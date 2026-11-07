@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turn-Table – The Periodic Table Challenge</title>
+<style>
+:root{
+  --navy:#14213d; --ink:#1b2433; --bg:#eef3fb; --card:#fff; --accent:#2f6bff; --accent2:#7c4dff;
+  --good:#1f9d55; --bad:#d64545; --gold:#f5b700; --muted:#5b6b86; --line:#d5deee;
+  --side:0px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+body{min-height:100vh}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--navy);color:#fff;padding:8px 16px;position:sticky;top:0;z-index:20}
+.brand{font-weight:800;font-size:20px;cursor:pointer;letter-spacing:.2px}
+#userChip{display:flex;align-items:center;gap:8px;font-weight:600}
+#userChip .who{background:rgba(255,255,255,.14);padding:4px 10px;border-radius:999px;font-size:14px}
+main{padding:12px 16px 24px;max-width:1500px;margin:0 auto}
+.warn{background:#fff3cd;color:#664d03;padding:8px 16px;font-size:14px;text-align:center}
+
+.btn{font:inherit;font-weight:700;border:2px solid var(--accent);background:var(--accent);color:#fff;padding:10px 18px;border-radius:12px;cursor:pointer;transition:transform .08s,filter .15s}
+.btn:hover{filter:brightness(1.08)} .btn:active{transform:scale(.97)}
+.btn.ghost{background:#fff;color:var(--accent)}
+.btn.sm{padding:5px 12px;font-size:14px;border-radius:9px}
+.btn.good{background:var(--good);border-color:var(--good)}
+.btn.warn2{background:#fff;color:var(--bad);border-color:var(--bad)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+header .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+button:focus-visible,input:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+input[type=text],input[type=password],input[type=search]{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;width:100%}
+input:focus{border-color:var(--accent);outline:none}
+
+.card{background:var(--card);border-radius:18px;box-shadow:0 2px 10px rgba(20,33,61,.08);padding:20px}
+.center{max-width:560px;margin:18px auto}
+h1{margin:0 0 6px;font-size:30px} h2{margin:0 0 8px;font-size:22px} h3{margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 14px}
+.msg{min-height:22px;font-weight:600;margin:8px 0}
+.msg.bad{color:var(--bad)} .msg.good{color:var(--good)}
+.seg{display:flex;gap:6px;margin:10px 0}
+.seg button{flex:1;font:inherit;font-weight:700;padding:9px;border:2px solid var(--line);background:#fff;border-radius:10px;cursor:pointer}
+.seg button.on{border-color:var(--accent);background:#e8efff;color:var(--accent)}
+.field{margin:10px 0} .field label{display:block;font-weight:700;margin-bottom:4px;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;cursor:pointer;font:inherit;font-weight:600;font-size:14px}
+.chip:hover{border-color:var(--accent)}
+
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:12px}
+.mcard{border:none;text-align:left;font:inherit;color:#fff;border-radius:20px;padding:20px;cursor:pointer;min-height:170px;display:flex;flex-direction:column;gap:6px;box-shadow:0 4px 12px rgba(20,33,61,.18);transition:transform .12s}
+.mcard:hover{transform:translateY(-3px)}
+.mcard .ic{font-size:36px} .mcard b{font-size:21px} .mcard span{opacity:.95;font-size:14px} .mcard .best{margin-top:auto;font-weight:700;font-size:14px;background:rgba(0,0,0,.18);padding:4px 10px;border-radius:999px;align-self:flex-start}
+.m1{background:linear-gradient(135deg,#2f6bff,#4fa3ff)} .m2{background:linear-gradient(135deg,#7c4dff,#b07cff)}
+.m3{background:linear-gradient(135deg,#00a67e,#3fd1a0)} .m4{background:linear-gradient(135deg,#f08a24,#ffb347)} .m5{background:linear-gradient(135deg,#5b6b86,#8fa0bb)}
+
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.lvl{border:3px solid var(--line);background:#fff;border-radius:16px;padding:16px;cursor:pointer;text-align:left;font:inherit}
+.lvl:hover{border-color:var(--accent)} .lvl b{font-size:20px;display:block} .lvl small{color:var(--muted)}
+.lvl .bestline{display:block;margin-top:8px;font-weight:700;color:var(--accent2)}
+
+.hud{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+.pill{background:#fff;border-radius:999px;padding:5px 14px;font-weight:600;box-shadow:0 1px 4px rgba(20,33,61,.1)}
+.pill b{font-size:18px}
+.prompt{flex:1;min-width:240px;text-align:center;background:var(--navy);color:#fff;border-radius:16px;padding:8px 14px;font-size:15px}
+.prompt b{display:block;font-size:34px;line-height:1.1;color:var(--gold)}
+.bigtimer{font-variant-numeric:tabular-nums;font-weight:800;font-size:22px}
+
+/* --- periodic table --- */
+.play{display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
+.play.has-side{grid-template-columns:minmax(0,1fr) 340px;--side:352px}
+.table-wrap{--cs:min(calc((100vw - var(--side) - 90px)/18.5),calc((100vh - 210px)/9.9),78px);overflow-x:auto;padding:2px}
+.ptable{display:grid;gap:2px;justify-content:center;
+  grid-template-columns:calc(var(--cs)*.45) repeat(18,var(--cs));
+  grid-template-rows:calc(var(--cs)*.4) repeat(7,var(--cs)) calc(var(--cs)*.3) repeat(2,var(--cs))}
+.gl,.pl{display:flex;align-items:center;justify-content:center;font-size:calc(var(--cs)*.24);font-weight:700;color:var(--muted)}
+.el{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0;margin:0;border:1px solid rgba(0,0,0,.22);border-radius:6px;cursor:pointer;color:var(--ink);font-family:inherit;line-height:1.05;background:#dfe5ee;transition:transform .08s}
+.el:hover{transform:scale(1.12);z-index:3;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.el .n{position:absolute;top:2px;left:3px;font-size:max(8px,calc(var(--cs)*.17));font-weight:600;opacity:.75}
+.el .s{font-size:calc(var(--cs)*.4);font-weight:800}
+.el .nm{font-size:max(7px,calc(var(--cs)*.15));max-width:100%;overflow:hidden;text-overflow:clip;white-space:nowrap;padding:0 1px}
+.ph{display:flex;align-items:center;justify-content:center;border:2px dashed var(--line);border-radius:6px;font-size:calc(var(--cs)*.18);color:var(--muted);text-align:center}
+.ptable:not(.mono) .cat-alkali{background:#ff8f8f}.ptable:not(.mono) .cat-alkaline{background:#ffb27a}
+.ptable:not(.mono) .cat-transition{background:#ffe27a}.ptable:not(.mono) .cat-post{background:#b8e08a}
+.ptable:not(.mono) .cat-metalloid{background:#6fd9bd}.ptable:not(.mono) .cat-nonmetal{background:#8ccaff}
+.ptable:not(.mono) .cat-halogen{background:#b9a6ff}.ptable:not(.mono) .cat-noble{background:#f0a0e6}
+.ptable:not(.mono) .cat-lanthanide{background:#ffc4d6}.ptable:not(.mono) .cat-actinide{background:#d6c4a8}
+.el.ok{background:var(--good)!important;color:#fff;transform:scale(1.18);z-index:4}
+.el.bad{background:var(--bad)!important;color:#fff;animation:shake .3s}
+.el.out{opacity:.35}
+.el.hit{outline:4px solid var(--gold);z-index:4;transform:scale(1.15)}
+.el.sel{outline:3px solid var(--accent2);z-index:4;transform:scale(1.12)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;margin-top:8px;font-size:13px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.25);vertical-align:-2px;margin-right:4px}
+
+.side{background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(20,33,61,.08)}
+.hints{list-style:none;margin:0 0 10px;padding:0;display:flex;flex-direction:column;gap:6px}
+.hint{border-radius:10px;padding:8px 10px;font-size:14.5px;line-height:1.35;border:2px solid var(--line)}
+.hint.locked{background:#f2f5fb;color:#9aa8c0;font-style:italic}
+.hint.shown{background:#eaf1ff;border-color:#b9cfff;animation:pop .3s}
+.hint b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+.guessrow{display:flex;gap:6px;margin:8px 0}
+.side .btn{width:100%;margin-top:6px}
+.guessrow .btn{width:auto;margin:0}
+.chk{display:flex;align-items:center;gap:6px;font-weight:600;font-size:14px;background:#fff;padding:5px 12px;border-radius:999px}
+
+.tray{display:flex;flex-wrap:wrap;gap:6px;min-height:40px;margin:6px 0}
+.atomchip{display:flex;align-items:center;gap:4px;background:#eaf1ff;border:2px solid #b9cfff;border-radius:10px;padding:2px 4px 2px 8px;font-weight:700}
+.atomchip button{border:none;background:#fff;border-radius:6px;width:24px;height:24px;font-weight:800;cursor:pointer;font-size:15px}
+.formula{font-size:28px;font-weight:800;text-align:center;min-height:38px;letter-spacing:1px}
+.beaker{background:linear-gradient(#f5f9ff,#dfeaff);border:2px solid #b9cfff;border-radius:14px}
+.beaker svg{width:100%;height:170px;display:block}
+.beaker svg.pop circle,.beaker svg.pop text{animation:pop .4s;transform-box:fill-box;transform-origin:center}
+.clue{background:var(--navy);color:#fff;border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.clue b{color:var(--gold);font-size:22px;display:block}
+.infobox{background:#f2f5fb;border-radius:10px;padding:8px 10px;margin:6px 0;font-size:14.5px}
+
+.bigtile{width:110px;height:110px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,.25);margin:0 auto 10px}
+.bigtile .s{font-size:46px;font-weight:800;line-height:1}.bigtile .n{font-size:14px;font-weight:700}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:15px}.kv dt{color:var(--muted);font-weight:700}.kv dd{margin:0;font-weight:600}
+
+.endbig{font-size:64px;font-weight:900;color:var(--accent);line-height:1.1}
+.endcard{max-width:720px;margin:14px auto;text-align:center}
+.tchips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.tchip{background:#eaf1ff;border-radius:10px;padding:4px 10px;font-size:14px}
+.tchip.slow{background:#ffe3e3}
+.newbest{display:inline-block;background:var(--gold);color:#3a2b00;font-weight:800;padding:4px 14px;border-radius:999px;margin:6px 0;animation:pop .4s}
+
+table.dt{width:100%;border-collapse:collapse;font-size:14px}
+table.dt th,table.dt td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
+table.dt th{background:#f2f5fb;position:sticky;top:0}
+.tscroll{overflow:auto;max-height:60vh}
+
+#modal,#countdown{position:fixed;inset:0;background:rgba(20,33,61,.6);display:flex;align-items:center;justify-content:center;z-index:50}
+#modal .card{width:min(420px,92vw)}
+#countdown{background:rgba(20,33,61,.82);z-index:40}
+#cdNum{font-size:120px;font-weight:900;color:#fff;animation:pop .35s}
+footer{text-align:center;color:var(--muted);font-size:12.5px;padding:6px 12px 18px}
+footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
+/* --- celebration effects --- */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.pop{position:absolute;left:50%;top:34%;display:flex;align-items:center;gap:10px;font-weight:900;color:#fff;padding:10px 24px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3);white-space:nowrap;font-size:30px;animation:popfx 1s ease-out forwards}
+.pop.big{font-size:50px;padding:14px 36px;animation-duration:1.5s}
+.pop .pi{font-size:1.2em}
+.pop.good{background:linear-gradient(135deg,#1f9d55,#3fd1a0)}
+.pop.great{background:linear-gradient(135deg,#f5b700,#ff8a00);color:#3a2300}
+.pop.oops{background:linear-gradient(135deg,#e5553d,#ff8a65)}
+.pop.try{background:linear-gradient(135deg,#7c4dff,#b07cff)}
+.pop.at{font-size:20px;padding:6px 14px;animation-name:popat;animation-duration:.9s}
+@keyframes popfx{0%{transform:translate(-50%,-30%) scale(.3);opacity:0}18%{transform:translate(-50%,-50%) scale(1.2);opacity:1}30%{transform:translate(-50%,-50%) scale(1)}80%{transform:translate(-50%,-60%) scale(1);opacity:1}100%{transform:translate(-50%,-110%) scale(1);opacity:0}}
+@keyframes popat{0%{transform:translate(-50%,0) scale(.4);opacity:0}20%{transform:translate(-50%,-120%) scale(1.15);opacity:1}100%{transform:translate(-50%,-260%) scale(1);opacity:0}}
+.conf{position:absolute;font-size:22px;animation:burst 1.3s cubic-bezier(.15,.7,.35,1) forwards}
+@keyframes burst{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}}
+
+.m6{background:linear-gradient(135deg,#e5484d,#ff8a8a)} .m7{background:linear-gradient(135deg,#0b7a9e,#3bb7d9)} .m8{background:linear-gradient(135deg,#d6336c,#ff7aa2)}
+.sync{font-size:12px;padding:3px 9px;border-radius:999px;font-weight:700;background:rgba(255,255,255,.14)}
+.sync.ok{background:rgba(63,209,160,.25);color:#c6f5e2} .sync.bad{background:rgba(214,69,69,.35);color:#ffd9d9} .sync.wait{background:rgba(245,183,0,.3);color:#ffeaa8}
+.stylechips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
+.stylechip{font:inherit;font-weight:700;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer}
+.stylechip:hover{border-color:var(--accent)} .stylechip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.prompt span#spLabel{display:block}
+.etile{width:96px;height:96px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid rgba(0,0,0,.25);margin:0 auto 6px;position:relative}
+.etile .tn{position:absolute;top:4px;left:7px;font-size:13px;font-weight:700}
+.etile .ts{font-size:38px;font-weight:800;line-height:1} .etile .tnm{font-size:12px;font-weight:600} .etile .tw{font-size:11px;opacity:.8}
+.atgrid{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:14px;align-items:start}
+.atgrid .card{padding:14px}
+.atsvg svg{width:100%;max-width:420px;height:auto;max-height:36vh}
+.atread{background:#f2f5fb;border-radius:10px;padding:8px 10px;font-size:15px;line-height:1.5;margin-top:6px}
+.ctr{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;margin:8px 0}
+.ctr label{font-weight:800;font-size:17px}
+.ctr button{width:46px;height:46px;border-radius:12px;border:2px solid var(--accent);background:#fff;color:var(--accent);font-size:24px;font-weight:800;cursor:pointer}
+.ctr button:hover{background:#e8efff} .ctr .v{min-width:44px;text-align:center;font-size:28px;font-weight:900}
+.ctr.p label{color:#e5484d} .ctr.n label{color:#6b778c} .ctr.e label{color:#2f6bff}
+.bceq{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;font-size:34px;font-weight:800;padding:14px 8px}
+.bceq .op{color:var(--muted);font-size:34px}
+.bceq .term{display:flex;flex-direction:column;align-items:center;gap:4px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 10px}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:38px;height:38px;border-radius:10px;border:2px solid var(--accent);background:#fff;color:var(--accent);font-size:22px;font-weight:800;cursor:pointer}
+.stepper button:hover{background:#e8efff} .stepper .coef{min-width:30px;text-align:center;font-size:30px}
+.bceq .fs{font-size:30px;letter-spacing:1px}
+.tally{max-width:640px;margin:0 auto}
+.tally-head{font-weight:800;padding:6px 10px;border-radius:10px;margin-bottom:6px}
+.tally-head.okr{background:#d9f5e5;color:#116b3a} .tally-head.badr{background:#fff0d6;color:#8a5a00}
+.trow{display:grid;grid-template-columns:44px 1fr 30px;align-items:center;gap:8px;margin:4px 0}
+.tsym{font-size:20px;text-align:center}
+.tbars{display:flex;flex-direction:column;gap:2px}
+.bar{height:20px;border-radius:6px;color:#fff;font-size:13px;font-weight:800;padding-left:8px;line-height:20px;min-width:22px;transition:width .2s}
+.bar.l{background:#2f6bff} .bar.r{background:#7c4dff}
+.trow.okr .tmark{color:var(--good)} .trow.badr .tmark{color:var(--bad)} .tmark{font-weight:900;font-size:20px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+.choice{color:var(--ink);font:inherit;font-weight:800;font-size:22px;padding:18px 12px;border-radius:16px;border:3px solid var(--line);background:#fff;cursor:pointer;min-height:84px}
+.choice:hover:not([disabled]){border-color:var(--accent);background:#eef3ff}
+.choice.out{opacity:.4;text-decoration:line-through} .choice.right{background:#d9f5e5;border-color:var(--good);color:#116b3a}
+.choice.ro{cursor:default;text-align:center}
+.lvclue{background:var(--navy);color:#fff;border-radius:14px;padding:10px 16px;text-align:center}
+.lvclue span{display:block;font-size:15px}
+.lvclue b{display:block;font-size:34px;line-height:1.15;color:var(--gold)} .lvclue b.long{font-size:20px;line-height:1.35;color:#fff;font-weight:600}
+.pill.low .bigtimer{color:var(--bad)}
+.lboard{list-style:none;margin:6px auto;padding:0;max-width:460px;text-align:left}
+.lboard li{display:flex;gap:10px;align-items:center;padding:6px 10px;border-radius:10px;background:#f2f5fb;margin:4px 0}
+.lboard li.me{background:#fff3c4;outline:2px solid var(--gold)}
+.rk{width:28px;font-weight:900;color:var(--accent)} .nm{flex:1;font-weight:700}
+.livebox{background:#f2f5fb;border-radius:14px;padding:12px;margin:10px 0}
+.livebox .row{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
+.livebox label{display:block;font-weight:700;font-size:13px;margin-bottom:2px}
+.livebox input,.livebox select,.tbar input,.tbar select{font:inherit;padding:7px 10px;border:2px solid var(--line);border-radius:10px;background:#fff}
+.tbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}
+.bigcode{font-size:96px;font-weight:900;letter-spacing:10px;color:var(--accent);line-height:1}
+.acts{white-space:nowrap}
+#lvTable{margin-top:6px;--cs:min(calc((100vw - 90px)/18.5),calc((100vh - 300px)/9.9),78px)}
+@media (max-width:980px){
+  .atgrid{grid-template-columns:1fr}
+  .choices{grid-template-columns:1fr}
+  .play.has-side{grid-template-columns:1fr;--side:0px}
+  .table-wrap{--cs:min(calc((100vw - 60px)/18.5),64px)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand" id="brand">⚛️ Turn-Table</div>
+  <div id="userChip" hidden>
+    <span class="who" id="userName"></span>
+    <span class="sync ok" id="syncBadge"></span>
+    <button class="btn sm ghost" id="btnHome">Menu</button>
+    <button class="btn sm ghost" id="btnLogout">Log out</button>
+  </div>
+</header>
+<div class="warn" id="warn" hidden>⚠️ This browser is blocking saved data, so your scores will disappear when you close the page.</div>
+
+<main>
+<!-- LOGIN -->
+<section class="screen" id="s-login">
+  <div class="card center">
+    <h1>Welcome to Turn-Table! 🔬</h1>
+    <p class="sub">Log in to save your scores. Use a nickname — <b>not</b> your full name.</p>
+    <div class="seg">
+      <button id="modeRet" class="on">I've played before</button>
+      <button id="modeNew">I'm new here</button>
+    </div>
+    <div class="field"><label for="uName">Nickname</label><input type="text" id="uName" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+    <div class="field"><label for="uPin">4-digit PIN</label><input type="password" id="uPin" maxlength="4" inputmode="numeric" autocomplete="off"></div>
+    <div class="field" id="classField" hidden><label for="uClass">Class code <small>(your teacher will tell you — optional)</small></label><input type="text" id="uClass" maxlength="12" autocomplete="off"></div>
+    <div class="msg bad" id="loginMsg"></div>
+    <button class="btn" id="btnLogin" style="width:100%">Log in</button>
+    <div id="nameList" style="margin-top:14px" hidden><small class="sub">Tap your nickname:</small><div class="chips" id="nameChips"></div></div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="screen" id="s-menu" hidden>
+  <h1 id="menuHello">Pick a game</h1>
+  <p class="sub">Mr. Turner's periodic table challenge. Pick a game and show what you know!</p>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- SPEED SETUP -->
+<section class="screen" id="s-speed-setup" hidden>
+  <div class="card">
+    <h2>⚡ Speed Find</h2>
+    <p class="sub">You'll see an element name. Click it on the table as fast as you can. 10 elements per round. Your <b>average time per element</b> is your score — lower is better!</p>
+    <div class="stylechips" id="styleChips"></div><p class="sub" id="styleDesc" style="margin:6px 0 0"></p>
+    <div class="levels" id="levelBtns"></div>
+    <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- SPEED PLAY -->
+<section class="screen" id="s-speed" hidden>
+  <div class="hud">
+    <div class="pill">Level: <b id="spLevel"></b></div>
+    <div class="pill">Element <b id="spProg">1/10</b></div>
+    <div class="prompt"><span id="spLabel">Find this element:</span><b id="spPrompt">…</b></div>
+    <div class="pill"><span class="bigtimer" id="spTimer">0.0s</span></div>
+    <div class="pill">Misses: <b id="spMiss">0</b></div>
+    <button class="btn sm ghost" id="spQuit">Quit</button>
+  </div>
+  <div class="msg good" id="spLast" style="text-align:center"></div>
+  <div class="play"><div id="spTable"></div></div>
+  <div id="spLegend"></div>
+</section>
+
+<!-- TRIVIA -->
+<section class="screen" id="s-trivia" hidden>
+  <div class="hud">
+    <div class="pill">Question <b id="trQ">1</b>/10</div>
+    <div class="pill">Score <b id="trScore">0</b></div>
+    <div class="pill">Worth <b id="trWorth">4</b> pts</div>
+    <label class="chk"><input type="checkbox" id="trColor"> Show color key</label>
+    <button class="btn sm ghost" id="trQuit">Quit</button>
+  </div>
+  <div class="play has-side">
+    <div id="trTable"></div>
+    <aside class="side">
+      <h2>🕵️ Mystery Element</h2>
+      <ol class="hints" id="trHints"></ol>
+      <div class="guessrow"><input type="text" id="trGuess" placeholder="Type a name or symbol" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
+      <p class="sub" style="margin:2px 0 0;font-size:13px">…or click the element on the table!</p>
+      <button class="btn ghost" id="trHintBtn">Reveal next hint (−1 pt)</button>
+      <div class="msg" id="trMsg"></div>
+      <button class="btn good" id="trNext" hidden>Next ▶</button>
+    </aside>
+  </div>
+  <div id="trLegend"></div>
+</section>
+
+<!-- LAB -->
+<section class="screen" id="s-lab" hidden>
+  <div class="hud">
+    <div class="pill">Compound <b id="lbQ">1</b>/10</div>
+    <div class="pill">Score <b id="lbScore">0</b></div>
+    <div class="pill">Worth <b id="lbWorth">3</b> pts</div>
+    <button class="btn sm ghost" id="lbQuit">Quit</button>
+  </div>
+  <div class="play has-side">
+    <div id="lbTable"></div>
+    <aside class="side">
+      <div class="clue">Build this compound:<b id="lbName"></b><span id="lbClue"></span></div>
+      <div class="beaker" id="lbBeaker"></div>
+      <div class="formula" id="lbFormula"></div>
+      <div class="tray" id="lbTray"></div>
+      <div class="infobox" id="lbHintBox" hidden></div>
+      <button class="btn" id="lbCombine">🧪 Combine!</button>
+      <div style="display:flex;gap:6px"><button class="btn ghost" id="lbHint">💡 Hint (−1 pt)</button><button class="btn warn2" id="lbClear">Clear</button></div>
+      <div class="msg" id="lbMsg"></div>
+      <button class="btn good" id="lbNext" hidden>Next ▶</button>
+    </aside>
+  </div>
+  <div id="lbLegend"></div>
+</section>
+
+<!-- EXPLORE -->
+<section class="screen" id="s-explore" hidden>
+  <div class="hud"><h2 style="margin:0;flex:1">🔭 Explore the Table</h2><button class="btn sm ghost" data-go="menu">← Menu</button></div>
+  <div class="play has-side">
+    <div id="exTable"></div>
+    <aside class="side" id="exInfo"></aside>
+  </div>
+  <div id="exLegend"></div>
+</section>
+
+<!-- ATOM SETUP -->
+<section class="screen" id="s-atom-setup" hidden>
+  <div class="card">
+    <h2>⚛️ Atom Builder</h2>
+    <p class="sub">You'll get an atom, ion or isotope to build. Use + and − to add protons, neutrons and electrons until it matches. 10 per round. Fewer hints and fewer misses = more points!</p>
+    <div class="levels" id="atLevels"></div>
+    <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- ATOM PLAY -->
+<section class="screen" id="s-atom" hidden>
+  <div class="hud">
+    <div class="pill">Atom <b id="atQ">1</b>/10</div>
+    <div class="pill">Score <b id="atScore">0</b></div>
+    <div class="pill">Worth <b id="atWorth">3</b> pts</div>
+    <button class="btn sm ghost" id="atQuit">Quit</button>
+  </div>
+  <div class="atgrid">
+    <div class="card" style="text-align:center">
+      <div class="clue" style="text-align:left">Build this:<b id="atPrompt"></b><span id="atSub"></span></div>
+      <div id="atTile"></div>
+      <div class="atsvg" id="atSvg"></div>
+      <div class="atread" id="atRead"></div>
+    </div>
+    <aside class="card" id="atCtrs">
+      <div class="ctr p"><label>Protons</label><button data-k="p" data-d="-1" aria-label="fewer protons">−</button><span class="v" id="atv_p">0</span><button data-k="p" data-d="1" aria-label="more protons">+</button></div>
+      <div class="ctr n"><label>Neutrons</label><button data-k="n" data-d="-1" aria-label="fewer neutrons">−</button><span class="v" id="atv_n">0</span><button data-k="n" data-d="1" aria-label="more neutrons">+</button></div>
+      <div class="ctr e"><label>Electrons</label><button data-k="e" data-d="-1" aria-label="fewer electrons">−</button><span class="v" id="atv_e">0</span><button data-k="e" data-d="1" aria-label="more electrons">+</button></div>
+      <div class="infobox" id="atHintBox" hidden></div>
+      <button class="btn" id="atCheck" style="width:100%">⚛️ Check my atom</button>
+      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn ghost" id="atHint" style="flex:1">💡 Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
+      <div class="msg" id="atMsg"></div>
+      <button class="btn good" id="atNext" hidden style="width:100%">Next ▶</button>
+    </aside>
+  </div>
+</section>
+
+<!-- BALANCE -->
+<section class="screen" id="s-balance" hidden>
+  <div class="hud">
+    <div class="pill">Equation <b id="bcQ">1</b>/10</div>
+    <div class="pill">Score <b id="bcScore">0</b></div>
+    <div class="pill">Worth <b id="bcWorth">3</b> pts</div>
+    <button class="btn sm ghost" id="bcQuit">Quit</button>
+  </div>
+  <div class="card">
+    <div class="clue">Balance this reaction. Atoms can't be lost or made, only rearranged!<b id="bcClue" style="font-size:19px;color:#fff;font-weight:600"></b></div>
+    <div class="bceq" id="bcEq"></div>
+    <div class="tally" id="bcTally"></div>
+    <div class="infobox" id="bcHintBox" hidden></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="bcCheck">⚖️ Check it!</button>
+      <button class="btn ghost" id="bcHint">💡 Hint (−1 pt)</button>
+    </div>
+    <div class="msg" id="bcMsg" style="text-align:center"></div>
+    <div style="text-align:center"><button class="btn good" id="bcNext" hidden>Next ▶</button></div>
+  </div>
+</section>
+
+<!-- LIVE (student) -->
+<section class="screen" id="s-live" hidden>
+  <div class="warn" id="lvConn" hidden>Reconnecting…</div>
+  <div class="hud">
+    <div class="pill">🎮 <b id="lvTitle">Class game</b></div>
+    <div class="pill">Question <b id="lvQ">–</b></div>
+    <div class="pill">Score <b id="lvScore">0</b></div>
+    <div class="pill" id="lvTimerPill" hidden><span class="bigtimer" id="lvTimer"></span></div>
+    <button class="btn sm ghost" id="lvQuit">Leave</button>
+  </div>
+  <div class="lvclue" id="lvClue" hidden><span id="lvLabel"></span><b id="lvPrompt"></b></div>
+  <div class="choices" id="lvChoices"></div>
+  <div class="msg" id="lvMsg" style="text-align:center;font-size:18px"></div>
+  <div id="lvTableWrap" hidden><div id="lvTable"></div></div>
+  <div id="lvBoard" style="text-align:center"></div>
+</section>
+
+<!-- LIVE (teacher board) -->
+<section class="screen" id="s-livet" hidden>
+  <div class="card" style="text-align:center">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap">
+      <b id="tlTitleShow"></b>
+      <button class="btn sm ghost" id="tlLeave">← Teacher panel</button>
+    </div>
+    <p class="sub" style="margin:8px 0 0">Students: open Turn-Table → <b>Class Game</b> → type the code</p>
+    <div class="bigcode" id="tlCode">----</div>
+    <h2 id="tlStatus" style="margin:6px 0 2px"></h2>
+    <div><span class="pill"><b id="tlPlayers">0 players</b></span> <span class="pill"><b id="tlTimerBox"></b></span></div>
+    <div class="tchips" id="tlNames"></div>
+    <div id="tlQ" hidden class="lvclue" style="margin:10px auto;max-width:800px"><span id="tlQLabel"></span><b id="tlQText" class="long"></b>
+      <div class="choices" id="tlQChoices" style="margin:8px 0 0"></div>
+      <div style="color:#7dffb0;font-weight:800;font-size:22px;margin-top:6px" id="tlQAnswer"></div></div>
+    <div class="msg" id="tlStats"></div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0">
+      <button class="btn" id="tlMain" style="font-size:20px;padding:12px 26px">▶ Start the game</button>
+      <button class="btn warn2" id="tlEnd">End game</button>
+    </div>
+    <h3 id="tlLbHead" hidden>Leaderboard</h3>
+    <ol class="lboard" id="tlLeaders" style="margin:0 auto"></ol>
+  </div>
+</section>
+
+<!-- END -->
+<section class="screen" id="s-end" hidden>
+  <div class="card endcard">
+    <div style="font-size:48px" id="endEmoji">🏆</div>
+    <h1 id="endTitle"></h1>
+    <div class="endbig" id="endBig"></div>
+    <p class="sub" id="endSub"></p>
+    <div id="endBody"></div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+      <button class="btn" id="endAgain">Play again</button>
+      <button class="btn ghost" data-go="menu">Menu</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="screen" id="s-stats" hidden>
+  <div class="card">
+    <h2>📊 My Stats</h2>
+    <div id="statsBody"></div>
+    <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- TEACHER -->
+<section class="screen" id="s-teacher" hidden>
+  <div class="card">
+    <h2>🧑‍🏫 Teacher Panel</h2>
+    <p class="sub">Every student's scores are saved online. They show up here as soon as a round ends.</p>
+    <div class="tbar">
+      <button class="btn sm" id="tRefresh">↻ Refresh</button>
+      <button class="btn sm ghost" id="tExport">⬇ Summary (CSV)</button>
+      <button class="btn sm ghost" id="tExportAll">⬇ Every round (CSV)</button>
+      <button class="btn sm ghost" id="tPass">🔑 Change passcode</button>
+      <button class="btn sm ghost" id="tBack">← Back</button>
+    </div>
+    <div class="livebox">
+      <b>🎮 Start a live class game</b>
+      <div class="row" style="margin-top:6px">
+        <div><label for="tlTitle">Title</label><input id="tlTitle" maxlength="40" value="Class game" style="width:170px"></div>
+        <div><label for="tlN">Questions</label><select id="tlN"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></div>
+        <div><label for="tlLim">Seconds each</label><select id="tlLim"><option>15</option><option selected>20</option><option>30</option><option>45</option></select></div>
+        <div><label for="tlMix">Kind</label><select id="tlMix"><option value="mixed" selected>Mixed</option><option value="find">Find it on the table</option><option value="quiz">Quiz questions</option></select></div>
+        <button class="btn" id="tlMake">Start game</button>
+      </div>
+      <div class="row" style="margin-top:8px"><div><label for="tlResumeCode">Lost your board? Reopen by code</label><input id="tlResumeCode" maxlength="4" inputmode="numeric" style="width:90px"></div><button class="btn sm ghost" id="tlResume">Open</button></div>
+    </div>
+    <div class="tbar">
+      <select id="tClass" aria-label="Class"></select>
+      <input id="tSearch" placeholder="Search nickname…" aria-label="Search">
+      <span class="sub" id="tCount" style="margin:0"></span>
+    </div>
+    <div class="tscroll"><table class="dt" id="tTable"></table></div>
+    <p class="sub" style="margin-top:8px">⚡ columns show best average time. Atom shows the best score for levels 1 / 2 / 3.</p>
+  </div>
+</section>
+
+<section class="screen" id="s-thist" hidden>
+  <div class="card">
+    <h2>📜 <span id="thName"></span></h2>
+    <div class="tscroll"><table class="dt" id="thTable"></table></div>
+    <p style="margin-top:12px"><button class="btn ghost sm" id="thBack">← Back to the panel</button></p>
+  </div>
+</section>
+</main>
+
+<footer>Your scores are saved online with your nickname. <a id="teacherLink">Teacher</a></footer>
+
+<div id="modal" hidden><div class="card">
+  <h2 id="mTitle"></h2><p id="mText" class="sub"></p>
+  <input type="password" id="mInput" hidden>
+  <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn ghost" id="mCancel">Cancel</button><button class="btn" id="mOk">OK</button></div>
+</div></div>
+<div id="fx" aria-hidden="true"></div>
+<div id="countdown" hidden><div id="cdNum"></div></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= TEACHER SETTINGS (edit these) ================= */
+const SHOW_NAME_LIST   = true;        // show tap-to-pick nicknames on the login screen
+const ROUND_LEN        = 10;          // questions per round
+/* ================================================================= */
+
+/* ---------- ELEMENT DATA ---------- */
+const RAW = `H|Hydrogen|1.008|1
+He|Helium|4.0026|18
+Li|Lithium|6.94|1
+Be|Beryllium|9.0122|2
+B|Boron|10.81|13
+C|Carbon|12.011|14
+N|Nitrogen|14.007|15
+O|Oxygen|15.999|16
+F|Fluorine|18.998|17
+Ne|Neon|20.180|18
+Na|Sodium|22.990|1
+Mg|Magnesium|24.305|2
+Al|Aluminum|26.982|13
+Si|Silicon|28.085|14
+P|Phosphorus|30.974|15
+S|Sulfur|32.06|16
+Cl|Chlorine|35.45|17
+Ar|Argon|39.948|18
+K|Potassium|39.098|1
+Ca|Calcium|40.078|2
+Sc|Scandium|44.956|3
+Ti|Titanium|47.867|4
+V|Vanadium|50.942|5
+Cr|Chromium|51.996|6
+Mn|Manganese|54.938|7
+Fe|Iron|55.845|8
+Co|Cobalt|58.933|9
+Ni|Nickel|58.693|10
+Cu|Copper|63.546|11
+Zn|Zinc|65.38|12
+Ga|Gallium|69.723|13
+Ge|Germanium|72.630|14
+As|Arsenic|74.922|15
+Se|Selenium|78.971|16
+Br|Bromine|79.904|17
+Kr|Krypton|83.798|18
+Rb|Rubidium|85.468|1
+Sr|Strontium|87.62|2
+Y|Yttrium|88.906|3
+Zr|Zirconium|91.224|4
+Nb|Niobium|92.906|5
+Mo|Molybdenum|95.95|6
+Tc|Technetium|98|7
+Ru|Ruthenium|101.07|8
+Rh|Rhodium|102.91|9
+Pd|Palladium|106.42|10
+Ag|Silver|107.87|11
+Cd|Cadmium|112.41|12
+In|Indium|114.82|13
+Sn|Tin|118.71|14
+Sb|Antimony|121.76|15
+Te|Tellurium|127.60|16
+I|Iodine|126.90|17
+Xe|Xenon|131.29|18
+Cs|Cesium|132.91|1
+Ba|Barium|137.33|2
+La|Lanthanum|138.91|-
+Ce|Cerium|140.12|-
+Pr|Praseodymium|140.91|-
+Nd|Neodymium|144.24|-
+Pm|Promethium|145|-
+Sm|Samarium|150.36|-
+Eu|Europium|151.96|-
+Gd|Gadolinium|157.25|-
+Tb|Terbium|158.93|-
+Dy|Dysprosium|162.50|-
+Ho|Holmium|164.93|-
+Er|Erbium|167.26|-
+Tm|Thulium|168.93|-
+Yb|Ytterbium|173.05|-
+Lu|Lutetium|174.97|-
+Hf|Hafnium|178.49|4
+Ta|Tantalum|180.95|5
+W|Tungsten|183.84|6
+Re|Rhenium|186.21|7
+Os|Osmium|190.23|8
+Ir|Iridium|192.22|9
+Pt|Platinum|195.08|10
+Au|Gold|196.97|11
+Hg|Mercury|200.59|12
+Tl|Thallium|204.38|13
+Pb|Lead|207.2|14
+Bi|Bismuth|208.98|15
+Po|Polonium|209|16
+At|Astatine|210|17
+Rn|Radon|222|18
+Fr|Francium|223|1
+Ra|Radium|226|2
+Ac|Actinium|227|-
+Th|Thorium|232.04|-
+Pa|Protactinium|231.04|-
+U|Uranium|238.03|-
+Np|Neptunium|237|-
+Pu|Plutonium|244|-
+Am|Americium|243|-
+Cm|Curium|247|-
+Bk|Berkelium|247|-
+Cf|Californium|251|-
+Es|Einsteinium|252|-
+Fm|Fermium|257|-
+Md|Mendelevium|258|-
+No|Nobelium|259|-
+Lr|Lawrencium|266|-
+Rf|Rutherfordium|267|4
+Db|Dubnium|268|5
+Sg|Seaborgium|269|6
+Bh|Bohrium|270|7
+Hs|Hassium|277|8
+Mt|Meitnerium|278|9
+Ds|Darmstadtium|281|10
+Rg|Roentgenium|282|11
+Cn|Copernicium|285|12
+Nh|Nihonium|286|13
+Fl|Flerovium|289|14
+Mc|Moscovium|290|15
+Lv|Livermorium|293|16
+Ts|Tennessine|294|17
+Og|Oganesson|294|18`;
+
+const CATS = {
+  alkali:['Alkali metal','#ff8f8f'], alkaline:['Alkaline earth metal','#ffb27a'], transition:['Transition metal','#ffe27a'],
+  post:['Post-transition metal','#b8e08a'], metalloid:['Metalloid','#6fd9bd'], nonmetal:['Nonmetal','#8ccaff'],
+  halogen:['Halogen','#b9a6ff'], noble:['Noble gas','#f0a0e6'], lanthanide:['Lanthanide','#ffc4d6'], actinide:['Actinide','#d6c4a8']
+};
+const METALS = ['alkali','alkaline','transition','post','lanthanide','actinide'];
+function catOf(n){
+  if([3,11,19,37,55,87].includes(n)) return 'alkali';
+  if([4,12,20,38,56,88].includes(n)) return 'alkaline';
+  if(n>=57&&n<=71) return 'lanthanide';
+  if(n>=89&&n<=103) return 'actinide';
+  if([5,14,32,33,51,52].includes(n)) return 'metalloid';
+  if([1,6,7,8,15,16,34].includes(n)) return 'nonmetal';
+  if([9,17,35,53,85,117].includes(n)) return 'halogen';
+  if([2,10,18,36,54,86,118].includes(n)) return 'noble';
+  if([13,31,49,50,81,82,83,84,113,114,115,116].includes(n)) return 'post';
+  return 'transition';
+}
+const periodOf = n => n<=2?1:n<=10?2:n<=18?3:n<=36?4:n<=54?5:n<=86?6:7;
+const GAS=[1,2,7,8,9,10,17,18,36,54,86], LIQ=[35,80];
+const EL = RAW.split('\n').map((line,i)=>{
+  const [sym,name,mass,g]=line.split('|'); const n=i+1;
+  return {n,sym,name,mass:parseFloat(mass),group:g==='-'?null:+g,period:periodOf(n),cat:catOf(n),
+          state:GAS.includes(n)?'gas':LIQ.includes(n)?'liquid':n>=104?'unknown':'solid'};
+});
+const BYSYM={}; EL.forEach(e=>BYSYM[e.sym]=e);
+const ALIAS={aluminium:'Al',sulphur:'S',caesium:'Cs'};
+
+/* Fun-fact / property clues (used as Hint 2 in Trivia). They never say the element's name. */
+const FACTS = {
+H:"I'm the lightest element and the most common one in the universe. Stars like our Sun burn me for fuel.",
+He:"I'm lighter than air, so party balloons filled with me float. I almost never react with anything.",
+Li:"I'm a soft, silvery metal you could cut with a butter knife. I power rechargeable batteries.",
+Be:"I'm a strong but very light metal used in spacecraft parts. Emeralds get their shape from compounds with me.",
+B:"I'm in laundry boosters and in heat-proof glass for cookware that won't crack in the oven.",
+C:"All living things contain me. Diamonds and pencil 'lead' are both made of me!",
+N:"I make up about 78% of the air you breathe, but your body can't use me directly.",
+O:"You need me to breathe, and fire needs me to burn. I'm about 21% of the air.",
+F:"I'm the most reactive nonmetal. A tiny bit of me in toothpaste helps prevent cavities.",
+Ne:"I glow bright reddish-orange when electricity passes through me, so I light up signs.",
+Na:"I'm a soft metal that fizzes and can explode in water. Joined with chlorine, I make table salt.",
+Mg:"I burn with a blinding white flame, so I'm in sparklers. Plants need me to make chlorophyll.",
+Al:"I'm a lightweight, shiny metal. Soda cans and kitchen foil are made from me.",
+Si:"I'm the main ingredient of sand and glass, and computer chips are made from me.",
+P:"I'm a key part of your DNA and your bones. Farmers add me to soil in fertilizer.",
+S:"I'm a bright yellow solid. Volcanoes release me, and some of my compounds smell like rotten eggs.",
+Cl:"I'm a greenish-yellow gas used to kill germs in swimming pools.",
+Ar:"I'm the third most common gas in the air. Many light bulbs are filled with me because I don't react.",
+K:"I'm a soft, reactive metal. Bananas are famous for having me, and your nerves and muscles need me.",
+Ca:"I'm the main mineral in your bones and teeth. Milk is a great source of me.",
+Ti:"I'm as strong as steel but much lighter. Bike frames and hip replacements are made from me.",
+Cr:"I give stainless steel its shine and keep it from rusting. Rubies get their red color from me.",
+Mn:"I'm added to steel to make it harder and tougher. I'm also inside many batteries.",
+Fe:"I'm the most-used metal on Earth. Magnets stick to me, I rust, and your blood needs me to carry oxygen.",
+Co:"I make a deep blue color in glass and pottery, and I'm magnetic.",
+Ni:"I'm a silvery, magnetic metal used in coins and stainless steel.",
+Cu:"I'm a reddish-orange metal that conducts electricity very well, so I'm inside wires. Pennies are coated with me.",
+Zn:"I coat steel nails and buckets to stop them from rusting. Your immune system needs a little of me.",
+Br:"I'm one of only two elements that are liquid at room temperature. I'm reddish-brown and smell terrible.",
+Kr:"I'm a noble gas. A fictional planet where a famous superhero was born is named after me.",
+Ag:"I'm the best conductor of electricity and heat of any metal. Fancy jewelry and forks and spoons are made from me.",
+Sn:"Food cans were once coated with me to stop rust. Mix me with copper and you get bronze.",
+I:"Your thyroid gland needs me. I turn into a purple vapor when heated, and I'm added to table salt.",
+Xe:"I'm a heavy noble gas that makes super bright blue-white car headlights and powers some spacecraft engines.",
+W:"I have the highest melting point of any metal, so I was used in old-style light bulb filaments.",
+Au:"I'm a soft, shiny yellow metal that never rusts or tarnishes. First-place medals are covered with me.",
+Hg:"I'm the only metal that is a liquid at room temperature. I used to be inside thermometers.",
+Pb:"I'm a heavy, soft, bluish-gray metal. I was once in paint and gasoline, but I'm toxic so we stopped.",
+U:"I'm a very heavy, radioactive metal used as fuel in nuclear power plants."
+};
+const POOL_EL = Object.keys(FACTS).map(s=>BYSYM[s]);
+
+/* ---------- COMPOUNDS (Compound Lab) ---------- */
+const COMPOUNDS = [
+ {t:1,name:'Water',f:{H:2,O:1},clue:"You drink it, and it covers about 70% of Earth's surface."},
+ {t:1,name:'Carbon dioxide',f:{C:1,O:2},clue:"The gas you breathe out. Plants take it in for photosynthesis."},
+ {t:1,name:'Sodium chloride',f:{Na:1,Cl:1},clue:"Table salt! A reactive metal and a poisonous gas join to make something safe to eat."},
+ {t:1,name:'Oxygen gas',f:{O:2},clue:"The gas you need to breathe. Its atoms travel in pairs."},
+ {t:1,name:'Hydrogen gas',f:{H:2},clue:"The lightest gas of all. Its atoms travel in pairs."},
+ {t:1,name:'Nitrogen gas',f:{N:2},clue:"Makes up most of the air around you. Its atoms travel in pairs."},
+ {t:1,name:'Carbon monoxide',f:{C:1,O:1},clue:"A dangerous gas from engines and furnaces. 'Mono' means one!"},
+ {t:1,name:'Hydrogen chloride',f:{H:1,Cl:1},clue:"Dissolved in water it makes a strong lab acid. Your stomach acid contains some too."},
+ {t:1,name:'Magnesium oxide',f:{Mg:1,O:1},clue:"The white powder left behind when magnesium ribbon burns."},
+ {t:1,name:'Silicon dioxide',f:{Si:1,O:2},clue:"The main ingredient in sand and quartz."},
+ {t:1,name:'Ammonia',f:{N:1,H:3},clue:"A sharp-smelling gas found in many window cleaners."},
+ {t:1,name:'Hydrogen sulfide',f:{H:2,S:1},clue:"A gas that smells like rotten eggs."},
+ {t:1,name:'Potassium chloride',f:{K:1,Cl:1},clue:"Used as a salt substitute and in fertilizer."},
+ {t:2,name:'Methane',f:{C:1,H:4},clue:"The main gas in natural gas that fuels stoves. Cows release it too!"},
+ {t:2,name:'Hydrogen peroxide',f:{H:2,O:2},clue:"Used to clean cuts. It's like water with one extra oxygen."},
+ {t:2,name:'Ozone',f:{O:3},clue:"Blocks harmful UV light high in the atmosphere. It's a three-atom form of oxygen."},
+ {t:2,name:'Sulfur dioxide',f:{S:1,O:2},clue:"A smelly gas released by volcanoes. It helps cause acid rain."},
+ {t:2,name:'Sodium hydroxide',f:{Na:1,O:1,H:1},clue:"A strong base used to make soap and unclog drains (also called lye)."},
+ {t:2,name:'Calcium chloride',f:{Ca:1,Cl:2},clue:"Spread on icy roads in winter to melt the ice."},
+ {t:2,name:'Calcium carbonate',f:{Ca:1,C:1,O:3},clue:"Found in chalk, limestone, eggshells and seashells."},
+ {t:2,name:'Iron(III) oxide',f:{Fe:2,O:3},clue:"What we call rust."},
+ {t:2,name:'Nitric acid',f:{H:1,N:1,O:3},clue:"A strong acid used to make fertilizers."},
+ {t:2,name:'Aluminum oxide',f:{Al:2,O:3},clue:"The hard coating on aluminum, and the main part of rubies and sapphires."},
+ {t:2,name:'Sodium bicarbonate',f:{Na:1,H:1,C:1,O:3},clue:"Baking soda! It fizzes when you add vinegar."},
+ {t:3,name:'Propane',f:{C:3,H:8},clue:"The fuel in backyard grills and camping stoves."},
+ {t:3,name:'Ethanol',f:{C:2,H:6,O:1},clue:"The alcohol that's added to gasoline in many cars."},
+ {t:3,name:'Acetic acid',f:{C:2,H:4,O:2},clue:"Gives vinegar its sour taste and sharp smell."},
+ {t:3,name:'Sulfuric acid',f:{H:2,S:1,O:4},clue:"The strong acid inside car batteries."}
+ ,{t:1,name:'Calcium oxide',f:{Ca:1,O:1},clue:"Quicklime! Made by heating limestone, and used in cement."}
+ ,{t:1,name:'Chlorine gas',f:{Cl:2},clue:"A greenish gas that kills germs in pools. Its atoms travel in pairs."}
+ ,{t:1,name:'Potassium iodide',f:{K:1,I:1},clue:"Added to table salt so your thyroid gets the iodine it needs."}
+ ,{t:1,name:'Sodium fluoride',f:{Na:1,F:1},clue:"The cavity-fighting ingredient in many toothpastes."}
+ ,{t:2,name:'Magnesium chloride',f:{Mg:1,Cl:2},clue:"A salt from seawater, used to make tofu and to melt ice on roads."}
+ ,{t:2,name:'Nitrogen dioxide',f:{N:1,O:2},clue:"A brown, smelly gas in car exhaust that makes smog."}
+ ,{t:2,name:'Nitrous oxide',f:{N:2,O:1},clue:"“Laughing gas” that dentists sometimes use."}
+ ,{t:2,name:'Zinc oxide',f:{Zn:1,O:1},clue:"The thick white sunscreen lifeguards put on their noses."}
+ ,{t:2,name:'Aluminum chloride',f:{Al:1,Cl:3},clue:"An ingredient in some antiperspirants."}
+ ,{t:2,name:'Sulfur trioxide',f:{S:1,O:3},clue:"A gas from burning fuels that turns into acid rain."}
+ ,{t:3,name:'Carbonic acid',f:{H:2,C:1,O:3},clue:"Forms when carbon dioxide dissolves in water. It makes soda fizzy."}
+ ,{t:3,name:'Phosphoric acid',f:{H:3,P:1,O:4},clue:"Gives cola its tangy bite and is used to make fertilizer."}
+ ,{t:3,name:'Calcium hydroxide',f:{Ca:1,O:2,H:2},clue:"Slaked lime, used in plaster and to treat soil that is too acidic."}
+ ,{t:3,name:'Ammonium nitrate',f:{N:2,H:4,O:3},clue:"A common fertilizer that gives plants nitrogen."}
+ ,{t:3,name:'Acetylene',f:{C:2,H:2},clue:"The gas in welding torches. It burns extremely hot."}
+ ,{t:3,name:'Butane',f:{C:4,H:10},clue:"The fuel inside a disposable lighter."}
+ ,{t:3,name:'Ethane',f:{C:2,H:6},clue:"A gas found in natural gas, just one carbon bigger than methane."}
+];
+const ATOMC={H:['#ffffff','#333'],C:['#3a3a3a','#fff'],N:['#4a6cff','#fff'],O:['#ff4a4a','#fff'],Na:['#b070ff','#fff'],
+  Cl:['#3fd13f','#06310a'],Ca:['#58d68d','#06310a'],S:['#ffe14a','#3a2f00'],Mg:['#7ee08a','#06310a'],K:['#c27bff','#fff'],
+  Fe:['#c9733a','#fff'],Si:['#d9b38c','#3a2200'],Al:['#b8b8c8','#222'],P:['#ff9f43','#3a1d00'],F:['#a8e6a1','#06310a'],I:['#9b59b6','#fff'],Zn:['#9fb0c8','#1b2433']};
+
+/* ---------- HELPERS ---------- */
+const $ = id => document.getElementById(id);
+function h(tag,props,...kids){
+  const e=document.createElement(tag);
+  for(const k in (props||{})){const v=props[k];
+    if(k==='class')e.className=v; else if(k==='style')e.style.cssText=v;
+    else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);
+    else if(v===true)e.setAttribute(k,''); else if(v!==false&&v!=null)e.setAttribute(k,v);}
+  kids.flat().forEach(c=>{if(c==null||c===false)return;e.append(c.nodeType?c:document.createTextNode(c));});
+  return e;
+}
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+const sample=(a,k)=>shuffle(a).slice(0,Math.min(k,a.length));
+const mean = a => a.reduce((x,y)=>x+y,0)/a.length;
+const fmtT = ms => (ms/1000).toFixed(2)+'s';
+const SUB='₀₁₂₃₄₅₆₇₈₉';
+const sub = n => n===1?'':String(n).split('').map(d=>SUB[+d]).join('');
+const fmtFormula = f => Object.keys(f).filter(k=>f[k]>0).map(k=>k+sub(f[k])).join('');
+const an = w => /^[aeiou]/i.test(w)?'an':'a';
+
+/* ---------- CELEBRATION FX ---------- */
+const fx={
+  pop({text,icon,kind='good',at=null,size=''}){
+    const el=h('div',{class:`pop ${kind} ${at?'at':size}`},h('span',{class:'pi'},icon),h('span',null,text));
+    if(at){const r=at.getBoundingClientRect();el.style.left=(r.left+r.width/2)+'px';el.style.top=r.top+'px';}
+    $('fx').append(el);setTimeout(()=>el.remove(),size==='big'?1500:950);
+  },
+  confetti(n=40,x,y){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    const ox=x==null?innerWidth/2:x,oy=y==null?innerHeight*0.38:y;
+    const cols=['#ff4d6d','#ffb703','#3fd1a0','#2f6bff','#b07cff','#ff8a00'],em=['⭐','🎉','✨','🔬','⚛️'];
+    for(let i=0;i<n;i++){
+      const p=h('div',{class:'conf'});
+      if(Math.random()<.3)p.textContent=em[i%em.length];
+      else p.style.cssText=`width:10px;height:14px;border-radius:2px;background:${cols[i%cols.length]}`;
+      const a=Math.random()*Math.PI*2,d=120+Math.random()*320;
+      p.style.left=ox+'px';p.style.top=oy+'px';
+      p.style.setProperty('--dx',Math.cos(a)*d+'px');
+      p.style.setProperty('--dy',(Math.sin(a)*d-80+Math.random()*160)+'px');
+      p.style.setProperty('--rot',(Math.random()*720-360)+'deg');
+      p.style.animationDelay=(Math.random()*.15)+'s';
+      $('fx').append(p);setTimeout(()=>p.remove(),1700);
+    }
+  }
+};
+
+/* ---------- CLOUD (score server) ---------- */
+const CLOUD={url:'https://alhnylmjsvumbjnhsior.supabase.co',key:'sb_publishable_e4aF29PL8QOahV0ZM2DYbw_OYBHvez1'};
+async function rpc(fn,args,ms){
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||9000);
+  try{
+    const r=await fetch(CLOUD.url+'/rest/v1/rpc/'+fn,{method:'POST',signal:c.signal,
+      headers:{'apikey':CLOUD.key,'Content-Type':'application/json'},body:JSON.stringify(args||{})});
+    if(!r.ok)throw new Error('http '+r.status);
+    return await r.json();
+  }finally{clearTimeout(t);}
+}
+
+/* ---------- STORAGE & PROFILES ---------- */
+const mem={}; let storageOK=true;
+const store={
+  get(k){try{return localStorage.getItem(k);}catch(e){return mem[k]===undefined?null:mem[k];}},
+  set(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+};
+try{localStorage.setItem('pte_t','1');localStorage.removeItem('pte_t');}catch(e){storageOK=false;}
+let profiles={};
+try{profiles=JSON.parse(store.get('pte_profiles_v1')||'{}')||{};}catch(e){profiles={};}
+const saveAll=()=>store.set('pte_profiles_v1',JSON.stringify(profiles));
+function hash(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(i))|0;return String(x);}
+function newProfile(name,cls,pin){return {name,cls:cls||'',pin,created:Date.now(),speed:{},trivia:{best:0,plays:0},lab:{best:0,plays:0},
+  atom:{},balance:{best:0,plays:0},missed:{},cloud:null};}
+function fixProfile(P){
+  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};
+  P.trivia=P.trivia||{best:0,plays:0};P.lab=P.lab||{best:0,plays:0};P.balance=P.balance||{best:0,plays:0};
+  if(P.cloud===undefined)P.cloud=null;
+  return P;
+}
+Object.keys(profiles).forEach(k=>fixProfile(profiles[k]));
+let me=null;
+try{me=sessionStorage.getItem('pte_me');}catch(e){}
+if(me&&!profiles[me])me=null;
+const prof=()=>profiles[me];
+const spRec=(P,key)=>P.speed[key]||(P.speed[key]={best:null,plays:0});
+const atRec=(P,key)=>P.atom[key]||(P.atom[key]={best:0,plays:0});
+let pendMissed={};
+function bumpMissed(sym){const P=prof();P.missed[sym]=(P.missed[sym]||0)+1;pendMissed[sym]=(pendMissed[sym]||0)+1;}
+
+/* ---------- SAVING SCORES ONLINE (with an offline queue) ---------- */
+let syncState='cloud';   // cloud | offline | authfail
+const qLoad=()=>{try{return JSON.parse(store.get('pte_queue_v1')||'[]');}catch(e){return [];}};
+const qSave=q=>store.set('pte_queue_v1',JSON.stringify(q.slice(-300)));
+function setSyncBadge(){
+  const b=$('syncBadge');if(!b)return;
+  const waiting=qLoad().filter(r=>r.user===me).length;
+  let t='☁️ Saved online',cls='ok';
+  if(syncState==='offline'){t='⚠️ Offline – saved on this device';cls='bad';}
+  else if(syncState==='authfail'){t='⚠️ Log in again to save';cls='bad';}
+  else if(waiting){t='⏳ Saving…';cls='wait';}
+  b.textContent=t;b.className='sync '+cls;
+}
+let flushing=false;
+async function flushQueue(){
+  const P=me&&prof();
+  if(!P||!P.cloud||flushing)return;
+  flushing=true;
+  try{
+    let q=qLoad(),mine=q.filter(r=>r.user===me);const rest=q.filter(r=>r.user!==me);
+    let state=syncState==='authfail'?'cloud':syncState;
+    for(const r of mine.slice()){
+      try{
+        const res=await rpc('tt_submit',{p_id:P.cloud.id,p_token:P.cloud.token,p_game:r.game,p_level:r.level,
+          p_value:r.value,p_detail:Object.assign({},r.detail,{cid:r.cid}),p_missed:r.missed||{}});
+        if(res&&res.ok){state='cloud';mine=mine.filter(x=>x.cid!==r.cid);}
+        else if(res&&res.error==='auth'){state='authfail';break;}
+        else if(res){mine=mine.filter(x=>x.cid!==r.cid);}   // bad record: drop it
+      }catch(e){state='offline';break;}
+    }
+    if(!mine.length&&state==='offline')state='cloud';
+    syncState=state;
+    qSave(rest.concat(mine));
+  }finally{flushing=false;setSyncBadge();}
+}
+function cloudSubmit(game,level,value,detail){
+  const rec={user:me,cid:me+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),game,
+    level:String(level==null?'':level),value:Math.round(value*100)/100,detail:detail||{},missed:pendMissed};
+  pendMissed={};
+  const q=qLoad();q.push(rec);qSave(q);
+  setSyncBadge();
+  if(prof()&&prof().cloud)flushQueue();else{syncState='offline';setSyncBadge();}
+}
+function mergeCloud(P,stats){
+  const sc=(stats&&stats.scores)||{};
+  Object.keys(sc).forEach(k=>{
+    const i=k.indexOf(':'),g=k.slice(0,i),lv=k.slice(i+1),b=Number(sc[k].best),pl=Number(sc[k].plays);
+    if(g==='speed'){const r=spRec(P,lv);r.best=r.best==null?b:Math.min(r.best,b);r.plays=Math.max(r.plays,pl);}
+    else if(g==='atom'){const r=atRec(P,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
+    else if(g==='trivia'||g==='lab'||g==='balance'){P[g].best=Math.max(P[g].best||0,b);P[g].plays=Math.max(P[g].plays||0,pl);}
+  });
+  const ms=(stats&&stats.missed)||{};
+  Object.keys(ms).forEach(s=>{P.missed[s]=Math.max(P.missed[s]||0,Number(ms[s]));});
+}
+
+
+/* ---------- SCREENS ---------- */
+let runId=0, spTimer=null, liveTimer=null, liveTick=null;
+function stopAll(){runId++;clearInterval(spTimer);clearInterval(liveTimer);clearInterval(liveTick);$('countdown').hidden=true;}
+function show(id){
+  stopAll();$('fx').replaceChildren();
+  document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));
+  $('userChip').hidden=!me; if(me)$('userName').textContent='👤 '+prof().name;
+  window.scrollTo(0,0);
+}
+function goMenu(){renderMenu();show('s-menu');}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&b.dataset.go==='menu')goMenu();});
+$('brand').onclick=()=>{me?goMenu():show('s-login');};
+$('btnHome').onclick=goMenu;
+$('btnLogout').onclick=()=>{me=null;try{sessionStorage.removeItem('pte_me');}catch(e){}renderLogin();show('s-login');};
+
+function modal({title,text,input,ok='OK',cancel=true}){
+  return new Promise(res=>{
+    const m=$('modal'),inp=$('mInput');
+    $('mTitle').textContent=title;$('mText').textContent=text||'';
+    inp.hidden=!input;inp.value='';if(input)inp.type=input;
+    $('mCancel').hidden=!cancel;$('mOk').textContent=ok;m.hidden=false;
+    if(input)setTimeout(()=>inp.focus(),30);
+    const done=v=>{m.hidden=true;$('mOk').onclick=$('mCancel').onclick=inp.onkeydown=null;res(v);};
+    $('mOk').onclick=()=>done(input?inp.value:true);
+    $('mCancel').onclick=()=>done(null);
+    inp.onkeydown=e=>{if(e.key==='Enter')done(inp.value);if(e.key==='Escape')done(null);};
+  });
+}
+async function countdown(){
+  const my=runId,c=$('countdown');c.hidden=false;
+  for(const t of ['3','2','1','Go!']){
+    const n=$('cdNum');n.textContent=t;n.style.animation='none';void n.offsetWidth;n.style.animation='';
+    await sleep(t==='Go!'?450:650);
+    if(my!==runId){c.hidden=true;return false;}
+  }
+  c.hidden=true;return true;
+}
+
+/* ---------- PERIODIC TABLE RENDERER ---------- */
+function buildTable(container,opt){
+  container.replaceChildren();container.classList.add('table-wrap');
+  const grid=h('div',{class:'ptable'+(opt.colors?'':' mono')});
+  const map={};
+  for(let g=1;g<=18;g++)grid.append(h('div',{class:'gl',style:`grid-row:1;grid-column:${g+1}`},g));
+  for(let p=1;p<=7;p++)grid.append(h('div',{class:'pl',style:`grid-row:${p+1};grid-column:1`},p));
+  EL.forEach(e=>{
+    let r,c;
+    if(e.cat==='lanthanide'){r=10;c=e.n-57+4;}
+    else if(e.cat==='actinide'){r=11;c=e.n-89+4;}
+    else{r=e.period+1;c=e.group+1;}
+    const b=h('button',{class:'el cat-'+e.cat,'data-n':e.n,style:`grid-row:${r};grid-column:${c}`,'aria-label':opt.names?e.name:e.sym},
+      h('span',{class:'n'},e.n),h('span',{class:'s'},e.sym),opt.names?h('span',{class:'nm'},e.name):null);
+    map[e.n]=b;grid.append(b);
+  });
+  grid.append(h('div',{class:'ph',style:'grid-row:7;grid-column:4'},'57–71'));
+  grid.append(h('div',{class:'ph',style:'grid-row:8;grid-column:4'},'89–103'));
+  grid.addEventListener('click',ev=>{const b=ev.target.closest('.el');if(b)opt.onPick(+b.dataset.n);});
+  container.append(grid);
+  return {map,grid};
+}
+function legend(box,show){
+  box.replaceChildren();if(!show)return;
+  const l=h('div',{class:'legend'});
+  Object.keys(CATS).forEach(k=>l.append(h('span',null,h('i',{style:'background:'+CATS[k][1]}),CATS[k][0])));
+  box.append(l);
+}
+function clearCells(map){Object.values(map).forEach(b=>b.classList.remove('ok','bad','out','hit','sel'));}
+
+/* ---------- LOGIN ---------- */
+let loginMode='returning',loginBusy=false;
+function setMode(m){
+  loginMode=m;$('modeRet').classList.toggle('on',m==='returning');$('modeNew').classList.toggle('on',m==='new');
+  $('classField').hidden=(m!=='new');$('btnLogin').textContent=m==='new'?'Create my account':'Log in';$('loginMsg').textContent='';
+}
+$('modeRet').onclick=()=>setMode('returning');$('modeNew').onclick=()=>setMode('new');
+function renderLogin(){
+  setMode('returning');$('uName').value='';$('uPin').value='';$('uClass').value='';
+  const names=Object.keys(profiles).sort();
+  $('nameList').hidden=!(SHOW_NAME_LIST&&names.length);
+  $('nameChips').replaceChildren(...names.map(k=>h('button',{class:'chip',onclick:()=>{setMode('returning');$('uName').value=profiles[k].name;$('uPin').value='';$('uPin').focus();}},profiles[k].name)));
+}
+function loginMsg(t,good){$('loginMsg').textContent=t;$('loginMsg').className='msg '+(good?'good':'bad');}
+function startSession(key,offline){
+  me=key;try{sessionStorage.setItem('pte_me',me);}catch(e){}
+  syncState=offline?'offline':'cloud';
+  goMenu();setSyncBadge();
+  if(!offline)flushQueue();
+}
+async function doLogin(){
+  if(loginBusy)return;
+  const raw=$('uName').value.trim().replace(/\s+/g,' '),pin=$('uPin').value.trim(),key=raw.toLowerCase();
+  const cls=$('uClass').value.trim().toUpperCase().slice(0,12);
+  if(!/^[A-Za-z0-9 _.\-]{2,16}$/.test(raw))return loginMsg('Pick a nickname with 2–16 letters or numbers.');
+  if(!/^\d{4}$/.test(pin))return loginMsg('Your PIN is exactly 4 numbers.');
+  const ph=hash(key+':'+pin);
+  loginBusy=true;$('btnLogin').disabled=true;loginMsg('Connecting…',true);
+  try{
+    let res=null;
+    try{
+      res=loginMode==='new'?await rpc('tt_register',{p_nick:raw,p_pin:pin,p_class:cls}):await rpc('tt_login',{p_nick:raw,p_pin:pin});
+    }catch(e){res=null;}
+    if(res===null){
+      const L=profiles[key];
+      if(loginMode==='returning'&&L&&L.pin===ph){startSession(key,true);return;}
+      return loginMsg("Can't reach the score server. Check the Wi-Fi and try again.");
+    }
+    if(!res.ok){
+      const e=res.error;
+      if(e==='taken')return loginMsg('That nickname is already taken. Try adding a number!');
+      if(e==='badname')return loginMsg('Pick a nickname with 2–16 letters or numbers.');
+      if(e==='notfound')return loginMsg("I can't find that nickname. Are you new? Tap “I'm new here”.");
+      if(e==='locked')return loginMsg('Too many wrong tries. Wait 5 minutes, or ask your teacher to reset your PIN.');
+      if(e==='badpin')return loginMsg(res.tries_left!=null?`Wrong PIN. ${res.tries_left} ${res.tries_left===1?'try':'tries'} left.`:'Your PIN is exactly 4 numbers.');
+      return loginMsg('Something went wrong. Try again.');
+    }
+    let P=profiles[key];
+    if(!P)P=profiles[key]=newProfile(res.name,res.class_code,ph);
+    else{P.name=res.name;P.pin=ph;if(res.class_code)P.cls=res.class_code;}
+    fixProfile(P);P.cloud={id:res.student_id,token:res.token};
+    mergeCloud(P,res.stats);saveAll();
+    startSession(key,false);
+  }finally{loginBusy=false;$('btnLogin').disabled=false;}
+}
+$('btnLogin').onclick=doLogin;
+['uName','uPin','uClass'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
+
+/* ---------- MENU ---------- */
+function renderMenu(){
+  const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;
+  const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
+  const ab=Object.values(P.atom).map(r=>r.best).filter(x=>x>0);
+  const mc=(cls,ic,title,desc,best,fn)=>h('button',{class:'mcard '+cls,onclick:fn},h('div',{class:'ic'},ic),h('b',null,title),h('span',null,desc),best?h('div',{class:'best'},best):null);
+  $('menuGrid').replaceChildren(
+    mc('m1','⚡','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
+    mc('m2','🕵️','Element Trivia','Guess the mystery element from 4 hints. Fewer hints = more points!',P.trivia.plays?`High score: ${P.trivia.best}/${ROUND_LEN*4}`:'',startTrivia),
+    mc('m3','🧪','Compound Lab','Build real compounds like H₂O by combining atoms from the table.',P.lab.plays?`High score: ${P.lab.best}/${ROUND_LEN*3}`:'',startLab),
+    mc('m6','⚛️','Atom Builder','Add protons, neutrons and electrons to build atoms, ions and isotopes.',ab.length?`High score: ${Math.max(...ab)}/${ROUND_LEN*3}`:'',()=>{renderAtomSetup();show('s-atom-setup');}),
+    mc('m7','⚖️','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
+    mc('m8','🎮','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
+    mc('m4','🔭','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
+    mc('m5','📊','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');})
+  );
+}
+
+
+/* ---------- END SCREEN ---------- */
+function showEnd({emoji,title,big,sub,body,again,party}){
+  $('endEmoji').textContent=emoji;$('endTitle').textContent=title;$('endBig').textContent=big;$('endSub').textContent=sub||'';
+  $('endBody').replaceChildren(...(body||[]));$('endAgain').onclick=again;show('s-end');
+  if(party)setTimeout(()=>{fx.confetti(100);fx.pop({icon:'🏆',text:party,kind:'great',size:'big'});},250);
+}
+
+/* ================= GAME 1: SPEED FIND ================= */
+const LEVELS={
+  1:{name:'Warm-Up',desc:'First 20 elements · names shown on the table',pool:()=>EL.filter(e=>e.n<=20),names:true,colors:true},
+  2:{name:'Explorer',desc:'39 common elements · symbols only',pool:()=>POOL_EL,names:false,colors:true},
+  3:{name:'Expert',desc:'All 118 elements · symbols only · no colors',pool:()=>EL,names:false,colors:false}
+};
+const STYLES=[
+  ['','Names','You see an element name. Click it on the table.'],
+  ['n','Atomic numbers','You see an atomic number. Click the element with that number.'],
+  ['g','Group & period','You see a group and period. Click the element where they cross.'],
+  ['f','Families','You see a family and a period, like “the noble gas in Period 3”.'],
+  ['m','Mixed','Every kind of question, randomly mixed together.']
+];
+const styleName=k=>STYLES.find(s=>s[0]===k)[1];
+const famKey=e=>e.cat+'|'+e.period;
+const famCount={};EL.forEach(e=>{if(e.group)famCount[famKey(e)]=(famCount[famKey(e)]||0)+1;});
+const famOK=e=>!!e.group&&famCount[famKey(e)]===1;
+const spEligible=(e,style)=>style==='g'?!!e.group:style==='f'?famOK(e):true;
+function spPromptFor(e,st){
+  const fam=CATS[e.cat][0].toLowerCase();
+  if(st==='n')return {label:'Find the element with atomic number',text:String(e.n)};
+  if(st==='g')return {label:'Find the element in',text:`Group ${e.group} · Period ${e.period}`};
+  if(st==='f')return {label:'Find',text:`the ${fam} in Period ${e.period}`};
+  return {label:'Find this element:',text:e.name};
+}
+let spStyle='';
+function renderSpeedSetup(){
+  const P=prof();
+  $('styleChips').replaceChildren(...STYLES.map(([k,name])=>h('button',{class:'stylechip'+(k===spStyle?' on':''),onclick:()=>{spStyle=k;renderSpeedSetup();}},name)));
+  $('styleDesc').textContent=STYLES.find(s=>s[0]===spStyle)[2];
+  $('levelBtns').replaceChildren(...[1,2,3].map(l=>{
+    const r=P.speed[l+spStyle],b=r&&r.best;
+    return h('button',{class:'lvl',onclick:()=>startSpeed(l,spStyle)},h('b',null,`Level ${l}: ${LEVELS[l].name}`),h('small',null,LEVELS[l].desc),
+      h('span',{class:'bestline'},b!=null?'🏅 Best average: '+fmtT(b):'No score yet'));
+  }));
+}
+let S=null,spCells={};
+async function startSpeed(level,style){
+  style=style||'';const L=LEVELS[level];
+  const picks=sample(L.pool().filter(e=>spEligible(e,style)),ROUND_LEN);
+  const queue=picks.map(e=>{
+    let st=style;
+    if(style==='m'){const c=['','n'];if(e.group)c.push('g');if(famOK(e))c.push('f');st=c[Math.floor(Math.random()*c.length)];}
+    return {e,st};
+  });
+  S={level,style,key:level+style,queue,i:0,times:[],mistakes:0,wrongQ:0,locked:true,t0:0,target:null,streak:0};
+  show('s-speed');const my=runId;
+  $('spLevel').textContent=L.name+(style?' · '+styleName(style):'');
+  $('spProg').textContent=`0/${queue.length}`;$('spLabel').textContent='Get ready…';$('spPrompt').textContent='';
+  $('spTimer').textContent='0.0s';$('spMiss').textContent='0';$('spLast').textContent='';
+  const t=buildTable($('spTable'),{names:L.names,colors:L.colors,onPick:spPick});spCells=t.map;
+  legend($('spLegend'),L.colors);
+  spTimer=setInterval(()=>{if(S&&!S.locked)$('spTimer').textContent=((performance.now()-S.t0)/1000).toFixed(1)+'s';},50);
+  if(!(await countdown())||my!==runId)return;
+  spNext();
+}
+function spNext(){
+  if(S.i>=S.queue.length)return spFinish();
+  const item=S.queue[S.i],p=spPromptFor(item.e,item.st);
+  S.target=item.e;S.wrongQ=0;
+  $('spLabel').textContent=p.label;$('spPrompt').textContent=p.text;$('spPrompt').classList.toggle('long',p.text.length>14);
+  $('spProg').textContent=`${S.i+1}/${S.queue.length}`;
+  S.locked=false;S.t0=performance.now();
+}
+function spPick(n){
+  if(!S||S.locked)return;
+  const cell=spCells[n];
+  if(n===S.target.n){
+    const my=runId,dt=performance.now()-S.t0;S.locked=true;S.times.push(dt);S.i++;
+    cell.classList.add('ok');$('spTimer').textContent=(dt/1000).toFixed(1)+'s';
+    $('spLast').textContent=`✔ ${S.target.name}: ${fmtT(dt)}`;
+    S.streak++;const sec=dt/1000,pr=sec<1.5?['⚡','Lightning!','great']:sec<3?['🔥','Nice!','good']:['✔','Got it!','good'];
+    fx.pop({icon:pr[0],text:pr[1],kind:pr[2],at:cell});
+    if([3,5,7,10].includes(S.streak)){fx.pop({icon:'🔥',text:S.streak+' in a row!',kind:'great',size:'big'});fx.confetti(S.streak>=7?70:35);}
+    setTimeout(()=>{if(my!==runId)return;cell.classList.remove('ok');spNext();},450);
+  }else{
+    S.mistakes++;S.streak=0;$('spMiss').textContent=S.mistakes;fx.pop({icon:'❌',text:'Oops!',kind:'oops',at:cell});
+    if(S.wrongQ++===0)bumpMissed(S.target.sym);
+    cell.classList.add('bad');setTimeout(()=>cell.classList.remove('bad'),350);
+  }
+}
+$('spQuit').onclick=goMenu;
+function spFinish(){
+  S.locked=true;clearInterval(spTimer);
+  const avg=mean(S.times),P=prof(),rec=spRec(P,S.key),prev=rec.best;
+  rec.plays++;const isBest=prev==null||avg<prev;if(isBest)rec.best=avg;saveAll();
+  cloudSubmit('speed',S.key,avg,{mistakes:S.mistakes,n:S.queue.length,style:S.style||'name'});
+  const paired=S.queue.map((it,i)=>({e:it.e,t:S.times[i]}));
+  const slow=paired.slice().sort((a,b)=>b.t-a.t).slice(0,3).map(x=>x.e.sym);
+  const lvl=S.level,style=S.style,perfect=S.mistakes===0;
+  const body=[
+    isBest?h('div',{class:'newbest'},prev==null?'🎉 First score saved!':'🎉 NEW PERSONAL BEST!'):null,
+    h('p',null,`Best average here: `,h('b',null,fmtT(rec.best)),` · Misses this round: `,h('b',null,S.mistakes)),
+    h('div',{class:'tchips'},paired.map(x=>h('span',{class:'tchip'+(slow.includes(x.e.sym)?' slow':'')},`${x.e.name} ${(x.t/1000).toFixed(1)}s`))),
+    h('p',{class:'sub'},'Red chips were your slowest — practice those in Explore mode!')
+  ];
+  showEnd({emoji:avg<2.5?'🚀':avg<4?'⭐':'💪',title:`Level ${lvl}: ${LEVELS[lvl].name}${style?' · '+styleName(style):''}`,big:fmtT(avg),
+    sub:'Your average time per element (lower is better)',body,again:()=>startSpeed(lvl,style),
+    party:isBest?'New best!':(perfect?'Perfect round!':null)});
+}
+
+
+/* ================= GAME 2: ELEMENT TRIVIA ================= */
+function hintsFor(e){
+  const typ=METALS.includes(e.cat)?'a metal':e.cat==='metalloid'?'a metalloid':'a nonmetal';
+  const fam=CATS[e.cat][0].toLowerCase();
+  return [
+    `At room temperature I'm a ${e.state}, and I'm ${typ}.`,
+    FACTS[e.sym],
+    `I live in Period ${e.period} and I'm classified as ${an(fam)} ${fam}. My atomic mass is about ${Math.round(e.mass)}.`,
+    `I'm in Group ${e.group}. My atomic number is ${e.n} (that's my number of protons) and my symbol is ${e.sym}.`
+  ];
+}
+const HINT_LABELS=['Property of matter','Clue','Period & size','Big giveaway'];
+let T=null,trCells={},trGrid=null;
+function startTrivia(){
+  stopAll();T={queue:sample(POOL_EL,ROUND_LEN),i:0,score:0,results:[],done:false};
+  show('s-trivia');
+  const t=buildTable($('trTable'),{names:false,colors:false,onPick:trClick});trCells=t.map;trGrid=t.grid;
+  $('trColor').checked=false;legend($('trLegend'),false);
+  trQuestion();
+}
+$('trColor').onchange=()=>{const on=$('trColor').checked;trGrid.classList.toggle('mono',!on);legend($('trLegend'),on);};
+function trQuestion(){
+  T.target=T.queue[T.i];T.hints=hintsFor(T.target);T.shown=1;T.ruled=new Set();T.done=false;T.lastTries=0;
+  clearCells(trCells);
+  $('trQ').textContent=T.i+1;$('trScore').textContent=T.score;
+  $('trMsg').textContent='';$('trMsg').className='msg';$('trNext').hidden=true;
+  $('trGuess').disabled=false;$('trGo').disabled=false;$('trGuess').value='';
+  renderHints(false);
+  if(!matchMedia('(pointer:coarse)').matches)$('trGuess').focus();
+}
+function renderHints(animate){
+  $('trHints').replaceChildren(...T.hints.map((txt,i)=>{
+    const open=i<T.shown||T.done;
+    return h('li',{class:'hint '+(open?'shown':'locked'),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
+      h('b',null,`Hint ${i+1} · ${HINT_LABELS[i]}`),open?txt:'🔒 Locked');
+  }));
+  $('trWorth').textContent=T.done?0:5-T.shown;
+  $('trHintBtn').disabled=T.done||T.shown>=4;
+}
+function trReveal(){if(T.done||T.shown>=4)return;T.shown++;renderHints(true);}
+$('trHintBtn').onclick=trReveal;
+function lookup(str){
+  const s=str.trim().toLowerCase();if(!s)return null;
+  if(ALIAS[s])return BYSYM[ALIAS[s]].n;
+  const e=EL.find(x=>x.name.toLowerCase()===s||x.sym.toLowerCase()===s);return e?e.n:null;
+}
+function trClick(n){trGuess(n);}
+function trTyped(){
+  if(T.done)return;const v=$('trGuess').value;if(!v.trim())return;
+  const n=lookup(v);
+  if(!n){$('trMsg').className='msg bad';$('trMsg').textContent=`I don't know an element called “${v.trim()}”. Check your spelling!`;return;}
+  $('trGuess').value='';trGuess(n);
+}
+$('trGo').onclick=trTyped;
+$('trGuess').addEventListener('keydown',e=>{if(e.key==='Enter')trTyped();});
+function trGuess(n){
+  if(!T||T.done||T.ruled.has(n))return;
+  const g=EL[n-1],msg=$('trMsg');
+  if(n===T.target.n)return trFinishQ(true);
+  T.ruled.add(n);const c=trCells[n];c.classList.add('out','bad');setTimeout(()=>c.classList.remove('bad'),350);
+  msg.className='msg bad';fx.pop({icon:'🤔',text:'Not quite!',kind:'try',at:c});
+  if(T.shown<4){T.shown++;msg.textContent=`Not ${g.name}. Here's another hint!`;renderHints(true);}
+  else{T.lastTries++;if(T.lastTries>=2)return trFinishQ(false);msg.textContent=`Not ${g.name}. One more try!`;}
+}
+function trFinishQ(ok){
+  T.done=true;const e=T.target,pts=ok?5-T.shown:0;T.score+=pts;
+  T.results.push({e,pts,hints:T.shown,ok});
+  if(!ok)bumpMissed(e.sym);
+  trCells[e.n].classList.remove('out');trCells[e.n].classList.add('hit');
+  $('trScore').textContent=T.score;renderHints(false);
+  const m=$('trMsg');m.className='msg '+(ok?'good':'bad');
+  m.textContent=ok?`🎉 Yes! It's ${e.name} (${e.sym}). +${pts} point${pts===1?'':'s'}!`:`The answer was ${e.name} (${e.sym}). Study its spot on the table!`;
+  if(ok){const k=T.shown,P=[null,['🧠','Genius! +4','great'],['🌟','Awesome! +3','great'],['👍','Nice! +2','good'],['😅','Phew! +1','good']][k];
+    fx.pop({icon:P[0],text:P[1],kind:P[2],size:'big'});if(k<=3)fx.confetti(k===1?80:45);}
+  else fx.pop({icon:'📚',text:'Study its spot!',kind:'try',size:'big'});
+  $('trGuess').disabled=true;$('trGo').disabled=true;
+  $('trNext').textContent=T.i+1>=T.queue.length?'See my results ▶':'Next ▶';$('trNext').hidden=false;$('trNext').focus({preventScroll:true});
+}
+$('trNext').onclick=()=>{T.i++;if(T.i>=T.queue.length)return trEnd();trQuestion();};
+$('trQuit').onclick=goMenu;
+function trEnd(){
+  const P=prof(),rec=P.trivia,prev=rec.best;rec.plays++;const isBest=T.score>prev;if(isBest)rec.best=T.score;saveAll();cloudSubmit('trivia','',T.score,{n:T.queue.length});
+  const right=T.results.filter(r=>r.ok).length,max=T.queue.length*4;
+  const title=T.score>=max*.85?'Element Master! 🧑‍🔬':T.score>=max*.6?'Lab Pro!':T.score>=max*.35?'Rising Scientist':'Keep Exploring!';
+  showEnd({emoji:T.score>=max*.6?'🏆':'🔬',title,big:`${T.score}/${max}`,sub:`${right} of ${T.queue.length} solved`,
+    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,
+      h('p',null,'High score: ',h('b',null,rec.best)),
+      h('div',{class:'tchips'},T.results.map(r=>h('span',{class:'tchip'+(r.ok?'':' slow')},`${r.e.name}: ${r.pts}`)))],
+    again:startTrivia,party:isBest?'New high score!':(T.score>=max*.6?'Great job!':null)});
+}
+
+/* ================= GAME 3: COMPOUND LAB ================= */
+let LB=null,lbCells={};
+function startLab(){
+  stopAll();const by=t=>COMPOUNDS.filter(c=>c.t===t);
+  LB={queue:[...sample(by(1),4),...sample(by(2),4),...sample(by(3),2)],i:0,score:0,results:[]};
+  show('s-lab');
+  const t=buildTable($('lbTable'),{names:true,colors:true,onPick:lbAdd});lbCells=t.map;legend($('lbLegend'),true);
+  lbRound();
+}
+function lbTotal(c){return Object.values(c).reduce((a,b)=>a+b,0);}
+function lbRound(){
+  const c=LB.queue[LB.i];Object.assign(LB,{c,counts:{},hints:0,wrong:0,done:false});
+  $('lbQ').textContent=LB.i+1;$('lbScore').textContent=LB.score;
+  $('lbName').textContent=c.name;$('lbClue').textContent=c.clue;
+  $('lbHintBox').hidden=true;$('lbMsg').textContent='';$('lbMsg').className='msg';$('lbNext').hidden=true;
+  $('lbCombine').disabled=false;$('lbHint').disabled=false;$('lbClear').disabled=false;
+  lbRender();
+}
+function lbRender(){
+  const c=LB.counts;
+  $('lbBeaker').replaceChildren(molSVG(c,false));
+  $('lbFormula').textContent=fmtFormula(c)||'—';
+  $('lbTray').replaceChildren(...Object.keys(c).filter(k=>c[k]>0).map(k=>
+    h('div',{class:'atomchip'},`${k} × ${c[k]}`,
+      h('button',{'aria-label':'remove one '+k,onclick:()=>lbChange(k,-1)},'−'),
+      h('button',{'aria-label':'add one '+k,onclick:()=>lbChange(k,1)},'+'))));
+  $('lbWorth').textContent=LB.done?0:Math.max(1,3-LB.hints-LB.wrong);
+}
+function lbChange(sym,d){
+  if(LB.done)return;
+  if(d>0&&lbTotal(LB.counts)>=20){$('lbMsg').className='msg bad';$('lbMsg').textContent='That is a lot of atoms! Try fewer.';return;}
+  LB.counts[sym]=Math.max(0,(LB.counts[sym]||0)+d);
+  if(!LB.counts[sym])delete LB.counts[sym];
+  $('lbMsg').textContent='';lbRender();
+}
+function lbAdd(n){lbChange(EL[n-1].sym,1);}
+$('lbClear').onclick=()=>{if(LB.done)return;LB.counts={};$('lbMsg').textContent='';lbRender();};
+$('lbHint').onclick=()=>{
+  if(LB.done||LB.hints>=2)return;LB.hints++;const f=LB.c.f,box=$('lbHintBox');box.hidden=false;
+  box.textContent=LB.hints===1?'You need: '+Object.keys(f).map(s=>BYSYM[s].name).join(', ')+'.':'The formula is '+fmtFormula(f)+'. The small number tells how many atoms of that element!';
+  if(LB.hints>=2)$('lbHint').disabled=true;lbRender();
+};
+$('lbCombine').onclick=()=>{
+  if(LB.done)return;const t=LB.c.f,a=LB.counts,msg=$('lbMsg');
+  if(!lbTotal(a)){msg.className='msg bad';msg.textContent='Click elements on the table to add atoms first.';return;}
+  const tk=Object.keys(t),ak=Object.keys(a);
+  const missing=tk.some(k=>!a[k]),extra=ak.some(k=>!t[k]),same=!missing&&!extra&&tk.every(k=>a[k]===t[k]);
+  if(same)return lbSuccess();
+  LB.wrong++;msg.className='msg bad';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});
+  msg.textContent=missing?"Not yet — you're missing a type of element.":extra?"Not yet — one of your elements doesn't belong.":"Right elements! Now check how many atoms of each.";
+  if(LB.wrong>=3&&LB.hints<2){LB.hints=2;$('lbHint').disabled=true;const b=$('lbHintBox');b.hidden=false;b.textContent='The formula is '+fmtFormula(t)+'.';msg.textContent+=' (Formula revealed.)';}
+  lbRender();
+};
+function lbSuccess(){
+  LB.done=true;const pts=Math.max(1,3-LB.hints-LB.wrong);LB.score+=pts;LB.results.push({c:LB.c,pts});
+  $('lbScore').textContent=LB.score;const svg=molSVG(LB.counts,true);svg.classList.add('pop');$('lbBeaker').replaceChildren(svg);
+  $('lbFormula').textContent=fmtFormula(LB.c.f);
+  const m=$('lbMsg');m.className='msg good';m.textContent=`🎉 ${LB.c.name} = ${fmtFormula(LB.c.f)}  +${pts} pt${pts===1?'':'s'}!`;
+  fx.pop({icon:'🧪',text:'Success! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  $('lbCombine').disabled=true;$('lbHint').disabled=true;$('lbClear').disabled=true;
+  $('lbNext').textContent=LB.i+1>=LB.queue.length?'See my results ▶':'Next ▶';$('lbNext').hidden=false;$('lbNext').focus({preventScroll:true});
+  $('lbWorth').textContent=0;
+}
+$('lbNext').onclick=()=>{LB.i++;if(LB.i>=LB.queue.length)return lbEnd();lbRound();};
+$('lbQuit').onclick=goMenu;
+function lbEnd(){
+  const P=prof(),rec=P.lab,prev=rec.best;rec.plays++;const isBest=LB.score>prev;if(isBest)rec.best=LB.score;saveAll();cloudSubmit('lab','',LB.score,{n:LB.queue.length});
+  const max=LB.queue.length*3;
+  showEnd({emoji:'🧪',title:LB.score>=max*.8?'Master Chemist!':LB.score>=max*.5?'Great Lab Work!':'Keep Experimenting!',big:`${LB.score}/${max}`,sub:'Compound Lab score',
+    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
+      h('div',{class:'tchips'},LB.results.map(r=>h('span',{class:'tchip'},`${r.c.name} ${fmtFormula(r.c.f)}`)))],
+    again:startLab,party:isBest?'New high score!':(LB.score>=max*.7?'Great lab work!':null)});
+}
+function molSVG(counts){
+  const ns='http://www.w3.org/2000/svg',W=300,H=230,cx=150,cy=115;
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const mk=(t,at)=>{const e=document.createElementNS(ns,t);for(const k in at)e.setAttribute(k,at[k]);return e;};
+  const keys=Object.keys(counts).filter(k=>counts[k]>0),atoms=[];
+  keys.forEach(k=>{for(let i=0;i<counts[k];i++)atoms.push(k);});
+  if(!atoms.length){const t=mk('text',{x:cx,y:cy,'text-anchor':'middle','font-size':16,fill:'#7a8aa6','font-family':'system-ui'});t.textContent='Click elements to add atoms';svg.append(t);return svg;}
+  let centre=null;if(atoms.length>2)centre=keys.find(k=>counts[k]===1&&k!=='H')||null;
+  const others=atoms.slice();if(centre)others.splice(others.indexOf(centre),1);
+  const n=others.length,pts=[];
+  const R=centre?(n<=4?58:n<=8?72:84):(n<=2?32:n<=5?54:72);
+  for(let i=0;i<n;i++){
+    let ang;
+    if(centre&&n===2)ang=(centre==='C'?[180,0]:[145,35])[i]*Math.PI/180;
+    else if(!centre&&n===2)ang=(i?0:180)*Math.PI/180;
+    else ang=(-90+i*360/n)*Math.PI/180;
+    pts.push({s:others[i],x:cx+R*Math.cos(ang),y:cy+R*Math.sin(ang)});
+  }
+  const line=(a,b)=>svg.append(mk('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:'#8896ab','stroke-width':5,'stroke-linecap':'round'}));
+  if(centre)pts.forEach(p=>line({x:cx,y:cy},p));
+  else if(n>=2)for(let i=0;i<n-(n===2?1:0);i++)line(pts[i],pts[(i+1)%n]);
+  const atom=(s,x,y)=>{
+    const col=ATOMC[s]||['#c9d3e6','#222'],r=s==='H'?15:['C','N','O'].includes(s)?20:23;
+    svg.append(mk('circle',{cx:x,cy:y,r,fill:col[0],stroke:'#4b5a75','stroke-width':2}));
+    const t=mk('text',{x,y:y+5,'text-anchor':'middle','font-size':r>16?20:16,'font-weight':800,fill:col[1],'font-family':'system-ui'});t.setAttribute('y',y+(r>16?7:6));t.textContent=s;svg.append(t);
+  };
+  if(centre)atom(centre,cx,cy);pts.forEach(p=>atom(p.s,p.x,p.y));
+  return svg;
+}
+
+/* ================= GAME 4: ATOM BUILDER ================= */
+const ION_SET=[['Li',1],['Na',1],['K',1],['Be',2],['Mg',2],['Ca',2],['Al',3],['F',-1],['Cl',-1],['O',-2],['S',-2],['N',-3]];
+const ISO_SET=[['H',2],['H',3],['He',3],['Li',6],['C',13],['C',14],['N',15],['O',17],['O',18],['Cl',37],['Mg',26],['Ne',22]];
+const SUP='⁰¹²³⁴⁵⁶⁷⁸⁹';
+const supNum=n=>String(n).split('').map(d=>SUP[+d]).join('');
+const ionLabel=(sym,ch)=>sym+(Math.abs(ch)>1?supNum(Math.abs(ch)):'')+(ch>0?'⁺':'⁻');
+const chargeText=c=>c===0?'neutral (0)':(c>0?'+'+c:String(c));
+function makeAtomQ(kind,sym,extra){
+  const e=BYSYM[sym],mass=Math.round(e.mass);
+  if(kind==='ion')return {kind,sym,Z:e.n,N:mass-e.n,E:e.n-extra,text:`${ionLabel(sym,extra)} ion`,sub:`${e.name} with a charge of ${extra>0?'+'+extra:extra}.`};
+  if(kind==='isotope')return {kind,sym,Z:e.n,N:extra-e.n,E:e.n,text:`${e.name}-${extra}`,sub:`A neutral atom with mass number ${extra}.`};
+  return {kind:'neutral',sym,Z:e.n,N:mass-e.n,E:e.n,text:`${e.name} atom`,sub:'A neutral atom: no overall charge.'};
+}
+function atomQueue(level){
+  if(level==='1')return sample(EL.filter(e=>e.n<=10),ROUND_LEN).map(e=>makeAtomQ('neutral',e.sym));
+  if(level==='2')return sample(EL.filter(e=>e.n<=20),ROUND_LEN).map(e=>makeAtomQ('neutral',e.sym));
+  return shuffle([...sample(ION_SET,5).map(([s,c])=>makeAtomQ('ion',s,c)),...sample(ISO_SET,5).map(([s,m])=>makeAtomQ('isotope',s,m))]);
+}
+const ATLEVELS={'1':['Level 1: Neutral atoms','The first 10 elements'],'2':['Level 2: Bigger atoms','Elements 1–20'],'3':['Level 3: Ions & isotopes','Charged atoms and different masses']};
+function renderAtomSetup(){
+  const P=prof();
+  $('atLevels').replaceChildren(...Object.keys(ATLEVELS).map(l=>{
+    const r=P.atom[l];
+    return h('button',{class:'lvl',onclick:()=>startAtom(l)},h('b',null,ATLEVELS[l][0]),h('small',null,ATLEVELS[l][1]),
+      h('span',{class:'bestline'},r&&r.plays?`🏅 High score: ${r.best}/${ROUND_LEN*3}`:'No score yet'));
+  }));
+}
+function atomSVG(p,n,e){
+  const ns='http://www.w3.org/2000/svg',C=160;
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 320 320');
+  const mk=(t,a)=>{const x=document.createElementNS(ns,t);for(const k in a)x.setAttribute(k,a[k]);return x;};
+  const caps=[2,8,8,18],radii=[64,92,120,148];let left=e;const shells=[];
+  for(let i=0;i<4&&left>0;i++){const c=Math.min(caps[i],left);shells.push(c);left-=c;}
+  shells.forEach((c,i)=>svg.append(mk('circle',{cx:C,cy:C,r:radii[i],fill:'none',stroke:'#b9cfff','stroke-width':2,'stroke-dasharray':'4 5'})));
+  shells.forEach((c,i)=>{for(let k=0;k<c;k++){const a=(-90+k*360/c+i*20)*Math.PI/180;
+    svg.append(mk('circle',{cx:C+radii[i]*Math.cos(a),cy:C+radii[i]*Math.sin(a),r:7,fill:'#2f6bff',stroke:'#fff','stroke-width':1.5}));}});
+  const order=[];let pp=p,nn=n;
+  while(pp>0||nn>0){if(pp>0){order.push('p');pp--;}if(nn>0){order.push('n');nn--;}}
+  order.forEach((t,i)=>{const a=i*2.39996,r=Math.sqrt(i+.5)*6.6;
+    svg.append(mk('circle',{cx:C+r*Math.cos(a),cy:C+r*Math.sin(a),r:6,fill:t==='p'?'#e5484d':'#9aa5b8',stroke:'#fff','stroke-width':1}));});
+  if(!order.length){const t=mk('text',{x:C,y:C+5,'text-anchor':'middle','font-size':15,fill:'#7a8aa6','font-family':'system-ui'});t.textContent='Add some particles!';svg.append(t);}
+  return svg;
+}
+const AT_CAP={p:20,n:24,e:24};
+let AT=null;
+function startAtom(level){
+  AT={level,queue:atomQueue(level),i:0,score:0};
+  show('s-atom');atRound();
+}
+function atRound(){
+  const q=AT.queue[AT.i];Object.assign(AT,{q,p:0,n:0,e:0,hints:0,wrong:0,done:false});
+  const el=BYSYM[q.sym];
+  $('atQ').textContent=AT.i+1;$('atScore').textContent=AT.score;
+  $('atPrompt').textContent=q.text;$('atSub').textContent=q.sub;
+  $('atTile').replaceChildren(h('div',{class:'etile',style:`background:${CATS[el.cat][1]}`},
+    h('span',{class:'tn'},el.n),h('span',{class:'ts'},el.sym),h('span',{class:'tnm'},el.name),h('span',{class:'tw'},el.mass.toFixed(3))));
+  $('atHintBox').hidden=true;$('atMsg').textContent='';$('atMsg').className='msg';$('atNext').hidden=true;
+  ['atCheck','atHint','atReset'].forEach(id=>$(id).disabled=false);
+  atRender();
+}
+function atRender(){
+  const {p,n,e}=AT,el=p>0&&p<=118?EL[p-1]:null,ch=p-e;
+  $('atSvg').replaceChildren(atomSVG(p,n,e));
+  ['p','n','e'].forEach(k=>$('atv_'+k).textContent=AT[k]);
+  $('atRead').replaceChildren(h('div',null,h('b',null,`${p}`),' protons · ',h('b',null,`${n}`),' neutrons · ',h('b',null,`${e}`),' electrons'),
+    h('div',null,el?`This is ${el.name}-${p+n}`:'Not an atom yet',` · mass number ${p+n} · charge ${chargeText(ch)}`));
+  $('atWorth').textContent=AT.done?0:Math.max(1,3-AT.hints-AT.wrong);
+}
+function atChange(k,d){
+  if(!AT||AT.done)return;
+  AT[k]=Math.max(0,Math.min(AT_CAP[k],AT[k]+d));$('atMsg').textContent='';atRender();
+}
+$('atCtrs').addEventListener('click',ev=>{const b=ev.target.closest('button[data-k]');if(b)atChange(b.dataset.k,+b.dataset.d);});
+$('atReset').onclick=()=>{if(!AT||AT.done)return;AT.p=AT.n=AT.e=0;atRender();};
+$('atHint').onclick=()=>{
+  if(!AT||AT.done||AT.hints>=2)return;AT.hints++;const q=AT.q,b=$('atHintBox');b.hidden=false;
+  b.textContent=AT.hints===1?'Protons = the atomic number on the tile. Mass number = protons + neutrons. A neutral atom has as many electrons as protons.'
+    :`Answer: ${q.Z} protons, ${q.N} neutrons, ${q.E} electrons.`;
+  if(AT.hints>=2)$('atHint').disabled=true;atRender();
+};
+$('atCheck').onclick=()=>{
+  if(!AT||AT.done)return;const q=AT.q,m=$('atMsg');
+  if(AT.p===q.Z&&AT.n===q.N&&AT.e===q.E)return atSuccess();
+  AT.wrong++;m.className='msg bad';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});
+  m.textContent=AT.p!==q.Z?'Check the protons. What does the atomic number say?'
+    :AT.n!==q.N?'Protons are right! Now the neutrons: mass number − protons.'
+    :'Nice! Now the electrons. Think about the charge.';
+  atRender();
+};
+function atSuccess(){
+  AT.done=true;const pts=Math.max(1,3-AT.hints-AT.wrong);AT.score+=pts;
+  $('atScore').textContent=AT.score;fx.pop({icon:'⚛️',text:'Atom built! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  const m=$('atMsg');m.className='msg good';m.textContent=`🎉 ${AT.q.text} built! +${pts} pt${pts===1?'':'s'}`;
+  ['atCheck','atHint','atReset'].forEach(id=>$(id).disabled=true);
+  $('atNext').textContent=AT.i+1>=AT.queue.length?'See my results ▶':'Next ▶';$('atNext').hidden=false;$('atNext').focus({preventScroll:true});
+  $('atWorth').textContent=0;
+}
+$('atNext').onclick=()=>{AT.i++;if(AT.i>=AT.queue.length)return atEnd();atRound();};
+$('atQuit').onclick=goMenu;
+function atEnd(){
+  const P=prof(),rec=atRec(P,AT.level),prev=rec.best;rec.plays++;const isBest=AT.score>prev;if(isBest)rec.best=AT.score;saveAll();
+  cloudSubmit('atom',AT.level,AT.score,{n:AT.queue.length});
+  const max=AT.queue.length*3;
+  showEnd({emoji:'⚛️',title:AT.score>=max*.8?'Atom Architect!':AT.score>=max*.5?'Great Building!':'Keep Building!',big:`${AT.score}/${max}`,sub:ATLEVELS[AT.level][0],
+    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score here: ',h('b',null,rec.best)),
+      h('div',{class:'tchips'},AT.queue.map(q=>h('span',{class:'tchip'},q.text)))],
+    again:()=>startAtom(AT.level),party:isBest?'New high score!':(AT.score>=max*.7?'Great building!':null)});
+}
+
+/* ================= GAME 5: BALANCE IT ================= */
+function parseF(str){const c={};str.replace(/([A-Z][a-z]?)(\d*)/g,(m,s,n)=>{c[s]=(c[s]||0)+(n?+n:1);return m;});return c;}
+const fmtStr=str=>str.replace(/\d+/g,d=>sub(+d));
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const REACTIONS=[
+ {t:1,clue:'Hydrogen reacts with chlorine gas.',eq:'H2+Cl2>HCl',c:[1,1,2]},
+ {t:1,clue:'Lightning makes nitrogen and oxygen combine.',eq:'N2+O2>NO',c:[1,1,2]},
+ {t:1,clue:'Hydrogen burns in oxygen to make water.',eq:'H2+O2>H2O',c:[2,1,2]},
+ {t:1,clue:'Sodium metal meets chlorine gas.',eq:'Na+Cl2>NaCl',c:[2,1,2]},
+ {t:1,clue:'Magnesium ribbon burns brightly.',eq:'Mg+O2>MgO',c:[2,1,2]},
+ {t:1,clue:'Carbon monoxide burns to make carbon dioxide.',eq:'CO+O2>CO2',c:[2,1,2]},
+ {t:1,clue:'Heating limestone. (Careful, check before you change anything!)',eq:'CaCO3>CaO+CO2',c:[1,1,1]},
+ {t:2,clue:'Hydrogen peroxide breaks down into water and oxygen.',eq:'H2O2>H2O+O2',c:[2,2,1]},
+ {t:2,clue:'Zinc dissolves in hydrochloric acid.',eq:'Zn+HCl>ZnCl2+H2',c:[1,2,1,1]},
+ {t:2,clue:'Making ammonia for fertilizer.',eq:'N2+H2>NH3',c:[1,3,2]},
+ {t:2,clue:'Natural gas burns on a stove.',eq:'CH4+O2>CO2+H2O',c:[1,2,1,2]},
+ {t:2,clue:'Aluminum reacts with chlorine.',eq:'Al+Cl2>AlCl3',c:[2,3,2]},
+ {t:2,clue:'Rotten egg gas burns.',eq:'H2S+O2>SO2+H2O',c:[2,3,2,2]},
+ {t:2,clue:'Heating a chemical to release oxygen.',eq:'KClO3>KCl+O2',c:[2,2,3]},
+ {t:3,clue:'Propane burns in a backyard grill.',eq:'C3H8+O2>CO2+H2O',c:[1,5,3,4]},
+ {t:3,clue:'Iron rusts.',eq:'Fe+O2>Fe2O3',c:[4,3,2]},
+ {t:3,clue:'Ethanol burns.',eq:'C2H6O+O2>CO2+H2O',c:[1,3,2,3]},
+ {t:3,clue:'Ethane burns.',eq:'C2H6+O2>CO2+H2O',c:[2,7,4,6]},
+ {t:3,clue:'Your cells burn sugar for energy (cellular respiration).',eq:'C6H12O6+O2>CO2+H2O',c:[1,6,6,6]},
+ {t:3,clue:'Ammonia burns to make nitric oxide.',eq:'NH3+O2>NO+H2O',c:[4,5,4,6]}
+].map(r=>{const [l,rr]=r.eq.split('>'),L=l.split('+'),R=rr.split('+');return Object.assign(r,{L,R,terms:L.concat(R),nL:L.length});});
+let BL=null;
+function startBalance(){
+  const by=t=>REACTIONS.filter(r=>r.t===t);
+  BL={queue:[...sample(by(1),3),...sample(by(2),4),...sample(by(3),3)],i:0,score:0,results:[]};
+  show('s-balance');bcRound();
+}
+function bcRound(){
+  const rx=BL.queue[BL.i];Object.assign(BL,{rx,coefs:rx.terms.map(()=>1),hints:0,wrong:0,done:false});
+  $('bcQ').textContent=BL.i+1;$('bcScore').textContent=BL.score;$('bcClue').textContent=rx.clue;
+  $('bcHintBox').hidden=true;$('bcMsg').textContent='';$('bcMsg').className='msg';$('bcNext').hidden=true;
+  $('bcCheck').disabled=false;$('bcHint').disabled=false;
+  bcRender();
+}
+function bcCounts(){
+  const L={},R={},rx=BL.rx;
+  rx.terms.forEach((f,k)=>{const c=parseF(f),side=k<rx.nL?L:R;Object.keys(c).forEach(s=>side[s]=(side[s]||0)+c[s]*BL.coefs[k]);});
+  return {L,R,syms:[...new Set(Object.keys(L).concat(Object.keys(R)))]};
+}
+const bcBalanced=()=>{const t=bcCounts();return t.syms.every(s=>(t.L[s]||0)===(t.R[s]||0));};
+function bcRender(){
+  const rx=BL.rx,eq=$('bcEq');eq.replaceChildren();
+  rx.terms.forEach((f,k)=>{
+    if(k>0)eq.append(h('span',{class:'op'},k===rx.nL?'→':'+'));
+    eq.append(h('span',{class:'term'},
+      h('span',{class:'stepper'},h('button',{'aria-label':'less '+f,onclick:()=>bcChange(k,-1)},'−'),h('b',{class:'coef'},BL.coefs[k]),h('button',{'aria-label':'more '+f,onclick:()=>bcChange(k,1)},'+')),
+      h('span',{class:'fs'},fmtStr(f))));
+  });
+  const t=bcCounts(),bal=bcBalanced(),mx=Math.max(1,...t.syms.map(s=>Math.max(t.L[s]||0,t.R[s]||0)));
+  $('bcTally').replaceChildren(
+    h('div',{class:'tally-head '+(bal?'okr':'badr')},bal?'⚖️ Both sides match!':'⚖️ Not balanced yet: the atoms on each side must match'),
+    ...t.syms.map(s=>{const l=t.L[s]||0,r=t.R[s]||0;
+      return h('div',{class:'trow '+(l===r?'okr':'badr')},h('b',{class:'tsym'},s),
+        h('div',{class:'tbars'},h('div',{class:'bar l',style:`width:${l/mx*100}%`},l),h('div',{class:'bar r',style:`width:${r/mx*100}%`},r)),
+        h('span',{class:'tmark'},l===r?'✔':'✘'));}));
+  $('bcWorth').textContent=BL.done?0:Math.max(1,3-BL.hints-BL.wrong);
+}
+function bcChange(k,d){
+  if(BL.done)return;BL.coefs[k]=Math.max(1,Math.min(9,BL.coefs[k]+d));$('bcMsg').textContent='';bcRender();
+}
+$('bcHint').onclick=()=>{
+  if(BL.done||BL.hints>=2)return;BL.hints++;const b=$('bcHintBox');b.hidden=false;
+  b.textContent=BL.hints===1?'Count each kind of atom on both sides. Change the big numbers (coefficients) in front of the formulas, never the small subscripts.'
+    :'Answer: '+BL.rx.terms.map((f,k)=>BL.rx.c[k]+' '+fmtStr(f)).join(' + ').replace(' + '+BL.rx.c[BL.rx.nL]+' ',' → '+BL.rx.c[BL.rx.nL]+' ');
+  if(BL.hints>=2)$('bcHint').disabled=true;bcRender();
+};
+$('bcCheck').onclick=()=>{
+  if(BL.done)return;const m=$('bcMsg');
+  if(!bcBalanced()){BL.wrong++;m.className='msg bad';m.textContent='Not yet. Compare the left and right atom counts below.';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});bcRender();return;}
+  if(BL.coefs.reduce(gcd)>1){m.className='msg bad';m.textContent='Balanced! But can you use smaller numbers? Divide them all by the same number.';fx.pop({icon:'🤏',text:'Smaller numbers!',kind:'try'});return;}
+  BL.done=true;const pts=Math.max(1,3-BL.hints-BL.wrong);BL.score+=pts;BL.results.push(BL.rx);
+  $('bcScore').textContent=BL.score;fx.pop({icon:'⚖️',text:'Balanced! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  m.className='msg good';m.textContent=`🎉 Balanced! Atoms are never lost or made, only rearranged. +${pts} pt${pts===1?'':'s'}`;
+  $('bcCheck').disabled=true;$('bcHint').disabled=true;
+  $('bcNext').textContent=BL.i+1>=BL.queue.length?'See my results ▶':'Next ▶';$('bcNext').hidden=false;$('bcNext').focus({preventScroll:true});
+  $('bcWorth').textContent=0;
+};
+$('bcNext').onclick=()=>{BL.i++;if(BL.i>=BL.queue.length)return bcEnd();bcRound();};
+$('bcQuit').onclick=goMenu;
+function bcEnd(){
+  const P=prof(),rec=P.balance,prev=rec.best;rec.plays++;const isBest=BL.score>prev;if(isBest)rec.best=BL.score;saveAll();
+  cloudSubmit('balance','',BL.score,{n:BL.queue.length});
+  const max=BL.queue.length*3;
+  showEnd({emoji:'⚖️',title:BL.score>=max*.8?'Master Balancer!':BL.score>=max*.5?'Nicely Balanced!':'Keep Balancing!',big:`${BL.score}/${max}`,sub:'Balance It score',
+    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
+      h('div',{class:'tchips'},BL.queue.map(r=>h('span',{class:'tchip'},r.terms.map(fmtStr).join(' + ').replace(' + '+fmtStr(r.terms[r.nL]),' → '+fmtStr(r.terms[r.nL])))))],
+    again:startBalance,party:isBest?'New high score!':(BL.score>=max*.7?'Great balancing!':null)});
+}
+
+
+/* ================= CLASS GAME (LIVE) ================= */
+const ansText=(q,a)=>q.type==='find'?(EL[a-1]?`${EL[a-1].name} (${EL[a-1].sym})`:String(a)):(q.choices&&q.choices[a]!=null?String(q.choices[a]):String(a));
+const catWord=e=>CATS[e.cat][0].toLowerCase();
+function genLiveQs(n,mix){
+  const used=new Set(),pick=(pool,filt)=>{const c=shuffle(pool.filter(e=>!used.has(e.sym)&&(!filt||filt(e))));const e=c[0]||shuffle(pool)[0];used.add(e.sym);return e;};
+  const mk={
+    find(){
+      const st=sample(['','n','g'],1)[0],e=pick(POOL_EL,x=>spEligible(x,st)),p=spPromptFor(e,st);
+      return {type:'find',label:p.label,text:p.text,answer:e.n};
+    },
+    fact(){
+      const e=pick(POOL_EL),opts=shuffle([e,...sample(POOL_EL.filter(x=>x!==e),3)]);
+      return {type:'mc',label:'Which element am I?',text:FACTS[e.sym],choices:opts.map(x=>x.name),answer:opts.indexOf(e)};
+    },
+    cat(){
+      const e=pick(POOL_EL),others=shuffle(POOL_EL.filter(x=>x.cat!==e.cat)),ds=[];
+      for(const x of others){if(ds.length<3&&!ds.some(d=>d.cat===x.cat))ds.push(x);}
+      const opts=shuffle([e,...ds]);
+      return {type:'mc',label:`Which of these is ${an(catWord(e))} ${catWord(e)}?`,text:'',choices:opts.map(x=>x.name),answer:opts.indexOf(e)};
+    },
+    prot(){
+      const e=pick(EL.filter(x=>x.n<=36)),s=new Set([e.n]);
+      while(s.size<4){const d=e.n+Math.floor(Math.random()*9)-4;if(d>=1&&d<=118)s.add(d);}
+      const opts=shuffle([...s]);
+      return {type:'mc',label:`How many protons does ${e.name} have?`,text:'',choices:opts.map(String),answer:opts.indexOf(e.n)};
+    }
+  };
+  const quiz=['fact','cat','prot'],out=[];
+  for(let i=0;i<n;i++){
+    const kind=mix==='find'?'find':mix==='quiz'?quiz[i%3]:(i%2===0?'find':quiz[(i>>1)%3]);
+    out.push(mk[kind]());
+  }
+  return out;
+}
+
+/* ----- student side ----- */
+let LV=null;
+async function openLiveJoin(){
+  const P=prof();
+  if(!P.cloud)return modal({title:'Need a connection',text:'Class Game needs the score server. Log out, then log back in while you have Wi-Fi.',cancel:false});
+  const code=await modal({title:'Join a class game',text:"Type the 4-number code on your teacher's screen.",input:'text',ok:'Join'});
+  if(code===null)return;
+  const c=String(code).trim();
+  if(!/^\d{4}$/.test(c))return modal({title:'Hmm…',text:'The class code is 4 numbers.',cancel:false});
+  let res=null;
+  try{res=await rpc('tt_live_join',{p_code:c,p_id:P.cloud.id,p_token:P.cloud.token});}
+  catch(e){return modal({title:'No connection',text:"Can't reach the game server. Check the Wi-Fi and try again.",cancel:false});}
+  if(!res||!res.ok){
+    const m=res&&res.error==='auth'?'Please log out and log back in, then try again.':'No live game has that code (or it already ended). Check the number.';
+    return modal({title:"Can't join",text:m,cancel:false});
+  }
+  lvStart(c,res);
+}
+function lvStart(code,v){
+  show('s-live');
+  LV={code,key:'',done:false,locked:false,deadline:0,busy:false,polling:false,errs:0,v:null,els:[]};
+  const t=buildTable($('lvTable'),{names:false,colors:false,onPick:n=>lvSubmit(n)});LV.cells=t.map;
+  lvRender(v);
+  liveTimer=setInterval(lvPoll,1200);liveTick=setInterval(lvTick,250);
+}
+async function lvPoll(){
+  const L=LV;if(!L||L.polling)return;L.polling=true;
+  try{
+    const P=prof(),v=await rpc('tt_live_state',{p_code:L.code,p_id:P.cloud.id,p_token:P.cloud.token},6000);
+    if(LV!==L)return;
+    L.errs=0;$('lvConn').hidden=true;
+    if(v&&v.ok)lvRender(v);
+    else if(v&&v.error==='auth'){lvMsg('Your login expired. Leave and log in again.','bad');}
+  }catch(e){if(LV===L){L.errs++;if(L.errs>=2)$('lvConn').hidden=false;}}
+  finally{L.polling=false;}
+}
+function lvMsg(t,cls){const m=$('lvMsg');m.textContent=t;m.className='msg '+(cls||'');}
+function lvRender(v){
+  LV.v=v;
+  $('lvTitle').textContent=v.title||'Class game';
+  $('lvScore').textContent=v.me?v.me.score:0;
+  $('lvQ').textContent=v.q_index>=0?`${Math.min(v.q_index+1,v.total)}/${v.total}`:'–';
+  if(v.status==='question')LV.deadline=Date.now()+v.limit_s*1000-v.elapsed_ms;
+  const key=v.status+'|'+v.q_index;
+  if(key!==LV.key){LV.key=key;lvEnter(v);}
+  lvUpdate(v);
+}
+function lvEnter(v){
+  const q=v.question;
+  LV.done=false;LV.locked=false;LV.els=[];
+  clearCells(LV.cells);
+  $('lvClue').hidden=true;$('lvChoices').replaceChildren();$('lvTableWrap').hidden=true;lvMsg('');
+  $('lvTimerPill').hidden=(v.status!=='question');
+  if((v.status==='question'||v.status==='reveal')&&q){
+    $('lvClue').hidden=false;$('lvLabel').textContent=q.label;$('lvPrompt').textContent=q.text||'';
+    $('lvPrompt').classList.toggle('long',(q.text||'').length>24);
+    if(q.type==='find')$('lvTableWrap').hidden=false;
+    else{
+      LV.els=q.choices.map((c,i)=>h('button',{class:'choice',onclick:()=>lvSubmit(i)},c));
+      $('lvChoices').replaceChildren(...LV.els);
+    }
+  }
+  if(v.status==='reveal'&&q){
+    LV.done=true;
+    if(q.type==='find'&&LV.cells[v.answer])LV.cells[v.answer].classList.add('hit');
+    else if(LV.els[v.answer])LV.els[v.answer].classList.add('right');
+    LV.els.forEach(b=>b.disabled=true);
+  }
+  if(v.status==='question'&&v.me&&v.me.done)LV.done=true;
+  if(v.status==='question'&&v.me&&v.me.done)LV.els.forEach(b=>b.disabled=true);
+}
+function lvUpdate(v){
+  const me=v.me,B=$('lvBoard');
+  if(v.status==='lobby'||(v.status!=='question'&&v.status!=='reveal'&&v.status!=='ended')){
+    lvMsg(`🎉 You're in${me?', '+me.name:''}! ${v.players} ${v.players===1?'player is':'players are'} here. Waiting for your teacher to start…`,'good');
+    B.replaceChildren();return;
+  }
+  if(v.status==='question'){
+    if(LV.done||(me&&me.done)){
+      LV.done=true;
+      if(me&&me.correct)lvMsg(`✅ Correct! +${me.points} points. Waiting for the others… (${v.answered}/${v.players} done)`,'good');
+      else lvMsg(`You're out of tries on this one. Waiting for the answer… (${v.answered}/${v.players} done)`,'bad');
+    }
+    B.replaceChildren();return;
+  }
+  const board=(n)=>h('ol',{class:'lboard'},v.leaders.slice(0,n).map((p,i)=>h('li',{class:me&&p.name===me.name?'me':''},h('span',{class:'rk'},i+1),h('span',{class:'nm'},p.name),h('b',null,p.score))));
+  if(v.status==='reveal'){
+    const q=v.question;
+    lvMsg(me&&me.correct?`🎉 You got it! +${me.points} points. The answer: ${ansText(q,v.answer)}`:`The answer was ${ansText(q,v.answer)}.`,me&&me.correct?'good':'bad');
+    B.replaceChildren(h('h3',null,'Top players'),board(5),me?h('p',{class:'sub'},`You're #${me.rank} with ${me.score} points.`):null);
+    return;
+  }
+  lvMsg(me?`🏁 Game over! You finished #${me.rank} with ${me.score} points.`:'🏁 Game over!','good');
+  B.replaceChildren(h('h3',null,'Final leaderboard'),board(10),h('p',null,h('button',{class:'btn',onclick:goMenu},'Back to menu')));
+  if(!LV.partied){LV.partied=true;if(me&&me.rank<=3){fx.confetti(120);fx.pop({icon:me.rank===1?'🏆':'🥈',text:me.rank===1?'You won!':'Top 3!',kind:'great',size:'big'});}}
+}
+function lvTick(){
+  if(!LV||!LV.v)return;
+  const v=LV.v;
+  if(v.status!=='question'){return;}
+  const rem=Math.max(0,Math.ceil((LV.deadline-Date.now())/1000));
+  $('lvTimer').textContent=rem+'s';$('lvTimerPill').classList.toggle('low',rem<=5);
+  if(rem===0&&!LV.locked&&!LV.done){LV.locked=true;lvMsg("⏰ Time's up! Waiting for the answer…",'bad');LV.els.forEach(b=>b.disabled=true);}
+}
+async function lvSubmit(ans){
+  const L=LV;if(!L||L.done||L.locked||L.busy)return;
+  const v=L.v;if(!v||v.status!=='question'||!v.question)return;
+  const isFind=v.question.type==='find',node=isFind?L.cells[ans]:L.els[ans];
+  if(node&&node.classList.contains('out'))return;
+  L.busy=true;
+  try{
+    const P=prof(),r=await rpc('tt_live_answer',{p_code:L.code,p_id:P.cloud.id,p_token:P.cloud.token,p_q:v.q_index,p_answer:ans},6000);
+    if(LV!==L)return;
+    if(!r||!r.ok){
+      if(r&&r.error==='closed'){L.locked=true;lvMsg("⏰ That question is closed. Wait for the answer.",'bad');}
+      else if(r&&r.error==='auth')lvMsg('Your login expired. Leave and log in again.','bad');
+      else lvMsg("That didn't go through. Tap again!",'bad');
+      return;
+    }
+    if(r.correct){
+      L.done=true;if(node)node.classList.add(isFind?'hit':'right');L.els.forEach(b=>b.disabled=true);
+      lvMsg(`✅ Correct! +${r.points} points. Waiting for the others…`,'good');
+      fx.pop({icon:r.points>=700?'🚀':'⭐',text:'+'+r.points,kind:'great',size:'big'});if(r.points>=600)fx.confetti(60);
+    }else{
+      if(node){node.classList.add('out');if(isFind){node.classList.add('bad');setTimeout(()=>node.classList.remove('bad'),350);}else node.disabled=true;}
+      fx.pop({icon:'🤔',text:'Not quite!',kind:'try',at:isFind?node:null});
+      if(r.done){L.done=true;L.els.forEach(b=>b.disabled=true);lvMsg('Out of tries on this one. Wait for the answer!','bad');}
+      else lvMsg(`Not quite! ${r.tries_left} ${r.tries_left===1?'try':'tries'} left.`,'bad');
+    }
+  }catch(e){lvMsg('Connection hiccup. Tap again!','bad');}
+  finally{L.busy=false;}
+}
+$('lvQuit').onclick=goMenu;
+
+/* ----- teacher side ----- */
+let TL=null;
+async function tlCreate(){
+  const title=$('tlTitle').value.trim()||'Class game',n=+$('tlN').value,lim=+$('tlLim').value,mix=$('tlMix').value;
+  $('tlMake').disabled=true;
+  try{
+    const r=await rpc('tt_t_live_create',{p_teacher:TPASS,p_title:title,p_questions:genLiveQs(n,mix),p_limit:lim});
+    if(!r||!r.ok)return modal({title:"Couldn't start",text:'Something went wrong. Try again.',cancel:false});
+    tlOpen(r.code);
+  }catch(e){modal({title:'No connection',text:"Can't reach the server.",cancel:false});}
+  finally{$('tlMake').disabled=false;}
+}
+async function tlResume(){
+  const c=$('tlResumeCode').value.trim();if(!/^\d{4}$/.test(c))return;
+  tlOpen(c);
+}
+function tlOpen(code){
+  show('s-livet');
+  TL={code,v:null,busy:false,auto:-9,deadline:0,polling:false};
+  $('tlCode').textContent=code;$('tlTimerBox').textContent='';
+  tlPoll();
+  liveTimer=setInterval(tlPoll,1500);liveTick=setInterval(tlTick,250);
+}
+async function tlPoll(){
+  const L=TL;if(!L||L.polling)return;L.polling=true;
+  try{const v=await rpc('tt_t_live_board',{p_teacher:TPASS,p_code:L.code},6000);if(TL===L&&v&&v.ok)tlRender(v);}
+  catch(e){}finally{L.polling=false;}
+}
+async function tlCtl(action){
+  const L=TL;if(!L||L.busy)return;L.busy=true;
+  try{const v=await rpc('tt_t_live_ctl',{p_teacher:TPASS,p_code:L.code,p_action:action},8000);if(TL===L&&v&&v.ok)tlRender(v);}
+  catch(e){modal({title:'No connection',text:'That did not go through. Try again.',cancel:false});}
+  finally{L.busy=false;}
+}
+function tlRender(v){
+  TL.v=v;
+  if(v.status==='question')TL.deadline=Date.now()+v.limit_s*1000-v.elapsed_ms;
+  const st=v.status,q=v.question;
+  $('tlTitleShow').textContent=v.title||'Class game';
+  $('tlStatus').textContent=st==='lobby'?'Waiting for students to join':st==='question'?`Question ${v.q_index+1} of ${v.total}`:st==='reveal'?`Answer · question ${v.q_index+1} of ${v.total}`:'Game over!';
+  $('tlPlayers').textContent=`${v.players} ${v.players===1?'player':'players'}`;
+  $('tlNames').replaceChildren(...(v.names||[]).map(n=>h('span',{class:'tchip'},n)));
+  $('tlNames').hidden=st!=='lobby';
+  if(q&&(st==='question'||st==='reveal')){
+    $('tlQ').hidden=false;$('tlQLabel').textContent=q.label;$('tlQText').textContent=q.text||'';
+    $('tlQChoices').replaceChildren(...(q.choices||[]).map((c,i)=>h('div',{class:'choice ro'+(st==='reveal'&&i===v.answer?' right':'')},c)));
+    $('tlQAnswer').textContent=st==='reveal'?'Answer: '+ansText(q,v.answer):'';
+    $('tlStats').textContent=`${v.answered} of ${v.players} finished · ${v.correct_count} correct`;
+  }else{$('tlQ').hidden=true;$('tlStats').textContent='';}
+  $('tlLeaders').replaceChildren(...(v.leaders||[]).slice(0,st==='ended'?10:5).map((p,i)=>h('li',null,h('span',{class:'rk'},i+1),h('span',{class:'nm'},p.name),h('b',null,p.score))));
+  $('tlLbHead').hidden=!(v.leaders||[]).length;
+  const main=$('tlMain'),end=$('tlEnd');
+  main.hidden=st==='ended';end.hidden=st==='ended';
+  if(st==='lobby'){main.textContent='▶ Start the game';main.dataset.a='start';}
+  else if(st==='question'){main.textContent='👁 Show the answer';main.dataset.a='reveal';}
+  else if(st==='reveal'){main.textContent=v.q_index+1>=v.total?'🏁 Finish game':'Next question ▶';main.dataset.a='next';}
+  if(st==='question'&&v.players>0&&v.answered>=v.players&&TL.auto!==v.q_index){TL.auto=v.q_index;setTimeout(()=>{if(TL&&TL.v&&TL.v.status==='question'&&TL.v.q_index===v.q_index)tlCtl('reveal');},1200);}
+  if(st!=='question')$('tlTimerBox').textContent='';
+}
+function tlTick(){
+  if(!TL||!TL.v||TL.v.status!=='question')return;
+  const rem=Math.max(0,Math.ceil((TL.deadline-Date.now())/1000));
+  $('tlTimerBox').textContent=rem+'s';
+  if(rem===0&&TL.auto!==TL.v.q_index){TL.auto=TL.v.q_index;tlCtl('reveal');}
+}
+$('tlMain').onclick=()=>{const a=$('tlMain').dataset.a;if(a)tlCtl(a);};
+$('tlEnd').onclick=async()=>{if(await modal({title:'End the game?',text:'Everyone will see the final leaderboard.',ok:'End game'}))tlCtl('end');};
+$('tlLeave').onclick=()=>{TL=null;renderTeacher();show('s-teacher');$('userChip').hidden=true;};
+$('tlMake').onclick=tlCreate;
+$('tlResume').onclick=tlResume;
+
+
+/* ================= EXPLORE ================= */
+let exCells={};
+function startExplore(){
+  stopAll();show('s-explore');
+  const t=buildTable($('exTable'),{names:true,colors:true,onPick:exPick});exCells=t.map;legend($('exLegend'),true);
+  $('exInfo').replaceChildren(h('h2',null,'Click an element!'),h('p',{class:'sub'},'Tap any square on the periodic table to see its facts.'));
+}
+function exPick(n){
+  clearCells(exCells);exCells[n].classList.add('sel');
+  const e=EL[n-1],col=CATS[e.cat][1];
+  $('exInfo').replaceChildren(
+    h('div',{class:'bigtile',style:`background:${col}`},h('span',{class:'n'},e.n),h('span',{class:'s'},e.sym)),
+    h('h2',{style:'text-align:center'},e.name),
+    h('dl',{class:'kv'},
+      h('dt',null,'Atomic number'),h('dd',null,`${e.n} (protons)`),
+      h('dt',null,'Atomic mass'),h('dd',null,e.mass.toFixed(2)),
+      h('dt',null,'Group'),h('dd',null,e.group||'f-block'),
+      h('dt',null,'Period'),h('dd',null,e.period),
+      h('dt',null,'Type'),h('dd',null,CATS[e.cat][0]),
+      h('dt',null,'Room temp'),h('dd',null,e.state==='unknown'?'unknown (made in labs)':e.state)),
+    FACTS[e.sym]?h('div',{class:'infobox'},FACTS[e.sym]):null);
+}
+
+/* ================= STATS ================= */
+const speedLabel=k=>{const l=k[0],s=k.slice(1);return `⚡ Speed Find · ${LEVELS[l]?LEVELS[l].name:'Level '+l}${s?' · '+styleName(s):''}`;};
+function renderStats(){
+  const P=prof();
+  const trick=Object.entries(P.missed).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  const rows=[];
+  Object.keys(P.speed).sort().forEach(k=>{const r=P.speed[k];if(r&&r.plays)rows.push([speedLabel(k),r.best!=null?fmtT(r.best)+' avg':'—',r.plays]);});
+  rows.push(['🕵️ Element Trivia',P.trivia.plays?`${P.trivia.best}/${ROUND_LEN*4}`:'—',P.trivia.plays]);
+  rows.push(['🧪 Compound Lab',P.lab.plays?`${P.lab.best}/${ROUND_LEN*3}`:'—',P.lab.plays]);
+  Object.keys(P.atom).sort().forEach(k=>{const r=P.atom[k];if(r&&r.plays)rows.push([`⚛️ Atom Builder · ${ATLEVELS[k]?ATLEVELS[k][0]:'Level '+k}`,`${r.best}/${ROUND_LEN*3}`,r.plays]);});
+  if(!Object.values(P.atom).some(r=>r&&r.plays))rows.push(['⚛️ Atom Builder','—',0]);
+  rows.push(['⚖️ Balance It',P.balance.plays?`${P.balance.best}/${ROUND_LEN*3}`:'—',P.balance.plays]);
+  $('statsBody').replaceChildren(
+    h('p',{class:'sub'},`${P.name}${P.cls?' · Class '+P.cls:''}`),
+    h('table',{class:'dt'},h('tr',null,h('th',null,'Game'),h('th',null,'Best'),h('th',null,'Rounds played')),
+      ...rows.map(r=>h('tr',null,h('td',null,r[0]),h('td',null,r[1]),h('td',null,r[2])))),
+    h('h3',{style:'margin-top:16px'},'Elements to practice'),
+    trick.length?h('div',{class:'tchips',style:'justify-content:flex-start'},trick.map(([s])=>h('span',{class:'tchip slow'},`${BYSYM[s]?BYSYM[s].name:s} (${s})`))):h('p',{class:'sub'},'Play a few rounds and your tricky elements will show up here.'));
+}
+
+/* ================= TEACHER ================= */
+let TPASS=null,TDATA=[];
+const GAME_NAMES={speed:'⚡ Speed Find',trivia:'🕵️ Trivia',lab:'🧪 Compound Lab',atom:'⚛️ Atom Builder',balance:'⚖️ Balance It'};
+function levelLabel(game,level){
+  if(game==='speed'){const l=level[0],s=level.slice(1);return `${LEVELS[l]?LEVELS[l].name:'L'+l}${s?' · '+styleName(s):''}`;}
+  if(game==='atom')return ATLEVELS[level]?ATLEVELS[level][0]:'Level '+level;
+  return '';
+}
+const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':String(Number(v));
+const when=t=>{if(!t)return '—';const d=new Date(t);return isNaN(d)?'—':d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});};
+const sc=(S,k)=>S&&S.stats&&S.stats.scores&&S.stats.scores[k];
+const bestOf=(S,keys,fmt)=>{const v=keys.map(k=>sc(S,k)).filter(Boolean);return v.length?fmt(v):'—';};
+const totalRounds=S=>Object.values((S.stats&&S.stats.scores)||{}).reduce((a,r)=>a+Number(r.plays||0),0);
+
+async function openTeacher(){
+  const pw=await modal({title:'Teacher access',text:'Enter the teacher passcode.',input:'password',ok:'Enter'});
+  if(pw===null)return;
+  let r=null;
+  try{r=await rpc('tt_t_check',{p_teacher:pw});}
+  catch(e){await modal({title:'No connection',text:"The teacher panel needs the score server. Check the Wi-Fi and try again.",cancel:false});return;}
+  if(!r||!r.ok){await modal({title:'Nope',text:'That passcode is not right.',cancel:false});return;}
+  TPASS=pw;
+  show('s-teacher');$('userChip').hidden=true;
+  await loadTeacher();
+}
+async function loadTeacher(){
+  $('tCount').textContent='Loading…';
+  try{
+    const r=await rpc('tt_t_overview',{p_teacher:TPASS},15000);
+    if(!r||!r.ok)throw new Error('x');
+    TDATA=r.students||[];
+  }catch(e){$('tCount').textContent="Couldn't load. Try Refresh.";return;}
+  const cl=[...new Set(TDATA.map(s=>s.class||''))].sort();
+  const cur=$('tClass').value;
+  $('tClass').replaceChildren(h('option',{value:'*'},'All classes'),...cl.map(c=>h('option',{value:c},c||'(no class code)')));
+  $('tClass').value=cl.includes(cur)||cur==='*'?cur||'*':'*';
+  renderTeacher();
+}
+function renderTeacher(){
+  const cls=$('tClass').value||'*',q=($('tSearch').value||'').trim().toLowerCase();
+  const list=TDATA.filter(s=>(cls==='*'||(s.class||'')===cls)&&(!q||s.name.toLowerCase().includes(q)));
+  $('tCount').textContent=`${list.length} of ${TDATA.length} students`;
+  const tb=$('tTable');
+  tb.replaceChildren(h('tr',null,['Student','Class','⚡ L1','⚡ L2','⚡ L3','🕵️ Trivia','🧪 Lab','⚛️ Atom','⚖️ Balance','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
+    ...list.map(S=>{
+      const sp=l=>bestOf(S,['speed:'+l],v=>fmtT(Number(v[0].best)));
+      const num=k=>bestOf(S,[k],v=>String(Number(v[0].best)));
+      const atom=['1','2','3'].map(l=>sc(S,'atom:'+l)?String(Number(sc(S,'atom:'+l).best)):'–').join(' / ');
+      return h('tr',null,h('td',null,h('b',null,S.name),S.has_pin?null:h('small',{class:'sub'},' (new PIN)')),h('td',null,S.class||'—'),
+        h('td',null,sp(1)),h('td',null,sp(2)),h('td',null,sp(3)),h('td',null,num('trivia:')),h('td',null,num('lab:')),
+        h('td',null,atom==='– / – / –'?'—':atom),h('td',null,num('balance:')),h('td',null,totalRounds(S)),h('td',null,when(S.last_seen)),
+        h('td',{class:'acts'},
+          h('button',{class:'btn sm ghost',onclick:()=>showHistory(S)},'History'),' ',
+          h('button',{class:'btn sm ghost',onclick:()=>teacherClass(S)},'Class'),' ',
+          h('button',{class:'btn sm ghost',onclick:()=>teacherPin(S)},'Reset PIN'),' ',
+          h('button',{class:'btn sm warn2',onclick:()=>teacherDelete(S)},'Delete')));
+    }));
+  if(!list.length)tb.append(h('tr',null,h('td',{colspan:12},TDATA.length?'No students match.':'No students have made an account yet.')));
+}
+async function tcall(fn,args){
+  try{const r=await rpc(fn,Object.assign({p_teacher:TPASS},args),15000);if(r&&r.ok)return r;
+    await modal({title:'Something went wrong',text:r&&r.error==='auth'?'The passcode no longer works. Close the panel and enter it again.':'That did not work. Try again.',cancel:false});}
+  catch(e){await modal({title:'No connection',text:"Can't reach the server.",cancel:false});}
+  return null;
+}
+async function teacherPin(S){
+  if(await modal({title:'Reset PIN?',text:`${S.name} will choose a new PIN the next time they log in.`,ok:'Reset PIN'})){if(await tcall('tt_t_reset_pin',{p_student:S.id}))loadTeacher();}
+}
+async function teacherDelete(S){
+  if(await modal({title:'Delete student?',text:`Delete ${S.name} and all of their scores? This cannot be undone.`,ok:'Delete'})){if(await tcall('tt_t_delete_student',{p_student:S.id}))loadTeacher();}
+}
+async function teacherClass(S){
+  const c=await modal({title:`Class code for ${S.name}`,text:'Type a class code (up to 12 letters or numbers).',input:'text',ok:'Save'});
+  if(c===null)return;
+  if(await tcall('tt_t_set_class',{p_student:S.id,p_class:c}))loadTeacher();
+}
+async function showHistory(S){
+  const r=await tcall('tt_t_history',{p_student:S.id});if(!r)return;
+  $('thName').textContent=`${S.name}${S.class?' · Class '+S.class:''}`;
+  $('thTable').replaceChildren(h('tr',null,['When','Game','Level','Score'].map(x=>h('th',null,x))),
+    ...(r.rows||[]).map(x=>h('tr',null,h('td',null,when(x.at)),h('td',null,GAME_NAMES[x.game]||x.game),h('td',null,levelLabel(x.game,x.level)||'—'),h('td',null,scoreLabel(x.game,x.value)))));
+  if(!(r.rows||[]).length)$('thTable').append(h('tr',null,h('td',{colspan:4},'No rounds played yet.')));
+  show('s-thist');$('userChip').hidden=true;
+}
+function downloadCSV(rows,name){
+  const csv=rows.map(r=>r.map(v=>`"${String(v==null?'':v).replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const a=h('a',{href:URL.createObjectURL(new Blob([csv],{type:'text/csv'})),download:name});
+  document.body.append(a);a.click();a.remove();
+}
+$('tExport').onclick=()=>{
+  const g=(S,k,d)=>{const r=sc(S,k);return r?(d?(Number(r.best)/1000).toFixed(2):Number(r.best)):'';};
+  const rows=[['Nickname','Class','Speed L1 best avg (s)','Speed L2 best avg (s)','Speed L3 best avg (s)','Trivia high score (/40)','Lab high score (/30)','Atom L1 (/30)','Atom L2 (/30)','Atom L3 (/30)','Balance It (/30)','Rounds played','Last played']];
+  TDATA.forEach(S=>rows.push([S.name,S.class||'',g(S,'speed:1',1),g(S,'speed:2',1),g(S,'speed:3',1),g(S,'trivia:'),g(S,'lab:'),g(S,'atom:1'),g(S,'atom:2'),g(S,'atom:3'),g(S,'balance:'),totalRounds(S),S.last_seen||'']));
+  downloadCSV(rows,'turn-table-summary.csv');
+};
+$('tExportAll').onclick=async()=>{
+  const r=await tcall('tt_t_all_scores',{});if(!r)return;
+  const rows=[['Nickname','Class','Game','Level','Score','When']];
+  (r.rows||[]).forEach(x=>rows.push([x.name,x.class||'',x.game,x.level,x.game==='speed'?(Number(x.value)/1000).toFixed(2)+' s avg':Number(x.value),x.at]));
+  downloadCSV(rows,'turn-table-every-round.csv');
+};
+$('tRefresh').onclick=loadTeacher;
+$('tClass').onchange=renderTeacher;$('tSearch').oninput=renderTeacher;
+$('tPass').onclick=async()=>{
+  const n=await modal({title:'New teacher passcode',text:'Choose a passcode with at least 6 characters. Write it down somewhere safe!',input:'text',ok:'Save'});
+  if(n===null)return;
+  if(n.length<6){await modal({title:'Too short',text:'Use at least 6 characters.',cancel:false});return;}
+  const r=await tcall('tt_t_set_passcode',{p_new:n});
+  if(r){TPASS=n;await modal({title:'Saved',text:'Your new passcode is set. Use it next time you open the teacher panel.',cancel:false});}
+};
+$('thBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;};
+$('teacherLink').onclick=openTeacher;
+$('tBack').onclick=()=>{TPASS=null;TDATA=[];if(me)goMenu();else{renderLogin();show('s-login');}};
+
+/* ================= START ================= */
+if(!storageOK)$('warn').hidden=false;
+if(me)goMenu();else{renderLogin();show('s-login');}
+})();
+</script>
+</body>
+</html>
