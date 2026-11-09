@@ -215,7 +215,84 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .bigcode{font-size:96px;font-weight:900;letter-spacing:10px;color:var(--accent);line-height:1}
 .acts{white-space:nowrap}
 #lvTable{margin-top:6px;--cs:min(calc((100vw - 90px)/18.5),calc((100vh - 300px)/9.9),78px)}
+.m9{background:linear-gradient(135deg,#c2410c,#fb923c)} .m10{background:linear-gradient(135deg,#4338ca,#818cf8)}
+.kh{margin:10px 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+/* --- atom diner --- */
+.dngrid{display:grid;grid-template-columns:380px minmax(0,1fr);gap:14px;align-items:start}
+.cust{display:flex;gap:12px;align-items:center}
+.cust .face{font-size:64px;line-height:1}
+.cust .face.mad{animation:shake .3s 2}
+.bubble{flex:1;background:#f2f5fb;border-radius:14px;padding:8px 12px;font-weight:700;font-size:16px}
+.patience{height:14px;border-radius:999px;background:#e6ebf5;overflow:hidden;margin:10px 0 4px}
+.patience i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#1f9d55,#3fd1a0)}
+.patience.mid i{background:linear-gradient(90deg,#f5b700,#ffd166)} .patience.low i{background:linear-gradient(90deg,#d64545,#ff8a65)}
+.ticket{background:#fffdf3;border:2px dashed #e0c97a;border-radius:12px;padding:10px;margin-top:8px}
+.ticket h4{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:#8a6d1a}
+.ingr,.dishes,.counter{display:flex;flex-wrap:wrap;gap:6px}
+.mol{display:inline-flex;flex-direction:column;align-items:center;gap:3px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:6px 8px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;color:var(--ink);transition:transform .1s}
+.mol:hover{border-color:var(--accent);transform:translateY(-2px)}
+.mol.gone{opacity:.25;cursor:default;transform:none;border-style:dashed}
+.mol.served{background:#e9f9ef;border-color:#9fdcb7}
+.mol.served:hover{border-color:var(--bad)}
+.balls{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;max-width:120px}
+.ball{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;border:1px solid rgba(0,0,0,.35);flex:none}
+.ball.big{width:46px;height:46px;font-size:17px;animation:pop .25s}
+.dish{display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid #e0c97a;border-radius:10px;padding:4px 10px;font-weight:800;font-size:18px}
+.dish .q{color:#8a6d1a} .dish small{font-weight:700;color:var(--good);font-size:13px}
+.ctxline{margin-top:8px;font-size:13.5px;color:var(--muted)}
+.trayrow{display:flex;flex-wrap:wrap;gap:14px;min-height:80px;align-items:flex-end}
+.abtn{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;border:none;background:none;cursor:pointer;font:inherit;padding:4px}
+.abtn .ball{width:58px;height:58px;font-size:21px;box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .06s}
+.abtn:hover .ball{transform:translateY(-2px)} .abtn:active .ball{transform:translateY(3px);box-shadow:none}
+.abtn .cnt{font-weight:900;font-size:17px}
+.abtn .key{position:absolute;top:0;right:-2px;background:var(--navy);color:#fff;font-size:11px;font-weight:800;border-radius:6px;padding:1px 5px}
+.abtn[disabled]{opacity:.28;cursor:default}
+.abtn.no .ball{animation:shake .3s}
+.plate{min-height:110px;border-radius:50%;background:radial-gradient(#fff 55%,#e4e9f2);border:3px solid #cfd8e6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 30px;max-width:520px;margin:0 auto}
+.plate .row{display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.plate .pf{font-size:22px;font-weight:900;color:var(--accent2)} .plate .empty{color:#9aa8c0;font-style:italic}
+.scale{margin-top:10px;background:#f2f5fb;border-radius:10px;padding:8px 10px;font-size:14.5px;text-align:center}
+.scale b{font-size:17px}
+.stuck{background:#fff0d6;color:#8a5a00;border-radius:10px;padding:8px 10px;margin-top:8px;font-weight:700;text-align:center}
+/* --- separation station --- */
+.seplevels{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin:12px 0}
+.seplv{border:3px solid var(--line);background:#fff;border-radius:14px;padding:10px 12px;text-align:left;font:inherit;cursor:pointer}
+.seplv:hover:not([disabled]){border-color:var(--accent)} .seplv[disabled]{opacity:.45;cursor:not-allowed}
+.seplv b{display:block;font-size:16px} .seplv .mx{font-size:20px;letter-spacing:2px} .seplv .st{color:var(--gold);font-size:18px;letter-spacing:1px}
+.sepstars{font-weight:800;font-size:18px}
+.spgoal{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-weight:700;margin:6px 0}
+.spgoal .tag{background:#eaf1ff;border-radius:999px;padding:4px 12px}
+.spgoal .tag.g{background:#e9f9ef;color:#116b3a}
+.toolbox{display:flex;flex-wrap:wrap;gap:8px}
+.tool{display:flex;align-items:center;gap:8px;border:3px solid var(--line);background:#fff;border-radius:14px;padding:6px 12px;font:inherit;cursor:pointer;text-align:left;max-width:290px}
+.tool .ti{font-size:30px} .tool b{display:block} .tool small{color:var(--muted);font-size:12.5px;line-height:1.25;display:block}
+.tool .cost{margin-left:auto;font-weight:900;color:#8a6d1a;white-space:nowrap}
+.tool:hover{border-color:var(--accent)} .tool.on{border-color:var(--accent);background:#e8efff;box-shadow:0 0 0 3px #b9cfff}
+.factory-wrap{overflow-x:auto;padding:6px 0}
+.factory{display:flex;align-items:stretch;gap:0;min-width:max-content;margin:6px auto 0;width:max-content}
+.fcol{display:flex;flex-direction:column;align-items:center;width:118px}
+.fcol .top{height:86px;display:flex;align-items:center;justify-content:center;width:100%}
+.mslot{width:96px;height:78px;border:3px dashed #b9c6db;border-radius:14px;background:#f7f9fd;font:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-weight:700;font-size:13px}
+.mslot:hover{border-color:var(--accent);background:#eef3ff}
+.mslot.full{border-style:solid;border-color:#7c8cab;background:#fff;color:var(--ink)} .mslot.full .mi{font-size:34px;line-height:1}
+.mslot.act{border-color:var(--gold);box-shadow:0 0 0 4px rgba(245,183,0,.35);transform:scale(1.06)}
+.beltseg{height:54px;width:100%;background:repeating-linear-gradient(90deg,#55607a 0 14px,#4a5470 14px 28px);display:flex;align-items:center;justify-content:center;border-top:4px solid #2c3346;border-bottom:4px solid #2c3346}
+.factory.running .beltseg{animation:belt .5s linear infinite}
+@keyframes belt{to{background-position:28px 0}}
+.token{background:#fff;border-radius:12px;padding:2px 6px;font-size:20px;box-shadow:0 2px 6px rgba(0,0,0,.4);white-space:nowrap;animation:pop .25s}
+.token .dis{opacity:.45;font-size:15px}
+.bin{margin-top:8px;width:92px;min-height:64px;border:3px solid #9aa8c0;border-top:none;border-radius:0 0 16px 16px;background:linear-gradient(#fff,#eef2f8);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px;font-size:22px;padding:4px}
+.bin.ok{border-color:var(--good);background:#e9f9ef} .bin.mixed{border-color:var(--bad);background:#fff0f0}
+.bin .lb,.endbin .lb{width:100%;text-align:center;font-size:11px;font-weight:700;color:var(--muted)}
+.fnote{font-size:12px;font-weight:700;color:var(--accent2);min-height:30px;text-align:center;padding:2px 4px;line-height:1.2}
+.hopper{width:100px;min-height:78px;border-radius:14px 14px 30px 30px;background:#ffe9c7;border:3px solid #e0a64a;display:flex;flex-wrap:wrap;gap:2px;align-items:center;justify-content:center;font-size:22px;padding:4px}
+.endbin{width:100px;min-height:78px;border:3px solid #9aa8c0;border-top:none;border-radius:0 0 18px 18px;background:linear-gradient(#fff,#eef2f8);display:flex;flex-wrap:wrap;gap:2px;align-items:center;justify-content:center;font-size:22px;padding:4px}
+.endbin.ok{border-color:var(--good);background:#e9f9ef} .endbin.mixed{border-color:var(--bad);background:#fff0f0}
+.spresult{text-align:center;background:#f2f5fb;border-radius:14px;padding:12px;margin-top:10px}
+.spresult .big{font-size:44px;letter-spacing:4px;color:var(--gold)}
+.dimstar{color:#cfd6e3}
 @media (max-width:980px){
+  .dngrid{grid-template-columns:1fr}
   .atgrid{grid-template-columns:1fr}
   .choices{grid-template-columns:1fr}
   .play.has-side{grid-template-columns:1fr;--side:0px}
@@ -407,6 +484,91 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
   </div>
 </section>
 
+<!-- ATOM DINER: SHIFT PICKER -->
+<section class="screen" id="s-diner-setup" hidden>
+  <div class="card">
+    <h2>🍔 Atom Diner</h2>
+    <p class="sub">Customers order molecules. Smash the ingredients into atoms, then rebuild them into the dishes. Every atom has to end up on a plate. Atoms are never lost and never made, only rearranged!</p>
+    <div class="levels" id="dnLevels"></div>
+    <p class="sub" style="margin-top:12px">⌨️ Shortcuts: number keys add atoms, <b>Space</b> smashes the next ingredient, <b>Backspace</b> clears the plate.</p>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- ATOM DINER: PLAY -->
+<section class="screen" id="s-diner" hidden>
+  <div class="hud">
+    <div class="pill">🍔 <b id="dnShift">Breakfast</b></div>
+    <div class="pill">⏱ <span class="bigtimer" id="dnTime">2:00</span></div>
+    <div class="pill">🪙 <b id="dnCoins">0</b></div>
+    <div class="pill">🔥 Streak <b id="dnStreak">0</b></div>
+    <div class="pill">🍽️ Served <b id="dnServed">0</b></div>
+    <button class="btn sm ghost" id="dnQuit">Quit</button>
+  </div>
+  <div class="dngrid">
+    <div class="card">
+      <div class="cust"><div class="face" id="dnFace">🦖</div><div class="bubble" id="dnSay"></div></div>
+      <div class="patience" id="dnPat"><i id="dnPatBar"></i></div>
+      <div class="ticket">
+        <h4>Ingredients · click to smash 💥</h4>
+        <div class="ingr" id="dnIngr"></div>
+        <button class="btn sm ghost" id="dnSmashAll" style="margin-top:6px">💥 Smash all</button>
+        <h4 style="margin-top:10px">Dishes to make</h4>
+        <div class="dishes" id="dnDishes"></div>
+        <div class="ctxline" id="dnCtx"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4 class="kh">Atom tray · click an atom to put it on the plate</h4>
+      <div class="trayrow" id="dnTray"></div>
+      <h4 class="kh">Plate</h4>
+      <div class="plate" id="dnPlate"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px">
+        <button class="btn sm ghost" id="dnClear">🗑️ Clear plate</button>
+        <span id="dnServeBtns"></span>
+      </div>
+      <h4 class="kh">Ready to serve · click a dish to break it back into atoms</h4>
+      <div class="counter" id="dnCounter"></div>
+      <div class="scale" id="dnScale"></div>
+      <div class="msg" id="dnMsg" style="text-align:center"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEPARATION STATION: LEVEL PICKER -->
+<section class="screen" id="s-sep-setup" hidden>
+  <div class="card">
+    <h2>🏭 Separation Station</h2>
+    <p class="sub">Mixtures are piling up at the factory! Put machines on the conveyor belt to split each mixture into pure substances. Spend as little as you can to earn 3 stars.</p>
+    <div class="sepstars" id="sepTotal"></div>
+    <div class="seplevels" id="sepLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- SEPARATION STATION: PLAY -->
+<section class="screen" id="s-sep" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="sxLvl">1</b>/<span id="sxLvlN">12</span></div>
+    <div class="pill">💰 Cost <b id="sxCost">0</b></div>
+    <div class="pill">⭐⭐⭐ costs <b id="sxPar">0</b> or less</div>
+    <button class="btn sm ghost" id="sxBack">← Levels</button>
+  </div>
+  <div class="card">
+    <div class="clue"><b id="sxName" style="font-size:22px"></b><span id="sxStory"></span></div>
+    <div class="spgoal" id="sxGoal"></div>
+    <h4 class="kh">Machines · pick one, then click a spot on the belt (click a placed machine to remove it)</h4>
+    <div class="toolbox" id="sxTools"></div>
+    <div class="factory-wrap"><div class="factory" id="sxFactory"></div></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+      <button class="btn" id="sxRun" style="font-size:19px">▶ Run the belt!</button>
+      <button class="btn ghost" id="sxClear">🧹 Clear belt</button>
+    </div>
+    <div class="msg" id="sxMsg" style="text-align:center;font-size:17px"></div>
+    <div class="spresult" id="sxResult" hidden></div>
+  </div>
+</section>
+
 <!-- LIVE (student) -->
 <section class="screen" id="s-live" hidden>
   <div class="warn" id="lvConn" hidden>Reconnecting…</div>
@@ -502,7 +664,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
       <span class="sub" id="tCount" style="margin:0"></span>
     </div>
     <div class="tscroll"><table class="dt" id="tTable"></table></div>
-    <p class="sub" style="margin-top:8px">⚡ columns show best average time. Atom shows the best score for levels 1 / 2 / 3.</p>
+    <p class="sub" style="margin-top:8px">⚡ columns show best average time. Atom shows the best score for levels 1 / 2 / 3. Diner shows best coins for Breakfast / Lunch / Dinner. Sep ⭐ is total stars across all Separation Station levels.</p>
   </div>
 </section>
 
@@ -532,6 +694,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 /* ================= TEACHER SETTINGS (edit these) ================= */
 const SHOW_NAME_LIST   = true;        // show tap-to-pick nicknames on the login screen
 const ROUND_LEN        = 10;          // questions per round
+const SEP_UNLOCK_ALL   = false;       // true = every Separation Station level is open from the start
 /* ================================================================= */
 
 /* ---------- ELEMENT DATA ---------- */
@@ -849,9 +1012,9 @@ try{profiles=JSON.parse(store.get('pte_profiles_v1')||'{}')||{};}catch(e){profil
 const saveAll=()=>store.set('pte_profiles_v1',JSON.stringify(profiles));
 function hash(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(i))|0;return String(x);}
 function newProfile(name,cls,pin){return {name,cls:cls||'',pin,created:Date.now(),speed:{},trivia:{best:0,plays:0},lab:{best:0,plays:0},
-  atom:{},balance:{best:0,plays:0},missed:{},cloud:null};}
+  atom:{},balance:{best:0,plays:0},diner:{},sep:{},missed:{},cloud:null};}
 function fixProfile(P){
-  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};
+  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};
   P.trivia=P.trivia||{best:0,plays:0};P.lab=P.lab||{best:0,plays:0};P.balance=P.balance||{best:0,plays:0};
   if(P.cloud===undefined)P.cloud=null;
   return P;
@@ -863,6 +1026,7 @@ if(me&&!profiles[me])me=null;
 const prof=()=>profiles[me];
 const spRec=(P,key)=>P.speed[key]||(P.speed[key]={best:null,plays:0});
 const atRec=(P,key)=>P.atom[key]||(P.atom[key]={best:0,plays:0});
+const lvRec=(P,game,key)=>P[game][key]||(P[game][key]={best:0,plays:0});
 let pendMissed={};
 function bumpMissed(sym){const P=prof();P.missed[sym]=(P.missed[sym]||0)+1;pendMissed[sym]=(pendMissed[sym]||0)+1;}
 
@@ -915,6 +1079,7 @@ function mergeCloud(P,stats){
     const i=k.indexOf(':'),g=k.slice(0,i),lv=k.slice(i+1),b=Number(sc[k].best),pl=Number(sc[k].plays);
     if(g==='speed'){const r=spRec(P,lv);r.best=r.best==null?b:Math.min(r.best,b);r.plays=Math.max(r.plays,pl);}
     else if(g==='atom'){const r=atRec(P,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
+    else if(g==='diner'||g==='sep'){const r=lvRec(P,g,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
     else if(g==='trivia'||g==='lab'||g==='balance'){P[g].best=Math.max(P[g].best||0,b);P[g].plays=Math.max(P[g].plays||0,pl);}
   });
   const ms=(stats&&stats.missed)||{};
@@ -1060,6 +1225,8 @@ function renderMenu(){
     mc('m3','🧪','Compound Lab','Build real compounds like H₂O by combining atoms from the table.',P.lab.plays?`High score: ${P.lab.best}/${ROUND_LEN*3}`:'',startLab),
     mc('m6','⚛️','Atom Builder','Add protons, neutrons and electrons to build atoms, ions and isotopes.',ab.length?`High score: ${Math.max(...ab)}/${ROUND_LEN*3}`:'',()=>{renderAtomSetup();show('s-atom-setup');}),
     mc('m7','⚖️','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
+    mc('m9','🍔','Atom Diner','Smash ingredients into atoms and rebuild them into dishes before customers lose patience!',dnBestLine(P),()=>{renderDinerSetup();show('s-diner-setup');}),
+    mc('m10','🏭','Separation Station','Build a factory line of magnets, filters and heaters to split mixtures apart.',sepStars(P)?`⭐ ${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
     mc('m8','🎮','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m4','🔭','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','📊','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');})
@@ -1574,6 +1741,405 @@ function bcEnd(){
 }
 
 
+/* ================= GAME 6: ATOM DINER (MS-PS1-5) ================= */
+const ACOL={H:['#ffffff','#333'],C:['#3b3b3b','#fff'],O:['#e5484d','#fff'],N:['#2f6bff','#fff'],Cl:['#2fbf5f','#fff'],Na:['#8e5cf7','#fff'],
+  Mg:['#127a4d','#fff'],Ca:['#b8c2cc','#222'],K:['#e8a6ff','#222'],S:['#f5c400','#222'],Fe:['#d9822b','#fff'],Zn:['#7a8ca8','#fff'],Al:['#cfd5de','#222']};
+function ball(s,big){const c=ACOL[s]||['#ccc','#222'];return h('span',{class:'ball'+(big?' big':''),style:`background:${c[0]};color:${c[1]}`},s);}
+function molBalls(f){const c=parseF(f),out=[];Object.keys(c).forEach(s=>{for(let i=0;i<c[s];i++)out.push(ball(s));});return h('span',{class:'balls'},out);}
+const addC=(a,b,k=1)=>{for(const s in b)a[s]=(a[s]||0)+b[s]*k;return a;};
+const sumC=c=>Object.values(c).reduce((x,y)=>x+y,0);
+const fitsIn=(need,have)=>Object.keys(need).every(s=>(have[s]||0)>=need[s]);
+const sameC=(a,b)=>{for(const k of new Set(Object.keys(a).concat(Object.keys(b))))if((a[k]||0)!==(b[k]||0))return false;return true;};
+const cntList=list=>list.reduce((c,[n,f])=>addC(c,parseF(f),n),{});
+const fmtClock=ms=>{const s=Math.ceil(ms/1000);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
+// [name, description, shift seconds, customer patience seconds]
+const DN_LEVELS={'1':['Breakfast Shift','Small orders. The ticket tells you how many of each dish.',120,35],
+  '2':['Lunch Rush','Bigger orders. You figure out how many of each dish.',150,45],
+  '3':['Dinner Madness','Giant molecules, hidden amounts, hungry customers.',180,60]};
+const DISHES=[
+ {lv:1,dish:'Rocket Fuel Combo',ctx:'Hydrogen burns in oxygen to make water. That’s rocket fuel!',R:[[2,'H2'],[1,'O2']],P:[[2,'H2O']]},
+ {lv:1,dish:'Lightning Fizz',ctx:'Lightning makes the nitrogen and oxygen in air combine.',R:[[1,'N2'],[1,'O2']],P:[[2,'NO']]},
+ {lv:1,dish:'Campfire Smoke',ctx:'Carbon burns in oxygen to make carbon dioxide.',R:[[1,'C'],[1,'O2']],P:[[1,'CO2']]},
+ {lv:1,dish:'Table Salt Fries',ctx:'Sodium metal and chlorine gas react to make table salt.',R:[[2,'Na'],[1,'Cl2']],P:[[2,'NaCl']]},
+ {lv:1,dish:'Sparkler Snack',ctx:'Magnesium burns with a blinding white light.',R:[[2,'Mg'],[1,'O2']],P:[[2,'MgO']]},
+ {lv:1,dish:'Acid Bites',ctx:'Hydrogen and chlorine react to make hydrogen chloride.',R:[[1,'H2'],[1,'Cl2']],P:[[2,'HCl']]},
+ {lv:1,dish:'Limestone Bake',ctx:'Heating limestone breaks it into lime and carbon dioxide.',R:[[1,'CaCO3']],P:[[1,'CaO'],[1,'CO2']]},
+ {lv:1,dish:'Bubbly Peroxide',ctx:'Hydrogen peroxide breaks down into water and oxygen gas.',R:[[2,'H2O2']],P:[[2,'H2O'],[1,'O2']]},
+ {lv:1,dish:'Fertilizer Fritters',ctx:'Farms use ammonia made from nitrogen and hydrogen.',R:[[1,'N2'],[3,'H2']],P:[[2,'NH3']]},
+ {lv:2,dish:'Gas Stove Special',ctx:'Natural gas (methane) burns on a kitchen stove.',R:[[1,'CH4'],[2,'O2']],P:[[1,'CO2'],[2,'H2O']]},
+ {lv:2,dish:'Rotten Egg Roast',ctx:'Hydrogen sulfide (rotten egg gas) burns.',R:[[2,'H2S'],[3,'O2']],P:[[2,'SO2'],[2,'H2O']]},
+ {lv:2,dish:'Oxygen Candle',ctx:'Heating potassium chlorate releases oxygen gas.',R:[[2,'KClO3']],P:[[2,'KCl'],[3,'O2']]},
+ {lv:2,dish:'Zinc Fizz',ctx:'Zinc metal fizzes in hydrochloric acid and gives off hydrogen gas.',R:[[1,'Zn'],[2,'HCl']],P:[[1,'ZnCl2'],[1,'H2']]},
+ {lv:2,dish:'Foil Flash',ctx:'Aluminum reacts with chlorine gas.',R:[[2,'Al'],[3,'Cl2']],P:[[2,'AlCl3']]},
+ {lv:2,dish:'Volcano Float',ctx:'Baking soda and acid fizz, just like a science-fair volcano.',R:[[1,'NaHCO3'],[1,'HCl']],P:[[1,'NaCl'],[1,'H2O'],[1,'CO2']]},
+ {lv:2,dish:'Chalk Fizz',ctx:'Chalk (calcium carbonate) bubbles when acid touches it.',R:[[1,'CaCO3'],[2,'HCl']],P:[[1,'CaCl2'],[1,'H2O'],[1,'CO2']]},
+ {lv:3,dish:'Backyard Grill Plate',ctx:'Propane burns in a backyard grill.',R:[[1,'C3H8'],[5,'O2']],P:[[3,'CO2'],[4,'H2O']]},
+ {lv:3,dish:'Rusty Iron Platter',ctx:'Iron slowly reacts with oxygen to make rust.',R:[[4,'Fe'],[3,'O2']],P:[[2,'Fe2O3']]},
+ {lv:3,dish:'Flambé Special',ctx:'Ethanol burns with a blue flame.',R:[[1,'C2H6O'],[3,'O2']],P:[[2,'CO2'],[3,'H2O']]},
+ {lv:3,dish:'Muscle Fuel Smoothie',ctx:'Your cells "burn" sugar for energy. That’s cellular respiration!',R:[[1,'C6H12O6'],[6,'O2']],P:[[6,'CO2'],[6,'H2O']]},
+ {lv:3,dish:'Fireworks Fondue',ctx:'Ammonia burns to make nitric oxide and water.',R:[[4,'NH3'],[5,'O2']],P:[[4,'NO'],[6,'H2O']]},
+ {lv:3,dish:'Baking Powder Puff',ctx:'Baking soda breaks down in a hot oven and makes bread rise.',R:[[2,'NaHCO3']],P:[[1,'Na2CO3'],[1,'H2O'],[1,'CO2']]},
+ {lv:3,dish:'Ethane Torch',ctx:'Ethane gas burns.',R:[[2,'C2H6'],[7,'O2']],P:[[4,'CO2'],[6,'H2O']]}
+].map(d=>{
+  d.inst=[];d.R.forEach(([n,f])=>{for(let i=0;i<n;i++)d.inst.push(f);});
+  d.need=d.P.map(([n,f])=>({f,c:parseF(f),n}));
+  d.atoms=sumC(cntList(d.R));
+  if(!sameC(cntList(d.R),cntList(d.P)))console.warn('Atom Diner: unbalanced dish',d.dish);
+  return d;
+});
+const DN_CUST=['🦖','👽','🤖','🧛','🐙','🦄','👻','🧙','🐸','🦊','🐼','🧟','🐵','🦁','🐧','🦈'];
+const DN_SAY=[d=>`I'll have the ${d.dish}, please!`,d=>`One ${d.dish}. Make it snappy!`,d=>`Ooh, the ${d.dish} looks good!`,d=>`${d.dish}! I'm STARVING.`,d=>`Is the ${d.dish} fresh? I'll take it!`];
+const DN_THANKS=['Delicious! 😋','Chef’s kiss! 🤌','Five stars! ⭐','Mmm, perfectly rearranged!','Not a single atom wasted!'];
+let DN=null;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function dnBestLine(P){const v=Object.values(P.diner||{}).filter(r=>r.plays).map(r=>r.best);return v.length?`Best shift: ${Math.max(...v)} 🪙`:'';}
+function renderDinerSetup(){
+  const P=prof(),ic={'1':'🍳 ','2':'🌭 ','3':'🍝 '};
+  $('dnLevels').replaceChildren(...Object.keys(DN_LEVELS).map(k=>{const L=DN_LEVELS[k],r=P.diner[k];
+    return h('button',{class:'lvl',onclick:()=>startDiner(k)},h('b',null,ic[k]+L[0]),h('small',null,`${L[1]} ${fmtClock(L[2]*1000)} shift.`),
+      h('span',{class:'bestline'},r&&r.plays?`Best: ${r.best} 🪙`:'Not played yet'));}));
+}
+async function startDiner(lv){
+  lv=String(lv);const L=DN_LEVELS[lv];
+  DN={lv,coins:0,streak:0,bestStreak:0,served:0,lost:0,atoms:0,queue:[],last:null,t:null,len:L[2]*1000,pat:L[3]*1000,tEnd:0,iv:null};
+  $('dnShift').textContent=L[0];$('dnCoins').textContent='0';$('dnStreak').textContent='0';$('dnServed').textContent='0';
+  $('dnTime').textContent=fmtClock(DN.len);$('dnTime').parentElement.classList.remove('low');
+  ['dnIngr','dnDishes','dnTray','dnPlate','dnCounter','dnScale','dnServeBtns'].forEach(id=>$(id).replaceChildren());
+  $('dnFace').textContent='🧑‍🍳';$('dnSay').textContent='Doors open in 3…';$('dnCtx').textContent='';$('dnMsg').textContent='';$('dnSmashAll').hidden=true;
+  $('dnPatBar').style.width='100%';$('dnPat').className='patience';
+  show('s-diner');
+  const my=runId;
+  if(!await countdown()||my!==runId)return;
+  DN.tEnd=Date.now()+DN.len;
+  dnNext();
+  DN.iv=setInterval(()=>{if(my!==runId){clearInterval(DN.iv);return;}dnTick();},100);
+}
+function dnNext(){
+  if(!DN.queue.length){
+    const lv=+DN.lv;let pool=DISHES.filter(d=>d.lv===lv);
+    if(lv>1)pool=pool.concat(sample(DISHES.filter(d=>d.lv===lv-1),lv===2?4:3));
+    DN.queue=shuffle(pool);
+    if(DN.last&&DN.queue[0]===DN.last&&DN.queue.length>1)DN.queue.push(DN.queue.shift());
+  }
+  const d=DN.queue.shift();DN.last=d;
+  const t=DN.t={d,smashed:d.inst.map(()=>false),tray:{},plate:{},made:[],hand:new Set(),t0:Date.now(),done:false,order:[]};
+  d.inst.forEach(f=>Object.keys(parseF(f)).forEach(s=>{if(!t.order.includes(s))t.order.push(s);}));
+  $('dnFace').textContent=pick(DN_CUST);$('dnFace').classList.remove('mad');
+  $('dnSay').textContent=pick(DN_SAY)(d);
+  $('dnCtx').textContent='🔬 '+d.ctx;
+  $('dnMsg').textContent='';$('dnMsg').className='msg';
+  dnRender();
+}
+function dnRender(){
+  const t=DN.t;if(!t)return;
+  const d=t.d,showN=DN.lv==='1',pc=t.plate,pn=sumC(pc);
+  $('dnIngr').replaceChildren(...d.inst.map((f,i)=>h('button',{class:'mol'+(t.smashed[i]?' gone':''),title:t.smashed[i]?'Smashed!':'Click to smash into atoms',
+    onclick:ev=>dnSmash(i,ev.currentTarget)},molBalls(f),fmtStr(f))));
+  $('dnSmashAll').hidden=t.done||t.smashed.every(Boolean);
+  const madeN=f=>t.made.filter(x=>x===f).length;
+  $('dnDishes').replaceChildren(...d.need.map(p=>h('span',{class:'dish'},h('span',{class:'q'},showN?String(p.n):'?'),fmtStr(p.f),madeN(p.f)?h('small',null,'✔ '+madeN(p.f)):null)));
+  $('dnTray').replaceChildren(...t.order.map((s,i)=>h('button',{class:'abtn','data-sym':s,disabled:t.done||!(t.tray[s]>0),'aria-label':`Add ${s} to the plate`,
+    onclick:ev=>dnAdd(s,ev.currentTarget)},h('span',{class:'key'},i+1),ball(s),h('span',{class:'cnt'},'×'+(t.tray[s]||0)))));
+  const ex=pn?d.need.filter(p=>sameC(p.c,pc)):[];
+  const pb=[];t.order.forEach(s=>{for(let i=0;i<(pc[s]||0);i++)pb.push(ball(s,true));});
+  const fml=ex.length?fmtStr(ex[0].f):fmtFormula(Object.fromEntries(t.order.filter(s=>pc[s]).map(s=>[s,pc[s]])));
+  $('dnPlate').replaceChildren(...(pn?[h('div',{class:'row'},pb),h('span',{class:'pf'},fml)]:[h('span',{class:'empty'},'Empty plate. Click atoms in the tray.')]));
+  $('dnServeBtns').replaceChildren(...ex.map(p=>h('button',{class:'btn sm good',onclick:()=>dnServe(p.f)},'🍽️ Serve as '+fmtStr(p.f))));
+  $('dnClear').disabled=!pn||t.done;
+  const quick=pn||t.done?[]:d.need.filter(p=>t.hand.has(p.f)&&fitsIn(p.c,t.tray));
+  $('dnCounter').replaceChildren(...(t.made.length?t.made.map((f,i)=>h('button',{class:'mol served',title:'Click to break it back into atoms',onclick:()=>dnBreak(i)},molBalls(f),fmtStr(f)))
+      :[h('span',{class:'sub',style:'margin:0'},'Nothing yet')]),
+    ...quick.map(p=>h('button',{class:'btn sm',style:'align-self:center',title:'You built this once, so now you can make more in one click',onclick:()=>dnQuick(p.f)},'⚡ Make another '+fmtStr(p.f))));
+  const inTray=sumC(t.tray),inD=t.made.reduce((a,f)=>a+sumC(parseF(f)),0),unsm=d.atoms-inTray-pn-inD;
+  $('dnScale').replaceChildren(h('div',null,'⚖️ Atoms delivered: ',h('b',null,d.atoms),'  →  in ingredients ',h('b',null,unsm),' · tray ',h('b',null,inTray),' · plate ',h('b',null,pn),' · dishes ',h('b',null,inD)));
+  if(!t.done&&t.smashed.every(Boolean)&&!pn&&inTray>0&&!d.need.some(p=>fitsIn(p.c,t.tray)))
+    $('dnScale').append(h('div',{class:'stuck'},'😬 Stuck! The leftover atoms can’t make any dish. Click a finished dish to break it apart and try a different mix.'));
+}
+function dnSmash(i,el){
+  const t=DN&&DN.t;if(!t||t.done||t.smashed[i])return;
+  t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));
+  if(el)fx.pop({icon:'💥',text:'Smash!',kind:'try',at:el});
+  dnRender();dnCheck();
+}
+function dnAdd(s,el){
+  const t=DN&&DN.t;if(!t||t.done||!(t.tray[s]>0))return;
+  const np=Object.assign({},t.plate);np[s]=(np[s]||0)+1;
+  if(!t.d.need.some(p=>fitsIn(np,p.c))){
+    if(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no');fx.pop({icon:'🙅',text:'No dish needs that!',kind:'oops',at:el});}
+    return;
+  }
+  t.tray[s]--;t.plate=np;
+  const ex=t.d.need.filter(p=>sameC(p.c,np));
+  // serve automatically unless this plate could still grow into a bigger dish
+  if(ex.length===1&&!t.d.need.some(p=>p!==ex[0]&&fitsIn(np,p.c)))return dnServe(ex[0].f);
+  dnRender();
+}
+function dnServe(f){
+  const t=DN.t;if(t.done)return;
+  t.made.push(f);t.hand.add(f);t.plate={};
+  fx.pop({icon:'🍽️',text:fmtStr(f)+'!',kind:'good',at:$('dnPlate')});
+  dnRender();dnCheck();
+}
+function dnQuick(f){
+  const t=DN.t,c=parseF(f);if(t.done||!fitsIn(c,t.tray))return;
+  addC(t.tray,c,-1);t.made.push(f);dnRender();dnCheck();
+}
+function dnBreak(i){
+  const t=DN.t;if(t.done)return;
+  const f=t.made.splice(i,1)[0];addC(t.tray,parseF(f));dnRender();
+}
+function dnClearPlate(){const t=DN&&DN.t;if(!t||t.done)return;addC(t.tray,t.plate);t.plate={};dnRender();}
+function dnCheck(){
+  const t=DN.t;if(t.done||!t.smashed.every(Boolean)||sumC(t.tray)||sumC(t.plate))return;
+  if(!t.d.need.every(p=>t.made.filter(x=>x===p.f).length===p.n)){
+    $('dnMsg').className='msg bad';$('dnMsg').textContent='Every atom is on a plate, but that’s not the order. Break some dishes apart and remix!';return;
+  }
+  t.done=true;
+  const frac=Math.max(0,1-(Date.now()-t.t0)/DN.pat),base=t.d.atoms,tip=Math.ceil(frac*10),sb=Math.min(10,DN.streak*2),earned=base+tip+sb;
+  DN.streak++;DN.bestStreak=Math.max(DN.bestStreak,DN.streak);DN.served++;DN.atoms+=t.d.atoms;DN.coins+=earned;
+  $('dnCoins').textContent=DN.coins;$('dnStreak').textContent=DN.streak;$('dnServed').textContent=DN.served;
+  fx.pop({icon:'🪙',text:'+'+earned,kind:frac>.6?'great':'good',size:'big'});fx.confetti(frac>.6?60:30);
+  $('dnFace').textContent='😋';$('dnSay').textContent=pick(DN_THANKS);
+  $('dnMsg').className='msg good';
+  $('dnMsg').textContent=`${t.d.atoms} atoms in, ${t.d.atoms} atoms out. None lost, none made! (${base} + ${tip} tip${sb?' + '+sb+' streak':''})`;
+  dnRender();
+  const my=runId;setTimeout(()=>{if(my===runId&&DN&&Date.now()<DN.tEnd)dnNext();},1400);
+}
+function dnTick(){
+  const left=DN.tEnd-Date.now();
+  $('dnTime').textContent=fmtClock(Math.max(0,left));$('dnTime').parentElement.classList.toggle('low',left<15000);
+  if(left<=0){clearInterval(DN.iv);return dnEnd();}
+  const t=DN.t;if(!t||t.done)return;
+  const frac=Math.max(0,1-(Date.now()-t.t0)/DN.pat);
+  $('dnPatBar').style.width=(frac*100)+'%';$('dnPat').className='patience'+(frac<.25?' low':frac<.55?' mid':'');
+  if(frac<=0){
+    t.done=true;DN.streak=0;DN.lost++;$('dnStreak').textContent=0;
+    $('dnFace').textContent='😤';$('dnFace').classList.add('mad');$('dnSay').textContent='Too slow! I’m out of here!';
+    fx.pop({icon:'😤',text:'Customer left!',kind:'oops'});
+    $('dnMsg').className='msg bad';$('dnMsg').textContent='They left hungry. Your streak reset.';
+    dnRender();
+    const my=runId;setTimeout(()=>{if(my===runId&&DN&&Date.now()<DN.tEnd)dnNext();},1400);
+  }
+}
+function dnEnd(){
+  const P=prof(),lv=DN.lv,rec=lvRec(P,'diner',lv),prev=rec.best;rec.plays++;
+  const isBest=DN.coins>prev;if(isBest)rec.best=DN.coins;saveAll();
+  cloudSubmit('diner',lv,DN.coins,{served:DN.served,lost:DN.lost,atoms:DN.atoms,streak:DN.bestStreak});
+  showEnd({emoji:'🍔',title:DN.served>=8?'Five-Star Chef!':DN.served>=4?'Great Shift!':'Keep Cooking!',big:`${DN.coins} 🪙`,sub:DN_LEVELS[lv][0],
+    body:[isBest&&DN.coins>0?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,
+      h('p',null,'Dishes served: ',h('b',null,DN.served),' · Customers who left: ',h('b',null,DN.lost),' · Best streak: ',h('b',null,DN.bestStreak)),
+      h('p',null,'You rearranged ',h('b',null,DN.atoms),' atoms and didn’t lose a single one. That’s the law of conservation of matter!'),
+      h('p',null,'Best for this shift: ',h('b',null,rec.best+' 🪙'))],
+    again:()=>startDiner(lv),party:isBest&&DN.coins>0?'New high score!':null});
+}
+$('dnSmashAll').onclick=()=>{const t=DN&&DN.t;if(!t||t.done)return;t.smashed.forEach((v,i)=>{if(!v){t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));}});fx.pop({icon:'💥',text:'SMASH!',kind:'try'});dnRender();dnCheck();};
+$('dnClear').onclick=dnClearPlate;
+$('dnQuit').onclick=()=>{renderDinerSetup();show('s-diner-setup');};
+document.addEventListener('keydown',e=>{
+  if($('s-diner').hidden||!DN||!DN.t||DN.t.done||!$('modal').hidden||e.ctrlKey||e.metaKey||e.altKey)return;
+  if(/^[1-9]$/.test(e.key)){const s=DN.t.order[+e.key-1];if(s){e.preventDefault();dnAdd(s,document.querySelector(`#dnTray .abtn[data-sym="${s}"]`));}}
+  else if(e.key===' '){e.preventDefault();const i=DN.t.smashed.indexOf(false);if(i>=0)dnSmash(i,$('dnIngr').children[i]);}
+  else if(e.key==='Backspace'){e.preventDefault();dnClearPlate();}
+});
+
+/* ================= GAME 7: SEPARATION STATION (MS-PS1-8) ================= */
+const SB={
+  iron:{n:'Iron filings',ic:'🔩',mag:1}, clips:{n:'Paperclips',ic:'📎',mag:1},
+  sand:{n:'Sand',ic:'🟤'}, pebbles:{n:'Pebbles',ic:'🪨'}, copper:{n:'Copper pennies',ic:'🪙'}, alum:{n:'Aluminum cans',ic:'🥫'},
+  salt:{n:'Salt',ic:'🧂',sol:1}, sugar:{n:'Sugar',ic:'🍬',sol:1}, water:{n:'Water',ic:'💧'}
+};
+const MACH={
+  magnet:{n:'Magnet',ic:'🧲',cost:3,d:'Pulls out anything magnetic.'},
+  water:{n:'Water tap',ic:'🚰',cost:1,d:'Adds water. Soluble stuff dissolves in it.'},
+  filter:{n:'Filter',ic:'🕸️',cost:2,d:'Catches solid bits. Liquid (and anything dissolved in it) drips through.'},
+  heat:{n:'Evaporator',ic:'🔥',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'}
+};
+const MORDER=['magnet','water','filter','heat'];
+const SEP_LEVELS=[
+ {name:'Junkyard Cleanup',mix:['iron','sand'],goal:['iron','sand'],slots:3,story:'A dump truck mixed iron filings into the sand pile.',fact:'Iron is magnetic and sand is not, so a magnet pulls out only the iron.'},
+ {name:'Muddy Puddle',mix:['sand','water'],goal:['sand','water'],slots:3,story:'The town water tank is full of mud. Get clean water back!',fact:'Sand doesn’t dissolve in water, so a filter catches it while the water drips through.'},
+ {name:'Ocean Salt',mix:['salt','water'],goal:['salt'],slots:3,story:'The chef wants sea salt made from real ocean water.',fact:'Dissolved salt slips right through a filter. Boil the water away and the salt is left behind as crystals.'},
+ {name:'Penny Problem',mix:['clips','copper'],goal:['clips','copper'],slots:3,story:'A jar of paperclips and pennies got knocked over.',fact:'Steel paperclips are magnetic, but copper is not. Not every metal sticks to a magnet!'},
+ {name:'Beach Day Disaster',mix:['salt','sand'],goal:['salt','sand'],slots:4,story:'Someone dumped a salt shaker into the sandbox.',fact:'Dissolve, then filter, then evaporate. A filter can’t pull apart a dry pile, so order matters!'},
+ {name:'Sweet Gravel',mix:['sugar','pebbles'],goal:['sugar','pebbles'],slots:4,story:'A bag of sugar burst all over the gravel driveway.',fact:'Sugar is soluble like salt, so the same dissolve → filter → evaporate trick works.'},
+ {name:'Muddy Sea',mix:['sand','salt','water'],goal:['sand','salt'],slots:4,story:'A storm washed beach sand into the salt-water tank.',fact:'This mixture already had water, so the salt was already dissolved. You only needed to filter and evaporate.'},
+ {name:'Can Crusher',mix:['alum','iron'],goal:['alum','iron'],slots:3,story:'The recycling center mixed soda cans with scrap iron.',fact:'Aluminum is a metal but it isn’t magnetic. Real recycling centers use giant magnets to split them up!'},
+ {name:'Triple Trouble',mix:['iron','salt','sand'],goal:['iron','salt','sand'],slots:5,story:'Three ingredients, one big mess. Get all three back, pure.',fact:'Use one property at a time: magnetism for the iron, solubility for the salt, and size for the sand.'},
+ {name:'Candy Factory Spill',mix:['sugar','clips','pebbles','water'],goal:['sugar','clips','pebbles'],slots:5,story:'Paperclips and gravel fell into the sugar-water tank.',fact:'Each substance keeps its own properties in a mixture. That’s why mixtures can be separated.'},
+ {name:'Recycling Rush',mix:['alum','iron','salt','sand'],goal:['iron','salt'],slots:5,story:'The boss only needs the iron and the salt from this load.',fact:'You can’t split aluminum from sand with these tools, and that’s okay. Engineers pick methods that fit the job.'},
+ {name:'Grand Finale',mix:['clips','sugar','sand','copper'],goal:['clips','sugar'],slots:4,story:'Last shift! Only four spots on the belt.',fact:'Magnetism, dissolving, filtering and evaporating: the same tools scientists use to separate real mixtures.'}
+];
+const icn=k=>SB[k].ic+' '+SB[k].n;
+const andList=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+function sepInit(L){
+  const items={};let water=false;
+  L.mix.forEach(k=>{if(k==='water')water=true;else items[k]='solid';});
+  if(water)Object.keys(items).forEach(k=>{if(SB[k].sol)items[k]='dissolved';});
+  return {items,water};
+}
+function sepStep(S,m){
+  const it=Object.assign({},S.items);let w=S.water,caught=[],note='';
+  const solids=()=>Object.keys(it).filter(k=>it[k]==='solid');
+  if(m==='magnet'){
+    solids().forEach(k=>{if(SB[k].mag){caught.push(k);delete it[k];}});
+    note=caught.length?'Grabbed '+andList(caught.map(k=>SB[k].ic)):'Nothing magnetic';
+  }else if(m==='water'){
+    const dis=solids().filter(k=>SB[k].sol);dis.forEach(k=>it[k]='dissolved');
+    note=dis.length?andList(dis.map(k=>SB[k].ic))+' dissolved!':(w?'More water':'Wet, but nothing dissolved');w=true;
+  }else if(m==='filter'){
+    caught=solids();caught.forEach(k=>delete it[k]);
+    note=!caught.length?'Nothing to catch':w?'Caught the solids':'No liquid! It caught the whole dry pile';
+  }else if(m==='heat'){
+    if(!w)note='Nothing to boil';
+    else{const cr=Object.keys(it).filter(k=>it[k]==='dissolved');cr.forEach(k=>it[k]='solid');w=false;
+      note='💨 Water boiled off'+(cr.length?', '+andList(cr.map(k=>SB[k].ic))+' crystals left':'');}
+  }
+  return {S:{items:it,water:w},caught,note};
+}
+const sepContents=S=>Object.keys(S.items).concat(S.water?['water']:[]);
+function sepRun(L,belt){
+  let S=sepInit(L);const bins=[],notes=[],states=[];
+  belt.forEach(m=>{if(!m){bins.push(null);notes.push('');states.push(S);return;}
+    const r=sepStep(S,m);S=r.S;bins.push(r.caught);notes.push(r.note);states.push(S);});
+  const end=sepContents(S);
+  const all=bins.filter(b=>b&&b.length).concat([end]);
+  const pure=g=>all.some(b=>b.length===1&&b[0]===g);
+  return {bins,notes,states,end,ok:L.goal.every(pure),pure};
+}
+const beltCost=b=>b.reduce((a,m)=>a+(m?MACH[m].cost:0),0);
+SEP_LEVELS.forEach(L=>{   // work out the cheapest possible factory for each level (the 3-star target)
+  const opts=[null,...MORDER],n=L.slots;let best=Infinity;
+  for(let c=0;c<Math.pow(opts.length,n);c++){
+    const b=[];let x=c;for(let j=0;j<n;j++){b.push(opts[x%opts.length]);x=Math.floor(x/opts.length);}
+    const cost=beltCost(b);if(cost<best&&sepRun(L,b).ok)best=cost;
+  }
+  L.par=best;if(best===Infinity)console.warn('Separation Station: level cannot be solved',L.name);
+});
+const sepStars=P=>SEP_LEVELS.reduce((a,L,i)=>a+((P.sep&&P.sep[i+1]&&P.sep[i+1].best)||0),0);
+const starStr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+let SX=null;
+function renderSepSetup(){
+  const P=prof();let prevSolved=true;
+  $('sepTotal').textContent=`⭐ ${sepStars(P)} / ${SEP_LEVELS.length*3} stars`;
+  $('sepLevels').replaceChildren(...SEP_LEVELS.map((L,i)=>{
+    const r=P.sep[i+1],st=r?r.best:0,open=SEP_UNLOCK_ALL||prevSolved;prevSolved=st>0;
+    return h('button',{class:'seplv',disabled:!open,onclick:()=>startSep(i)},h('small',{class:'sub'},'Level '+(i+1)),
+      h('b',null,open?L.name:'🔒 Locked'),h('div',{class:'mx'},L.mix.map(k=>SB[k].ic).join('')),h('div',{class:'st'},starStr(st)));
+  }));
+}
+function startSep(i){
+  const L=SEP_LEVELS[i];
+  SX={i,belt:Array(L.slots).fill(null),tool:null,running:false,run:null};
+  show('s-sep');$('sxMsg').textContent='';$('sxResult').hidden=true;sxRender();
+}
+function sxRender(){
+  const L=SEP_LEVELS[SX.i];
+  $('sxLvl').textContent=SX.i+1;$('sxLvlN').textContent=SEP_LEVELS.length;$('sxCost').textContent=beltCost(SX.belt);$('sxPar').textContent=L.par;
+  $('sxName').textContent=L.name;$('sxStory').textContent=L.story;
+  $('sxGoal').replaceChildren(h('span',null,'Mixture:'),...L.mix.map(k=>h('span',{class:'tag'},icn(k))),
+    h('span',null,'  ➜  Goal: get pure'),...L.goal.map(k=>h('span',{class:'tag g'},icn(k))),h('span',null,'each in its own bin'));
+  $('sxTools').replaceChildren(...MORDER.map(m=>h('button',{class:'tool'+(SX.tool===m?' on':''),disabled:SX.running,onclick:()=>{SX.tool=SX.tool===m?null:m;sxRender();}},
+    h('span',{class:'ti'},MACH[m].ic),h('span',null,h('b',null,MACH[m].n),h('small',null,MACH[m].d)),h('span',{class:'cost'},'💰'+MACH[m].cost))));
+  $('sxRun').disabled=SX.running;$('sxClear').disabled=SX.running;
+  sxFactory();
+}
+function sxToken(S){
+  const ks=Object.keys(S.items);
+  if(!ks.length&&!S.water)return h('span',{class:'token'},'∅');
+  return h('span',{class:'token'},...ks.map(k=>S.items[k]==='dissolved'?h('span',{class:'dis',title:SB[k].n+' (dissolved)'},SB[k].ic):SB[k].ic),S.water?'💧':null);
+}
+function sxBin(items,cls,label){
+  const L=SEP_LEVELS[SX.i];let st='';
+  if(items&&items.length)st=items.length===1?' ok':' mixed';
+  return h('div',{class:cls+st,title:items&&items.length?andList(items.map(k=>SB[k].n)):'Empty'},h('div',{class:'lb'},label),...(items||[]).map(k=>SB[k].ic));
+}
+function sxFactory(){
+  const L=SEP_LEVELS[SX.i],run=SX.run,f=$('sxFactory');
+  f.className='factory'+(SX.running?' running':'');
+  const cols=[h('div',{class:'fcol'},h('div',{class:'top'},h('div',{class:'hopper',title:'The mixture'},L.mix.map(k=>SB[k].ic).join(''))),
+    h('div',{class:'beltseg'},run&&run.at===-1?sxToken(run.S):null),h('div',{class:'fnote'},'Mixture in ➜'))];
+  SX.belt.forEach((m,i)=>{
+    const slot=h('button',{class:'mslot'+(m?' full':'')+(run&&run.at===i?' act':''),disabled:SX.running,
+      'aria-label':m?MACH[m].n+'. Click to remove':'Empty spot',onclick:()=>sxSlot(i)},
+      m?[h('span',{class:'mi'},MACH[m].ic),h('span',null,MACH[m].n)]:[h('span',{style:'font-size:24px'},'＋'),h('span',null,'empty')]);
+    const shown=run&&run.at>=i;
+    cols.push(h('div',{class:'fcol'},h('div',{class:'top'},slot),h('div',{class:'beltseg'},run&&run.at===i?sxToken(run.S):null),
+      h('div',{class:'fnote'},shown?run.res.notes[i]:''),
+      m==='magnet'||m==='filter'?sxBin(shown?run.res.bins[i]:null,'bin',m==='magnet'?'Magnet bin':'Filter bin'):null));
+  });
+  cols.push(h('div',{class:'fcol'},h('div',{class:'top'},h('span',{style:'font-size:34px'},'🏁')),
+    h('div',{class:'beltseg'},run&&run.at===SX.belt.length?sxToken(run.S):null),h('div',{class:'fnote'},'End of the line'),
+    sxBin(run&&run.at>=SX.belt.length?run.res.end:null,'endbin','End bin')));
+  f.replaceChildren(...cols);
+}
+function sxSlot(i){
+  if(SX.running)return;
+  const cur=SX.belt[i];
+  if(!SX.tool&&!cur){$('sxMsg').className='msg';$('sxMsg').textContent='👆 Pick a machine from the list first.';return;}
+  SX.belt[i]=cur&&(!SX.tool||SX.tool===cur)?null:SX.tool;
+  SX.run=null;$('sxResult').hidden=true;$('sxMsg').textContent='';sxRender();
+}
+async function sxRunBelt(){
+  if(SX.running)return;
+  const L=SEP_LEVELS[SX.i];
+  if(!SX.belt.some(Boolean)){$('sxMsg').className='msg bad';$('sxMsg').textContent='Put at least one machine on the belt first!';return;}
+  const res=sepRun(L,SX.belt),my=runId;
+  SX.running=true;$('sxResult').hidden=true;$('sxMsg').textContent='';
+  SX.run={at:-1,S:sepInit(L),res};sxRender();
+  await sleep(550);
+  for(let i=0;i<=SX.belt.length;i++){
+    if(my!==runId)return;
+    SX.run.at=i;if(i<SX.belt.length)SX.run.S=res.states[i];
+    sxFactory();
+    await sleep(i<SX.belt.length&&SX.belt[i]?850:350);
+  }
+  if(my!==runId)return;
+  SX.running=false;sxRender();sxJudge(res);
+}
+function sxWhy(g,res,bad){
+  const nm=icn(g);
+  if(g==='water'&&!res.end.includes('water'))return {covers:[g],text:`Your ${nm} boiled away as steam!`};
+  let where,items,tip='';
+  if(res.end.includes(g)){
+    where='the end bin';items=res.end;
+    if(SB[g].sol&&items.includes('water'))return {covers:[g],text:`Your ${nm} is still dissolved in the water.`};
+  }else{
+    const i=res.bins.findIndex(b=>b&&b.includes(g));items=res.bins[i];where=`the ${MACH[SX.belt[i]].n.toLowerCase()} bin`;
+    if(SX.belt[i]==='filter'&&res.notes[i].startsWith('No liquid'))tip=' A filter only works when there’s a liquid!';
+  }
+  const covers=items.filter(x=>bad.includes(x)),rest=items.filter(x=>!covers.includes(x)).map(x=>SB[x].n.toLowerCase());
+  const text=covers.length>1?`Your ${andList(covers.map(icn))} got stuck together in ${where}${rest.length?' with '+andList(rest):''}.`
+    :`Your ${nm} got mixed with ${andList(rest)} in ${where}.`;
+  return {covers,text:text+tip};
+}
+function sxJudge(res){
+  const L=SEP_LEVELS[SX.i],cost=beltCost(SX.belt),m=$('sxMsg');
+  if(!res.ok){
+    const bad=L.goal.filter(g=>!res.pure(g)),seen=new Set(),why=[];
+    bad.forEach(g=>{if(seen.has(g))return;const r=sxWhy(g,res,bad);r.covers.forEach(x=>seen.add(x));why.push(r.text);});
+    m.className='msg bad';m.textContent='❌ Not pure yet. '+why.join(' ');
+    fx.pop({icon:'🤔',text:'Still mixed!',kind:'oops'});return;
+  }
+  const stars=cost<=L.par?3:cost<=L.par+3?2:1;
+  const P=prof(),lv=String(SX.i+1),r=lvRec(P,'sep',lv);r.plays++;const isBest=stars>r.best;if(isBest)r.best=stars;saveAll();
+  cloudSubmit('sep',lv,stars,{cost,par:L.par,belt:SX.belt.filter(Boolean).join('>')});
+  m.className='msg good';m.textContent='✅ Pure! Every goal substance landed in its own bin.';
+  fx.pop({icon:'✨',text:stars===3?'Perfect factory!':'Pure!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  const next=SX.i+1<SEP_LEVELS.length;
+  $('sxResult').replaceChildren(
+    h('div',{class:'big'},h('span',null,'★'.repeat(stars)),h('span',{class:'dimstar'},'★'.repeat(3-stars))),
+    h('p',null,`Your factory cost `,h('b',null,cost),`. The 3-star target is `,h('b',null,L.par),'.',stars<3?' Can you do it cheaper?':' You found the cheapest way!'),
+    h('p',{class:'infobox'},'🔬 ',h('b',null,'Science says: '),L.fact),
+    h('div',{style:'display:flex;gap:8px;justify-content:center;flex-wrap:wrap'},
+      next?h('button',{class:'btn good',onclick:()=>startSep(SX.i+1)},'Next level ▶'):h('button',{class:'btn good',onclick:()=>{renderSepSetup();show('s-sep-setup');}},'🏆 All levels done!'),
+      h('button',{class:'btn ghost',onclick:()=>{$('sxResult').hidden=true;}},stars<3?'Try for 3 ★':'Keep tinkering'),
+      h('button',{class:'btn ghost',onclick:()=>{renderSepSetup();show('s-sep-setup');}},'Levels')));
+  $('sxResult').hidden=false;
+}
+$('sxRun').onclick=sxRunBelt;
+$('sxClear').onclick=()=>{if(SX.running)return;SX.belt=SX.belt.map(()=>null);SX.run=null;$('sxResult').hidden=true;$('sxMsg').textContent='';sxRender();};
+$('sxBack').onclick=()=>{renderSepSetup();show('s-sep-setup');};
+
 /* ================= CLASS GAME (LIVE) ================= */
 const ansText=(q,a)=>q.type==='find'?(EL[a-1]?`${EL[a-1].name} (${EL[a-1].sym})`:String(a)):(q.choices&&q.choices[a]!=null?String(q.choices[a]):String(a));
 const catWord=e=>CATS[e.cat][0].toLowerCase();
@@ -1850,6 +2416,8 @@ function renderStats(){
   Object.keys(P.atom).sort().forEach(k=>{const r=P.atom[k];if(r&&r.plays)rows.push([`⚛️ Atom Builder · ${ATLEVELS[k]?ATLEVELS[k][0]:'Level '+k}`,`${r.best}/${ROUND_LEN*3}`,r.plays]);});
   if(!Object.values(P.atom).some(r=>r&&r.plays))rows.push(['⚛️ Atom Builder','—',0]);
   rows.push(['⚖️ Balance It',P.balance.plays?`${P.balance.best}/${ROUND_LEN*3}`:'—',P.balance.plays]);
+  Object.keys(DN_LEVELS).forEach(k=>{const r=P.diner[k];rows.push([`🍔 Atom Diner · ${DN_LEVELS[k][0]}`,r&&r.plays?`${r.best} 🪙`:'—',r?r.plays:0]);});
+  rows.push(['🏭 Separation Station',sepStars(P)?`⭐ ${sepStars(P)}/${SEP_LEVELS.length*3}`:'—',Object.values(P.sep).reduce((a,r)=>a+(r.plays||0),0)]);
   $('statsBody').replaceChildren(
     h('p',{class:'sub'},`${P.name}${P.cls?' · Class '+P.cls:''}`),
     h('table',{class:'dt'},h('tr',null,h('th',null,'Game'),h('th',null,'Best'),h('th',null,'Rounds played')),
@@ -1860,13 +2428,17 @@ function renderStats(){
 
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
-const GAME_NAMES={speed:'⚡ Speed Find',trivia:'🕵️ Trivia',lab:'🧪 Compound Lab',atom:'⚛️ Atom Builder',balance:'⚖️ Balance It'};
+const GAME_NAMES={speed:'⚡ Speed Find',trivia:'🕵️ Trivia',lab:'🧪 Compound Lab',atom:'⚛️ Atom Builder',balance:'⚖️ Balance It',diner:'🍔 Atom Diner',sep:'🏭 Separation Station'};
 function levelLabel(game,level){
   if(game==='speed'){const l=level[0],s=level.slice(1);return `${LEVELS[l]?LEVELS[l].name:'L'+l}${s?' · '+styleName(s):''}`;}
   if(game==='atom')return ATLEVELS[level]?ATLEVELS[level][0]:'Level '+level;
+  if(game==='diner')return DN_LEVELS[level]?DN_LEVELS[level][0]:'Shift '+level;
+  if(game==='sep')return SEP_LEVELS[level-1]?`${level}. ${SEP_LEVELS[level-1].name}`:'Level '+level;
   return '';
 }
-const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':String(Number(v));
+const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':game==='diner'?Number(v)+' coins':game==='sep'?'⭐'.repeat(Number(v)):String(Number(v));
+const sepTotalOf=S=>{let t=0;for(let i=1;i<=SEP_LEVELS.length;i++){const r=sc(S,'sep:'+i);if(r)t+=Number(r.best);}return t;};
+const dinerOf=S=>['1','2','3'].map(l=>sc(S,'diner:'+l)?String(Number(sc(S,'diner:'+l).best)):'–').join(' / ');
 const when=t=>{if(!t)return '—';const d=new Date(t);return isNaN(d)?'—':d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});};
 const sc=(S,k)=>S&&S.stats&&S.stats.scores&&S.stats.scores[k];
 const bestOf=(S,keys,fmt)=>{const v=keys.map(k=>sc(S,k)).filter(Boolean);return v.length?fmt(v):'—';};
@@ -1901,21 +2473,23 @@ function renderTeacher(){
   const list=TDATA.filter(s=>(cls==='*'||(s.class||'')===cls)&&(!q||s.name.toLowerCase().includes(q)));
   $('tCount').textContent=`${list.length} of ${TDATA.length} students`;
   const tb=$('tTable');
-  tb.replaceChildren(h('tr',null,['Student','Class','⚡ L1','⚡ L2','⚡ L3','🕵️ Trivia','🧪 Lab','⚛️ Atom','⚖️ Balance','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
+  tb.replaceChildren(h('tr',null,['Student','Class','⚡ L1','⚡ L2','⚡ L3','🕵️ Trivia','🧪 Lab','⚛️ Atom','⚖️ Balance','🍔 Diner','🏭 Sep ⭐','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
     ...list.map(S=>{
       const sp=l=>bestOf(S,['speed:'+l],v=>fmtT(Number(v[0].best)));
       const num=k=>bestOf(S,[k],v=>String(Number(v[0].best)));
       const atom=['1','2','3'].map(l=>sc(S,'atom:'+l)?String(Number(sc(S,'atom:'+l).best)):'–').join(' / ');
       return h('tr',null,h('td',null,h('b',null,S.name),S.has_pin?null:h('small',{class:'sub'},' (new PIN)')),h('td',null,S.class||'—'),
         h('td',null,sp(1)),h('td',null,sp(2)),h('td',null,sp(3)),h('td',null,num('trivia:')),h('td',null,num('lab:')),
-        h('td',null,atom==='– / – / –'?'—':atom),h('td',null,num('balance:')),h('td',null,totalRounds(S)),h('td',null,when(S.last_seen)),
+        h('td',null,atom==='– / – / –'?'—':atom),h('td',null,num('balance:')),
+        h('td',null,dinerOf(S)==='– / – / –'?'—':dinerOf(S)),h('td',null,sepTotalOf(S)?sepTotalOf(S)+'/'+SEP_LEVELS.length*3:'—'),
+        h('td',null,totalRounds(S)),h('td',null,when(S.last_seen)),
         h('td',{class:'acts'},
           h('button',{class:'btn sm ghost',onclick:()=>showHistory(S)},'History'),' ',
           h('button',{class:'btn sm ghost',onclick:()=>teacherClass(S)},'Class'),' ',
           h('button',{class:'btn sm ghost',onclick:()=>teacherPin(S)},'Reset PIN'),' ',
           h('button',{class:'btn sm warn2',onclick:()=>teacherDelete(S)},'Delete')));
     }));
-  if(!list.length)tb.append(h('tr',null,h('td',{colspan:12},TDATA.length?'No students match.':'No students have made an account yet.')));
+  if(!list.length)tb.append(h('tr',null,h('td',{colspan:14},TDATA.length?'No students match.':'No students have made an account yet.')));
 }
 async function tcall(fn,args){
   try{const r=await rpc(fn,Object.assign({p_teacher:TPASS},args),15000);if(r&&r.ok)return r;
@@ -1949,8 +2523,8 @@ function downloadCSV(rows,name){
 }
 $('tExport').onclick=()=>{
   const g=(S,k,d)=>{const r=sc(S,k);return r?(d?(Number(r.best)/1000).toFixed(2):Number(r.best)):'';};
-  const rows=[['Nickname','Class','Speed L1 best avg (s)','Speed L2 best avg (s)','Speed L3 best avg (s)','Trivia high score (/40)','Lab high score (/30)','Atom L1 (/30)','Atom L2 (/30)','Atom L3 (/30)','Balance It (/30)','Rounds played','Last played']];
-  TDATA.forEach(S=>rows.push([S.name,S.class||'',g(S,'speed:1',1),g(S,'speed:2',1),g(S,'speed:3',1),g(S,'trivia:'),g(S,'lab:'),g(S,'atom:1'),g(S,'atom:2'),g(S,'atom:3'),g(S,'balance:'),totalRounds(S),S.last_seen||'']));
+  const rows=[['Nickname','Class','Speed L1 best avg (s)','Speed L2 best avg (s)','Speed L3 best avg (s)','Trivia high score (/40)','Lab high score (/30)','Atom L1 (/30)','Atom L2 (/30)','Atom L3 (/30)','Balance It (/30)','Diner Breakfast (coins)','Diner Lunch (coins)','Diner Dinner (coins)','Separation stars (/'+SEP_LEVELS.length*3+')','Rounds played','Last played']];
+  TDATA.forEach(S=>rows.push([S.name,S.class||'',g(S,'speed:1',1),g(S,'speed:2',1),g(S,'speed:3',1),g(S,'trivia:'),g(S,'lab:'),g(S,'atom:1'),g(S,'atom:2'),g(S,'atom:3'),g(S,'balance:'),g(S,'diner:1'),g(S,'diner:2'),g(S,'diner:3'),sepTotalOf(S)||'',totalRounds(S),S.last_seen||'']));
   downloadCSV(rows,'turn-table-summary.csv');
 };
 $('tExportAll').onclick=async()=>{
