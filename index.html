@@ -85,11 +85,11 @@ h1{margin:0 0 6px;font-size:30px} h2{margin:0 0 8px;font-size:22px} h3{margin:0 
 .el .s{font-size:calc(var(--cs)*.4);font-weight:800}
 .el .nm{font-size:max(7px,calc(var(--cs)*.15));max-width:100%;overflow:hidden;text-overflow:clip;white-space:nowrap;padding:0 1px}
 .ph{display:flex;align-items:center;justify-content:center;border:2px dashed var(--line);border-radius:6px;font-size:calc(var(--cs)*.18);color:var(--muted);text-align:center}
-.ptable:not(.mono) .cat-alkali{background:#ff8f8f}.ptable:not(.mono) .cat-alkaline{background:#ffb27a}
-.ptable:not(.mono) .cat-transition{background:#ffe27a}.ptable:not(.mono) .cat-post{background:#b8e08a}
-.ptable:not(.mono) .cat-metalloid{background:#6fd9bd}.ptable:not(.mono) .cat-nonmetal{background:#8ccaff}
-.ptable:not(.mono) .cat-halogen{background:#b9a6ff}.ptable:not(.mono) .cat-noble{background:#f0a0e6}
-.ptable:not(.mono) .cat-lanthanide{background:#ffc4d6}.ptable:not(.mono) .cat-actinide{background:#d6c4a8}
+.ptable:not(.mono) .cat-alkali{background:#f29a92}.ptable:not(.mono) .cat-alkaline{background:#f4bd85}
+.ptable:not(.mono) .cat-transition{background:#f1dc8f}.ptable:not(.mono) .cat-post{background:#b9d995}
+.ptable:not(.mono) .cat-metalloid{background:#87cfb9}.ptable:not(.mono) .cat-nonmetal{background:#96c5ea}
+.ptable:not(.mono) .cat-halogen{background:#b7a8ec}.ptable:not(.mono) .cat-noble{background:#e6a3d2}
+.ptable:not(.mono) .cat-lanthanide{background:#f3c3cf}.ptable:not(.mono) .cat-actinide{background:#d6c3a4}
 .el.ok{background:var(--good)!important;color:#fff;transform:scale(1.18);z-index:4}
 .el.bad{background:var(--bad)!important;color:#fff;animation:shake .3s}
 .el.out{opacity:.35}
@@ -298,12 +298,64 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
   .play.has-side{grid-template-columns:1fr;--side:0px}
   .table-wrap{--cs:min(calc((100vw - 60px)/18.5),64px)}
 }
+
+/* ---- premium art layer ---- */
+.ico{width:1.15em;height:1.15em;vertical-align:-.2em;flex:none}
+.brand{display:flex;align-items:center;gap:10px;letter-spacing:.1px}
+.brand .logo{display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+h2 .ico,h1 .ico{color:var(--accent);margin-right:4px}
+.btn .ico{margin-right:3px;vertical-align:-.22em}
+.hero{display:flex;justify-content:center;margin-bottom:10px}
+.setupart{float:right;width:210px;aspect-ratio:16/9;border-radius:14px;overflow:hidden;margin:0 0 10px 16px;line-height:0;box-shadow:0 6px 16px rgba(16,21,54,.16)}
+.setupart svg{width:100%;height:100%;display:block}
+@media (max-width:700px){.setupart{display:none}}
+.mcard,.mcard.m1,.mcard.m2,.mcard.m3,.mcard.m4,.mcard.m5,.mcard.m6,.mcard.m7,.mcard.m8{background:#fff;color:var(--ink);padding:0;min-height:0;gap:0;overflow:hidden;border:1px solid #e1e6f1;border-radius:18px;
+  box-shadow:0 1px 2px rgba(16,21,54,.06),0 8px 22px rgba(16,21,54,.07);transition:transform .18s ease,box-shadow .18s ease}
+.mcard:hover{transform:translateY(-4px);box-shadow:0 2px 4px rgba(16,21,54,.08),0 18px 34px rgba(16,21,54,.15)}
+.mcard:focus-visible{outline:3px solid #f4b13a;outline-offset:3px}
+.mcard .art{display:block;aspect-ratio:16/9;overflow:hidden;line-height:0}
+.mcard .art svg{display:block;width:100%;height:100%;transition:transform .35s ease}
+.mcard:hover .art svg{transform:scale(1.045)}
+.mcard .body{padding:13px 16px 16px;display:flex;flex-direction:column;gap:3px;flex:1}
+.mcard b{font-size:19px;letter-spacing:-.15px;color:var(--navy)}
+.mcard span{color:var(--muted);font-size:14px;line-height:1.4;opacity:1}
+.mcard .best{margin-top:10px;font-weight:700;font-size:13px;background:#fff4d6;color:#7a5200;padding:4px 11px;border-radius:999px;align-self:flex-start}
+.menu-grid{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}
+.pop{background:#17855a;box-shadow:0 10px 28px rgba(16,21,54,.28),0 0 0 3px rgba(255,255,255,.55)}
+.pop.good{background:#17855a}.pop.great{background:#f4b13a;color:#2b1d00}.pop.oops{background:#c8402f}.pop.try{background:#5b3fa8}
+.pop .pi{display:inline-flex;align-items:center;justify-content:center;width:1.55em;height:1.55em;border-radius:50%;background:rgba(255,255,255,.22);font-size:1em}
+.pop.great .pi{background:rgba(43,29,0,.14)}
+.pop .pi .ico{width:.95em;height:.95em;stroke-width:2}
+.conf{line-height:0}.conf .ico{width:22px;height:22px;fill:currentColor;stroke:none}
+.cust .face{width:92px;height:92px;line-height:0;flex:none}.cust .face svg{width:100%;height:100%;display:block;filter:drop-shadow(0 4px 5px rgba(16,21,54,.22))}
+.ball{border:1px solid rgba(16,21,54,.22);box-shadow:inset -2px -3px 0 rgba(16,21,54,.2),inset 2px 2px 0 rgba(255,255,255,.4)}
+.sic{width:1em;height:1em;vertical-align:-.16em;display:inline-block;flex:none}
+.token .sic,.bin .sic,.hopper .sic{filter:drop-shadow(0 1px 1px rgba(16,21,54,.25))}
+.pill .ico{vertical-align:-.2em}
+.cost .sic{width:.9em;height:.9em;margin-right:3px}
+.endicon{width:76px;height:76px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;background:#fff1cf;color:#b87a00;box-shadow:inset 0 0 0 2px #f4b13a55}
+.endicon .ico{width:38px;height:38px;stroke-width:1.7}
+.term .mini{display:block;width:128px;height:98px;line-height:0}.term .mini svg{width:100%;height:100%}
+.atsvg svg{max-height:43vh}
+.newbest{display:inline-flex;align-items:center;gap:6px}
+.newbest .ico{width:1.05em;height:1.05em;fill:#3a2b00}
+.sync{display:inline-flex;align-items:center;gap:5px}.sync .ico{width:14px;height:14px}
+#userChip .who{display:inline-flex;align-items:center;gap:6px}#userChip .who .ico{width:15px;height:15px}
+.bestline{display:inline-flex;align-items:center;gap:5px}.bestline .ico{color:#d49a1a}
+.hint b .ico,.hint .ico{width:.95em;height:.95em}
+.warn .ico{color:#9a6b00;margin-right:4px}
+.tmark .ico{width:1.1em;height:1.1em;stroke-width:2.6}
+.tally-head{display:flex;align-items:center;gap:7px}
+.beaker{background:#f4f6fb;border:2px solid #dde4f2;border-radius:14px}
+.el{border:1px solid rgba(16,21,54,.17);border-radius:6px}
+.el .n{opacity:.62}
+.etile,.bigtile{border:2px solid rgba(16,21,54,.2);box-shadow:inset 0 -3px 0 rgba(16,21,54,.07)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand" id="brand">⚛️ Turn-Table</div>
+  <div class="brand" id="brand"><i data-logo="30"></i><span>Turn-Table</span></div>
   <div id="userChip" hidden>
     <span class="who" id="userName"></span>
     <span class="sync ok" id="syncBadge"></span>
@@ -311,13 +363,14 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
     <button class="btn sm ghost" id="btnLogout">Log out</button>
   </div>
 </header>
-<div class="warn" id="warn" hidden>⚠️ This browser is blocking saved data, so your scores will disappear when you close the page.</div>
+<div class="warn" id="warn" hidden><i data-ic="warning"></i>This browser is blocking saved data, so your scores will disappear when you close the page.</div>
 
 <main>
 <!-- LOGIN -->
 <section class="screen" id="s-login">
   <div class="card center">
-    <h1>Welcome to Turn-Table! 🔬</h1>
+    <div class="hero"><i data-logo="64"></i></div>
+    <h1 style="text-align:center">Welcome to Turn-Table!</h1>
     <p class="sub">Log in to save your scores. Use a nickname — <b>not</b> your full name.</p>
     <div class="seg">
       <button id="modeRet" class="on">I've played before</button>
@@ -342,7 +395,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- SPEED SETUP -->
 <section class="screen" id="s-speed-setup" hidden>
   <div class="card">
-    <h2>⚡ Speed Find</h2>
+    <div class="setupart" data-thumb="speed"></div><h2><i data-ic="bolt"></i>Speed Find</h2>
     <p class="sub">You'll see an element name. Click it on the table as fast as you can. 10 elements per round. Your <b>average time per element</b> is your score — lower is better!</p>
     <div class="stylechips" id="styleChips"></div><p class="sub" id="styleDesc" style="margin:6px 0 0"></p>
     <div class="levels" id="levelBtns"></div>
@@ -377,7 +430,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
   <div class="play has-side">
     <div id="trTable"></div>
     <aside class="side">
-      <h2>🕵️ Mystery Element</h2>
+      <h2><i data-ic="question"></i>Mystery Element</h2>
       <ol class="hints" id="trHints"></ol>
       <div class="guessrow"><input type="text" id="trGuess" placeholder="Type a name or symbol" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
       <p class="sub" style="margin:2px 0 0;font-size:13px">…or click the element on the table!</p>
@@ -405,8 +458,8 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
       <div class="formula" id="lbFormula"></div>
       <div class="tray" id="lbTray"></div>
       <div class="infobox" id="lbHintBox" hidden></div>
-      <button class="btn" id="lbCombine">🧪 Combine!</button>
-      <div style="display:flex;gap:6px"><button class="btn ghost" id="lbHint">💡 Hint (−1 pt)</button><button class="btn warn2" id="lbClear">Clear</button></div>
+      <button class="btn" id="lbCombine"><i data-ic="flask"></i>Combine!</button>
+      <div style="display:flex;gap:6px"><button class="btn ghost" id="lbHint"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="lbClear">Clear</button></div>
       <div class="msg" id="lbMsg"></div>
       <button class="btn good" id="lbNext" hidden>Next ▶</button>
     </aside>
@@ -416,7 +469,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 
 <!-- EXPLORE -->
 <section class="screen" id="s-explore" hidden>
-  <div class="hud"><h2 style="margin:0;flex:1">🔭 Explore the Table</h2><button class="btn sm ghost" data-go="menu">← Menu</button></div>
+  <div class="hud"><h2 style="margin:0;flex:1"><i data-ic="lens"></i>Explore the Table</h2><button class="btn sm ghost" data-go="menu">← Menu</button></div>
   <div class="play has-side">
     <div id="exTable"></div>
     <aside class="side" id="exInfo"></aside>
@@ -427,7 +480,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- ATOM SETUP -->
 <section class="screen" id="s-atom-setup" hidden>
   <div class="card">
-    <h2>⚛️ Atom Builder</h2>
+    <div class="setupart" data-thumb="atom"></div><h2><i data-ic="atom"></i>Atom Builder</h2>
     <p class="sub">You'll get an atom, ion or isotope to build. Use + and − to add protons, neutrons and electrons until it matches. 10 per round. Fewer hints and fewer misses = more points!</p>
     <div class="levels" id="atLevels"></div>
     <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
@@ -454,8 +507,8 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
       <div class="ctr n"><label>Neutrons</label><button data-k="n" data-d="-1" aria-label="fewer neutrons">−</button><span class="v" id="atv_n">0</span><button data-k="n" data-d="1" aria-label="more neutrons">+</button></div>
       <div class="ctr e"><label>Electrons</label><button data-k="e" data-d="-1" aria-label="fewer electrons">−</button><span class="v" id="atv_e">0</span><button data-k="e" data-d="1" aria-label="more electrons">+</button></div>
       <div class="infobox" id="atHintBox" hidden></div>
-      <button class="btn" id="atCheck" style="width:100%">⚛️ Check my atom</button>
-      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn ghost" id="atHint" style="flex:1">💡 Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
+      <button class="btn" id="atCheck" style="width:100%"><i data-ic="check"></i>Check my atom</button>
+      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn ghost" id="atHint" style="flex:1"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
       <div class="msg" id="atMsg"></div>
       <button class="btn good" id="atNext" hidden style="width:100%">Next ▶</button>
     </aside>
@@ -476,8 +529,8 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
     <div class="tally" id="bcTally"></div>
     <div class="infobox" id="bcHintBox" hidden></div>
     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
-      <button class="btn" id="bcCheck">⚖️ Check it!</button>
-      <button class="btn ghost" id="bcHint">💡 Hint (−1 pt)</button>
+      <button class="btn" id="bcCheck"><i data-ic="check"></i>Check it!</button>
+      <button class="btn ghost" id="bcHint"><i data-ic="bulb"></i>Hint (−1 pt)</button>
     </div>
     <div class="msg" id="bcMsg" style="text-align:center"></div>
     <div style="text-align:center"><button class="btn good" id="bcNext" hidden>Next ▶</button></div>
@@ -487,7 +540,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- ATOM DINER: SHIFT PICKER -->
 <section class="screen" id="s-diner-setup" hidden>
   <div class="card">
-    <h2>🍔 Atom Diner</h2>
+    <div class="setupart" data-thumb="diner"></div><h2><i data-ic="plate"></i>Atom Diner</h2>
     <p class="sub">Customers order molecules. Smash the ingredients into atoms, then rebuild them into the dishes. Every atom has to end up on a plate. Atoms are never lost and never made, only rearranged!</p>
     <div class="levels" id="dnLevels"></div>
     <p class="sub" style="margin-top:12px">⌨️ Shortcuts: number keys add atoms, <b>Space</b> smashes the next ingredient, <b>Backspace</b> clears the plate.</p>
@@ -498,21 +551,21 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- ATOM DINER: PLAY -->
 <section class="screen" id="s-diner" hidden>
   <div class="hud">
-    <div class="pill">🍔 <b id="dnShift">Breakfast</b></div>
-    <div class="pill">⏱ <span class="bigtimer" id="dnTime">2:00</span></div>
-    <div class="pill">🪙 <b id="dnCoins">0</b></div>
-    <div class="pill">🔥 Streak <b id="dnStreak">0</b></div>
-    <div class="pill">🍽️ Served <b id="dnServed">0</b></div>
+    <div class="pill"><i data-ic="flag"></i> <b id="dnShift">Breakfast</b></div>
+    <div class="pill"><i data-ic="clock"></i> <span class="bigtimer" id="dnTime">2:00</span></div>
+    <div class="pill"><i data-ic="coin"></i> <b id="dnCoins">0</b></div>
+    <div class="pill"><i data-ic="flame"></i> Streak <b id="dnStreak">0</b></div>
+    <div class="pill"><i data-ic="plate"></i> Served <b id="dnServed">0</b></div>
     <button class="btn sm ghost" id="dnQuit">Quit</button>
   </div>
   <div class="dngrid">
     <div class="card">
-      <div class="cust"><div class="face" id="dnFace">🦖</div><div class="bubble" id="dnSay"></div></div>
+      <div class="cust"><div class="face" id="dnFace"></div><div class="bubble" id="dnSay"></div></div>
       <div class="patience" id="dnPat"><i id="dnPatBar"></i></div>
       <div class="ticket">
-        <h4>Ingredients · click to smash 💥</h4>
+        <h4>Ingredients · click to smash</h4>
         <div class="ingr" id="dnIngr"></div>
-        <button class="btn sm ghost" id="dnSmashAll" style="margin-top:6px">💥 Smash all</button>
+        <button class="btn sm ghost" id="dnSmashAll" style="margin-top:6px"><i data-ic="burst"></i>Smash all</button>
         <h4 style="margin-top:10px">Dishes to make</h4>
         <div class="dishes" id="dnDishes"></div>
         <div class="ctxline" id="dnCtx"></div>
@@ -524,7 +577,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
       <h4 class="kh">Plate</h4>
       <div class="plate" id="dnPlate"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px">
-        <button class="btn sm ghost" id="dnClear">🗑️ Clear plate</button>
+        <button class="btn sm ghost" id="dnClear"><i data-ic="x"></i>Clear plate</button>
         <span id="dnServeBtns"></span>
       </div>
       <h4 class="kh">Ready to serve · click a dish to break it back into atoms</h4>
@@ -538,7 +591,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- SEPARATION STATION: LEVEL PICKER -->
 <section class="screen" id="s-sep-setup" hidden>
   <div class="card">
-    <h2>🏭 Separation Station</h2>
+    <div class="setupart" data-thumb="sep"></div><h2><i data-ic="funnel"></i>Separation Station</h2>
     <p class="sub">Mixtures are piling up at the factory! Put machines on the conveyor belt to split each mixture into pure substances. Spend as little as you can to earn 3 stars.</p>
     <div class="sepstars" id="sepTotal"></div>
     <div class="seplevels" id="sepLevels"></div>
@@ -550,8 +603,8 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <section class="screen" id="s-sep" hidden>
   <div class="hud">
     <div class="pill">Level <b id="sxLvl">1</b>/<span id="sxLvlN">12</span></div>
-    <div class="pill">💰 Cost <b id="sxCost">0</b></div>
-    <div class="pill">⭐⭐⭐ costs <b id="sxPar">0</b> or less</div>
+    <div class="pill"><i data-ic="coin"></i> Cost <b id="sxCost">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> costs <b id="sxPar">0</b> or less</div>
     <button class="btn sm ghost" id="sxBack">← Levels</button>
   </div>
   <div class="card">
@@ -562,7 +615,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
     <div class="factory-wrap"><div class="factory" id="sxFactory"></div></div>
     <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
       <button class="btn" id="sxRun" style="font-size:19px">▶ Run the belt!</button>
-      <button class="btn ghost" id="sxClear">🧹 Clear belt</button>
+      <button class="btn ghost" id="sxClear"><i data-ic="x"></i>Clear belt</button>
     </div>
     <div class="msg" id="sxMsg" style="text-align:center;font-size:17px"></div>
     <div class="spresult" id="sxResult" hidden></div>
@@ -573,7 +626,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <section class="screen" id="s-live" hidden>
   <div class="warn" id="lvConn" hidden>Reconnecting…</div>
   <div class="hud">
-    <div class="pill">🎮 <b id="lvTitle">Class game</b></div>
+    <div class="pill"><i data-ic="live"></i> <b id="lvTitle">Class game</b></div>
     <div class="pill">Question <b id="lvQ">–</b></div>
     <div class="pill">Score <b id="lvScore">0</b></div>
     <div class="pill" id="lvTimerPill" hidden><span class="bigtimer" id="lvTimer"></span></div>
@@ -614,7 +667,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- END -->
 <section class="screen" id="s-end" hidden>
   <div class="card endcard">
-    <div style="font-size:48px" id="endEmoji">🏆</div>
+    <div class="endicon" id="endEmoji"></div>
     <h1 id="endTitle"></h1>
     <div class="endbig" id="endBig"></div>
     <p class="sub" id="endSub"></p>
@@ -629,7 +682,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- STATS -->
 <section class="screen" id="s-stats" hidden>
   <div class="card">
-    <h2>📊 My Stats</h2>
+    <h2><i data-ic="chart"></i>My Stats</h2>
     <div id="statsBody"></div>
     <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
   </div>
@@ -638,17 +691,17 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <!-- TEACHER -->
 <section class="screen" id="s-teacher" hidden>
   <div class="card">
-    <h2>🧑‍🏫 Teacher Panel</h2>
+    <h2><i data-ic="cap"></i>Teacher Panel</h2>
     <p class="sub">Every student's scores are saved online. They show up here as soon as a round ends.</p>
     <div class="tbar">
       <button class="btn sm" id="tRefresh">↻ Refresh</button>
-      <button class="btn sm ghost" id="tExport">⬇ Summary (CSV)</button>
-      <button class="btn sm ghost" id="tExportAll">⬇ Every round (CSV)</button>
-      <button class="btn sm ghost" id="tPass">🔑 Change passcode</button>
+      <button class="btn sm ghost" id="tExport"><i data-ic="download"></i>Summary (CSV)</button>
+      <button class="btn sm ghost" id="tExportAll"><i data-ic="download"></i>Every round (CSV)</button>
+      <button class="btn sm ghost" id="tPass"><i data-ic="key"></i>Change passcode</button>
       <button class="btn sm ghost" id="tBack">← Back</button>
     </div>
     <div class="livebox">
-      <b>🎮 Start a live class game</b>
+      <b><i data-ic="live"></i> Start a live class game</b>
       <div class="row" style="margin-top:6px">
         <div><label for="tlTitle">Title</label><input id="tlTitle" maxlength="40" value="Class game" style="width:170px"></div>
         <div><label for="tlN">Questions</label><select id="tlN"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></div>
@@ -664,13 +717,13 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
       <span class="sub" id="tCount" style="margin:0"></span>
     </div>
     <div class="tscroll"><table class="dt" id="tTable"></table></div>
-    <p class="sub" style="margin-top:8px">⚡ columns show best average time. Atom shows the best score for levels 1 / 2 / 3. Diner shows best coins for Breakfast / Lunch / Dinner. Sep ⭐ is total stars across all Separation Station levels.</p>
+    <p class="sub" style="margin-top:8px">Speed columns show best average time. Atom shows the best score for levels 1 / 2 / 3. Diner shows best coins for Breakfast / Lunch / Dinner. Sep ★ is total stars across all Separation Station levels.</p>
   </div>
 </section>
 
 <section class="screen" id="s-thist" hidden>
   <div class="card">
-    <h2>📜 <span id="thName"></span></h2>
+    <h2><i data-ic="doc"></i><span id="thName"></span></h2>
     <div class="tscroll"><table class="dt" id="thTable"></table></div>
     <p style="margin-top:12px"><button class="btn ghost sm" id="thBack">← Back to the panel</button></p>
   </div>
@@ -690,6 +743,275 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 <script>
 (function(){
 'use strict';
+/* ================= ART SYSTEM: custom icons, logo and game thumbnails ================= */
+const ART=(()=>{
+  const INK='#101536',CREAM='#f6efe0',AMBER='#f4b13a';
+  /* 24x24 line icons. stroke=currentColor, round caps. */
+  const P={
+    bolt:'<path d="M13.2 2.5 5 13.6h6l-1.2 7.9L19 10.2h-6.2z"/>',
+    question:'<circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.4a2.9 2.9 0 1 1 4.4 2.5c-.9.6-1.7 1.1-1.7 2.3"/><circle cx="12" cy="17.5" r=".7" fill="currentColor" stroke="none"/>',
+    flask:'<path d="M9.5 3h5M10.4 3v6.3L4.9 19.1a1.7 1.7 0 0 0 1.5 2.5h11.2a1.7 1.7 0 0 0 1.5-2.5l-5.5-9.8V3"/><path d="M7.4 15.2h9.2"/>',
+    atom:'<circle cx="12" cy="12" r="1.8" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/>',
+    scale:'<path d="M12 3.5v17M7.5 20.5h9M3.5 7.5h17"/><path d="M6 7.5 3 14.5a3.2 3.2 0 0 0 6 0zM18 7.5l-3 7a3.2 3.2 0 0 0 6 0z"/>',
+    live:'<circle cx="12" cy="12" r="2.1" fill="currentColor" stroke="none"/><path d="M8 8a5.7 5.7 0 0 0 0 8M16 8a5.7 5.7 0 0 1 0 8M5.2 5.2a9.6 9.6 0 0 0 0 13.6M18.8 5.2a9.6 9.6 0 0 1 0 13.6"/>',
+    lens:'<circle cx="10.5" cy="10.5" r="6.6"/><path d="m15.4 15.4 5.6 5.6"/>',
+    chart:'<rect x="3.5" y="11" width="4.2" height="9" rx="1.2"/><rect x="9.9" y="4" width="4.2" height="16" rx="1.2"/><rect x="16.3" y="8" width="4.2" height="12" rx="1.2"/>',
+    trophy:'<path d="M7 3.5h10V9a5 5 0 0 1-10 0z"/><path d="M7 5.5H3.8v1.6A3.6 3.6 0 0 0 7.4 10.7M17 5.5h3.2v1.6a3.6 3.6 0 0 1-3.6 3.6M12 14v4M8.2 20.5h7.6M9.2 18h5.6"/>',
+    medal:'<circle cx="12" cy="15" r="5.6"/><path d="M8.4 10.4 6 3h4.2l1.8 4.6M15.6 10.4 18 3h-4.2L12 7.6"/><path d="m12 12.6.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/>',
+    star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+    sparkle:'<path d="M12 2.5c.9 5.2 3.3 7.6 8.5 8.5-5.2.9-7.6 3.3-8.5 8.5-.9-5.2-3.3-7.6-8.5-8.5 5.2-.9 7.6-3.3 8.5-8.5z"/>',
+    check:'<path d="m4.5 12.6 5 5L19.5 7"/>',
+    x:'<path d="M6 6l12 12M18 6 6 18"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>',
+    cloud:'<path d="M7 18.5a4.6 4.6 0 0 1-.6-9.1A6.2 6.2 0 0 1 18.2 10a4.3 4.3 0 0 1-.7 8.5z"/><path d="m9.6 13.6 2.1 2.1 3.7-3.8"/>',
+    cloudoff:'<path d="M7 18.5a4.6 4.6 0 0 1-.6-9.1A6.2 6.2 0 0 1 18.2 10a4.3 4.3 0 0 1-.7 8.5z"/><path d="M4 4l16 16"/>',
+    warning:'<path d="M12 3.2 2.4 19.8h19.2z"/><path d="M12 9.8v4.6"/><circle cx="12" cy="17.1" r=".7" fill="currentColor" stroke="none"/>',
+    bulb:'<path d="M9.2 18h5.6M10.2 21h3.6"/><path d="M12 3a6 6 0 0 0-3.7 10.7c.7.6 1.2 1.3 1.2 2.3h5c0-1 .5-1.7 1.2-2.3A6 6 0 0 0 12 3z"/>',
+    lock:'<rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+    key:'<circle cx="8" cy="15.5" r="4.2"/><path d="m11 12.5 9-9M16.2 7.3l2.6 2.6M13.6 9.9l2 2"/>',
+    download:'<path d="M12 3.5v12m0 0-4.6-4.6M12 15.5l4.6-4.6M4.5 20h15"/>',
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/>',
+    flag:'<path d="M5.5 21V4M5.5 4.5h11.2L14.6 8.6l2.1 4.1H5.5"/>',
+    eye:'<path d="M2 12s3.7-7 10-7 10 7 10 7-3.7 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    flame:'<path d="M12 21.7c4 0 6.6-2.7 6.6-6.3 0-2.8-1.7-4.8-3.3-6.5-.9-1-1.5-2.4-1.6-4.4-3.1 1.6-5.7 4.9-5.7 8.7 0 .7.1 1.3.4 1.9-1.1-.3-2-1-2.3-1.5-.3 1.1-.3 2 0 2.9.5 2.8 2.4 5.2 5.9 5.2z"/>',
+    burst:'<path d="m12 2.5 2 4.6 4.7-2-1.9 4.7 4.7 1.9-4.7 2 1.9 4.7-4.7-1.9-2 4.6-2-4.6-4.7 1.9 1.9-4.7-4.7-2 4.7-1.9-1.9-4.7 4.7 2z"/>',
+    book:'<path d="M4 5A2 2 0 0 1 6 3h14v15H6a2 2 0 0 0-2 2z"/><path d="M4 20a2 2 0 0 0 2 2h14"/><path d="M8.5 7.5h7"/>',
+    rocket:'<path d="M12 2.5c3.6 2.2 5.6 6.2 5.6 10.2l-2.1 3.1H8.5l-2.1-3.1c0-4 2-8 5.6-10.2z"/><circle cx="12" cy="10" r="1.9"/><path d="M8.5 15.8 6 19.6l3.2-1M15.5 15.8l2.5 3.8-3.2-1M12 18v3.5"/>',
+    down:'<path d="M12 4.5v14m0 0-6-6m6 6 6-6"/>',
+    cap:'<path d="m2 9.2 10-5 10 5-10 5z"/><path d="M6.2 11.6V16c0 1.6 2.7 3 5.8 3s5.8-1.4 5.8-3v-4.4M22 9.2v5.6"/>',
+    doc:'<path d="M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 8h6M9 12h6M9 16h3.6"/>',
+    cell:'<rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><path d="M8 9.2h2.2M8 15.8h8"/>'
+  };
+  /* inline icon as an SVG string (for innerHTML) */
+  const ico=(n,size)=>`<svg class="ico" viewBox="0 0 24 24" ${size?`width="${size}" height="${size}" `:''}fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]||''}</svg>`;
+  const el=(n,size)=>{const t=document.createElement('template');t.innerHTML=ico(n,size);return t.content.firstChild;};
+
+  /* brand mark: a record with a periodic-table tile for a label */
+  const logo=(s=30)=>`<svg class="logo" viewBox="0 0 48 48" width="${s}" height="${s}" aria-hidden="true">
+<circle cx="24" cy="24" r="22" fill="#0b0d22" stroke="#3b4285" stroke-width="1.5"/>
+<circle cx="24" cy="24" r="17" fill="none" stroke="#2a3070" stroke-width="1"/><circle cx="24" cy="24" r="13.5" fill="none" stroke="#2a3070" stroke-width="1"/>
+<rect x="13.5" y="13.5" width="21" height="21" rx="4" fill="${AMBER}" stroke="#fff6df" stroke-width="1.4"/>
+<text x="24" y="28.6" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="800" font-size="12.5" fill="${INK}">Tt</text></svg>`;
+
+
+  /* ---- extra outline icons ---- */
+  Object.assign(P,{
+    coin:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.4"/>',
+    plate:'<circle cx="12" cy="12" r="9.2"/><circle cx="12" cy="12" r="5.2"/>',
+    funnel:'<path d="M3.5 4.5h17L14 12.6V20l-4 1.6v-9z"/>'
+  });
+
+  /* ---- customer characters (64x64), used in Atom Diner ---- */
+  const dk='#101536';
+  const eyeSvg=(x,y,r,mood,dark)=>{
+    if(mood==='happy')return `<path d="M${x-r} ${y+r*.45}q${r} ${-r*1.7} ${2*r} 0" fill="none" stroke="${dk}" stroke-width="2.6" stroke-linecap="round"/>`;
+    const base=dark?`<ellipse cx="${x}" cy="${y}" rx="${r*.9}" ry="${r*1.15}" fill="${dk}"/><circle cx="${x-r*.28}" cy="${y-r*.4}" r="${r*.3}" fill="#fff"/>`
+      :`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="${dk}" stroke-opacity=".25" stroke-width="1"/><circle cx="${x+(mood==='mad'?0:r*.12)}" cy="${y+r*.12}" r="${r*.55}" fill="${dk}"/><circle cx="${x-r*.1}" cy="${y-r*.18}" r="${r*.2}" fill="#fff"/>`;
+    return base;
+  };
+  const mouthSvg=(cx,cy,w,mood)=>mood==='happy'?`<path d="M${cx-w/2} ${cy-1}h${w}a${w/2} ${w*.6} 0 0 1 ${-w} 0z" fill="${dk}"/><path d="M${cx-w*.22} ${cy+w*.4}a${w*.22} ${w*.2} 0 0 1 ${w*.44} 0z" fill="#ff7a8a"/>`
+    :mood==='mad'?`<path d="M${cx-w/2} ${cy+3}q${w/2} ${-w*.42} ${w} 0" fill="none" stroke="${dk}" stroke-width="2.6" stroke-linecap="round"/>`
+    :`<path d="M${cx-w/2} ${cy}q${w/2} ${w*.42} ${w} 0" fill="none" stroke="${dk}" stroke-width="2.4" stroke-linecap="round"/>`;
+  const CH=[
+    ()=>({b:`<rect x="8" y="14" width="48" height="44" rx="19" fill="#4fae6a"/><path d="M15 17l5-10 5 10zM26 13l5-11 5 11zM37 13l5-10 5 10z" fill="#f0a640"/><ellipse cx="32" cy="52" rx="14" ry="8" fill="#a9e0b4"/>`,e:[[24,31,5],[40,31,5]],m:[32,44,16]}),
+    ()=>({b:`<ellipse cx="32" cy="35" rx="22" ry="24" fill="#97d96a"/><path d="M32 11V5" stroke="#6fb04a" stroke-width="2.6" stroke-linecap="round"/><circle cx="32" cy="5" r="3.6" fill="#f4b13a"/>`,e:[[22,33,6],[42,33,6]],m:[32,48,12],dark:1}),
+    ()=>({b:`<path d="M32 15V7" stroke="#7e8da3" stroke-width="2.6" stroke-linecap="round"/><circle cx="32" cy="6" r="3.6" fill="#e2483f"/><rect x="5" y="30" width="6" height="12" rx="3" fill="#7e8da3"/><rect x="53" y="30" width="6" height="12" rx="3" fill="#7e8da3"/><rect x="9" y="15" width="46" height="42" rx="10" fill="#a8b8cc"/><rect x="14" y="21" width="36" height="28" rx="7" fill="#26324d"/>`,e:[[24,32,4.5],[40,32,4.5]],m:[32,43,12],ec:'#5ee3ff'}),
+    ()=>({b:`<path d="M6 62L16 48l16 9 16-9 10 14z" fill="#9b1c3a"/><rect x="12" y="14" width="40" height="42" rx="17" fill="#efe6f5"/><path d="M12 30C12 8 52 8 52 30L44 22 32 31 20 22z" fill="#1b1730"/>`,e:[[24,36,4.4],[40,36,4.4]],m:[32,47,12],o:`<path d="M26.6 47.8l1.8 4 1.8-3zM37.4 47.8l-1.8 4-1.8-3z" fill="#fff"/>`}),
+    ()=>({b:`<path d="M10 44a22 24 0 0 1 44 0z" fill="#9b6bd6"/><circle cx="14" cy="50" r="5.5" fill="#9b6bd6"/><circle cx="23" cy="53" r="5.5" fill="#9b6bd6"/><circle cx="32" cy="54" r="5.5" fill="#9b6bd6"/><circle cx="41" cy="53" r="5.5" fill="#9b6bd6"/><circle cx="50" cy="50" r="5.5" fill="#9b6bd6"/><rect x="10" y="40" width="44" height="12" fill="#9b6bd6"/><circle cx="20" cy="22" r="2.6" fill="#7d4fc0"/><circle cx="43" cy="18" r="3.2" fill="#7d4fc0"/><circle cx="32" cy="14" r="2.2" fill="#7d4fc0"/>`,e:[[24,35,5.6],[40,35,5.6]],m:[32,47,14]}),
+    ()=>({b:`<circle cx="10" cy="32" r="7" fill="#f08cc3"/><circle cx="9" cy="43" r="7" fill="#c98af0"/><circle cx="12" cy="53" r="6" fill="#f08cc3"/><path d="M16 26L18 11 28 21zM48 26L46 11 36 21z" fill="#ffd6ec"/><rect x="14" y="20" width="36" height="38" rx="16" fill="#fff6fb"/><path d="M28 20L32 3l4 17z" fill="#f4b13a"/><path d="M29.4 14l5.2-2M30.4 9.6l3.4-1.2" stroke="#d98f1f" stroke-width="1.4"/><ellipse cx="32" cy="49" rx="9" ry="6" fill="#ffd6ec"/>`,e:[[25,37,4.4],[39,37,4.4]],m:[32,50,8]}),
+    ()=>({b:`<path d="M12 58V30a20 20 0 0 1 40 0v28l-6.7-5-6.6 5-6.7-5-6.7 5-6.6-5z" fill="#f4f7ff" stroke="#c4cfe9" stroke-width="2"/>`,e:[[25,33,4.6],[39,33,4.6]],m:[32,47,9],dark:1}),
+    ()=>({b:`<circle cx="32" cy="40" r="16" fill="#f2cfa8"/><path d="M14 31L32 1l18 30q-18 6-36 0z" fill="#3b4bb0"/><ellipse cx="32" cy="31" rx="23" ry="6" fill="#2f3b94"/><path d="M30 16l1.5 3.5 3.5.4-2.6 2.4.7 3.5-3.1-1.8-3.1 1.8.7-3.5-2.6-2.4 3.5-.4z" fill="#f4b13a"/>`,e:[[26,40,3.6],[38,40,3.6]],m:null,o:`<path d="M16 44q16 24 32 0-8 7-16 3-8 4-16-3z" fill="#f4f1ea"/>`,mm:[32,49,8]}),
+    ()=>({b:`<ellipse cx="32" cy="40" rx="25" ry="19" fill="#6cc24a"/><circle cx="20" cy="22" r="10" fill="#6cc24a"/><circle cx="44" cy="22" r="10" fill="#6cc24a"/><ellipse cx="32" cy="52" rx="15" ry="6" fill="#b9e5a0"/>`,e:[[20,22,6.4],[44,22,6.4]],m:[32,45,26]}),
+    ()=>({b:`<path d="M8 24L16 6l12 12q4-2 8 0L48 6l8 18q0 32-24 32T8 24z" fill="#f08a3e"/><path d="M14 22l3-9 6 6zM50 22l-3-9-6 6z" fill="#8a3a14"/><path d="M8 38q12 18 24 8 12 10 24-8 0 20-24 22T8 38z" fill="#fff4e6"/><path d="M29 44h6l-3 4z" fill="${dk}"/>`,e:[[22,33,4],[42,33,4]],m:[32,52,10]}),
+    ()=>({b:`<circle cx="14" cy="15" r="8.5" fill="${dk}"/><circle cx="50" cy="15" r="8.5" fill="${dk}"/><circle cx="32" cy="35" r="22" fill="#fafafa" stroke="#d3d9e6" stroke-width="2"/><ellipse cx="22" cy="33" rx="6.6" ry="8.4" transform="rotate(-18 22 33)" fill="${dk}"/><ellipse cx="42" cy="33" rx="6.6" ry="8.4" transform="rotate(18 42 33)" fill="${dk}"/><ellipse cx="32" cy="43" rx="4" ry="3" fill="${dk}"/>`,e:[[22,33,3.4],[42,33,3.4]],m:[32,48,10],ec:'dkpatch'}),
+    ()=>({b:`<rect x="10" y="14" width="44" height="44" rx="14" fill="#a3c48d"/><path d="M14 18q6-9 12-4 3-6 9-2 5-5 12 2l-3 5q-9-5-14 0-6-5-16 2z" fill="#4d6b45"/><path d="M40 20l8 4M42 17l2 9M45 18l-2 8" stroke="#4d6b45" stroke-width="1.8" stroke-linecap="round"/>`,e:[[24,34,6],[41,35,4]],m:[32,47,14]}),
+    ()=>({b:`<circle cx="9" cy="36" r="8" fill="#9a6a3f"/><circle cx="55" cy="36" r="8" fill="#9a6a3f"/><circle cx="9" cy="36" r="4.4" fill="#f0cfa0"/><circle cx="55" cy="36" r="4.4" fill="#f0cfa0"/><circle cx="32" cy="34" r="22" fill="#9a6a3f"/><circle cx="24" cy="33" r="9" fill="#f0cfa0"/><circle cx="40" cy="33" r="9" fill="#f0cfa0"/><ellipse cx="32" cy="42" rx="14" ry="12" fill="#f0cfa0"/><circle cx="30" cy="42" r="1.2" fill="${dk}"/><circle cx="34" cy="42" r="1.2" fill="${dk}"/>`,e:[[25,34,3.8],[39,34,3.8]],m:[32,49,12]}),
+    ()=>({b:Array.from({length:12},(_,i)=>{const a=i*Math.PI/6;return `<circle cx="${32+Math.cos(a)*21}" cy="${35+Math.sin(a)*21}" r="9" fill="#c8741f"/>`;}).join('')+`<circle cx="32" cy="35" r="23" fill="#c8741f"/><circle cx="32" cy="36" r="17" fill="#f4b862"/><ellipse cx="32" cy="45" rx="9" ry="6.4" fill="#fde3b0"/><path d="M29 41h6l-3 4z" fill="${dk}"/>`,e:[[25,32,3.8],[39,32,3.8]],m:[32,48,9]}),
+    ()=>({b:`<path d="M10 60V32a22 24 0 0 1 44 0v28z" fill="#2a3150"/><path d="M32 22q-14 4-14 20 0 10 14 14 14-4 14-14 0-16-14-20z" fill="#fff"/><path d="M26 41h12l-6 9z" fill="#f4a02a"/>`,e:[[25,33,4.2],[39,33,4.2]],m:null}),
+    ()=>({b:`<path d="M27 18L36 2l7 18z" fill="#587aa6"/><path d="M6 40a26 26 0 0 1 52 0v10a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" fill="#6f8fb8"/><path d="M6 46h52v4a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" fill="#e6eef8"/>`,e:[[21,33,3.8],[43,33,3.8]],m:null,o:`__SHARK__`})
+  ];
+  const face=(i,mood='ok')=>{
+    if(i==='chef'){
+      return `<svg class="face-svg" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="40" r="17" fill="#f2cfa8"/><path d="M15 29a9 9 0 0 1 5-15 9 9 0 0 1 12-3 9 9 0 0 1 12 3 9 9 0 0 1 5 15v6H15z" fill="#fff" stroke="#cfd6e4" stroke-width="2"/><rect x="15" y="29" width="34" height="7" rx="2" fill="#e8edf7"/>${eyeSvg(26,41,3.6,'happy')}${eyeSvg(38,41,3.6,'happy')}${mouthSvg(32,49,10,'ok')}<circle cx="22" cy="47" r="3" fill="#ff8f8f" opacity=".45"/><circle cx="42" cy="47" r="3" fill="#ff8f8f" opacity=".45"/></svg>`;
+    }
+    const c=CH[((+i%CH.length)+CH.length)%CH.length]();
+    let o=c.o||'';
+    if(o==='__SHARK__')o=mood==='happy'?`<path d="M16 42Q32 60 48 42z" fill="#26324d"/><path d="M19 44l3 5 3-3 3 5 3-4 3 4 3-5 3 3 3-5" fill="#fff"/>`:mood==='mad'?`<path d="M18 52Q32 40 46 52z" fill="#26324d"/><path d="M21 51l3-4 3 3 3-4 3 4 3-4 3 4 3-3 3 3" fill="#fff"/>`:`<path d="M17 44Q32 56 47 44z" fill="#26324d"/><path d="M20 45l3 4 3-3 3 4 3-4 3 4 3-3 3 3 3-4" fill="#fff"/>`;
+    const eyes=c.e.map(([x,y,r],k)=>c.ec==='dkpatch'?(mood==='happy'?eyeSvg(x,y,r+1,'happy').replace(dk,'#fff'):`<circle cx="${x}" cy="${y-1}" r="${r}" fill="#fff"/><circle cx="${x}" cy="${y-.5}" r="${r*.5}" fill="${dk}"/>`)
+      :c.ec?(mood==='happy'?eyeSvg(x,y,r,'happy').replace(dk,c.ec):`<circle cx="${x}" cy="${y}" r="${r}" fill="${c.ec}"/><circle cx="${x-r*.25}" cy="${y-r*.3}" r="${r*.3}" fill="#fff"/>`)
+      :eyeSvg(x,y,r,mood,c.dark)).join('');
+    const brows=mood==='mad'?c.e.map(([x,y,r],k)=>{const s=k===0?1:-1;return `<path d="M${x-r*1.2} ${y-r*1.5-s*r*.6}L${x+r*1.2} ${y-r*1.5+s*r*.6}" stroke="${dk}" stroke-width="2.8" stroke-linecap="round"/>`;}).join(''):'';
+    const cheeks=mood==='mad'?c.e.map(([x,y,r])=>`<circle cx="${x}" cy="${y+r*2.2}" r="${r*.9}" fill="#ff3b3b" opacity=".3"/>`).join(''):'';
+    const mouth=c.m?mouthSvg(c.m[0],c.m[1],c.m[2],mood):(c.mm?mouthSvg(c.mm[0],c.mm[1],c.mm[2],mood):'');
+    const ov=(c.o==='__SHARK__'||i===3)?'':'';
+    return `<svg class="face-svg" viewBox="0 0 64 64" aria-hidden="true">${c.b}${cheeks}${eyes}${brows}${mouth}${o}</svg>`;
+  };
+
+  /* ---- Separation Station: substances & machines (32x32 colour icons) ---- */
+  const cube=(x,y,s)=>`<path d="M${x} ${y-s*.5}l${s*.5} ${s*.28}-${s*.5} ${s*.28}-${s*.5}-${s*.28}z" fill="#fff"/><path d="M${x-s*.5} ${y-s*.22}l${s*.5} ${s*.28}v${s*.55}l-${s*.5}-${s*.28}z" fill="#f2e2ea"/><path d="M${x+s*.5} ${y-s*.22}l-${s*.5} ${s*.28}v${s*.55}l${s*.5}-${s*.28}z" fill="#e3cbd8"/><path d="M${x} ${y-s*.5}l${s*.5} ${s*.28}v${s*.55}l-${s*.5} ${s*.28}-${s*.5}-${s*.28}v-${s*.55}z" fill="none" stroke="#b88fa6" stroke-width="1.1" stroke-linejoin="round"/>`;
+  const SUBI={
+    iron:`<path d="M3 27C7 15 25 15 29 27z" fill="#596271"/><path d="M8 23l3-2 2 3zM15 19l3 1-1 3zM21 23l3-1 0 3zM12 26l3-1 1 2zM19 18l2 2-3 1z" fill="#aab4c2"/><path d="M6 24l2-1M17 22l2 0M24 25l2 0" stroke="#c9d1dc" stroke-width="1" stroke-linecap="round"/>`,
+    clips:`<path d="M9 6v15a4.2 4.2 0 0 0 8.4 0V9.6a2.6 2.6 0 0 0-5.2 0V19" fill="none" stroke="#8793a8" stroke-width="2.3" stroke-linecap="round"/><path d="M16 11v13a4.2 4.2 0 0 0 8.4 0V12.6a2.6 2.6 0 0 0-5.2 0V22" fill="none" stroke="#b3bdcc" stroke-width="2.3" stroke-linecap="round"/>`,
+    sand:`<path d="M2 27Q9 11 16 20Q23 9 30 27z" fill="#e5c58c"/><path d="M2 27Q9 11 16 20Q23 9 30 27z" fill="none" stroke="#c9a566" stroke-width="1.4" stroke-linejoin="round"/><circle cx="10" cy="24" r=".9" fill="#c9a566"/><circle cx="17" cy="25" r=".9" fill="#c9a566"/><circle cx="23" cy="23" r=".9" fill="#c9a566"/>`,
+    pebbles:`<ellipse cx="11" cy="21" rx="7.4" ry="5.4" fill="#8f8a82"/><ellipse cx="22.5" cy="22.5" rx="6.4" ry="4.8" fill="#a8a195"/><ellipse cx="17" cy="13" rx="5.8" ry="4.2" fill="#76716a"/><path d="M7 19a5 4 0 0 1 4-2M19.5 21a4 3 0 0 1 3-1.5M14 11.4a3 2.4 0 0 1 3-.8" stroke="#fff" stroke-opacity=".35" stroke-width="1.3" fill="none" stroke-linecap="round"/>`,
+    copper:`<circle cx="12" cy="12" r="9.4" fill="#a45a28"/><circle cx="19" cy="19" r="10" fill="#c8793c" stroke="#8d4b1d" stroke-width="1.8"/><circle cx="19" cy="19" r="6.3" fill="none" stroke="#e5ab7c" stroke-width="1.4"/><path d="M14 15a7 7 0 0 1 4-3" stroke="#fff" stroke-opacity=".5" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+    alum:`<rect x="8.5" y="6.5" width="15" height="21" rx="2.6" fill="#d7dce5" stroke="#9aa4b6" stroke-width="1.4"/><rect x="8.5" y="12.5" width="15" height="8" fill="#5b94e0"/><ellipse cx="16" cy="6.5" rx="7.5" ry="2" fill="#aeb6c4" stroke="#8793a8" stroke-width="1"/><path d="M14.4 5.8h3.2" stroke="#6b768a" stroke-width="1.2" stroke-linecap="round"/><path d="M11 9v16" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round"/>`,
+    salt:`<path d="M9.5 11.5h13l1.6 14a2 2 0 0 1-2 2.2h-12.2a2 2 0 0 1-2-2.2z" fill="#f6f9fd" stroke="#8d9db6" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 11.5a7 6 0 0 1 14 0z" fill="#9aa6ba" stroke="#7a879d" stroke-width="1.2"/><circle cx="13.5" cy="8.4" r=".9" fill="#4e596d"/><circle cx="16" cy="6.8" r=".9" fill="#4e596d"/><circle cx="18.5" cy="8.4" r=".9" fill="#4e596d"/><path d="M11.4 17l.6 8M20.6 17l-.6 8" stroke="#cdd8ea" stroke-width="1.3" stroke-linecap="round"/>`,
+    sugar:cube(11,19,14)+cube(21,14,13),
+    water:`<path d="M16 3.5C16 3.5 7 13.6 7 20a9 9 0 0 0 18 0C25 13.6 16 3.5 16 3.5z" fill="#3d9be9"/><path d="M11.4 19.6a5 5 0 0 0 3 4.6" stroke="#fff" stroke-opacity=".65" stroke-width="1.8" fill="none" stroke-linecap="round"/>`
+  };
+  const MACHI={
+    magnet:`<path d="M8 6v10a8 8 0 0 0 8 8" fill="none" stroke="#e2483f" stroke-width="7"/><path d="M24 6v10a8 8 0 0 1-8 8" fill="none" stroke="#3d6fd6" stroke-width="7"/><rect x="4.5" y="3" width="7" height="7" rx="1" fill="#e3e7ee" stroke="#9aa4b6" stroke-width="1"/><rect x="20.5" y="3" width="7" height="7" rx="1" fill="#e3e7ee" stroke="#9aa4b6" stroke-width="1"/>`,
+    tap:`<path d="M13 3.5h6M16 3.5V8" stroke="#6b7a92" stroke-width="2.6" stroke-linecap="round"/><path d="M5 8h15a5 5 0 0 1 5 5v2" fill="none" stroke="#8d9bb0" stroke-width="5.4" stroke-linecap="round"/><rect x="21" y="14" width="8" height="4" rx="1.5" fill="#6b7a92"/><path d="M25 22c0 0-3 3.4-3 5.4a3 3 0 0 0 6 0c0-2-3-5.4-3-5.4z" fill="#3d9be9"/>`,
+    filter:`<path d="M4 6h24l-8.4 12.4V27l-7.2 2.2V18.4z" fill="#8fb3e3" stroke="#4f77b5" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 10.4h16M11 14.4h10" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" stroke-linecap="round"/>`,
+    heat:`<path d="M16 2.5C19 8.4 25.6 12 25.6 19.4a9.6 9.6 0 0 1-19.2 0C6.4 14 10.6 12 11.6 7 13.8 9 15 6.4 16 2.5z" fill="#f08a24"/><path d="M16 14c3.2 4 5.2 5 5.2 8.4a5.2 5.2 0 0 1-10.4 0c0-3.4 2.4-4.4 5.2-8.4z" fill="#ffd166"/>`,
+    flag:`<path d="M7 28V4" stroke="#4a5468" stroke-width="2.6" stroke-linecap="round"/><rect x="8" y="5" width="18" height="13" fill="#fff" stroke="#4a5468" stroke-width="1.4"/><path d="M8 5h4.5v4.3H8zM17 5h4.5v4.3H17zM12.5 9.3H17v4.4h-4.5zM21.5 9.3H26v4.4h-4.5zM8 13.7h4.5V18H8zM17 13.7h4.5V18H17z" fill="#26324d"/>`,
+    coin:`<circle cx="16" cy="16" r="12.4" fill="#f4b13a" stroke="#b9801a" stroke-width="2"/><circle cx="16" cy="16" r="8" fill="none" stroke="#fff6df" stroke-width="1.6"/><path d="M11.4 11.6a7 7 0 0 1 4.6-2.2" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" fill="none" stroke-linecap="round"/>`
+  };
+  const cic=(n,size)=>`<svg class="sic" viewBox="0 0 32 32" ${size?`width="${size}" height="${size}" `:''}aria-hidden="true">${SUBI[n]||MACHI[n]||''}</svg>`;
+  const cel=(n,size)=>{const t=document.createElement('template');t.innerHTML=cic(n,size);return t.content.firstChild;};
+
+  /* ---- game thumbnails (320 x 180) ---- */
+  const wrap=(id,bg,body)=>`<svg class="thumb" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+<defs><pattern id="g${id}" width="30" height="30" patternUnits="userSpaceOnUse"><rect x="3" y="3" width="24" height="24" rx="5" fill="none" stroke="#fff" stroke-opacity=".085" stroke-width="1.5"/></pattern></defs>
+<rect width="320" height="180" fill="${bg}"/><rect width="320" height="180" fill="url(#g${id})"/>${body}</svg>`;
+  const star=(x,y,r,f=AMBER,o=1)=>`<path transform="translate(${x} ${y}) scale(${r/12})" d="M0-12c.9 7.2 4.8 11.1 12 12-7.2.9-11.1 4.8-12 12-.9-7.2-4.8-11.1-12-12 7.2-.9 11.1-4.8 12-12z" fill="${f}" opacity="${o}"/>`;
+  const ball=(x,y,r,f,tx,tc)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${f}"/><path d="M${x-r*.62} ${y-r*.22}a${r*.7} ${r*.7} 0 0 1 ${r*.5}-${r*.5}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="${Math.max(1.6,r*.14)}" stroke-linecap="round"/>${tx?`<text x="${x}" y="${y+r*.36}" text-anchor="middle" font-family="system-ui,Arial,sans-serif" font-weight="800" font-size="${r*.95}" fill="${tc}">${tx}</text>`:''}`;
+  const sw='font-family="system-ui,Arial,sans-serif" font-weight="800"';
+
+  const speed=()=>{
+    const syms=['H','He','Li','Be','B','C','N','O','F','Ne','Na','Mg','Al','Si','P'];
+    let t='';
+    syms.forEach((s,i)=>{const c=i%5,r=(i/5)|0,x=20+c*44,y=40+r*44,hit=i===7;
+      t+=`<rect x="${x}" y="${y}" width="38" height="38" rx="7" fill="${hit?AMBER:CREAM}" opacity="${hit?1:.92-((c+r)%3)*.07}"/>`+
+         `<text x="${x+19}" y="${y+25}" text-anchor="middle" ${sw} font-size="${hit?19:14}" fill="${INK}" opacity="${hit?1:.38}">${s}</text>`;});
+    const hx=20+2*44-3,hy=40+44-3;
+    t+=`<rect x="${20+7%5*44-3}" y="${40+44-3}" width="44" height="44" rx="10" fill="none" stroke="#fff" stroke-width="2.5" stroke-dasharray="5 4"/>`;
+    /* stopwatch */
+    const cx=262,cy=84,R=40;let tk='';
+    for(let i=0;i<12;i++){const a=i*Math.PI/6,l=i%3?4:7;tk+=`<line x1="${cx+Math.sin(a)*(R-6)}" y1="${cy-Math.cos(a)*(R-6)}" x2="${cx+Math.sin(a)*(R-6-l)}" y2="${cy-Math.cos(a)*(R-6-l)}" stroke="${INK}" stroke-width="${i%3?1.6:2.6}" stroke-linecap="round"/>`;}
+    const a1=-Math.PI/2,a2=a1+1.9,pt=(a,r)=>[cx+Math.cos(a)*r,cy+Math.sin(a)*r];
+    const [x1,y1]=pt(a1,R-12),[x2,y2]=pt(a2,R-12);
+    t+=`<rect x="${cx-7}" y="${cy-R-11}" width="14" height="9" rx="2.5" fill="${CREAM}"/><rect x="${cx-3}" y="${cy-R-6}" width="6" height="8" fill="${CREAM}"/>`+
+       `<circle cx="${cx}" cy="${cy+3}" r="${R}" fill="#0f2a6b" opacity=".45"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${CREAM}"/>`+
+       `<path d="M${cx} ${cy}L${x1} ${y1}A${R-12} ${R-12} 0 0 1 ${x2} ${y2}z" fill="${AMBER}"/>${tk}`+
+       `<line x1="${cx}" y1="${cy}" x2="${pt(a2,R-10)[0]}" y2="${pt(a2,R-10)[1]}" stroke="${INK}" stroke-width="3" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="4.5" fill="${INK}"/>`;
+    /* cursor */
+    t+=`<g transform="translate(130 112) rotate(-8)"><path d="M0 0v26l7-6.5 5 11.5 6.2-2.7-5-11.3 9.3-.4z" fill="#fff" stroke="${INK}" stroke-width="2.4" stroke-linejoin="round"/></g>`;
+    return wrap('speed','#22418f',t);
+  };
+  const trivia=()=>{
+    let t=`<g transform="rotate(-6 92 94)"><rect x="56" y="62" width="84" height="84" rx="14" fill="#1c0f3f" opacity=".5"/><rect x="50" y="54" width="84" height="84" rx="14" fill="${CREAM}"/>`+
+      `<text x="64" y="75" ${sw} font-size="13" fill="${INK}" opacity=".45">?</text><text x="92" y="118" text-anchor="middle" ${sw} font-size="62" fill="${INK}">?</text></g>`;
+    for(let i=0;i<4;i++){const y=44+i*30;
+      t+=`<circle cx="186" cy="${y+9}" r="11" fill="${i<3?'#fff':AMBER}" opacity="${i<3?.22:1}"/><text x="186" y="${y+14}" text-anchor="middle" ${sw} font-size="14" fill="${i<3?'#fff':INK}">${i+1}</text>`+
+         `<rect x="206" y="${y}" width="92" height="18" rx="9" fill="#fff" opacity=".16"/><rect x="206" y="${y}" width="${23*(i+1)}" height="18" rx="9" fill="${AMBER}"/>`;}
+    t+=star(150,38,9)+star(34,152,7,CREAM,.8)+star(300,22,6,CREAM,.6);
+    return wrap('trivia','#4a2d86',t);
+  };
+  const lab=()=>{
+    const fl='M91 30H117V72L152 138Q158 152 142 152H66Q50 152 56 138L91 72Z';
+    let t=`<clipPath id="fc"><path d="${fl}"/></clipPath><path d="${fl}" fill="#fff" fill-opacity=".14"/>`+
+      `<g clip-path="url(#fc)"><rect x="40" y="102" width="130" height="60" fill="${AMBER}"/><path d="M40 102q16-8 32 0t32 0 32 0 32 0v-4H40z" fill="${AMBER}"/>`+
+      `<circle cx="82" cy="126" r="5.5" fill="#fff" opacity=".7"/><circle cx="110" cy="116" r="3.8" fill="#fff" opacity=".7"/><circle cx="98" cy="138" r="4.4" fill="#fff" opacity=".55"/><circle cx="120" cy="132" r="2.6" fill="#fff" opacity=".6"/></g>`+
+      `<path d="${fl}" fill="none" stroke="${CREAM}" stroke-width="5" stroke-linejoin="round"/><rect x="85" y="25" width="38" height="9" rx="4.5" fill="${CREAM}"/>`+
+      `<circle cx="96" cy="14" r="3.2" fill="#fff" opacity=".55"/><circle cx="106" cy="8" r="2.2" fill="#fff" opacity=".4"/>`;
+    /* water molecule */
+    t+=`<line x1="236" y1="88" x2="206" y2="120" stroke="${CREAM}" stroke-width="6" stroke-linecap="round"/><line x1="236" y1="88" x2="266" y2="120" stroke="${CREAM}" stroke-width="6" stroke-linecap="round"/>`+
+       ball(236,86,27,'#e2483f','O','#fff')+ball(204,122,15,CREAM,'H',INK)+ball(268,122,15,CREAM,'H',INK)+
+       `<text x="236" y="166" text-anchor="middle" ${sw} font-size="21" fill="${CREAM}" opacity=".95">H₂O</text>`+star(290,40,8)+star(188,50,5,CREAM,.7);
+    return wrap('lab','#0b6b5e',t);
+  };
+  const atom=()=>{
+    const cx=160,cy=90;let t='';
+    [34,58,82].forEach(r=>t+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${CREAM}" stroke-opacity=".5" stroke-width="2"/>`);
+    const el=(r,deg)=>{const a=deg*Math.PI/180;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+    [[34,-35],[34,145],[58,20],[58,140],[58,260],[82,-70],[82,100]].forEach(([r,d])=>{const [x,y]=el(r,d);
+      t+=`<circle cx="${x}" cy="${y}" r="8.5" fill="#fff" fill-opacity=".15"/><circle cx="${x}" cy="${y}" r="6.6" fill="${INK}" stroke="${CREAM}" stroke-width="2.4"/><path d="M${x-2.6} ${y}h5.2" stroke="${CREAM}" stroke-width="1.6" stroke-linecap="round"/>`;});
+    [[0,0,1],[13,-8,0],[-13,-8,0],[13,10,1],[-13,10,1],[0,-18,1],[0,20,0],[0,-2,0]].forEach(([dx,dy,p],k)=>{
+      if(k===7)return;t+=`<circle cx="${cx+dx}" cy="${cy+dy}" r="10.6" fill="${p?AMBER:CREAM}" stroke="#7a2a1d" stroke-opacity=".5" stroke-width="1.2"/>`+(p?`<path d="M${cx+dx-3.4} ${cy+dy}h6.8M${cx+dx} ${cy+dy-3.4}v6.8" stroke="#7a2a1d" stroke-width="1.5" stroke-linecap="round"/>`:'');});
+    t+=star(40,40,8)+star(290,150,7,CREAM,.8);
+    return wrap('atom','#b5402f',t);
+  };
+  const balance=()=>{
+    let t=`<rect x="152" y="54" width="16" height="94" rx="7" fill="${CREAM}"/><path d="M114 164q0-14 14-14h64q14 0 14 14z" fill="${CREAM}"/>`+
+      `<rect x="56" y="45" width="208" height="10" rx="5" fill="${CREAM}"/>`+
+      [[68,'M68 52L42 110M68 52L94 110'],[252,'M252 52L226 110M252 52L278 110']].map(([x,d])=>`<path d="${d}" stroke="${CREAM}" stroke-width="2.2" fill="none" stroke-linecap="round"/>`).join('')+
+      [68,252].map(x=>`<path d="M${x-36} 108h72q0 20-36 20t-36-20z" fill="${CREAM}"/>`).join('')+
+      `<circle cx="160" cy="50" r="12" fill="${AMBER}" stroke="${INK}" stroke-width="3"/>`;
+    [0,184].forEach(o=>{t+=ball(56+o,94,12.5,'#e2483f')+ball(80+o,94,12.5,'#e2483f')+ball(68+o,70,12.5,AMBER)+ball(68+o,92,0.01,'none');});
+    t+=star(34,30,7,CREAM,.8)+star(292,26,9);
+    return wrap('balance','#0d5575',t);
+  };
+  const klass=()=>{
+    const bl=(x,y,w,h,o,n,fs)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="${CREAM}" opacity="${o}"/><text x="${x+w/2}" y="${y+fs+8}" text-anchor="middle" ${sw} font-size="${fs}" fill="${INK}" opacity=".82">${n}</text>`;
+    const av=(x,y,c)=>`<circle cx="${x}" cy="${y}" r="13" fill="${c}"/><path d="M${x-19} ${y+30}a19 17 0 0 1 38 0z" fill="${c}"/>`;
+    let t=bl(130,98,60,62,1,1,30)+bl(70,118,60,42,.86,2,24)+bl(190,128,60,32,.72,3,22)+
+      av(160,62,AMBER)+av(100,84,'#8fd3ff')+av(220,94,'#b6efc9')+star(160,28,11)+
+      `<rect x="20" y="20" width="62" height="24" rx="12" fill="${INK}"/><circle cx="35" cy="32" r="5" fill="#ff5d73"/><text x="45" y="36.5" ${sw} font-size="12" fill="${CREAM}" letter-spacing="1">LIVE</text>`;
+    [[48,90,AMBER,-20],[268,52,CREAM,25],[282,112,'#8fd3ff',10],[36,138,CREAM,40],[250,28,AMBER,-35],[88,40,'#b6efc9',15]].forEach(([x,y,c,r])=>t+=`<rect x="${x}" y="${y}" width="8" height="13" rx="2" fill="${c}" transform="rotate(${r} ${x+4} ${y+6})"/>`);
+    return wrap('class','#9f2f5d',t);
+  };
+  const explore=()=>{
+    let t='';
+    for(let r=0;r<4;r++)for(let c=0;c<9;c++){const x=10+c*35,y=18+r*36;t+=`<rect x="${x}" y="${y}" width="30" height="30" rx="6" fill="${CREAM}" opacity="${.18+((c*3+r*5)%4)*.05}"/>`;}
+    const cx=196,cy=84,R=54;
+    t+=`<clipPath id="lc"><circle cx="${cx}" cy="${cy}" r="${R-4}"/></clipPath><circle cx="${cx}" cy="${cy+4}" r="${R+8}" fill="#4a2606" opacity=".35"/>`+
+      `<circle cx="${cx}" cy="${cy}" r="${R-4}" fill="#fff7e6"/><g clip-path="url(#lc)">`;
+    [['Ne',-81,-81,0],['Li',-25,-81,0],['Be',31,-81,0],['K',-81,-25,0],['Na',-25,-25,1],['Mg',31,-25,0],['Ca',-81,31,0],['Rb',-25,31,0],['Sr',31,31,0]].forEach(([s,dx,dy,h])=>{
+      t+=`<rect x="${cx+dx}" y="${cy+dy}" width="50" height="50" rx="9" fill="${h?AMBER:'#ead7b8'}"/><text x="${cx+dx+25}" y="${cy+dy+33}" text-anchor="middle" ${sw} font-size="${h?24:19}" fill="${INK}" opacity="${h?1:.5}">${s}</text>`;});
+    t+=`</g><circle cx="${cx}" cy="${cy}" r="${R-4}" fill="none" stroke="${INK}" stroke-width="3" opacity=".12"/><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${CREAM}" stroke-width="9"/>`+
+      `<path d="M${cx-34} ${cy-30}a46 46 0 0 1 22-18" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".8"/>`+
+      `<path d="M${cx+38} ${cy+40}L${cx+78} ${cy+80}" stroke="${INK}" stroke-width="16" stroke-linecap="round"/><path d="M${cx+38} ${cy+40}L${cx+78} ${cy+80}" stroke="#2a2f63" stroke-width="9" stroke-linecap="round"/>`+star(36,150,8,CREAM,.85);
+    return wrap('explore','#a85a12',t);
+  };
+  const stats=()=>{
+    const hs=[30,46,64,84,106];let t=`<line x1="30" y1="152" x2="290" y2="152" stroke="${CREAM}" stroke-opacity=".5" stroke-width="2.5" stroke-linecap="round"/>`;
+    [60,100,140].forEach(y=>t+=`<line x1="30" y1="${y}" x2="290" y2="${y}" stroke="#fff" stroke-opacity=".08" stroke-width="1.5"/>`);
+    hs.forEach((h,i)=>{const x=46+i*50,last=i===4;t+=`<path d="M${x} 152V${152-h+7}a7 7 0 0 1 7-7h20a7 7 0 0 1 7 7V152z" fill="${last?AMBER:CREAM}" opacity="${last?1:.9-(4-i)*.08}"/>`;});
+    const pts=hs.map((h,i)=>[71+i*50,152-h-16]);
+    t+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#fff" stroke-opacity=".75" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 7"/>`+
+      pts.map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i===4?6:4.5}" fill="${i===4?AMBER:INK}" stroke="${CREAM}" stroke-width="2.4"/>`).join('')+star(296,20,9)+star(40,34,6,CREAM,.7);
+    return wrap('stats','#34435e',t);
+  };
+
+  const diner=()=>{
+    let t=`<ellipse cx="116" cy="146" rx="78" ry="10" fill="#0d2f1b" opacity=".35"/><circle cx="116" cy="104" r="62" fill="#f6efe0"/><circle cx="116" cy="104" r="62" fill="none" stroke="#cfc6b0" stroke-width="2"/><circle cx="116" cy="104" r="46" fill="#fff" stroke="#e3dbc8" stroke-width="2"/>`+
+      `<line x1="116" y1="92" x2="92" y2="118" stroke="${CREAM}" stroke-width="7" stroke-linecap="round"/><line x1="116" y1="92" x2="140" y2="118" stroke="${CREAM}" stroke-width="7" stroke-linecap="round"/>`+
+      ball(116,90,17,'#e2483f','O','#fff')+ball(91,120,11,CREAM,'H',INK)+ball(141,120,11,CREAM,'H',INK)+
+      `<path d="M96 40q-6-10 0-18M116 36q-6-10 0-20M136 40q-6-10 0-18" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="3.5" stroke-linecap="round"/>`+
+      `<g transform="rotate(5 252 94)"><rect x="206" y="40" width="92" height="116" rx="9" fill="${CREAM}"/><path d="M206 150l8 9 8-9 8 9 8-9 8 9 8-9 8 9 8-9 8 9 8-9v-3H206z" fill="${CREAM}"/>`+
+      `<rect x="206" y="40" width="92" height="22" rx="9" fill="#f4b13a"/><text x="252" y="56" text-anchor="middle" ${sw} font-size="12" fill="${INK}" letter-spacing="1.5">ORDER</text>`+
+      `<text x="220" y="86" ${sw} font-size="15" fill="${INK}">2 H₂</text><text x="220" y="108" ${sw} font-size="15" fill="${INK}">1 O₂</text><path d="M220 117h64" stroke="${INK}" stroke-opacity=".3" stroke-width="1.6" stroke-dasharray="3 3"/><text x="220" y="138" ${sw} font-size="15" fill="#c8402f">2 H₂O</text></g>`+
+      star(296,26,8)+star(30,34,6,CREAM,.8)+star(40,160,5,CREAM,.6);
+    return wrap('diner','#2d7a46',t);
+  };
+  const sep=()=>{
+    let t=`<rect x="14" y="132" width="292" height="16" rx="8" fill="#2f3747"/><rect x="14" y="132" width="292" height="6" rx="3" fill="#586174"/>`;
+    for(let i=0;i<10;i++)t+=`<circle cx="${30+i*29}" cy="152" r="7.5" fill="#3a4357" stroke="#6b7691" stroke-width="2"/>`;
+    t+=`<path d="M22 132l10-26h44l10 26z" fill="#e8c88a" stroke="#c4a05a" stroke-width="2" stroke-linejoin="round"/>`+
+      [[38,126],[52,120],[66,126]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="5" fill="${i===1?'#596271':'#e5c58c'}"/>`).join('')+
+      `<path d="M150 66v22M150 88" stroke="none"/>`+
+      /* magnet with field lines */
+      `<path d="M138 34v22a22 22 0 0 0 44 0V34" fill="none" stroke="#e2483f" stroke-width="15"/><path d="M182 34v22a22 22 0 0 1-22 22" fill="none" stroke="#3d6fd6" stroke-width="15"/>`+
+      `<rect x="130.5" y="26" width="15" height="14" rx="2" fill="#e3e7ee"/><rect x="174.5" y="26" width="15" height="14" rx="2" fill="#e3e7ee"/>`+
+      `<path d="M138 100q22-14 44 0" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2.4" stroke-dasharray="3 6" stroke-linecap="round"/>`+
+      [[150,108],[170,100],[160,88]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.6" fill="#596271" stroke="#aab4c2" stroke-width="1.6"/>`).join('')+
+      `<path d="M104 128q0-10 8-10h22" fill="none" stroke="none"/>`+
+      /* bins */
+      `<path d="M222 96h34l-4 36h-26z" fill="#e8eef7" stroke="#9aa8c0" stroke-width="3" stroke-linejoin="round"/><path d="M262 96h34l-4 36h-26z" fill="#e8eef7" stroke="#9aa8c0" stroke-width="3" stroke-linejoin="round"/>`+
+      `<path d="M228 132q3-14 11-14t11 14z" fill="#596271"/><path d="M268 132q4-18 12-18t12 18z" fill="#e5c58c"/>`+
+      [0,1,2].map(i=>star(248+i*20,32,8)).join('')+star(30,40,6,CREAM,.8);
+    return wrap('sep','#46566d',t);
+  };
+
+  const thumbs={speed,trivia,lab,atom,balance,class:klass,explore,stats,diner,sep};
+  let uid=0;
+  const thumb=n=>{const u=++uid;return thumbs[n]().replace(/id="([^"]+)"/g,(m,i)=>`id="${i}_${u}"`).replace(/url\(#([^)]+)\)/g,(m,i)=>`url(#${i}_${u})`);};
+  return {INK,CREAM,AMBER,P,ico,el,logo,thumb,face,cic,cel,names:Object.keys(thumbs),SUBI,MACHI};
+})();
+
+const I=(n,sz)=>ART.el(n,sz);
 
 /* ================= TEACHER SETTINGS (edit these) ================= */
 const SHOW_NAME_LIST   = true;        // show tap-to-pick nicknames on the login screen
@@ -818,9 +1140,9 @@ Ts|Tennessine|294|17
 Og|Oganesson|294|18`;
 
 const CATS = {
-  alkali:['Alkali metal','#ff8f8f'], alkaline:['Alkaline earth metal','#ffb27a'], transition:['Transition metal','#ffe27a'],
-  post:['Post-transition metal','#b8e08a'], metalloid:['Metalloid','#6fd9bd'], nonmetal:['Nonmetal','#8ccaff'],
-  halogen:['Halogen','#b9a6ff'], noble:['Noble gas','#f0a0e6'], lanthanide:['Lanthanide','#ffc4d6'], actinide:['Actinide','#d6c4a8']
+  alkali:['Alkali metal','#f29a92'], alkaline:['Alkaline earth metal','#f4bd85'], transition:['Transition metal','#f1dc8f'],
+  post:['Post-transition metal','#b9d995'], metalloid:['Metalloid','#87cfb9'], nonmetal:['Nonmetal','#96c5ea'],
+  halogen:['Halogen','#b7a8ec'], noble:['Noble gas','#e6a3d2'], lanthanide:['Lanthanide','#f3c3cf'], actinide:['Actinide','#d6c3a4']
 };
 const METALS = ['alkali','alkaline','transition','post','lanthanide','actinide'];
 function catOf(n){
@@ -937,9 +1259,9 @@ const COMPOUNDS = [
  ,{t:3,name:'Butane',f:{C:4,H:10},clue:"The fuel inside a disposable lighter."}
  ,{t:3,name:'Ethane',f:{C:2,H:6},clue:"A gas found in natural gas, just one carbon bigger than methane."}
 ];
-const ATOMC={H:['#ffffff','#333'],C:['#3a3a3a','#fff'],N:['#4a6cff','#fff'],O:['#ff4a4a','#fff'],Na:['#b070ff','#fff'],
-  Cl:['#3fd13f','#06310a'],Ca:['#58d68d','#06310a'],S:['#ffe14a','#3a2f00'],Mg:['#7ee08a','#06310a'],K:['#c27bff','#fff'],
-  Fe:['#c9733a','#fff'],Si:['#d9b38c','#3a2200'],Al:['#b8b8c8','#222'],P:['#ff9f43','#3a1d00'],F:['#a8e6a1','#06310a'],I:['#9b59b6','#fff'],Zn:['#9fb0c8','#1b2433']};
+const ATOMC={H:['#f4efe4','#101536'],C:['#3b4150','#fff'],N:['#3f62d6','#fff'],O:['#e2483f','#fff'],Na:['#8a5fd6','#fff'],
+  Cl:['#38a860','#fff'],Ca:['#52b788','#07301e'],S:['#ecc43a','#3a2f00'],Mg:['#6fcf97','#07301e'],K:['#a45bd6','#fff'],
+  Fe:['#c4703a','#fff'],Si:['#d2ae84','#3a2200'],Al:['#aab0c4','#1b2433'],P:['#f09a40','#3a1d00'],F:['#9fdc98','#07301e'],I:['#8a4fb0','#fff'],Zn:['#8fa3c0','#1b2433']};
 
 /* ---------- HELPERS ---------- */
 const $ = id => document.getElementById(id);
@@ -965,17 +1287,18 @@ const an = w => /^[aeiou]/i.test(w)?'an':'a';
 /* ---------- CELEBRATION FX ---------- */
 const fx={
   pop({text,icon,kind='good',at=null,size=''}){
-    const el=h('div',{class:`pop ${kind} ${at?'at':size}`},h('span',{class:'pi'},icon),h('span',null,text));
+    const pi=h('span',{class:'pi'});pi.innerHTML=ART.ico(icon);
+    const el=h('div',{class:`pop ${kind} ${at?'at':size}`},pi,h('span',null,text));
     if(at){const r=at.getBoundingClientRect();el.style.left=(r.left+r.width/2)+'px';el.style.top=r.top+'px';}
     $('fx').append(el);setTimeout(()=>el.remove(),size==='big'?1500:950);
   },
   confetti(n=40,x,y){
     if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
     const ox=x==null?innerWidth/2:x,oy=y==null?innerHeight*0.38:y;
-    const cols=['#ff4d6d','#ffb703','#3fd1a0','#2f6bff','#b07cff','#ff8a00'],em=['⭐','🎉','✨','🔬','⚛️'];
+    const cols=['#f4b13a','#e2483f','#2f6bff','#3fae8a','#8a5fd6','#f6efe0'];
     for(let i=0;i<n;i++){
       const p=h('div',{class:'conf'});
-      if(Math.random()<.3)p.textContent=em[i%em.length];
+      if(Math.random()<.3){p.innerHTML=ART.ico('sparkle',22);p.style.color=cols[i%cols.length];}
       else p.style.cssText=`width:10px;height:14px;border-radius:2px;background:${cols[i%cols.length]}`;
       const a=Math.random()*Math.PI*2,d=120+Math.random()*320;
       p.style.left=ox+'px';p.style.top=oy+'px';
@@ -1037,11 +1360,11 @@ const qSave=q=>store.set('pte_queue_v1',JSON.stringify(q.slice(-300)));
 function setSyncBadge(){
   const b=$('syncBadge');if(!b)return;
   const waiting=qLoad().filter(r=>r.user===me).length;
-  let t='☁️ Saved online',cls='ok';
-  if(syncState==='offline'){t='⚠️ Offline – saved on this device';cls='bad';}
-  else if(syncState==='authfail'){t='⚠️ Log in again to save';cls='bad';}
-  else if(waiting){t='⏳ Saving…';cls='wait';}
-  b.textContent=t;b.className='sync '+cls;
+  let t='Saved online',cls='ok',ic='cloud';
+  if(syncState==='offline'){t='Offline – saved on this device';cls='bad';ic='cloudoff';}
+  else if(syncState==='authfail'){t='Log in again to save';cls='bad';ic='warning';}
+  else if(waiting){t='Saving…';cls='wait';ic='clock';}
+  b.innerHTML=ART.ico(ic)+'<span>'+t+'</span>';b.className='sync '+cls;
 }
 let flushing=false;
 async function flushQueue(){
@@ -1093,7 +1416,7 @@ function stopAll(){runId++;clearInterval(spTimer);clearInterval(liveTimer);clear
 function show(id){
   stopAll();$('fx').replaceChildren();
   document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));
-  $('userChip').hidden=!me; if(me)$('userName').textContent='👤 '+prof().name;
+  $('userChip').hidden=!me; if(me)$('userName').replaceChildren(I('user'),prof().name);
   window.scrollTo(0,0);
 }
 function goMenu(){renderMenu();show('s-menu');}
@@ -1218,27 +1541,28 @@ function renderMenu(){
   const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
   const ab=Object.values(P.atom).map(r=>r.best).filter(x=>x>0);
-  const mc=(cls,ic,title,desc,best,fn)=>h('button',{class:'mcard '+cls,onclick:fn},h('div',{class:'ic'},ic),h('b',null,title),h('span',null,desc),best?h('div',{class:'best'},best):null);
+  const mc=(cls,ic,title,desc,best,fn)=>{const art=h('div',{class:'art'});art.innerHTML=ART.thumb(ic);
+    return h('button',{class:'mcard '+cls,onclick:fn},art,h('div',{class:'body'},h('b',null,title),h('span',null,desc),best?h('div',{class:'best'},best):null));};
   $('menuGrid').replaceChildren(
-    mc('m1','⚡','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
-    mc('m2','🕵️','Element Trivia','Guess the mystery element from 4 hints. Fewer hints = more points!',P.trivia.plays?`High score: ${P.trivia.best}/${ROUND_LEN*4}`:'',startTrivia),
-    mc('m3','🧪','Compound Lab','Build real compounds like H₂O by combining atoms from the table.',P.lab.plays?`High score: ${P.lab.best}/${ROUND_LEN*3}`:'',startLab),
-    mc('m6','⚛️','Atom Builder','Add protons, neutrons and electrons to build atoms, ions and isotopes.',ab.length?`High score: ${Math.max(...ab)}/${ROUND_LEN*3}`:'',()=>{renderAtomSetup();show('s-atom-setup');}),
-    mc('m7','⚖️','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
-    mc('m9','🍔','Atom Diner','Smash ingredients into atoms and rebuild them into dishes before customers lose patience!',dnBestLine(P),()=>{renderDinerSetup();show('s-diner-setup');}),
-    mc('m10','🏭','Separation Station','Build a factory line of magnets, filters and heaters to split mixtures apart.',sepStars(P)?`⭐ ${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
-    mc('m8','🎮','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
-    mc('m4','🔭','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
-    mc('m5','📊','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');})
+    mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
+    mc('m2','trivia','Element Trivia','Guess the mystery element from 4 hints. Fewer hints = more points!',P.trivia.plays?`High score: ${P.trivia.best}/${ROUND_LEN*4}`:'',startTrivia),
+    mc('m3','lab','Compound Lab','Build real compounds like H₂O by combining atoms from the table.',P.lab.plays?`High score: ${P.lab.best}/${ROUND_LEN*3}`:'',startLab),
+    mc('m6','atom','Atom Builder','Add protons, neutrons and electrons to build atoms, ions and isotopes.',ab.length?`High score: ${Math.max(...ab)}/${ROUND_LEN*3}`:'',()=>{renderAtomSetup();show('s-atom-setup');}),
+    mc('m7','balance','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
+    mc('m9','diner','Atom Diner','Smash ingredients into atoms and rebuild them into dishes before customers lose patience!',dnBestLine(P),()=>{renderDinerSetup();show('s-diner-setup');}),
+    mc('m10','sep','Separation Station','Build a factory line of magnets, filters and heaters to split mixtures apart.',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
+    mc('m8','class','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
+    mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
+    mc('m5','stats','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');})
   );
 }
 
 
 /* ---------- END SCREEN ---------- */
 function showEnd({emoji,title,big,sub,body,again,party}){
-  $('endEmoji').textContent=emoji;$('endTitle').textContent=title;$('endBig').textContent=big;$('endSub').textContent=sub||'';
+  $('endEmoji').innerHTML=ART.ico(emoji);$('endTitle').textContent=title;$('endBig').textContent=big;$('endSub').textContent=sub||'';
   $('endBody').replaceChildren(...(body||[]));$('endAgain').onclick=again;show('s-end');
-  if(party)setTimeout(()=>{fx.confetti(100);fx.pop({icon:'🏆',text:party,kind:'great',size:'big'});},250);
+  if(party)setTimeout(()=>{fx.confetti(100);fx.pop({icon:'trophy',text:party,kind:'great',size:'big'});},250);
 }
 
 /* ================= GAME 1: SPEED FIND ================= */
@@ -1274,7 +1598,7 @@ function renderSpeedSetup(){
   $('levelBtns').replaceChildren(...[1,2,3].map(l=>{
     const r=P.speed[l+spStyle],b=r&&r.best;
     return h('button',{class:'lvl',onclick:()=>startSpeed(l,spStyle)},h('b',null,`Level ${l}: ${LEVELS[l].name}`),h('small',null,LEVELS[l].desc),
-      h('span',{class:'bestline'},b!=null?'🏅 Best average: '+fmtT(b):'No score yet'));
+      h('span',{class:'bestline'},b!=null?[I('medal'),'Best average: '+fmtT(b)]:'No score yet'));
   }));
 }
 let S=null,spCells={};
@@ -1311,13 +1635,13 @@ function spPick(n){
   if(n===S.target.n){
     const my=runId,dt=performance.now()-S.t0;S.locked=true;S.times.push(dt);S.i++;
     cell.classList.add('ok');$('spTimer').textContent=(dt/1000).toFixed(1)+'s';
-    $('spLast').textContent=`✔ ${S.target.name}: ${fmtT(dt)}`;
-    S.streak++;const sec=dt/1000,pr=sec<1.5?['⚡','Lightning!','great']:sec<3?['🔥','Nice!','good']:['✔','Got it!','good'];
+    $('spLast').replaceChildren(I('check'),` ${S.target.name}: ${fmtT(dt)}`);
+    S.streak++;const sec=dt/1000,pr=sec<1.5?['bolt','Lightning!','great']:sec<3?['flame','Nice!','good']:['check','Got it!','good'];
     fx.pop({icon:pr[0],text:pr[1],kind:pr[2],at:cell});
-    if([3,5,7,10].includes(S.streak)){fx.pop({icon:'🔥',text:S.streak+' in a row!',kind:'great',size:'big'});fx.confetti(S.streak>=7?70:35);}
+    if([3,5,7,10].includes(S.streak)){fx.pop({icon:'flame',text:S.streak+' in a row!',kind:'great',size:'big'});fx.confetti(S.streak>=7?70:35);}
     setTimeout(()=>{if(my!==runId)return;cell.classList.remove('ok');spNext();},450);
   }else{
-    S.mistakes++;S.streak=0;$('spMiss').textContent=S.mistakes;fx.pop({icon:'❌',text:'Oops!',kind:'oops',at:cell});
+    S.mistakes++;S.streak=0;$('spMiss').textContent=S.mistakes;fx.pop({icon:'x',text:'Oops!',kind:'oops',at:cell});
     if(S.wrongQ++===0)bumpMissed(S.target.sym);
     cell.classList.add('bad');setTimeout(()=>cell.classList.remove('bad'),350);
   }
@@ -1332,12 +1656,12 @@ function spFinish(){
   const slow=paired.slice().sort((a,b)=>b.t-a.t).slice(0,3).map(x=>x.e.sym);
   const lvl=S.level,style=S.style,perfect=S.mistakes===0;
   const body=[
-    isBest?h('div',{class:'newbest'},prev==null?'🎉 First score saved!':'🎉 NEW PERSONAL BEST!'):null,
+    isBest?h('div',{class:'newbest'},I('sparkle'),prev==null?'First score saved!':'NEW PERSONAL BEST!'):null,
     h('p',null,`Best average here: `,h('b',null,fmtT(rec.best)),` · Misses this round: `,h('b',null,S.mistakes)),
     h('div',{class:'tchips'},paired.map(x=>h('span',{class:'tchip'+(slow.includes(x.e.sym)?' slow':'')},`${x.e.name} ${(x.t/1000).toFixed(1)}s`))),
     h('p',{class:'sub'},'Red chips were your slowest — practice those in Explore mode!')
   ];
-  showEnd({emoji:avg<2.5?'🚀':avg<4?'⭐':'💪',title:`Level ${lvl}: ${LEVELS[lvl].name}${style?' · '+styleName(style):''}`,big:fmtT(avg),
+  showEnd({emoji:avg<2.5?'rocket':avg<4?'star':'bolt',title:`Level ${lvl}: ${LEVELS[lvl].name}${style?' · '+styleName(style):''}`,big:fmtT(avg),
     sub:'Your average time per element (lower is better)',body,again:()=>startSpeed(lvl,style),
     party:isBest?'New best!':(perfect?'Perfect round!':null)});
 }
@@ -1377,7 +1701,7 @@ function renderHints(animate){
   $('trHints').replaceChildren(...T.hints.map((txt,i)=>{
     const open=i<T.shown||T.done;
     return h('li',{class:'hint '+(open?'shown':'locked'),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
-      h('b',null,`Hint ${i+1} · ${HINT_LABELS[i]}`),open?txt:'🔒 Locked');
+      h('b',null,`Hint ${i+1} · ${HINT_LABELS[i]}`),open?txt:[I('lock'),' Locked']);
   }));
   $('trWorth').textContent=T.done?0:5-T.shown;
   $('trHintBtn').disabled=T.done||T.shown>=4;
@@ -1403,7 +1727,7 @@ function trGuess(n){
   const g=EL[n-1],msg=$('trMsg');
   if(n===T.target.n)return trFinishQ(true);
   T.ruled.add(n);const c=trCells[n];c.classList.add('out','bad');setTimeout(()=>c.classList.remove('bad'),350);
-  msg.className='msg bad';fx.pop({icon:'🤔',text:'Not quite!',kind:'try',at:c});
+  msg.className='msg bad';fx.pop({icon:'question',text:'Not quite!',kind:'try',at:c});
   if(T.shown<4){T.shown++;msg.textContent=`Not ${g.name}. Here's another hint!`;renderHints(true);}
   else{T.lastTries++;if(T.lastTries>=2)return trFinishQ(false);msg.textContent=`Not ${g.name}. One more try!`;}
 }
@@ -1414,10 +1738,10 @@ function trFinishQ(ok){
   trCells[e.n].classList.remove('out');trCells[e.n].classList.add('hit');
   $('trScore').textContent=T.score;renderHints(false);
   const m=$('trMsg');m.className='msg '+(ok?'good':'bad');
-  m.textContent=ok?`🎉 Yes! It's ${e.name} (${e.sym}). +${pts} point${pts===1?'':'s'}!`:`The answer was ${e.name} (${e.sym}). Study its spot on the table!`;
-  if(ok){const k=T.shown,P=[null,['🧠','Genius! +4','great'],['🌟','Awesome! +3','great'],['👍','Nice! +2','good'],['😅','Phew! +1','good']][k];
+  m.textContent=ok?`Yes! It's ${e.name} (${e.sym}). +${pts} point${pts===1?'':'s'}!`:`The answer was ${e.name} (${e.sym}). Study its spot on the table!`;
+  if(ok){const k=T.shown,P=[null,['bulb','Genius! +4','great'],['star','Awesome! +3','great'],['check','Nice! +2','good'],['check','Phew! +1','good']][k];
     fx.pop({icon:P[0],text:P[1],kind:P[2],size:'big'});if(k<=3)fx.confetti(k===1?80:45);}
-  else fx.pop({icon:'📚',text:'Study its spot!',kind:'try',size:'big'});
+  else fx.pop({icon:'book',text:'Study its spot!',kind:'try',size:'big'});
   $('trGuess').disabled=true;$('trGo').disabled=true;
   $('trNext').textContent=T.i+1>=T.queue.length?'See my results ▶':'Next ▶';$('trNext').hidden=false;$('trNext').focus({preventScroll:true});
 }
@@ -1426,9 +1750,9 @@ $('trQuit').onclick=goMenu;
 function trEnd(){
   const P=prof(),rec=P.trivia,prev=rec.best;rec.plays++;const isBest=T.score>prev;if(isBest)rec.best=T.score;saveAll();cloudSubmit('trivia','',T.score,{n:T.queue.length});
   const right=T.results.filter(r=>r.ok).length,max=T.queue.length*4;
-  const title=T.score>=max*.85?'Element Master! 🧑‍🔬':T.score>=max*.6?'Lab Pro!':T.score>=max*.35?'Rising Scientist':'Keep Exploring!';
-  showEnd({emoji:T.score>=max*.6?'🏆':'🔬',title,big:`${T.score}/${max}`,sub:`${right} of ${T.queue.length} solved`,
-    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,
+  const title=T.score>=max*.85?'Element Master!':T.score>=max*.6?'Lab Pro!':T.score>=max*.35?'Rising Scientist':'Keep Exploring!';
+  showEnd({emoji:T.score>=max*.6?'trophy':'question',title,big:`${T.score}/${max}`,sub:`${right} of ${T.queue.length} solved`,
+    body:[isBest?h('div',{class:'newbest'},I('sparkle'),'NEW HIGH SCORE!'):null,
       h('p',null,'High score: ',h('b',null,rec.best)),
       h('div',{class:'tchips'},T.results.map(r=>h('span',{class:'tchip'+(r.ok?'':' slow')},`${r.e.name}: ${r.pts}`)))],
     again:startTrivia,party:isBest?'New high score!':(T.score>=max*.6?'Great job!':null)});
@@ -1482,7 +1806,7 @@ $('lbCombine').onclick=()=>{
   const tk=Object.keys(t),ak=Object.keys(a);
   const missing=tk.some(k=>!a[k]),extra=ak.some(k=>!t[k]),same=!missing&&!extra&&tk.every(k=>a[k]===t[k]);
   if(same)return lbSuccess();
-  LB.wrong++;msg.className='msg bad';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});
+  LB.wrong++;msg.className='msg bad';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});
   msg.textContent=missing?"Not yet — you're missing a type of element.":extra?"Not yet — one of your elements doesn't belong.":"Right elements! Now check how many atoms of each.";
   if(LB.wrong>=3&&LB.hints<2){LB.hints=2;$('lbHint').disabled=true;const b=$('lbHintBox');b.hidden=false;b.textContent='The formula is '+fmtFormula(t)+'.';msg.textContent+=' (Formula revealed.)';}
   lbRender();
@@ -1491,8 +1815,8 @@ function lbSuccess(){
   LB.done=true;const pts=Math.max(1,3-LB.hints-LB.wrong);LB.score+=pts;LB.results.push({c:LB.c,pts});
   $('lbScore').textContent=LB.score;const svg=molSVG(LB.counts,true);svg.classList.add('pop');$('lbBeaker').replaceChildren(svg);
   $('lbFormula').textContent=fmtFormula(LB.c.f);
-  const m=$('lbMsg');m.className='msg good';m.textContent=`🎉 ${LB.c.name} = ${fmtFormula(LB.c.f)}  +${pts} pt${pts===1?'':'s'}!`;
-  fx.pop({icon:'🧪',text:'Success! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  const m=$('lbMsg');m.className='msg good';m.textContent=`${LB.c.name} = ${fmtFormula(LB.c.f)}  +${pts} pt${pts===1?'':'s'}!`;
+  fx.pop({icon:'flask',text:'Success! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
   $('lbCombine').disabled=true;$('lbHint').disabled=true;$('lbClear').disabled=true;
   $('lbNext').textContent=LB.i+1>=LB.queue.length?'See my results ▶':'Next ▶';$('lbNext').hidden=false;$('lbNext').focus({preventScroll:true});
   $('lbWorth').textContent=0;
@@ -1502,8 +1826,8 @@ $('lbQuit').onclick=goMenu;
 function lbEnd(){
   const P=prof(),rec=P.lab,prev=rec.best;rec.plays++;const isBest=LB.score>prev;if(isBest)rec.best=LB.score;saveAll();cloudSubmit('lab','',LB.score,{n:LB.queue.length});
   const max=LB.queue.length*3;
-  showEnd({emoji:'🧪',title:LB.score>=max*.8?'Master Chemist!':LB.score>=max*.5?'Great Lab Work!':'Keep Experimenting!',big:`${LB.score}/${max}`,sub:'Compound Lab score',
-    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
+  showEnd({emoji:'flask',title:LB.score>=max*.8?'Master Chemist!':LB.score>=max*.5?'Great Lab Work!':'Keep Experimenting!',big:`${LB.score}/${max}`,sub:'Compound Lab score',
+    body:[isBest?h('div',{class:'newbest'},I('sparkle'),'NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
       h('div',{class:'tchips'},LB.results.map(r=>h('span',{class:'tchip'},`${r.c.name} ${fmtFormula(r.c.f)}`)))],
     again:startLab,party:isBest?'New high score!':(LB.score>=max*.7?'Great lab work!':null)});
 }
@@ -1517,7 +1841,7 @@ function molSVG(counts){
   let centre=null;if(atoms.length>2)centre=keys.find(k=>counts[k]===1&&k!=='H')||null;
   const others=atoms.slice();if(centre)others.splice(others.indexOf(centre),1);
   const n=others.length,pts=[];
-  const R=centre?(n<=4?58:n<=8?72:84):(n<=2?32:n<=5?54:72);
+  const R=centre?(n<=4?58:n<=8?72:84):(n<2?0:n<=2?32:n<=5?54:72);
   for(let i=0;i<n;i++){
     let ang;
     if(centre&&n===2)ang=(centre==='C'?[180,0]:[145,35])[i]*Math.PI/180;
@@ -1525,15 +1849,18 @@ function molSVG(counts){
     else ang=(-90+i*360/n)*Math.PI/180;
     pts.push({s:others[i],x:cx+R*Math.cos(ang),y:cy+R*Math.sin(ang)});
   }
-  const line=(a,b)=>svg.append(mk('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:'#8896ab','stroke-width':5,'stroke-linecap':'round'}));
+  const line=(a,b)=>svg.append(mk('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,stroke:'#b7c0d2','stroke-width':6,'stroke-linecap':'round'}));
   if(centre)pts.forEach(p=>line({x:cx,y:cy},p));
   else if(n>=2)for(let i=0;i<n-(n===2?1:0);i++)line(pts[i],pts[(i+1)%n]);
   const atom=(s,x,y)=>{
     const col=ATOMC[s]||['#c9d3e6','#222'],r=s==='H'?15:['C','N','O'].includes(s)?20:23;
-    svg.append(mk('circle',{cx:x,cy:y,r,fill:col[0],stroke:'#4b5a75','stroke-width':2}));
+    svg.append(mk('circle',{cx:x,cy:y+3,r,fill:'#101536','fill-opacity':.12}));
+    svg.append(mk('circle',{cx:x,cy:y,r,fill:col[0],stroke:'rgba(16,21,54,.38)','stroke-width':1.6}));
+    svg.append(mk('path',{d:`M${x-r*.62} ${y-r*.2}a${r*.7} ${r*.7} 0 0 1 ${r*.5} ${-r*.5}`,fill:'none',stroke:'#fff','stroke-opacity':.55,'stroke-width':2.6,'stroke-linecap':'round'}));
     const t=mk('text',{x,y:y+5,'text-anchor':'middle','font-size':r>16?20:16,'font-weight':800,fill:col[1],'font-family':'system-ui'});t.setAttribute('y',y+(r>16?7:6));t.textContent=s;svg.append(t);
   };
   if(centre)atom(centre,cx,cy);pts.forEach(p=>atom(p.s,p.x,p.y));
+  if(atoms.length<=2)svg.setAttribute('viewBox',`${cx-72} ${cy-56} 144 112`);else if(atoms.length<=3)svg.setAttribute('viewBox',`${cx-100} ${cy-77} 200 154`);else if(atoms.length<=6)svg.setAttribute('viewBox',`${cx-125} ${cy-96} 250 192`);
   return svg;
 }
 
@@ -1561,7 +1888,7 @@ function renderAtomSetup(){
   $('atLevels').replaceChildren(...Object.keys(ATLEVELS).map(l=>{
     const r=P.atom[l];
     return h('button',{class:'lvl',onclick:()=>startAtom(l)},h('b',null,ATLEVELS[l][0]),h('small',null,ATLEVELS[l][1]),
-      h('span',{class:'bestline'},r&&r.plays?`🏅 High score: ${r.best}/${ROUND_LEN*3}`:'No score yet'));
+      h('span',{class:'bestline'},r&&r.plays?[I('medal'),`High score: ${r.best}/${ROUND_LEN*3}`]:'No score yet'));
   }));
 }
 function atomSVG(p,n,e){
@@ -1570,13 +1897,18 @@ function atomSVG(p,n,e){
   const mk=(t,a)=>{const x=document.createElementNS(ns,t);for(const k in a)x.setAttribute(k,a[k]);return x;};
   const caps=[2,8,8,18],radii=[64,92,120,148];let left=e;const shells=[];
   for(let i=0;i<4&&left>0;i++){const c=Math.min(caps[i],left);shells.push(c);left-=c;}
-  shells.forEach((c,i)=>svg.append(mk('circle',{cx:C,cy:C,r:radii[i],fill:'none',stroke:'#b9cfff','stroke-width':2,'stroke-dasharray':'4 5'})));
-  shells.forEach((c,i)=>{for(let k=0;k<c;k++){const a=(-90+k*360/c+i*20)*Math.PI/180;
-    svg.append(mk('circle',{cx:C+radii[i]*Math.cos(a),cy:C+radii[i]*Math.sin(a),r:7,fill:'#2f6bff',stroke:'#fff','stroke-width':1.5}));}});
+  shells.forEach((c,i)=>svg.append(mk('circle',{cx:C,cy:C,r:radii[i],fill:'none',stroke:'#d3dcf0','stroke-width':1.8})));
   const order=[];let pp=p,nn=n;
   while(pp>0||nn>0){if(pp>0){order.push('p');pp--;}if(nn>0){order.push('n');nn--;}}
-  order.forEach((t,i)=>{const a=i*2.39996,r=Math.sqrt(i+.5)*6.6;
-    svg.append(mk('circle',{cx:C+r*Math.cos(a),cy:C+r*Math.sin(a),r:6,fill:t==='p'?'#e5484d':'#9aa5b8',stroke:'#fff','stroke-width':1}));});
+  {const nR=Math.sqrt(order.length+.5)*6.8+12,R=Math.max(shells.length?radii[shells.length-1]:0,nR,58)+20;
+   svg.setAttribute('viewBox',`${C-R} ${C-R} ${2*R} ${2*R}`);}
+  order.forEach((t,i)=>{const a=i*2.39996,r=Math.sqrt(i+.5)*6.8,x=C+r*Math.cos(a),y=C+r*Math.sin(a);
+    svg.append(mk('circle',{cx:x,cy:y,r:6.6,fill:t==='p'?'#e2483f':'#aab3c5',stroke:'#fff','stroke-width':1.2}));
+    if(t==='p')svg.append(mk('path',{d:`M${x-2.6} ${y}h5.2M${x} ${y-2.6}v5.2`,stroke:'#fff','stroke-width':1.5,'stroke-linecap':'round'}));});
+  shells.forEach((c,i)=>{for(let k=0;k<c;k++){const a=(-90+k*360/c+i*20)*Math.PI/180,x=C+radii[i]*Math.cos(a),y=C+radii[i]*Math.sin(a);
+    svg.append(mk('circle',{cx:x,cy:y,r:10,fill:'#2f6bff','fill-opacity':.16}));
+    svg.append(mk('circle',{cx:x,cy:y,r:7,fill:'#2f6bff',stroke:'#fff','stroke-width':1.6}));
+    svg.append(mk('path',{d:`M${x-2.6} ${y}h5.2`,stroke:'#fff','stroke-width':1.6,'stroke-linecap':'round'}));}});
   if(!order.length){const t=mk('text',{x:C,y:C+5,'text-anchor':'middle','font-size':15,fill:'#7a8aa6','font-family':'system-ui'});t.textContent='Add some particles!';svg.append(t);}
   return svg;
 }
@@ -1620,7 +1952,7 @@ $('atHint').onclick=()=>{
 $('atCheck').onclick=()=>{
   if(!AT||AT.done)return;const q=AT.q,m=$('atMsg');
   if(AT.p===q.Z&&AT.n===q.N&&AT.e===q.E)return atSuccess();
-  AT.wrong++;m.className='msg bad';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});
+  AT.wrong++;m.className='msg bad';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});
   m.textContent=AT.p!==q.Z?'Check the protons. What does the atomic number say?'
     :AT.n!==q.N?'Protons are right! Now the neutrons: mass number − protons.'
     :'Nice! Now the electrons. Think about the charge.';
@@ -1628,8 +1960,8 @@ $('atCheck').onclick=()=>{
 };
 function atSuccess(){
   AT.done=true;const pts=Math.max(1,3-AT.hints-AT.wrong);AT.score+=pts;
-  $('atScore').textContent=AT.score;fx.pop({icon:'⚛️',text:'Atom built! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
-  const m=$('atMsg');m.className='msg good';m.textContent=`🎉 ${AT.q.text} built! +${pts} pt${pts===1?'':'s'}`;
+  $('atScore').textContent=AT.score;fx.pop({icon:'atom',text:'Atom built! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  const m=$('atMsg');m.className='msg good';m.textContent=`${AT.q.text} built! +${pts} pt${pts===1?'':'s'}`;
   ['atCheck','atHint','atReset'].forEach(id=>$(id).disabled=true);
   $('atNext').textContent=AT.i+1>=AT.queue.length?'See my results ▶':'Next ▶';$('atNext').hidden=false;$('atNext').focus({preventScroll:true});
   $('atWorth').textContent=0;
@@ -1640,8 +1972,8 @@ function atEnd(){
   const P=prof(),rec=atRec(P,AT.level),prev=rec.best;rec.plays++;const isBest=AT.score>prev;if(isBest)rec.best=AT.score;saveAll();
   cloudSubmit('atom',AT.level,AT.score,{n:AT.queue.length});
   const max=AT.queue.length*3;
-  showEnd({emoji:'⚛️',title:AT.score>=max*.8?'Atom Architect!':AT.score>=max*.5?'Great Building!':'Keep Building!',big:`${AT.score}/${max}`,sub:ATLEVELS[AT.level][0],
-    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score here: ',h('b',null,rec.best)),
+  showEnd({emoji:'atom',title:AT.score>=max*.8?'Atom Architect!':AT.score>=max*.5?'Great Building!':'Keep Building!',big:`${AT.score}/${max}`,sub:ATLEVELS[AT.level][0],
+    body:[isBest?h('div',{class:'newbest'},I('sparkle'),'NEW HIGH SCORE!'):null,h('p',null,'High score here: ',h('b',null,rec.best)),
       h('div',{class:'tchips'},AT.queue.map(q=>h('span',{class:'tchip'},q.text)))],
     again:()=>startAtom(AT.level),party:isBest?'New high score!':(AT.score>=max*.7?'Great building!':null)});
 }
@@ -1691,21 +2023,24 @@ function bcCounts(){
   return {L,R,syms:[...new Set(Object.keys(L).concat(Object.keys(R)))]};
 }
 const bcBalanced=()=>{const t=bcCounts();return t.syms.every(s=>(t.L[s]||0)===(t.R[s]||0));};
+function bcMini(f){const c={};f.replace(/([A-Z][a-z]?)(\d*)/g,(m,s,n)=>{c[s]=(c[s]||0)+(n?+n:1);});
+  if(Object.values(c).reduce((a,b)=>a+b,0)>6)return null;
+  const d=h('span',{class:'mini'});d.append(molSVG(c));return d;}
 function bcRender(){
   const rx=BL.rx,eq=$('bcEq');eq.replaceChildren();
   rx.terms.forEach((f,k)=>{
     if(k>0)eq.append(h('span',{class:'op'},k===rx.nL?'→':'+'));
-    eq.append(h('span',{class:'term'},
+    eq.append(h('span',{class:'term'},bcMini(f),
       h('span',{class:'stepper'},h('button',{'aria-label':'less '+f,onclick:()=>bcChange(k,-1)},'−'),h('b',{class:'coef'},BL.coefs[k]),h('button',{'aria-label':'more '+f,onclick:()=>bcChange(k,1)},'+')),
       h('span',{class:'fs'},fmtStr(f))));
   });
   const t=bcCounts(),bal=bcBalanced(),mx=Math.max(1,...t.syms.map(s=>Math.max(t.L[s]||0,t.R[s]||0)));
   $('bcTally').replaceChildren(
-    h('div',{class:'tally-head '+(bal?'okr':'badr')},bal?'⚖️ Both sides match!':'⚖️ Not balanced yet: the atoms on each side must match'),
+    h('div',{class:'tally-head '+(bal?'okr':'badr')},I(bal?'check':'scale'),bal?'Both sides match!':'Not balanced yet: the atoms on each side must match'),
     ...t.syms.map(s=>{const l=t.L[s]||0,r=t.R[s]||0;
       return h('div',{class:'trow '+(l===r?'okr':'badr')},h('b',{class:'tsym'},s),
         h('div',{class:'tbars'},h('div',{class:'bar l',style:`width:${l/mx*100}%`},l),h('div',{class:'bar r',style:`width:${r/mx*100}%`},r)),
-        h('span',{class:'tmark'},l===r?'✔':'✘'));}));
+        h('span',{class:'tmark'},I(l===r?'check':'x')));}));
   $('bcWorth').textContent=BL.done?0:Math.max(1,3-BL.hints-BL.wrong);
 }
 function bcChange(k,d){
@@ -1719,11 +2054,11 @@ $('bcHint').onclick=()=>{
 };
 $('bcCheck').onclick=()=>{
   if(BL.done)return;const m=$('bcMsg');
-  if(!bcBalanced()){BL.wrong++;m.className='msg bad';m.textContent='Not yet. Compare the left and right atom counts below.';fx.pop({icon:'💥',text:'Almost!',kind:'oops'});bcRender();return;}
-  if(BL.coefs.reduce(gcd)>1){m.className='msg bad';m.textContent='Balanced! But can you use smaller numbers? Divide them all by the same number.';fx.pop({icon:'🤏',text:'Smaller numbers!',kind:'try'});return;}
+  if(!bcBalanced()){BL.wrong++;m.className='msg bad';m.textContent='Not yet. Compare the left and right atom counts below.';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});bcRender();return;}
+  if(BL.coefs.reduce(gcd)>1){m.className='msg bad';m.textContent='Balanced! But can you use smaller numbers? Divide them all by the same number.';fx.pop({icon:'down',text:'Smaller numbers!',kind:'try'});return;}
   BL.done=true;const pts=Math.max(1,3-BL.hints-BL.wrong);BL.score+=pts;BL.results.push(BL.rx);
-  $('bcScore').textContent=BL.score;fx.pop({icon:'⚖️',text:'Balanced! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
-  m.className='msg good';m.textContent=`🎉 Balanced! Atoms are never lost or made, only rearranged. +${pts} pt${pts===1?'':'s'}`;
+  $('bcScore').textContent=BL.score;fx.pop({icon:'scale',text:'Balanced! +'+pts,kind:'great',size:'big'});fx.confetti(pts===3?80:45);
+  m.className='msg good';m.textContent=`Balanced! Atoms are never lost or made, only rearranged. +${pts} pt${pts===1?'':'s'}`;
   $('bcCheck').disabled=true;$('bcHint').disabled=true;
   $('bcNext').textContent=BL.i+1>=BL.queue.length?'See my results ▶':'Next ▶';$('bcNext').hidden=false;$('bcNext').focus({preventScroll:true});
   $('bcWorth').textContent=0;
@@ -1734,16 +2069,15 @@ function bcEnd(){
   const P=prof(),rec=P.balance,prev=rec.best;rec.plays++;const isBest=BL.score>prev;if(isBest)rec.best=BL.score;saveAll();
   cloudSubmit('balance','',BL.score,{n:BL.queue.length});
   const max=BL.queue.length*3;
-  showEnd({emoji:'⚖️',title:BL.score>=max*.8?'Master Balancer!':BL.score>=max*.5?'Nicely Balanced!':'Keep Balancing!',big:`${BL.score}/${max}`,sub:'Balance It score',
-    body:[isBest?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
+  showEnd({emoji:'scale',title:BL.score>=max*.8?'Master Balancer!':BL.score>=max*.5?'Nicely Balanced!':'Keep Balancing!',big:`${BL.score}/${max}`,sub:'Balance It score',
+    body:[isBest?h('div',{class:'newbest'},I('sparkle'),'NEW HIGH SCORE!'):null,h('p',null,'High score: ',h('b',null,rec.best)),
       h('div',{class:'tchips'},BL.queue.map(r=>h('span',{class:'tchip'},r.terms.map(fmtStr).join(' + ').replace(' + '+fmtStr(r.terms[r.nL]),' → '+fmtStr(r.terms[r.nL])))))],
     again:startBalance,party:isBest?'New high score!':(BL.score>=max*.7?'Great balancing!':null)});
 }
 
 
 /* ================= GAME 6: ATOM DINER (MS-PS1-5) ================= */
-const ACOL={H:['#ffffff','#333'],C:['#3b3b3b','#fff'],O:['#e5484d','#fff'],N:['#2f6bff','#fff'],Cl:['#2fbf5f','#fff'],Na:['#8e5cf7','#fff'],
-  Mg:['#127a4d','#fff'],Ca:['#b8c2cc','#222'],K:['#e8a6ff','#222'],S:['#f5c400','#222'],Fe:['#d9822b','#fff'],Zn:['#7a8ca8','#fff'],Al:['#cfd5de','#222']};
+const ACOL=ATOMC;
 function ball(s,big){const c=ACOL[s]||['#ccc','#222'];return h('span',{class:'ball'+(big?' big':''),style:`background:${c[0]};color:${c[1]}`},s);}
 function molBalls(f){const c=parseF(f),out=[];Object.keys(c).forEach(s=>{for(let i=0;i<c[s];i++)out.push(ball(s));});return h('span',{class:'balls'},out);}
 const addC=(a,b,k=1)=>{for(const s in b)a[s]=(a[s]||0)+b[s]*k;return a;};
@@ -1787,17 +2121,17 @@ const DISHES=[
   if(!sameC(cntList(d.R),cntList(d.P)))console.warn('Atom Diner: unbalanced dish',d.dish);
   return d;
 });
-const DN_CUST=['🦖','👽','🤖','🧛','🐙','🦄','👻','🧙','🐸','🦊','🐼','🧟','🐵','🦁','🐧','🦈'];
+const DN_CUST=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 const DN_SAY=[d=>`I'll have the ${d.dish}, please!`,d=>`One ${d.dish}. Make it snappy!`,d=>`Ooh, the ${d.dish} looks good!`,d=>`${d.dish}! I'm STARVING.`,d=>`Is the ${d.dish} fresh? I'll take it!`];
-const DN_THANKS=['Delicious! 😋','Chef’s kiss! 🤌','Five stars! ⭐','Mmm, perfectly rearranged!','Not a single atom wasted!'];
+const DN_THANKS=['Delicious!','Chef’s kiss!','Five stars!','Mmm, perfectly rearranged!','Not a single atom wasted!'];
 let DN=null;
 const pick=a=>a[Math.floor(Math.random()*a.length)];
-function dnBestLine(P){const v=Object.values(P.diner||{}).filter(r=>r.plays).map(r=>r.best);return v.length?`Best shift: ${Math.max(...v)} 🪙`:'';}
+function dnBestLine(P){const v=Object.values(P.diner||{}).filter(r=>r.plays).map(r=>r.best);return v.length?`Best shift: ${Math.max(...v)} coins`:'';}
 function renderDinerSetup(){
-  const P=prof(),ic={'1':'🍳 ','2':'🌭 ','3':'🍝 '};
+  const P=prof(),ic={'1':'','2':'','3':''};
   $('dnLevels').replaceChildren(...Object.keys(DN_LEVELS).map(k=>{const L=DN_LEVELS[k],r=P.diner[k];
     return h('button',{class:'lvl',onclick:()=>startDiner(k)},h('b',null,ic[k]+L[0]),h('small',null,`${L[1]} ${fmtClock(L[2]*1000)} shift.`),
-      h('span',{class:'bestline'},r&&r.plays?`Best: ${r.best} 🪙`:'Not played yet'));}));
+      h('span',{class:'bestline'},r&&r.plays?`Best: ${r.best} coins`:'Not played yet'));}));
 }
 async function startDiner(lv){
   lv=String(lv);const L=DN_LEVELS[lv];
@@ -1805,7 +2139,7 @@ async function startDiner(lv){
   $('dnShift').textContent=L[0];$('dnCoins').textContent='0';$('dnStreak').textContent='0';$('dnServed').textContent='0';
   $('dnTime').textContent=fmtClock(DN.len);$('dnTime').parentElement.classList.remove('low');
   ['dnIngr','dnDishes','dnTray','dnPlate','dnCounter','dnScale','dnServeBtns'].forEach(id=>$(id).replaceChildren());
-  $('dnFace').textContent='🧑‍🍳';$('dnSay').textContent='Doors open in 3…';$('dnCtx').textContent='';$('dnMsg').textContent='';$('dnSmashAll').hidden=true;
+  $('dnFace').innerHTML=ART.face('chef');$('dnSay').textContent='Doors open in 3…';$('dnCtx').textContent='';$('dnMsg').textContent='';$('dnSmashAll').hidden=true;
   $('dnPatBar').style.width='100%';$('dnPat').className='patience';
   show('s-diner');
   const my=runId;
@@ -1824,9 +2158,9 @@ function dnNext(){
   const d=DN.queue.shift();DN.last=d;
   const t=DN.t={d,smashed:d.inst.map(()=>false),tray:{},plate:{},made:[],hand:new Set(),t0:Date.now(),done:false,order:[]};
   d.inst.forEach(f=>Object.keys(parseF(f)).forEach(s=>{if(!t.order.includes(s))t.order.push(s);}));
-  $('dnFace').textContent=pick(DN_CUST);$('dnFace').classList.remove('mad');
+  DN.cust=pick(DN_CUST);$('dnFace').innerHTML=ART.face(DN.cust);$('dnFace').classList.remove('mad');
   $('dnSay').textContent=pick(DN_SAY)(d);
-  $('dnCtx').textContent='🔬 '+d.ctx;
+  $('dnCtx').textContent=d.ctx;
   $('dnMsg').textContent='';$('dnMsg').className='msg';
   dnRender();
 }
@@ -1844,28 +2178,28 @@ function dnRender(){
   const pb=[];t.order.forEach(s=>{for(let i=0;i<(pc[s]||0);i++)pb.push(ball(s,true));});
   const fml=ex.length?fmtStr(ex[0].f):fmtFormula(Object.fromEntries(t.order.filter(s=>pc[s]).map(s=>[s,pc[s]])));
   $('dnPlate').replaceChildren(...(pn?[h('div',{class:'row'},pb),h('span',{class:'pf'},fml)]:[h('span',{class:'empty'},'Empty plate. Click atoms in the tray.')]));
-  $('dnServeBtns').replaceChildren(...ex.map(p=>h('button',{class:'btn sm good',onclick:()=>dnServe(p.f)},'🍽️ Serve as '+fmtStr(p.f))));
+  $('dnServeBtns').replaceChildren(...ex.map(p=>h('button',{class:'btn sm good',onclick:()=>dnServe(p.f)},'Serve as '+fmtStr(p.f))));
   $('dnClear').disabled=!pn||t.done;
   const quick=pn||t.done?[]:d.need.filter(p=>t.hand.has(p.f)&&fitsIn(p.c,t.tray));
   $('dnCounter').replaceChildren(...(t.made.length?t.made.map((f,i)=>h('button',{class:'mol served',title:'Click to break it back into atoms',onclick:()=>dnBreak(i)},molBalls(f),fmtStr(f)))
       :[h('span',{class:'sub',style:'margin:0'},'Nothing yet')]),
-    ...quick.map(p=>h('button',{class:'btn sm',style:'align-self:center',title:'You built this once, so now you can make more in one click',onclick:()=>dnQuick(p.f)},'⚡ Make another '+fmtStr(p.f))));
+    ...quick.map(p=>h('button',{class:'btn sm',style:'align-self:center',title:'You built this once, so now you can make more in one click',onclick:()=>dnQuick(p.f)},'Make another '+fmtStr(p.f))));
   const inTray=sumC(t.tray),inD=t.made.reduce((a,f)=>a+sumC(parseF(f)),0),unsm=d.atoms-inTray-pn-inD;
-  $('dnScale').replaceChildren(h('div',null,'⚖️ Atoms delivered: ',h('b',null,d.atoms),'  →  in ingredients ',h('b',null,unsm),' · tray ',h('b',null,inTray),' · plate ',h('b',null,pn),' · dishes ',h('b',null,inD)));
+  $('dnScale').replaceChildren(h('div',null,'Atoms delivered: ',h('b',null,d.atoms),'  →  in ingredients ',h('b',null,unsm),' · tray ',h('b',null,inTray),' · plate ',h('b',null,pn),' · dishes ',h('b',null,inD)));
   if(!t.done&&t.smashed.every(Boolean)&&!pn&&inTray>0&&!d.need.some(p=>fitsIn(p.c,t.tray)))
-    $('dnScale').append(h('div',{class:'stuck'},'😬 Stuck! The leftover atoms can’t make any dish. Click a finished dish to break it apart and try a different mix.'));
+    $('dnScale').append(h('div',{class:'stuck'},'Stuck! The leftover atoms can’t make any dish. Click a finished dish to break it apart and try a different mix.'));
 }
 function dnSmash(i,el){
   const t=DN&&DN.t;if(!t||t.done||t.smashed[i])return;
   t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));
-  if(el)fx.pop({icon:'💥',text:'Smash!',kind:'try',at:el});
+  if(el)fx.pop({icon:'burst',text:'Smash!',kind:'try',at:el});
   dnRender();dnCheck();
 }
 function dnAdd(s,el){
   const t=DN&&DN.t;if(!t||t.done||!(t.tray[s]>0))return;
   const np=Object.assign({},t.plate);np[s]=(np[s]||0)+1;
   if(!t.d.need.some(p=>fitsIn(np,p.c))){
-    if(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no');fx.pop({icon:'🙅',text:'No dish needs that!',kind:'oops',at:el});}
+    if(el){el.classList.remove('no');void el.offsetWidth;el.classList.add('no');fx.pop({icon:'x',text:'No dish needs that!',kind:'oops',at:el});}
     return;
   }
   t.tray[s]--;t.plate=np;
@@ -1877,7 +2211,7 @@ function dnAdd(s,el){
 function dnServe(f){
   const t=DN.t;if(t.done)return;
   t.made.push(f);t.hand.add(f);t.plate={};
-  fx.pop({icon:'🍽️',text:fmtStr(f)+'!',kind:'good',at:$('dnPlate')});
+  fx.pop({icon:'plate',text:fmtStr(f)+'!',kind:'good',at:$('dnPlate')});
   dnRender();dnCheck();
 }
 function dnQuick(f){
@@ -1898,8 +2232,8 @@ function dnCheck(){
   const frac=Math.max(0,1-(Date.now()-t.t0)/DN.pat),base=t.d.atoms,tip=Math.ceil(frac*10),sb=Math.min(10,DN.streak*2),earned=base+tip+sb;
   DN.streak++;DN.bestStreak=Math.max(DN.bestStreak,DN.streak);DN.served++;DN.atoms+=t.d.atoms;DN.coins+=earned;
   $('dnCoins').textContent=DN.coins;$('dnStreak').textContent=DN.streak;$('dnServed').textContent=DN.served;
-  fx.pop({icon:'🪙',text:'+'+earned,kind:frac>.6?'great':'good',size:'big'});fx.confetti(frac>.6?60:30);
-  $('dnFace').textContent='😋';$('dnSay').textContent=pick(DN_THANKS);
+  fx.pop({icon:'coin',text:'+'+earned,kind:frac>.6?'great':'good',size:'big'});fx.confetti(frac>.6?60:30);
+  $('dnFace').innerHTML=ART.face(DN.cust||0,'happy');$('dnSay').textContent=pick(DN_THANKS);
   $('dnMsg').className='msg good';
   $('dnMsg').textContent=`${t.d.atoms} atoms in, ${t.d.atoms} atoms out. None lost, none made! (${base} + ${tip} tip${sb?' + '+sb+' streak':''})`;
   dnRender();
@@ -1914,8 +2248,8 @@ function dnTick(){
   $('dnPatBar').style.width=(frac*100)+'%';$('dnPat').className='patience'+(frac<.25?' low':frac<.55?' mid':'');
   if(frac<=0){
     t.done=true;DN.streak=0;DN.lost++;$('dnStreak').textContent=0;
-    $('dnFace').textContent='😤';$('dnFace').classList.add('mad');$('dnSay').textContent='Too slow! I’m out of here!';
-    fx.pop({icon:'😤',text:'Customer left!',kind:'oops'});
+    $('dnFace').innerHTML=ART.face(DN.cust||0,'mad');$('dnFace').classList.add('mad');$('dnSay').textContent='Too slow! I’m out of here!';
+    fx.pop({icon:'warning',text:'Customer left!',kind:'oops'});
     $('dnMsg').className='msg bad';$('dnMsg').textContent='They left hungry. Your streak reset.';
     dnRender();
     const my=runId;setTimeout(()=>{if(my===runId&&DN&&Date.now()<DN.tEnd)dnNext();},1400);
@@ -1925,14 +2259,14 @@ function dnEnd(){
   const P=prof(),lv=DN.lv,rec=lvRec(P,'diner',lv),prev=rec.best;rec.plays++;
   const isBest=DN.coins>prev;if(isBest)rec.best=DN.coins;saveAll();
   cloudSubmit('diner',lv,DN.coins,{served:DN.served,lost:DN.lost,atoms:DN.atoms,streak:DN.bestStreak});
-  showEnd({emoji:'🍔',title:DN.served>=8?'Five-Star Chef!':DN.served>=4?'Great Shift!':'Keep Cooking!',big:`${DN.coins} 🪙`,sub:DN_LEVELS[lv][0],
-    body:[isBest&&DN.coins>0?h('div',{class:'newbest'},'🎉 NEW HIGH SCORE!'):null,
+  showEnd({emoji:'plate',title:DN.served>=8?'Five-Star Chef!':DN.served>=4?'Great Shift!':'Keep Cooking!',big:`${DN.coins} coins`,sub:DN_LEVELS[lv][0],
+    body:[isBest&&DN.coins>0?h('div',{class:'newbest'},I('sparkle'),'NEW HIGH SCORE!'):null,
       h('p',null,'Dishes served: ',h('b',null,DN.served),' · Customers who left: ',h('b',null,DN.lost),' · Best streak: ',h('b',null,DN.bestStreak)),
       h('p',null,'You rearranged ',h('b',null,DN.atoms),' atoms and didn’t lose a single one. That’s the law of conservation of matter!'),
-      h('p',null,'Best for this shift: ',h('b',null,rec.best+' 🪙'))],
+      h('p',null,'Best for this shift: ',h('b',null,rec.best+' coins'))],
     again:()=>startDiner(lv),party:isBest&&DN.coins>0?'New high score!':null});
 }
-$('dnSmashAll').onclick=()=>{const t=DN&&DN.t;if(!t||t.done)return;t.smashed.forEach((v,i)=>{if(!v){t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));}});fx.pop({icon:'💥',text:'SMASH!',kind:'try'});dnRender();dnCheck();};
+$('dnSmashAll').onclick=()=>{const t=DN&&DN.t;if(!t||t.done)return;t.smashed.forEach((v,i)=>{if(!v){t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));}});fx.pop({icon:'burst',text:'SMASH!',kind:'try'});dnRender();dnCheck();};
 $('dnClear').onclick=dnClearPlate;
 $('dnQuit').onclick=()=>{renderDinerSetup();show('s-diner-setup');};
 document.addEventListener('keydown',e=>{
@@ -1944,15 +2278,15 @@ document.addEventListener('keydown',e=>{
 
 /* ================= GAME 7: SEPARATION STATION (MS-PS1-8) ================= */
 const SB={
-  iron:{n:'Iron filings',ic:'🔩',mag:1}, clips:{n:'Paperclips',ic:'📎',mag:1},
-  sand:{n:'Sand',ic:'🟤'}, pebbles:{n:'Pebbles',ic:'🪨'}, copper:{n:'Copper pennies',ic:'🪙'}, alum:{n:'Aluminum cans',ic:'🥫'},
-  salt:{n:'Salt',ic:'🧂',sol:1}, sugar:{n:'Sugar',ic:'🍬',sol:1}, water:{n:'Water',ic:'💧'}
+  iron:{n:'Iron filings',ic:'iron',mag:1}, clips:{n:'Paperclips',ic:'clips',mag:1},
+  sand:{n:'Sand',ic:'sand'}, pebbles:{n:'Pebbles',ic:'pebbles'}, copper:{n:'Copper pennies',ic:'copper'}, alum:{n:'Aluminum cans',ic:'alum'},
+  salt:{n:'Salt',ic:'salt',sol:1}, sugar:{n:'Sugar',ic:'sugar',sol:1}, water:{n:'Water',ic:'water'}
 };
 const MACH={
-  magnet:{n:'Magnet',ic:'🧲',cost:3,d:'Pulls out anything magnetic.'},
-  water:{n:'Water tap',ic:'🚰',cost:1,d:'Adds water. Soluble stuff dissolves in it.'},
-  filter:{n:'Filter',ic:'🕸️',cost:2,d:'Catches solid bits. Liquid (and anything dissolved in it) drips through.'},
-  heat:{n:'Evaporator',ic:'🔥',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'}
+  magnet:{n:'Magnet',ic:'magnet',cost:3,d:'Pulls out anything magnetic.'},
+  water:{n:'Water tap',ic:'tap',cost:1,d:'Adds water. Soluble stuff dissolves in it.'},
+  filter:{n:'Filter',ic:'filter',cost:2,d:'Catches solid bits. Liquid (and anything dissolved in it) drips through.'},
+  heat:{n:'Evaporator',ic:'heat',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'}
 };
 const MORDER=['magnet','water','filter','heat'];
 const SEP_LEVELS=[
@@ -1969,7 +2303,9 @@ const SEP_LEVELS=[
  {name:'Recycling Rush',mix:['alum','iron','salt','sand'],goal:['iron','salt'],slots:5,story:'The boss only needs the iron and the salt from this load.',fact:'You can’t split aluminum from sand with these tools, and that’s okay. Engineers pick methods that fit the job.'},
  {name:'Grand Finale',mix:['clips','sugar','sand','copper'],goal:['clips','sugar'],slots:4,story:'Last shift! Only four spots on the belt.',fact:'Magnetism, dissolving, filtering and evaporating: the same tools scientists use to separate real mixtures.'}
 ];
-const icn=k=>SB[k].ic+' '+SB[k].n;
+const icn=k=>SB[k].n.toLowerCase();
+const SIC=k=>ART.cel(SB[k].ic),MIC=m=>ART.cel(MACH[m].ic),NM=k=>SB[k].n.toLowerCase();
+const cap1=t=>t.charAt(0).toUpperCase()+t.slice(1);
 const andList=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
 function sepInit(L){
   const items={};let water=false;
@@ -1982,17 +2318,17 @@ function sepStep(S,m){
   const solids=()=>Object.keys(it).filter(k=>it[k]==='solid');
   if(m==='magnet'){
     solids().forEach(k=>{if(SB[k].mag){caught.push(k);delete it[k];}});
-    note=caught.length?'Grabbed '+andList(caught.map(k=>SB[k].ic)):'Nothing magnetic';
+    note=caught.length?'Grabbed '+andList(caught.map(NM)):'Nothing magnetic';
   }else if(m==='water'){
     const dis=solids().filter(k=>SB[k].sol);dis.forEach(k=>it[k]='dissolved');
-    note=dis.length?andList(dis.map(k=>SB[k].ic))+' dissolved!':(w?'More water':'Wet, but nothing dissolved');w=true;
+    note=dis.length?cap1(andList(dis.map(NM)))+' dissolved!':(w?'More water':'Wet, but nothing dissolved');w=true;
   }else if(m==='filter'){
     caught=solids();caught.forEach(k=>delete it[k]);
     note=!caught.length?'Nothing to catch':w?'Caught the solids':'No liquid! It caught the whole dry pile';
   }else if(m==='heat'){
     if(!w)note='Nothing to boil';
     else{const cr=Object.keys(it).filter(k=>it[k]==='dissolved');cr.forEach(k=>it[k]='solid');w=false;
-      note='💨 Water boiled off'+(cr.length?', '+andList(cr.map(k=>SB[k].ic))+' crystals left':'');}
+      note='Water boiled off'+(cr.length?', '+andList(cr.map(NM))+' crystals left':'');}
   }
   return {S:{items:it,water:w},caught,note};
 }
@@ -2020,11 +2356,11 @@ const starStr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
 let SX=null;
 function renderSepSetup(){
   const P=prof();let prevSolved=true;
-  $('sepTotal').textContent=`⭐ ${sepStars(P)} / ${SEP_LEVELS.length*3} stars`;
+  $('sepTotal').textContent=`${sepStars(P)} / ${SEP_LEVELS.length*3} stars`;
   $('sepLevels').replaceChildren(...SEP_LEVELS.map((L,i)=>{
     const r=P.sep[i+1],st=r?r.best:0,open=SEP_UNLOCK_ALL||prevSolved;prevSolved=st>0;
     return h('button',{class:'seplv',disabled:!open,onclick:()=>startSep(i)},h('small',{class:'sub'},'Level '+(i+1)),
-      h('b',null,open?L.name:'🔒 Locked'),h('div',{class:'mx'},L.mix.map(k=>SB[k].ic).join('')),h('div',{class:'st'},starStr(st)));
+      h('b',null,open?L.name:'Locked'),h('div',{class:'mx'},...L.mix.map(k=>SIC(k))),h('div',{class:'st'},starStr(st)));
   }));
 }
 function startSep(i){
@@ -2036,38 +2372,38 @@ function sxRender(){
   const L=SEP_LEVELS[SX.i];
   $('sxLvl').textContent=SX.i+1;$('sxLvlN').textContent=SEP_LEVELS.length;$('sxCost').textContent=beltCost(SX.belt);$('sxPar').textContent=L.par;
   $('sxName').textContent=L.name;$('sxStory').textContent=L.story;
-  $('sxGoal').replaceChildren(h('span',null,'Mixture:'),...L.mix.map(k=>h('span',{class:'tag'},icn(k))),
-    h('span',null,'  ➜  Goal: get pure'),...L.goal.map(k=>h('span',{class:'tag g'},icn(k))),h('span',null,'each in its own bin'));
+  $('sxGoal').replaceChildren(h('span',null,'Mixture:'),...L.mix.map(k=>h('span',{class:'tag'},SIC(k),' '+SB[k].n)),
+    h('span',null,'  ➜  Goal: get pure'),...L.goal.map(k=>h('span',{class:'tag g'},SIC(k),' '+SB[k].n)),h('span',null,'each in its own bin'));
   $('sxTools').replaceChildren(...MORDER.map(m=>h('button',{class:'tool'+(SX.tool===m?' on':''),disabled:SX.running,onclick:()=>{SX.tool=SX.tool===m?null:m;sxRender();}},
-    h('span',{class:'ti'},MACH[m].ic),h('span',null,h('b',null,MACH[m].n),h('small',null,MACH[m].d)),h('span',{class:'cost'},'💰'+MACH[m].cost))));
+    h('span',{class:'ti'},MIC(m)),h('span',null,h('b',null,MACH[m].n),h('small',null,MACH[m].d)),h('span',{class:'cost'},ART.cel('coin'),String(MACH[m].cost)))));
   $('sxRun').disabled=SX.running;$('sxClear').disabled=SX.running;
   sxFactory();
 }
 function sxToken(S){
   const ks=Object.keys(S.items);
   if(!ks.length&&!S.water)return h('span',{class:'token'},'∅');
-  return h('span',{class:'token'},...ks.map(k=>S.items[k]==='dissolved'?h('span',{class:'dis',title:SB[k].n+' (dissolved)'},SB[k].ic):SB[k].ic),S.water?'💧':null);
+  return h('span',{class:'token'},...ks.map(k=>S.items[k]==='dissolved'?h('span',{class:'dis',title:SB[k].n+' (dissolved)'},SIC(k)):SIC(k)),S.water?SIC('water'):null);
 }
 function sxBin(items,cls,label){
   const L=SEP_LEVELS[SX.i];let st='';
   if(items&&items.length)st=items.length===1?' ok':' mixed';
-  return h('div',{class:cls+st,title:items&&items.length?andList(items.map(k=>SB[k].n)):'Empty'},h('div',{class:'lb'},label),...(items||[]).map(k=>SB[k].ic));
+  return h('div',{class:cls+st,title:items&&items.length?andList(items.map(k=>SB[k].n)):'Empty'},h('div',{class:'lb'},label),...(items||[]).map(k=>SIC(k)));
 }
 function sxFactory(){
   const L=SEP_LEVELS[SX.i],run=SX.run,f=$('sxFactory');
   f.className='factory'+(SX.running?' running':'');
-  const cols=[h('div',{class:'fcol'},h('div',{class:'top'},h('div',{class:'hopper',title:'The mixture'},L.mix.map(k=>SB[k].ic).join(''))),
+  const cols=[h('div',{class:'fcol'},h('div',{class:'top'},h('div',{class:'hopper',title:'The mixture'},...L.mix.map(k=>SIC(k)))),
     h('div',{class:'beltseg'},run&&run.at===-1?sxToken(run.S):null),h('div',{class:'fnote'},'Mixture in ➜'))];
   SX.belt.forEach((m,i)=>{
     const slot=h('button',{class:'mslot'+(m?' full':'')+(run&&run.at===i?' act':''),disabled:SX.running,
       'aria-label':m?MACH[m].n+'. Click to remove':'Empty spot',onclick:()=>sxSlot(i)},
-      m?[h('span',{class:'mi'},MACH[m].ic),h('span',null,MACH[m].n)]:[h('span',{style:'font-size:24px'},'＋'),h('span',null,'empty')]);
+      m?[h('span',{class:'mi'},MIC(m)),h('span',null,MACH[m].n)]:[h('span',{style:'font-size:24px'},'＋'),h('span',null,'empty')]);
     const shown=run&&run.at>=i;
     cols.push(h('div',{class:'fcol'},h('div',{class:'top'},slot),h('div',{class:'beltseg'},run&&run.at===i?sxToken(run.S):null),
       h('div',{class:'fnote'},shown?run.res.notes[i]:''),
       m==='magnet'||m==='filter'?sxBin(shown?run.res.bins[i]:null,'bin',m==='magnet'?'Magnet bin':'Filter bin'):null));
   });
-  cols.push(h('div',{class:'fcol'},h('div',{class:'top'},h('span',{style:'font-size:34px'},'🏁')),
+  cols.push(h('div',{class:'fcol'},h('div',{class:'top'},h('span',{style:'font-size:34px;line-height:0'},ART.cel('flag'))),
     h('div',{class:'beltseg'},run&&run.at===SX.belt.length?sxToken(run.S):null),h('div',{class:'fnote'},'End of the line'),
     sxBin(run&&run.at>=SX.belt.length?run.res.end:null,'endbin','End bin')));
   f.replaceChildren(...cols);
@@ -2075,7 +2411,7 @@ function sxFactory(){
 function sxSlot(i){
   if(SX.running)return;
   const cur=SX.belt[i];
-  if(!SX.tool&&!cur){$('sxMsg').className='msg';$('sxMsg').textContent='👆 Pick a machine from the list first.';return;}
+  if(!SX.tool&&!cur){$('sxMsg').className='msg';$('sxMsg').textContent='Pick a machine from the list first.';return;}
   SX.belt[i]=cur&&(!SX.tool||SX.tool===cur)?null:SX.tool;
   SX.run=null;$('sxResult').hidden=true;$('sxMsg').textContent='';sxRender();
 }
@@ -2117,19 +2453,19 @@ function sxJudge(res){
   if(!res.ok){
     const bad=L.goal.filter(g=>!res.pure(g)),seen=new Set(),why=[];
     bad.forEach(g=>{if(seen.has(g))return;const r=sxWhy(g,res,bad);r.covers.forEach(x=>seen.add(x));why.push(r.text);});
-    m.className='msg bad';m.textContent='❌ Not pure yet. '+why.join(' ');
-    fx.pop({icon:'🤔',text:'Still mixed!',kind:'oops'});return;
+    m.className='msg bad';m.textContent='Not pure yet. '+why.join(' ');
+    fx.pop({icon:'question',text:'Still mixed!',kind:'oops'});return;
   }
   const stars=cost<=L.par?3:cost<=L.par+3?2:1;
   const P=prof(),lv=String(SX.i+1),r=lvRec(P,'sep',lv);r.plays++;const isBest=stars>r.best;if(isBest)r.best=stars;saveAll();
   cloudSubmit('sep',lv,stars,{cost,par:L.par,belt:SX.belt.filter(Boolean).join('>')});
-  m.className='msg good';m.textContent='✅ Pure! Every goal substance landed in its own bin.';
-  fx.pop({icon:'✨',text:stars===3?'Perfect factory!':'Pure!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  m.className='msg good';m.textContent='Pure! Every goal substance landed in its own bin.';
+  fx.pop({icon:'sparkle',text:stars===3?'Perfect factory!':'Pure!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
   const next=SX.i+1<SEP_LEVELS.length;
   $('sxResult').replaceChildren(
     h('div',{class:'big'},h('span',null,'★'.repeat(stars)),h('span',{class:'dimstar'},'★'.repeat(3-stars))),
     h('p',null,`Your factory cost `,h('b',null,cost),`. The 3-star target is `,h('b',null,L.par),'.',stars<3?' Can you do it cheaper?':' You found the cheapest way!'),
-    h('p',{class:'infobox'},'🔬 ',h('b',null,'Science says: '),L.fact),
+    h('p',{class:'infobox'},I('flask'),' ',h('b',null,'Science says: '),L.fact),
     h('div',{style:'display:flex;gap:8px;justify-content:center;flex-wrap:wrap'},
       next?h('button',{class:'btn good',onclick:()=>startSep(SX.i+1)},'Next level ▶'):h('button',{class:'btn good',onclick:()=>{renderSepSetup();show('s-sep-setup');}},'🏆 All levels done!'),
       h('button',{class:'btn ghost',onclick:()=>{$('sxResult').hidden=true;}},stars<3?'Try for 3 ★':'Keep tinkering'),
@@ -2249,13 +2585,13 @@ function lvEnter(v){
 function lvUpdate(v){
   const me=v.me,B=$('lvBoard');
   if(v.status==='lobby'||(v.status!=='question'&&v.status!=='reveal'&&v.status!=='ended')){
-    lvMsg(`🎉 You're in${me?', '+me.name:''}! ${v.players} ${v.players===1?'player is':'players are'} here. Waiting for your teacher to start…`,'good');
+    lvMsg(`You're in${me?', '+me.name:''}! ${v.players} ${v.players===1?'player is':'players are'} here. Waiting for your teacher to start…`,'good');
     B.replaceChildren();return;
   }
   if(v.status==='question'){
     if(LV.done||(me&&me.done)){
       LV.done=true;
-      if(me&&me.correct)lvMsg(`✅ Correct! +${me.points} points. Waiting for the others… (${v.answered}/${v.players} done)`,'good');
+      if(me&&me.correct)lvMsg(`Correct! +${me.points} points. Waiting for the others… (${v.answered}/${v.players} done)`,'good');
       else lvMsg(`You're out of tries on this one. Waiting for the answer… (${v.answered}/${v.players} done)`,'bad');
     }
     B.replaceChildren();return;
@@ -2263,13 +2599,13 @@ function lvUpdate(v){
   const board=(n)=>h('ol',{class:'lboard'},v.leaders.slice(0,n).map((p,i)=>h('li',{class:me&&p.name===me.name?'me':''},h('span',{class:'rk'},i+1),h('span',{class:'nm'},p.name),h('b',null,p.score))));
   if(v.status==='reveal'){
     const q=v.question;
-    lvMsg(me&&me.correct?`🎉 You got it! +${me.points} points. The answer: ${ansText(q,v.answer)}`:`The answer was ${ansText(q,v.answer)}.`,me&&me.correct?'good':'bad');
+    lvMsg(me&&me.correct?`You got it! +${me.points} points. The answer: ${ansText(q,v.answer)}`:`The answer was ${ansText(q,v.answer)}.`,me&&me.correct?'good':'bad');
     B.replaceChildren(h('h3',null,'Top players'),board(5),me?h('p',{class:'sub'},`You're #${me.rank} with ${me.score} points.`):null);
     return;
   }
-  lvMsg(me?`🏁 Game over! You finished #${me.rank} with ${me.score} points.`:'🏁 Game over!','good');
+  lvMsg(me?`Game over! You finished #${me.rank} with ${me.score} points.`:'Game over!','good');
   B.replaceChildren(h('h3',null,'Final leaderboard'),board(10),h('p',null,h('button',{class:'btn',onclick:goMenu},'Back to menu')));
-  if(!LV.partied){LV.partied=true;if(me&&me.rank<=3){fx.confetti(120);fx.pop({icon:me.rank===1?'🏆':'🥈',text:me.rank===1?'You won!':'Top 3!',kind:'great',size:'big'});}}
+  if(!LV.partied){LV.partied=true;if(me&&me.rank<=3){fx.confetti(120);fx.pop({icon:me.rank===1?'trophy':'medal',text:me.rank===1?'You won!':'Top 3!',kind:'great',size:'big'});}}
 }
 function lvTick(){
   if(!LV||!LV.v)return;
@@ -2296,11 +2632,11 @@ async function lvSubmit(ans){
     }
     if(r.correct){
       L.done=true;if(node)node.classList.add(isFind?'hit':'right');L.els.forEach(b=>b.disabled=true);
-      lvMsg(`✅ Correct! +${r.points} points. Waiting for the others…`,'good');
-      fx.pop({icon:r.points>=700?'🚀':'⭐',text:'+'+r.points,kind:'great',size:'big'});if(r.points>=600)fx.confetti(60);
+      lvMsg(`Correct! +${r.points} points. Waiting for the others…`,'good');
+      fx.pop({icon:r.points>=700?'rocket':'star',text:'+'+r.points,kind:'great',size:'big'});if(r.points>=600)fx.confetti(60);
     }else{
       if(node){node.classList.add('out');if(isFind){node.classList.add('bad');setTimeout(()=>node.classList.remove('bad'),350);}else node.disabled=true;}
-      fx.pop({icon:'🤔',text:'Not quite!',kind:'try',at:isFind?node:null});
+      fx.pop({icon:'question',text:'Not quite!',kind:'try',at:isFind?node:null});
       if(r.done){L.done=true;L.els.forEach(b=>b.disabled=true);lvMsg('Out of tries on this one. Wait for the answer!','bad');}
       else lvMsg(`Not quite! ${r.tries_left} ${r.tries_left===1?'try':'tries'} left.`,'bad');
     }
@@ -2363,8 +2699,8 @@ function tlRender(v){
   const main=$('tlMain'),end=$('tlEnd');
   main.hidden=st==='ended';end.hidden=st==='ended';
   if(st==='lobby'){main.textContent='▶ Start the game';main.dataset.a='start';}
-  else if(st==='question'){main.textContent='👁 Show the answer';main.dataset.a='reveal';}
-  else if(st==='reveal'){main.textContent=v.q_index+1>=v.total?'🏁 Finish game':'Next question ▶';main.dataset.a='next';}
+  else if(st==='question'){main.textContent='Show the answer';main.dataset.a='reveal';}
+  else if(st==='reveal'){main.textContent=v.q_index+1>=v.total?'Finish game':'Next question ▶';main.dataset.a='next';}
   if(st==='question'&&v.players>0&&v.answered>=v.players&&TL.auto!==v.q_index){TL.auto=v.q_index;setTimeout(()=>{if(TL&&TL.v&&TL.v.status==='question'&&TL.v.q_index===v.q_index)tlCtl('reveal');},1200);}
   if(st!=='question')$('tlTimerBox').textContent='';
 }
@@ -2405,19 +2741,19 @@ function exPick(n){
 }
 
 /* ================= STATS ================= */
-const speedLabel=k=>{const l=k[0],s=k.slice(1);return `⚡ Speed Find · ${LEVELS[l]?LEVELS[l].name:'Level '+l}${s?' · '+styleName(s):''}`;};
+const speedLabel=k=>{const l=k[0],s=k.slice(1);return `Speed Find · ${LEVELS[l]?LEVELS[l].name:'Level '+l}${s?' · '+styleName(s):''}`;};
 function renderStats(){
   const P=prof();
   const trick=Object.entries(P.missed).sort((a,b)=>b[1]-a[1]).slice(0,6);
   const rows=[];
   Object.keys(P.speed).sort().forEach(k=>{const r=P.speed[k];if(r&&r.plays)rows.push([speedLabel(k),r.best!=null?fmtT(r.best)+' avg':'—',r.plays]);});
-  rows.push(['🕵️ Element Trivia',P.trivia.plays?`${P.trivia.best}/${ROUND_LEN*4}`:'—',P.trivia.plays]);
-  rows.push(['🧪 Compound Lab',P.lab.plays?`${P.lab.best}/${ROUND_LEN*3}`:'—',P.lab.plays]);
-  Object.keys(P.atom).sort().forEach(k=>{const r=P.atom[k];if(r&&r.plays)rows.push([`⚛️ Atom Builder · ${ATLEVELS[k]?ATLEVELS[k][0]:'Level '+k}`,`${r.best}/${ROUND_LEN*3}`,r.plays]);});
-  if(!Object.values(P.atom).some(r=>r&&r.plays))rows.push(['⚛️ Atom Builder','—',0]);
-  rows.push(['⚖️ Balance It',P.balance.plays?`${P.balance.best}/${ROUND_LEN*3}`:'—',P.balance.plays]);
-  Object.keys(DN_LEVELS).forEach(k=>{const r=P.diner[k];rows.push([`🍔 Atom Diner · ${DN_LEVELS[k][0]}`,r&&r.plays?`${r.best} 🪙`:'—',r?r.plays:0]);});
-  rows.push(['🏭 Separation Station',sepStars(P)?`⭐ ${sepStars(P)}/${SEP_LEVELS.length*3}`:'—',Object.values(P.sep).reduce((a,r)=>a+(r.plays||0),0)]);
+  rows.push(['Element Trivia',P.trivia.plays?`${P.trivia.best}/${ROUND_LEN*4}`:'—',P.trivia.plays]);
+  rows.push(['Compound Lab',P.lab.plays?`${P.lab.best}/${ROUND_LEN*3}`:'—',P.lab.plays]);
+  Object.keys(P.atom).sort().forEach(k=>{const r=P.atom[k];if(r&&r.plays)rows.push([`Atom Builder · ${ATLEVELS[k]?ATLEVELS[k][0]:'Level '+k}`,`${r.best}/${ROUND_LEN*3}`,r.plays]);});
+  if(!Object.values(P.atom).some(r=>r&&r.plays))rows.push(['Atom Builder','—',0]);
+  rows.push(['Balance It',P.balance.plays?`${P.balance.best}/${ROUND_LEN*3}`:'—',P.balance.plays]);
+  Object.keys(DN_LEVELS).forEach(k=>{const r=P.diner[k];rows.push([`Atom Diner · ${DN_LEVELS[k][0]}`,r&&r.plays?`${r.best} coins`:'—',r?r.plays:0]);});
+  rows.push(['Separation Station',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} ★`:'—',Object.values(P.sep).reduce((a,r)=>a+(r.plays||0),0)]);
   $('statsBody').replaceChildren(
     h('p',{class:'sub'},`${P.name}${P.cls?' · Class '+P.cls:''}`),
     h('table',{class:'dt'},h('tr',null,h('th',null,'Game'),h('th',null,'Best'),h('th',null,'Rounds played')),
@@ -2428,7 +2764,7 @@ function renderStats(){
 
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
-const GAME_NAMES={speed:'⚡ Speed Find',trivia:'🕵️ Trivia',lab:'🧪 Compound Lab',atom:'⚛️ Atom Builder',balance:'⚖️ Balance It',diner:'🍔 Atom Diner',sep:'🏭 Separation Station'};
+const GAME_NAMES={speed:'Speed Find',trivia:'Trivia',lab:'Compound Lab',atom:'Atom Builder',balance:'Balance It',diner:'Atom Diner',sep:'Separation Station'};
 function levelLabel(game,level){
   if(game==='speed'){const l=level[0],s=level.slice(1);return `${LEVELS[l]?LEVELS[l].name:'L'+l}${s?' · '+styleName(s):''}`;}
   if(game==='atom')return ATLEVELS[level]?ATLEVELS[level][0]:'Level '+level;
@@ -2436,7 +2772,7 @@ function levelLabel(game,level){
   if(game==='sep')return SEP_LEVELS[level-1]?`${level}. ${SEP_LEVELS[level-1].name}`:'Level '+level;
   return '';
 }
-const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':game==='diner'?Number(v)+' coins':game==='sep'?'⭐'.repeat(Number(v)):String(Number(v));
+const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':game==='diner'?Number(v)+' coins':game==='sep'?'★'.repeat(Number(v)):String(Number(v));
 const sepTotalOf=S=>{let t=0;for(let i=1;i<=SEP_LEVELS.length;i++){const r=sc(S,'sep:'+i);if(r)t+=Number(r.best);}return t;};
 const dinerOf=S=>['1','2','3'].map(l=>sc(S,'diner:'+l)?String(Number(sc(S,'diner:'+l).best)):'–').join(' / ');
 const when=t=>{if(!t)return '—';const d=new Date(t);return isNaN(d)?'—':d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});};
@@ -2473,7 +2809,7 @@ function renderTeacher(){
   const list=TDATA.filter(s=>(cls==='*'||(s.class||'')===cls)&&(!q||s.name.toLowerCase().includes(q)));
   $('tCount').textContent=`${list.length} of ${TDATA.length} students`;
   const tb=$('tTable');
-  tb.replaceChildren(h('tr',null,['Student','Class','⚡ L1','⚡ L2','⚡ L3','🕵️ Trivia','🧪 Lab','⚛️ Atom','⚖️ Balance','🍔 Diner','🏭 Sep ⭐','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
+  tb.replaceChildren(h('tr',null,['Student','Class','Speed L1','Speed L2','Speed L3','Trivia','Lab','Atom','Balance','Diner','Sep ★','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
     ...list.map(S=>{
       const sp=l=>bestOf(S,['speed:'+l],v=>fmtT(Number(v[0].best)));
       const num=k=>bestOf(S,[k],v=>String(Number(v[0].best)));
@@ -2545,6 +2881,11 @@ $('tPass').onclick=async()=>{
 $('thBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;};
 $('teacherLink').onclick=openTeacher;
 $('tBack').onclick=()=>{TPASS=null;TDATA=[];if(me)goMenu();else{renderLogin();show('s-login');}};
+
+/* ---- hydrate static art placeholders ---- */
+document.querySelectorAll('i[data-ic]').forEach(x=>{x.outerHTML=ART.ico(x.dataset.ic);});
+document.querySelectorAll('[data-thumb]').forEach(x=>{x.innerHTML=ART.thumb(x.dataset.thumb);});
+document.querySelectorAll('i[data-logo]').forEach(x=>{x.outerHTML=ART.logo(+x.dataset.logo||30);});
 
 /* ================= START ================= */
 if(!storageOK)$('warn').hidden=false;
