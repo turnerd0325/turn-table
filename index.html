@@ -74,8 +74,8 @@ h1{margin:0 0 6px;font-size:30px} h2{margin:0 0 8px;font-size:22px} h3{margin:0 
 /* --- periodic table --- */
 .play{display:grid;grid-template-columns:1fr;gap:12px;align-items:start}
 .play.has-side{grid-template-columns:minmax(0,1fr) 340px;--side:352px}
-.table-wrap{--cs:min(calc((100vw - var(--side) - 90px)/18.5),calc((100vh - 210px)/9.9),78px);overflow-x:auto;padding:2px}
-.ptable{display:grid;gap:2px;justify-content:center;
+.table-wrap{--cs:min(calc((min(100vw,1500px) - var(--side) - 112px)/18.5),calc((100vh - 210px)/9.9),78px);overflow-x:auto;padding:2px}
+.ptable{display:grid;gap:2px;justify-content:safe center;
   grid-template-columns:calc(var(--cs)*.45) repeat(18,var(--cs));
   grid-template-rows:calc(var(--cs)*.4) repeat(7,var(--cs)) calc(var(--cs)*.3) repeat(2,var(--cs))}
 .gl,.pl{display:flex;align-items:center;justify-content:center;font-size:calc(var(--cs)*.24);font-weight:700;color:var(--muted)}
