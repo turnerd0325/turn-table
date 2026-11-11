@@ -2360,7 +2360,7 @@ const SB={
   salt:{n:'Salt',ic:'salt',sol:1}, sugar:{n:'Sugar',ic:'sugar',sol:1}, water:{n:'Water',ic:'water'}
 };
 const MACH={
-  magnet:{n:'Magnet',ic:'magnet',cost:3,d:'Pulls out anything magnetic.'},
+  magnet:{n:'Magnet',ic:'magnet',cost:3,d:'Pulls magnetic stuff out of a DRY mixture. It can’t grab through a liquid.'},
   water:{n:'Water tap',ic:'tap',cost:1,d:'Adds water. Soluble stuff dissolves in it.'},
   filter:{n:'Filter',ic:'filter',cost:2,d:'Catches solid bits. Liquid (and anything dissolved in it) drips through.'},
   heat:{n:'Evaporator',ic:'heat',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'}
@@ -2376,7 +2376,7 @@ const SEP_LEVELS=[
  {name:'Muddy Sea',mix:['sand','salt','water'],goal:['sand','salt'],slots:4,story:'A storm washed beach sand into the salt-water tank.',fact:'This mixture already had water, so the salt was already dissolved. You only needed to filter and evaporate.'},
  {name:'Can Crusher',mix:['alum','iron'],goal:['alum','iron'],slots:3,story:'The recycling center mixed soda cans with scrap iron.',fact:'Aluminum is a metal but it isn’t magnetic. Real recycling centers use giant magnets to split them up!'},
  {name:'Triple Trouble',mix:['iron','salt','sand'],goal:['iron','salt','sand'],slots:5,story:'Three ingredients, one big mess. Get all three back, pure.',fact:'Use one property at a time: magnetism for the iron, solubility for the salt, and size for the sand.'},
- {name:'Candy Factory Spill',mix:['sugar','clips','pebbles','water'],goal:['sugar','clips','pebbles'],slots:5,story:'Paperclips and gravel fell into the sugar-water tank.',fact:'Each substance keeps its own properties in a mixture. That’s why mixtures can be separated.'},
+ {name:'Candy Factory Spill',mix:['sugar','clips','pebbles','water'],goal:['sugar','clips','pebbles'],slots:5,story:'Paperclips and gravel fell into the sugar-water tank.',fact:'A magnet is much harder to use in a liquid, so boil the water off first. Then pull out the clips and use water again to split sugar from gravel.'},
  {name:'Recycling Rush',mix:['alum','iron','salt','sand'],goal:['iron','salt'],slots:5,story:'The boss only needs the iron and the salt from this load.',fact:'You can’t split aluminum from sand with these tools, and that’s okay. Engineers pick methods that fit the job.'},
  {name:'Grand Finale',mix:['clips','sugar','sand','copper'],goal:['clips','sugar'],slots:4,story:'Last shift! Only four spots on the belt.',fact:'Magnetism, dissolving, filtering and evaporating: the same tools scientists use to separate real mixtures.'}
 ];
@@ -2394,8 +2394,9 @@ function sepStep(S,m){
   const it=Object.assign({},S.items);let w=S.water,caught=[],note='';
   const solids=()=>Object.keys(it).filter(k=>it[k]==='solid');
   if(m==='magnet'){
-    solids().forEach(k=>{if(SB[k].mag){caught.push(k);delete it[k];}});
-    note=caught.length?'Grabbed '+andList(caught.map(NM))+(S.water?', even in water!':''):'Nothing magnetic';
+    if(S.water){note=solids().some(k=>SB[k].mag)?'Too wet! A magnet can’t grab through a liquid':'Too wet, and nothing magnetic';}
+    else{solids().forEach(k=>{if(SB[k].mag){caught.push(k);delete it[k];}});
+      note=caught.length?'Grabbed '+andList(caught.map(NM)):'Nothing magnetic';}
   }else if(m==='water'){
     const dis=solids().filter(k=>SB[k].sol);dis.forEach(k=>it[k]='dissolved');
     note=dis.length?cap1(andList(dis.map(NM)))+' dissolved!':(w?'More water':'Wet, but nothing dissolved');w=true;
@@ -2421,12 +2422,11 @@ function sepRun(L,belt){
 }
 const beltCost=b=>b.reduce((a,m)=>a+(m?MACH[m].cost:0),0);
 SEP_LEVELS.forEach(L=>{   // work out the cheapest possible factory for each level (the 3-star target)
-  const opts=[null,...MORDER],n=L.slots;let best=Infinity,bestKey=Infinity;
+  const opts=[null,...MORDER],n=L.slots;let best=Infinity;
   for(let c=0;c<Math.pow(opts.length,n);c++){
     const b=[];let x=c;for(let j=0;j<n;j++){b.push(opts[x%opts.length]);x=Math.floor(x/opts.length);}
     const cost=beltCost(b);if(cost>best)continue;
-    const mi=b.indexOf('magnet'),key=cost*100+(mi<0?9:mi);   // cheapest wins; among ties, prefer magnet-first
-    if(key<bestKey&&sepRun(L,b).ok){bestKey=key;best=cost;L.sol=b.slice();}
+    if(cost<best&&sepRun(L,b).ok){best=cost;L.sol=b.slice();}
   }
   L.par=best;if(best===Infinity)console.warn('Separation Station: level cannot be solved',L.name);
 });
@@ -2474,7 +2474,7 @@ function sxCoach(){
 function sxHints(L){
   const sol=L.sol||[],used=sol.filter(Boolean),names=[...new Set(used)].map(m=>MACH[m].n.toLowerCase());
   return [
-    used.includes('magnet')?'Is anything in this mixture magnetic? Start with the magnet. It pulls that substance out first and leaves an easier mixture to deal with.'
+    L.mix.includes('water')&&L.mix.some(k=>SB[k].mag)?'A magnet is much harder to use in a liquid. How can you get the water out of the way first?'
       :L.mix.includes('water')?'This mixture already has water in it. What can you do with that?':'Which of these substances dissolve in water? Which ones don’t?',
     'Machines to use: '+andList(names)+'. The cheapest factory costs '+L.par+'.',
     'Full answer, from left to right: '+used.map((m,i)=>(i+1)+'. '+MACH[m].n).join(', ')+'.'
@@ -2581,6 +2581,7 @@ function sxWhy(g,res,bad){
   const covers=items.filter(x=>bad.includes(x)),rest=items.filter(x=>!covers.includes(x)).map(x=>SB[x].n.toLowerCase());
   const text=covers.length>1?`Your ${andList(covers.map(icn))} got stuck together in ${where}${rest.length?' with '+andList(rest):''}.`
     :`Your ${nm} got mixed with ${andList(rest)} in ${where}.`;
+  if(covers.some(x=>SB[x].mag)&&res.notes.some((n,i)=>SX.belt[i]==='magnet'&&n.startsWith('Too wet')))tip+=' The magnet can’t grab through a liquid. Dry it out first!';
   return {covers,text:text+tip};
 }
 function sxJudge(res){SX.fail=!res.ok;SX.ok=res.ok;sxJudge0(res);sxCoach();}
