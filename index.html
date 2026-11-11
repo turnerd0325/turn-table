@@ -288,6 +288,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .hopper{width:100px;min-height:78px;border-radius:14px 14px 30px 30px;background:#ffe9c7;border:3px solid #e0a64a;display:flex;flex-wrap:wrap;gap:2px;align-items:center;justify-content:center;font-size:22px;padding:4px}
 .endbin{width:100px;min-height:78px;border:3px solid #9aa8c0;border-top:none;border-radius:0 0 18px 18px;background:linear-gradient(#fff,#eef2f8);display:flex;flex-wrap:wrap;gap:2px;align-items:center;justify-content:center;font-size:22px;padding:4px}
 .endbin.ok{border-color:var(--good);background:#e9f9ef} .endbin.mixed{border-color:var(--bad);background:#fff0f0}
+.bin.junk,.endbin.junk{border-color:#b9c0d4;background:#f3f5fa}
 .spresult{text-align:center;background:#f2f5fb;border-radius:14px;padding:12px;margin-top:10px}
 .spresult .big{font-size:44px;letter-spacing:4px;color:var(--gold)}
 .dimstar{color:#cfd6e3}
@@ -2418,7 +2419,8 @@ function sxToken(S){
 }
 function sxBin(items,cls,label){
   const L=SEP_LEVELS[SX.i];let st='';
-  if(items&&items.length)st=items.length===1?' ok':' mixed';
+  /* green = one substance alone; red = a goal substance is stuck in a mix; grey = only leftover junk mixed together (that's fine) */
+  if(items&&items.length)st=items.length===1?' ok':(items.some(k=>L.goal.includes(k))?' mixed':' junk');
   return h('div',{class:cls+st,title:items&&items.length?andList(items.map(k=>SB[k].n)):'Empty'},h('div',{class:'lb'},label),...(items||[]).map(k=>SIC(k)));
 }
 function sxFactory(){
