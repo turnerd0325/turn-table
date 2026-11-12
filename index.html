@@ -260,6 +260,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .seplv:hover:not([disabled]){border-color:var(--accent)} .seplv[disabled]{opacity:.45;cursor:not-allowed}
 .seplv b{display:block;font-size:16px} .seplv .mx{font-size:20px;letter-spacing:2px} .seplv .st{color:var(--gold);font-size:18px;letter-spacing:1px}
 .sepstars{font-weight:800;font-size:18px}
+.seppack{grid-column:1/-1;font-weight:900;font-size:15px;color:var(--accent);margin-top:6px;padding-bottom:2px;border-bottom:2px solid var(--line)}
 .spgoal{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-weight:700;margin:6px 0}
 .spgoal .tag{background:#eaf1ff;border-radius:999px;padding:4px 12px}
 .spgoal .tag.g{background:#e9f9ef;color:#116b3a}
@@ -918,6 +919,10 @@ const ART=(()=>{
     alum:`<rect x="8.5" y="6.5" width="15" height="21" rx="2.6" fill="#d7dce5" stroke="#9aa4b6" stroke-width="1.4"/><rect x="8.5" y="12.5" width="15" height="8" fill="#5b94e0"/><ellipse cx="16" cy="6.5" rx="7.5" ry="2" fill="#aeb6c4" stroke="#8793a8" stroke-width="1"/><path d="M14.4 5.8h3.2" stroke="#6b768a" stroke-width="1.2" stroke-linecap="round"/><path d="M11 9v16" stroke="#fff" stroke-opacity=".5" stroke-width="1.4" stroke-linecap="round"/>`,
     salt:`<path d="M9.5 11.5h13l1.6 14a2 2 0 0 1-2 2.2h-12.2a2 2 0 0 1-2-2.2z" fill="#f6f9fd" stroke="#8d9db6" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 11.5a7 6 0 0 1 14 0z" fill="#9aa6ba" stroke="#7a879d" stroke-width="1.2"/><circle cx="13.5" cy="8.4" r=".9" fill="#4e596d"/><circle cx="16" cy="6.8" r=".9" fill="#4e596d"/><circle cx="18.5" cy="8.4" r=".9" fill="#4e596d"/><path d="M11.4 17l.6 8M20.6 17l-.6 8" stroke="#cdd8ea" stroke-width="1.3" stroke-linecap="round"/>`,
     sugar:cube(11,19,14)+cube(21,14,13),
+    oil:`<path d="M16 3.5C16 3.5 7.5 13.6 7.5 20a8.5 8.5 0 0 0 17 0C24.5 13.6 16 3.5 16 3.5z" fill="#f2b632" stroke="#c98a10" stroke-width="1.3"/><path d="M11.8 19.6a4.8 4.6 0 0 0 2.8 4.4" stroke="#fff" stroke-opacity=".75" stroke-width="1.8" fill="none" stroke-linecap="round"/>`,
+    sawdust:`<path d="M2 27Q9 14 16 21Q23 11 30 27z" fill="#dcb67e" stroke="#b58d52" stroke-width="1.3" stroke-linejoin="round"/><g fill="#a67c45"><rect x="8" y="23" width="3.4" height="1.4" rx=".7" transform="rotate(20 9 24)"/><rect x="14" y="22" width="3.4" height="1.4" rx=".7" transform="rotate(-25 15 23)"/><rect x="20" y="23.4" width="3.4" height="1.4" rx=".7" transform="rotate(15 21 24)"/><rect x="12" y="25.6" width="3" height="1.3" rx=".6" transform="rotate(-10 13 26)"/><rect x="18" y="19" width="3" height="1.3" rx=".6" transform="rotate(30 19 19.6)"/></g>`,
+    cork:`<path d="M9.5 8h13l-2.2 18H11.7z" fill="#d1a265" stroke="#a87b3f" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="16" cy="8" rx="6.5" ry="2.2" fill="#e6c48f" stroke="#a87b3f" stroke-width="1.3"/><g fill="#a87b3f"><circle cx="13.6" cy="14" r=".9"/><circle cx="18.4" cy="17" r=".9"/><circle cx="14.6" cy="21" r=".8"/><circle cx="17.6" cy="12.4" r=".7"/></g>`,
+    marbles:`<circle cx="11" cy="20.5" r="7" fill="#4a8fe0" stroke="#2f69b3" stroke-width="1.3"/><circle cx="22" cy="21.5" r="6.4" fill="#e0584a" stroke="#a83a2f" stroke-width="1.3"/><circle cx="16.5" cy="10.5" r="6" fill="#46b87a" stroke="#2f8a58" stroke-width="1.3"/><path d="M7.5 17.5a5 4 0 0 1 4-2M19 19a4 3.4 0 0 1 3.4-1.4M14 8a3.4 2.6 0 0 1 3.4-.8" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M6 22.5c3-2 6-2 10 0" stroke="#fff" stroke-opacity=".35" stroke-width="1.2" fill="none"/>`,
     water:`<path d="M16 3.5C16 3.5 7 13.6 7 20a9 9 0 0 0 18 0C25 13.6 16 3.5 16 3.5z" fill="#3d9be9"/><path d="M11.4 19.6a5 5 0 0 0 3 4.6" stroke="#fff" stroke-opacity=".65" stroke-width="1.8" fill="none" stroke-linecap="round"/>`
   };
   const MACHI={
@@ -925,6 +930,11 @@ const ART=(()=>{
     tap:`<path d="M13 3.5h6M16 3.5V8" stroke="#6b7a92" stroke-width="2.6" stroke-linecap="round"/><path d="M5 8h15a5 5 0 0 1 5 5v2" fill="none" stroke="#8d9bb0" stroke-width="5.4" stroke-linecap="round"/><rect x="21" y="14" width="8" height="4" rx="1.5" fill="#6b7a92"/><path d="M25 22c0 0-3 3.4-3 5.4a3 3 0 0 0 6 0c0-2-3-5.4-3-5.4z" fill="#3d9be9"/>`,
     filter:`<path d="M4 6h24l-8.4 12.4V27l-7.2 2.2V18.4z" fill="#8fb3e3" stroke="#4f77b5" stroke-width="1.8" stroke-linejoin="round"/><path d="M8 10.4h16M11 14.4h10" stroke="#fff" stroke-opacity=".7" stroke-width="1.5" stroke-linecap="round"/>`,
     heat:`<path d="M16 2.5C19 8.4 25.6 12 25.6 19.4a9.6 9.6 0 0 1-19.2 0C6.4 14 10.6 12 11.6 7 13.8 9 15 6.4 16 2.5z" fill="#f08a24"/><path d="M16 14c3.2 4 5.2 5 5.2 8.4a5.2 5.2 0 0 1-10.4 0c0-3.4 2.4-4.4 5.2-8.4z" fill="#ffd166"/>`,
+    sieve:`<path d="M3 13h22a11 11 0 0 1-22 0z" fill="#c4cfe0" stroke="#6f7f9a" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 13v7M12.5 13v9.5M17 13v9.5M21.5 13v7M5.4 17.5h17.2M8 21h12" stroke="#6f7f9a" stroke-width="1" opacity=".75"/><path d="M25 13l5-6" stroke="#6f7f9a" stroke-width="2.6" stroke-linecap="round"/><circle cx="9" cy="28" r="1.3" fill="#e5c58c"/><circle cx="14.5" cy="29.2" r="1.3" fill="#e5c58c"/><circle cx="19.5" cy="28" r="1.3" fill="#e5c58c"/><ellipse cx="9" cy="10.4" rx="3.4" ry="2.6" fill="#8f8a82"/><ellipse cx="17" cy="9.6" rx="3" ry="2.4" fill="#a8a195"/>`,
+    sepfun:`<path d="M16 2.5v3M13 5.5h6" stroke="#6b7a92" stroke-width="2" stroke-linecap="round"/><path d="M16 6C10.5 6 7 12 7 17.5c0 3.5 2.6 6 5.4 7.2L14.6 27h2.8l2.2-2.3c2.8-1.2 5.4-3.7 5.4-7.2C25 12 21.5 6 16 6z" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 14.6C9.4 12 11.6 10.4 16 10.4s6.6 1.6 8 4.2z" fill="#f2b632"/><path d="M7.1 15.6h17.8c.1.6.1 1.3.1 1.9 0 3.5-2.6 6-5.4 7.2L17.4 27h-2.8l-2.2-2.3C9.6 23.5 7 21 7 17.5c0-.6 0-1.3.1-1.9z" fill="#3d9be9"/><rect x="14.4" y="27" width="3.2" height="2.6" fill="#6b7a92"/><path d="M19.4 27.4h5.6" stroke="#e2483f" stroke-width="2.4" stroke-linecap="round"/>`,
+    decanter:`<g transform="rotate(32 14 18)"><path d="M11.5 2.5h5v8l6 6.5v10a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V17l6-6.5z" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.6" stroke-linejoin="round"/><path d="M5.6 19h16.8v8a1.6 1.6 0 0 1-1.6 1.6H7.2A1.6 1.6 0 0 1 5.6 27z" fill="#3d9be9"/></g><path d="M26 6c0 0-2.2 2.6-2.2 4.1a2.2 2.2 0 0 0 4.4 0C28.2 8.6 26 6 26 6z" fill="#3d9be9"/><path d="M29.2 14.6c0 0-1.4 1.6-1.4 2.6a1.4 1.4 0 0 0 2.8 0c0-1-1.4-2.6-1.4-2.6z" fill="#3d9be9"/>`,
+    tank:`<rect x="3.5" y="6.5" width="25" height="21" rx="2.5" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.6"/><rect x="4.3" y="12" width="23.4" height="14.8" rx="1.6" fill="#5aaef0" opacity=".9"/><ellipse cx="11" cy="12" rx="3.4" ry="1.7" fill="#d1a265" stroke="#a87b3f" stroke-width=".9"/><ellipse cx="21.4" cy="12.2" rx="2.8" ry="1.5" fill="#d1a265" stroke="#a87b3f" stroke-width=".9"/><circle cx="10" cy="23" r="2.6" fill="#e0584a"/><circle cx="17" cy="24" r="2.6" fill="#46b87a"/><circle cx="23.4" cy="23" r="2.4" fill="#8f8a82"/><path d="M9 5.5h14" stroke="#6b7a92" stroke-width="2" stroke-linecap="round"/>`,
+    still:`<circle cx="10" cy="20.5" r="7" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.6"/><path d="M3.2 21a7 7 0 0 0 13.6 0z" fill="#3d9be9"/><rect x="8" y="7" width="4" height="7" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.4"/><path d="M10 7V4.6h12.5L27 9v5" fill="none" stroke="#8d9bb0" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.6 19.5h6l-.8 8.5h-4.4z" fill="#e3f0fb" stroke="#4f77b5" stroke-width="1.3"/><path d="M24.2 24h4.6l-.3 4h-4z" fill="#3d9be9"/><path d="M27 16.4c0 0-1.5 1.8-1.5 2.8" stroke="#3d9be9" stroke-width="2" stroke-linecap="round"/><path d="M10 30.4c-1.9 0-2.9-1.2-2.9-2.3 0-1.3 1.5-1.9 1.5-3.4 1 .8 1.3 1.5 1.3 2.3.6-.6.9-1.3.9-2.3 1.1 1.1 2 2.4 2 3.5 0 1.1-.9 2.2-2.8 2.2z" fill="#f08a24"/>`,
     flag:`<path d="M7 28V4" stroke="#4a5468" stroke-width="2.6" stroke-linecap="round"/><rect x="8" y="5" width="18" height="13" fill="#fff" stroke="#4a5468" stroke-width="1.4"/><path d="M8 5h4.5v4.3H8zM17 5h4.5v4.3H17zM12.5 9.3H17v4.4h-4.5zM21.5 9.3H26v4.4h-4.5zM8 13.7h4.5V18H8zM17 13.7h4.5V18H17z" fill="#26324d"/>`,
     coin:`<circle cx="16" cy="16" r="12.4" fill="#f4b13a" stroke="#b9801a" stroke-width="2"/><circle cx="16" cy="16" r="8" fill="none" stroke="#fff6df" stroke-width="1.6"/><path d="M11.4 11.6a7 7 0 0 1 4.6-2.2" stroke="#fff" stroke-opacity=".7" stroke-width="1.6" fill="none" stroke-linecap="round"/>`
   };
@@ -1627,7 +1637,7 @@ function renderMenu(){
     mc('m6','atom','Atom Builder','Add protons, neutrons and electrons to build atoms, ions and isotopes.',ab.length?`High score: ${Math.max(...ab)}/${ROUND_LEN*3}`:'',()=>{renderAtomSetup();show('s-atom-setup');}),
     mc('m7','balance','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
     mc('m9','diner','Atom Diner','Smash ingredients into atoms and rebuild them into dishes before customers lose patience!',dnBestLine(P),()=>{renderDinerSetup();show('s-diner-setup');}),
-    mc('m10','sep','Separation Station','Build a factory line of magnets, filters and heaters to split mixtures apart.',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
+    mc('m10','sep','Separation Station','Build a factory line of magnets, sieves, filters, funnels and stills to split mixtures apart.',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
     mc('m8','class','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','stats','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
@@ -2356,17 +2366,25 @@ document.addEventListener('keydown',e=>{
 
 /* ================= GAME 7: SEPARATION STATION (MS-PS1-8) ================= */
 const SB={
-  iron:{n:'Iron filings',ic:'iron',mag:1}, clips:{n:'Paperclips',ic:'clips',mag:1},
-  sand:{n:'Sand',ic:'sand'}, pebbles:{n:'Pebbles',ic:'pebbles'}, copper:{n:'Copper pennies',ic:'copper'}, alum:{n:'Aluminum cans',ic:'alum'},
-  salt:{n:'Salt',ic:'salt',sol:1}, sugar:{n:'Sugar',ic:'sugar',sol:1}, water:{n:'Water',ic:'water'}
+  iron:{n:'Iron filings',ic:'iron',mag:1}, clips:{n:'Paperclips',ic:'clips',mag:1,big:1},
+  sand:{n:'Sand',ic:'sand'}, pebbles:{n:'Pebbles',ic:'pebbles',big:1}, copper:{n:'Copper pennies',ic:'copper',big:1}, alum:{n:'Aluminum cans',ic:'alum',big:1},
+  salt:{n:'Salt',ic:'salt',sol:1}, sugar:{n:'Sugar',ic:'sugar',sol:1}, water:{n:'Water',ic:'water',liq:1},
+  oil:{n:'Cooking oil',ic:'oil',liq:1}, sawdust:{n:'Sawdust',ic:'sawdust',lite:1}, cork:{n:'Cork pieces',ic:'cork',lite:1,big:1}, marbles:{n:'Marbles',ic:'marbles',big:1}
 };
 const MACH={
   magnet:{n:'Magnet',ic:'magnet',cost:3,d:'Pulls magnetic stuff out of a DRY mixture. It can’t grab through a liquid.'},
   water:{n:'Water tap',ic:'tap',cost:1,d:'Adds water. Soluble stuff dissolves in it.'},
   filter:{n:'Filter',ic:'filter',cost:2,d:'Catches solid bits. Liquid (and anything dissolved in it) drips through.'},
-  heat:{n:'Evaporator',ic:'heat',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'}
+  heat:{n:'Evaporator',ic:'heat',cost:4,d:'Boils water away as steam. Dissolved stuff is left as crystals.'},
+  sieve:{n:'Sieve',ic:'sieve',cost:2,d:'Catches BIG pieces. Small bits fall through, and liquid drips through too.',bin:1},
+  funnel:{n:'Separating funnel',ic:'sepfun',cost:3,d:'Splits two liquids that don’t mix, like oil and water. The heavier layer drains out the bottom.',bin:1},
+  decanter:{n:'Decanter',ic:'decanter',cost:1,d:'Pours the liquid off the top. Settled solids stay behind, but floating things pour off with the liquid.',bin:1},
+  tank:{n:'Density tank',ic:'tank',cost:3,d:'A tank of water. Things that float get skimmed off the top. It needs water already on the belt.',bin:1},
+  distiller:{n:'Distiller',ic:'still',cost:6,d:'Boils the water, then cools the steam back into pure water in its own bin. Dissolved stuff is left behind as crystals.',bin:1}
 };
-const MORDER=['magnet','water','filter','heat'];
+Object.assign(MACH.magnet,{bin:1});Object.assign(MACH.filter,{bin:1});
+const MORDER=['magnet','sieve','water','filter','decanter','funnel','tank','heat','distiller'];
+const MORDER0=['magnet','water','filter','heat'];
 const SEP_LEVELS=[
  {name:'Junkyard Cleanup',mix:['iron','sand'],goal:['iron','sand'],slots:3,story:'A dump truck mixed iron filings into the sand pile.',fact:'Iron is magnetic and sand is not, so a magnet pulls out only the iron.'},
  {name:'Muddy Puddle',mix:['sand','water'],goal:['sand','water'],slots:3,story:'The town water tank is full of mud. Get clean water back!',fact:'Sand doesn’t dissolve in water, so a filter catches it while the water drips through.'},
@@ -2379,39 +2397,75 @@ const SEP_LEVELS=[
  {name:'Triple Trouble',mix:['iron','salt','sand'],goal:['iron','salt','sand'],slots:5,story:'Three ingredients, one big mess. Get all three back, pure.',fact:'Use one property at a time: magnetism for the iron, solubility for the salt, and size for the sand.'},
  {name:'Candy Factory Spill',mix:['sugar','clips','pebbles','water'],goal:['sugar','clips','pebbles'],slots:5,story:'Paperclips and gravel fell into the sugar-water tank.',fact:'A magnet is much harder to use in a liquid, so boil the water off first. Then pull out the clips and use water again to split sugar from gravel.'},
  {name:'Recycling Rush',mix:['alum','iron','salt','sand'],goal:['iron','salt'],slots:5,story:'The boss only needs the iron and the salt from this load.',fact:'You can’t split aluminum from sand with these tools, and that’s okay. Engineers pick methods that fit the job.'},
- {name:'Grand Finale',mix:['clips','sugar','sand','copper'],goal:['clips','sugar'],slots:4,story:'Last shift! Only four spots on the belt.',fact:'Magnetism, dissolving, filtering and evaporating: the same tools scientists use to separate real mixtures.'}
+ {name:'Grand Finale',mix:['clips','sugar','sand','copper'],goal:['clips','sugar'],slots:4,story:'Last shift! Only four spots on the belt.',fact:'Magnetism, dissolving, filtering and evaporating: the same tools scientists use to separate real mixtures.'},
+ /* ---- Pack 2: New Tools. These levels use the sieve, decanter, density tank, separating funnel and distiller. ---- */
+ {name:'Rock Sorting',intro:'sieve',clue:'Look at the size of the pieces. Which substance is chunky and which is fine?',tools:['sieve','water','filter'],mix:['pebbles','sand'],goal:['pebbles','sand'],slots:3,story:'The quarry dumped pebbles into a pile of sand. Sort them by size!',fact:'A sieve has holes just big enough for small grains. Big pieces get caught and small ones fall through. Sorting by particle size is called sieving.'},
+ {name:'Toy Box Mess',clue:'Two properties are at work: one substance is magnetic, and one is much bigger than the others.',tools:['sieve','magnet','water','filter'],mix:['marbles','iron','sand'],goal:['marbles','iron','sand'],slots:3,story:'Marbles, iron filings and sand all got swept into one bucket.',fact:'Use one property per machine: the sieve sorts by size (marbles are big) and the magnet sorts by magnetism (only iron sticks).'},
+ {name:'Settled Mud',intro:'decanter',clue:'The sand has settled to the bottom. What could you do to just pour the water off the top?',tools:['decanter','filter','water','heat'],mix:['sand','water'],goal:['sand','water'],slots:3,story:'The mud in this tank has settled to the bottom. Get the clear water out.',fact:'Heavy solids settle to the bottom. Decanting means carefully pouring off the liquid and leaving the settled solid behind.'},
+ {name:'River Gravel',clue:'One substance is big, one is small, and water sits on top. Which machine sorts by size? Which one pours off liquid?',tools:['decanter','sieve','filter','heat'],mix:['pebbles','sand','water'],goal:['pebbles','sand','water'],slots:3,story:'A flood left a tank of pebbles, sand and water.',fact:'You can combine methods. Sieving splits big from small, and decanting pours the water off what has settled.'},
+ {name:'Sugar Sand Sort',clue:'Sieve out the big stuff first. Then think about which of the rest dissolves in water.',tools:['sieve','water','filter','heat','decanter'],mix:['sugar','sand','pebbles'],goal:['sugar','sand','pebbles'],slots:4,story:'Sugar, sand and pebbles are in one dry heap.',fact:'Sugar dissolves and sand doesn’t, so water splits them. Decanting would pour the sugar water away with no way to get the sugar back, so a filter and evaporator do the job.'},
+ {name:'Sawdust Spill',intro:'tank',clue:'Sawdust floats in water and sand sinks. What do you need to add before the density tank can work?',tools:['water','tank','filter','decanter','heat'],mix:['sawdust','sand'],goal:['sawdust','sand'],slots:4,story:'A woodshop floor is covered in sawdust and sand.',fact:'Density decides who floats. Sawdust is less dense than water so it floats, and sand is denser so it sinks. A density tank skims off the floaters.'},
+ {name:'Cork Cleanup',clue:'The cork floats and the marbles sink. A decanter pours off floating things too, so what should go first?',tools:['tank','decanter','sieve','filter'],mix:['cork','marbles','water'],goal:['cork','marbles','water'],slots:3,story:'Corks and marbles fell into the fish tank.',fact:'Careful with order! A decanter pours off floating things along with the liquid, so skim the corks off first.'},
+ {name:'Salad Dressing',intro:'funnel',clue:'The oil and water don’t mix. Which machine drains one layer off the bottom?',tools:['funnel','decanter','filter','heat'],mix:['oil','water'],goal:['oil','water'],slots:2,story:'The oil and water in this dressing have separated into layers.',fact:'Oil and water don’t mix, and oil is less dense so it floats on top. A separating funnel drains off the bottom layer.'},
+ {name:'Oil Spill Cleanup',clue:'If the sand is still in the funnel, it drains out with the water. Take the solid out first.',tools:['funnel','filter','decanter','heat'],mix:['oil','sand','water'],goal:['oil','sand','water'],slots:3,story:'Oil, sand and water are all mixed up after a spill.',fact:'Take out the solid first. If sand is still in the funnel it sinks and drains out with the water layer.'},
+ {name:'Pool Party Cleanup',clue:'Corks float, marbles are big and sink, and the oil sits on top of the water. Take the solids out before you split the liquids.',tools:['tank','sieve','funnel','filter','decanter'],mix:['cork','marbles','oil','water'],goal:['cork','marbles','oil','water'],slots:4,story:'Corks, marbles and oil all ended up in the pool.',fact:'Four substances, three properties: floating (cork), size (marbles) and layers (oil and water).'},
+ {name:'Fresh Water',intro:'distiller',clue:'You want to keep the water, not boil it away. Which machine cools the steam back into water?',tools:['heat','distiller','filter','decanter'],mix:['salt','water'],goal:['salt','water'],slots:2,story:'Sailors are stuck at sea with only salt water to drink.',fact:'An evaporator boils the water away and wastes it. A distiller catches the steam and cools it back into pure water, and the salt stays behind.'},
+ {name:'Sugary Seas',clue:'The sugar is dissolved but the sand isn’t. Take the sand out before you boil the water.',tools:['filter','distiller','heat','decanter','water'],mix:['sugar','sand','water'],goal:['sugar','sand','water'],slots:3,story:'Sugar and sand are stirred into a tank of water.',fact:'Filter out what didn’t dissolve, then distill the sugar water. The pure water is collected and the sugar crystals are left.'},
+ {name:'Oily Salt Water',clue:'Boil off the water first and catch the steam. What is left that is a liquid you can pour off?',tools:['funnel','distiller','filter','heat','decanter'],mix:['oil','salt','water'],goal:['oil','salt','water'],slots:3,story:'Oil spilled into the salt-water tank.',fact:'The funnel would drain salt water, not pure water. Distilling boils off pure water first. Then a decanter pours the oil off the salt crystals.'},
+ {name:'Beach Cleanup',clue:'The magnet only works on a dry pile, so get the water out of the way first. And remember what floats.',tools:['magnet','sieve','tank','decanter','filter','heat'],mix:['clips','sand','cork','pebbles','water'],goal:['clips','sand','cork','pebbles','water'],slots:4,story:'The tide left a wet mess of corks, clips, pebbles and sand.',fact:'Real cleanups use many methods in the right order. Remember the magnet only works on dry stuff, so get the liquid out of the way first.'},
+ {name:'Master Chemist',clue:'Skim what floats first. Then think: which solids can you take out while the liquids are still there?',tools:['tank','sieve','filter','funnel','magnet','decanter','heat','distiller'],mix:['iron','marbles','sawdust','oil','water'],goal:['iron','marbles','sawdust','oil','water'],slots:4,story:'The final test: five substances to separate with only four machines.',fact:'You used floating, size, solid-or-liquid and layers. Scientists combine physical properties just like this to separate real mixtures.'}
 ];
 const icn=k=>SB[k].n.toLowerCase();
 const SIC=k=>ART.cel(SB[k].ic),MIC=m=>ART.cel(MACH[m].ic),NM=k=>SB[k].n.toLowerCase();
 const cap1=t=>t.charAt(0).toUpperCase()+t.slice(1);
 const andList=a=>a.length<2?(a[0]||''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+const sepTools=L=>MORDER.filter(m=>(L.tools||MORDER0).includes(m));
 function sepInit(L){
-  const items={};let water=false;
-  L.mix.forEach(k=>{if(k==='water')water=true;else items[k]='solid';});
+  const items={};let water=false,oil=false;
+  L.mix.forEach(k=>{if(k==='water')water=true;else if(k==='oil')oil=true;else items[k]='solid';});
   if(water)Object.keys(items).forEach(k=>{if(SB[k].sol)items[k]='dissolved';});
-  return {items,water};
+  return {items,water,oil};
 }
 function sepStep(S,m){
-  const it=Object.assign({},S.items);let w=S.water,caught=[],note='';
-  const solids=()=>Object.keys(it).filter(k=>it[k]==='solid');
+  const it=Object.assign({},S.items);let w=S.water,o=S.oil,caught=[],note='';
+  const keys=st=>Object.keys(it).filter(k=>it[k]===st),solids=()=>keys('solid'),dissolved=()=>keys('dissolved'),liq=()=>w||o;
+  const take=a=>a.forEach(k=>delete it[k]);
   if(m==='magnet'){
-    if(S.water){note=solids().some(k=>SB[k].mag)?'Too wet! A magnet can’t grab through a liquid':'Too wet, and nothing magnetic';}
+    if(liq()){note=solids().some(k=>SB[k].mag)?'Too wet! A magnet can’t grab through a liquid':'Too wet, and nothing magnetic';}
     else{solids().forEach(k=>{if(SB[k].mag){caught.push(k);delete it[k];}});
       note=caught.length?'Grabbed '+andList(caught.map(NM)):'Nothing magnetic';}
   }else if(m==='water'){
     const dis=solids().filter(k=>SB[k].sol);dis.forEach(k=>it[k]='dissolved');
     note=dis.length?cap1(andList(dis.map(NM)))+' dissolved!':(w?'More water':'Wet, but nothing dissolved');w=true;
   }else if(m==='filter'){
-    caught=solids();caught.forEach(k=>delete it[k]);
-    note=!caught.length?'Nothing to catch':w?'Caught the solids':'No liquid! It caught the whole dry pile';
+    caught=solids();take(caught);
+    note=!caught.length?'Nothing to catch':liq()?'Caught the solids':'No liquid! It caught the whole dry pile';
   }else if(m==='heat'){
-    if(!w)note='Nothing to boil';
-    else{const cr=Object.keys(it).filter(k=>it[k]==='dissolved');cr.forEach(k=>it[k]='solid');w=false;
+    if(!w)note=o?'Oil won’t boil away':'Nothing to boil';
+    else{const cr=dissolved();cr.forEach(k=>it[k]='solid');w=false;
       note='Water boiled off'+(cr.length?', '+andList(cr.map(NM))+' crystals left':'');}
+  }else if(m==='sieve'){
+    caught=solids().filter(k=>SB[k].big);take(caught);
+    note=caught.length?'Caught the big pieces':'Nothing big enough to catch';
+  }else if(m==='funnel'){
+    if(w&&o){const sunk=solids().filter(k=>!SB[k].lite);caught=['water',...dissolved(),...sunk];take(caught.slice(1));w=false;
+      note='Drained the water layer'+(sunk.length?', and the sunk '+andList(sunk.map(NM))+' went too':'');}
+    else note=liq()?'Only one liquid, so there are no layers to split':'No liquid!';
+  }else if(m==='decanter'){
+    if(!liq())note='No liquid to pour off';
+    else{const fl=solids().filter(k=>SB[k].lite);caught=[...(w?['water']:[]),...(o?['oil']:[]),...dissolved(),...fl];take(caught.filter(k=>k!=='water'&&k!=='oil'));w=o=false;
+      note='Poured off the liquid'+(fl.length?', and the floating '+andList(fl.map(NM))+' came with it':'');}
+  }else if(m==='tank'){
+    if(!w)note='Needs water to float in. Add water first!';
+    else{caught=solids().filter(k=>SB[k].lite);take(caught);note=caught.length?'Skimmed off the floaters':'Nothing floats';}
+  }else if(m==='distiller'){
+    if(!w)note=o?'Oil won’t boil away':'Nothing to boil';
+    else{const cr=dissolved();cr.forEach(k=>it[k]='solid');w=false;caught=['water'];
+      note='Steam cooled into pure water'+(cr.length?', '+andList(cr.map(NM))+' crystals left':'');}
   }
-  return {S:{items:it,water:w},caught,note};
+  return {S:{items:it,water:w,oil:o},caught,note};
 }
-const sepContents=S=>Object.keys(S.items).concat(S.water?['water']:[]);
+const sepContents=S=>Object.keys(S.items).concat(S.water?['water']:[],S.oil?['oil']:[]);
 function sepRun(L,belt){
   let S=sepInit(L);const bins=[],notes=[],states=[];
   belt.forEach(m=>{if(!m){bins.push(null);notes.push('');states.push(S);return;}
@@ -2422,30 +2476,34 @@ function sepRun(L,belt){
   return {bins,notes,states,end,ok:L.goal.every(pure),pure};
 }
 const beltCost=b=>b.reduce((a,m)=>a+(m?MACH[m].cost:0),0);
-SEP_LEVELS.forEach(L=>{   // work out the cheapest possible factory for each level (the 3-star target)
-  const opts=[null,...MORDER],n=L.slots;let best=Infinity;
+function sepSolve(L){   // work out the cheapest possible factory for a level (the 3-star target); done the first time it's needed
+  if(L._par!==undefined)return;
+  const opts=[null,...sepTools(L)],n=L.slots;let best=Infinity;L._sol=null;
   for(let c=0;c<Math.pow(opts.length,n);c++){
     const b=[];let x=c;for(let j=0;j<n;j++){b.push(opts[x%opts.length]);x=Math.floor(x/opts.length);}
     const cost=beltCost(b);if(cost>best)continue;
-    if(cost<best&&sepRun(L,b).ok){best=cost;L.sol=b.slice();}
+    if(cost<best&&sepRun(L,b).ok){best=cost;L._sol=b.slice();}
   }
-  L.par=best;if(best===Infinity)console.warn('Separation Station: level cannot be solved',L.name);
-});
+  L._par=best;if(best===Infinity)console.warn('Separation Station: level cannot be solved',L.name);
+}
+SEP_LEVELS.forEach(L=>Object.defineProperties(L,{par:{get(){sepSolve(L);return L._par;}},sol:{get(){sepSolve(L);return L._sol;}}}));
 const sepStars=P=>SEP_LEVELS.reduce((a,L,i)=>a+((P.sep&&P.sep[i+1]&&P.sep[i+1].best)||0),0);
 const starStr=n=>'★'.repeat(n)+'☆'.repeat(3-n);
 let SX=null;
 function renderSepSetup(){
   const P=prof();let prevSolved=true;
   $('sepTotal').textContent=`${sepStars(P)} / ${SEP_LEVELS.length*3} stars`;
-  $('sepLevels').replaceChildren(...SEP_LEVELS.map((L,i)=>{
+  const PACKS={0:'Classic Tools',12:'New Tools: Sieve and Decanter',17:'New Tools: Floating and Layers',22:'New Tool: Distiller and Mastery'};
+  $('sepLevels').replaceChildren(...SEP_LEVELS.flatMap((L,i)=>{
     const r=P.sep[i+1],st=r?r.best:0,open=SEP_UNLOCK_ALL||prevSolved;prevSolved=st>0;
-    return h('button',{class:'seplv',disabled:!open,onclick:()=>startSep(i)},h('small',{class:'sub'},'Level '+(i+1)),
+    const b=h('button',{class:'seplv',disabled:!open,onclick:()=>startSep(i)},h('small',{class:'sub'},'Level '+(i+1)),
       h('b',null,open?L.name:'Locked'),h('div',{class:'mx'},...L.mix.map(k=>SIC(k))),h('div',{class:'st'},starStr(st)));
+    return PACKS[i]?[h('div',{class:'seppack'},PACKS[i]),b]:[b];
   }));
 }
 function startSep(i){if(SX3D===null&&!matchMedia('(prefers-reduced-motion:reduce)').matches){SX3D=undefined;setTimeout(()=>import('./sep3d.js').then(mod=>{if(SX3D===undefined)SX3D=mod;}).catch(()=>{SX3D=false;}),1200);}
   const L=SEP_LEVELS[i];
-  SX={i,belt:Array(L.slots).fill(null),tool:null,running:false,run:null,hint:0,ran:false,fail:false};
+  SX={i,belt:Array(L.slots).fill(null),tool:null,running:false,run:null,hint:0,ran:false,fail:false,intro:L.intro||null};
   show('s-sep');$('sxMsg').textContent='';$('sxResult').hidden=true;sxRender();
 }
 function sxRender(){
@@ -2454,7 +2512,7 @@ function sxRender(){
   $('sxName').textContent=L.name;$('sxStory').textContent=L.story;
   $('sxGoal').replaceChildren(h('span',null,'Mixture:'),...L.mix.map(k=>h('span',{class:'tag'},SIC(k),' '+SB[k].n)),
     h('span',null,'  ➜  Goal: get pure'),...L.goal.map(k=>h('span',{class:'tag g'},SIC(k),' '+SB[k].n)),h('span',null,'each in its own bin'));
-  $('sxTools').replaceChildren(...MORDER.map(m=>h('button',{class:'tool'+(SX.tool===m?' on':''),disabled:SX.running,title:MACH[m].n+': '+MACH[m].d+' Drag me onto the belt, or click me and then click a spot.',onclick:()=>{if(performance.now()<sxNoClick)return;SX.tool=SX.tool===m?null:m;SX.ran=false;sxRender();}},
+  $('sxTools').replaceChildren(...sepTools(L).map(m=>h('button',{class:'tool'+(SX.tool===m?' on':''),disabled:SX.running,title:MACH[m].n+': '+MACH[m].d+' Drag me onto the belt, or click me and then click a spot.',onclick:()=>{if(performance.now()<sxNoClick)return;SX.tool=SX.tool===m?null:m;SX.ran=false;sxRender();}},
     h('span',{class:'ti'},MIC(m)),h('span',null,h('b',null,MACH[m].n),h('small',null,MACH[m].d)),h('span',{class:'cost'},ART.cel('coin'),String(MACH[m].cost)))));
   $('sxRun').disabled=SX.running;$('sxClear').disabled=SX.running;
   $('sxRun').classList.toggle('pulse',!SX.running&&!SX.ran&&SX.belt.some(Boolean));
@@ -2468,6 +2526,7 @@ function sxCoach(){
   else if(SX.ok&&SX.ran)t=['Solved! ','Check your result below, or rebuild the belt cheaper to chase 3 stars.'],cls+=' go';
   else if(SX.tool&&has)t=['Placed! ','Click another glowing spot to add another '+nm+', or pick a different machine. Press ▶ Run the belt! when you’re ready.'];
   else if(SX.tool)t=['Now click a glowing spot on the belt ','to put the '+nm+' there. (Click the '+nm+' again to put it down.)'];
+  else if(!has&&SX.intro)t=['New machine: '+MACH[SX.intro].n+'! ',MACH[SX.intro].d+' Drag it onto the belt to try it.'];
   else if(!has)t=['Start here: ','drag a machine from the list onto a spot on the belt. (Or click a machine, then click a spot.)'];
   else t=['Nice! ','Machines work from left to right. Add more, drag them around, or press ▶ Run the belt!'];
   c.className=cls;c.replaceChildren(h('span',{class:'ci'},I('bulb')),h('span',null,h('b',null,t[0]),t[1]));
@@ -2475,7 +2534,7 @@ function sxCoach(){
 function sxHints(L){
   const sol=L.sol||[],used=sol.filter(Boolean),names=[...new Set(used)].map(m=>MACH[m].n.toLowerCase());
   return [
-    L.mix.includes('water')&&L.mix.some(k=>SB[k].mag)?'A magnet is much harder to use in a liquid. How can you get the water out of the way first?'
+    L.clue?L.clue:L.mix.includes('water')&&L.mix.some(k=>SB[k].mag)?'A magnet is much harder to use in a liquid. How can you get the water out of the way first?'
       :L.mix.includes('water')?'This mixture already has water in it. What can you do with that?':'Which of these substances dissolve in water? Which ones don’t?',
     'Machines to use: '+andList(names)+'. The cheapest factory costs '+L.par+'.',
     'Full answer, from left to right: '+used.map((m,i)=>(i+1)+'. '+MACH[m].n).join(', ')+'.'
@@ -2495,7 +2554,7 @@ function sxDragEnd(){
   if(d.ghost)d.ghost.remove();$('sxTools').classList.remove('dropzone');
   $('sxFactory').querySelectorAll('.mslot').forEach(x=>x.classList.remove('hot','lift'));return d;
 }
-$('sxTools').addEventListener('pointerdown',e=>{const b=e.target.closest('.tool');if(!b||b.disabled)return;sxDragStart(e,'tool',MORDER[[...$('sxTools').children].indexOf(b)],-1);});
+$('sxTools').addEventListener('pointerdown',e=>{const b=e.target.closest('.tool');if(!b||b.disabled)return;sxDragStart(e,'tool',sepTools(SEP_LEVELS[SX.i])[[...$('sxTools').children].indexOf(b)],-1);});
 $('sxFactory').addEventListener('pointerdown',e=>{const sl=e.target.closest('.mslot');if(!sl||sl.disabled)return;const i=[...$('sxFactory').querySelectorAll('.mslot')].indexOf(sl);if(SX.belt[i])sxDragStart(e,'slot',SX.belt[i],i);});
 document.addEventListener('pointermove',e=>{
   const d=sxDrag;if(!d||e.pointerId!==d.id)return;
@@ -2520,8 +2579,8 @@ function sxDrop(e){
 document.addEventListener('pointerup',sxDrop);document.addEventListener('pointercancel',sxDrop);
 function sxToken(S){
   const ks=Object.keys(S.items);
-  if(!ks.length&&!S.water)return h('span',{class:'token'},'∅');
-  return h('span',{class:'token'},...ks.map(k=>S.items[k]==='dissolved'?h('span',{class:'dis',title:SB[k].n+' (dissolved)'},SIC(k)):SIC(k)),S.water?SIC('water'):null);
+  if(!ks.length&&!S.water&&!S.oil)return h('span',{class:'token'},'∅');
+  return h('span',{class:'token'},...ks.map(k=>S.items[k]==='dissolved'?h('span',{class:'dis',title:SB[k].n+' (dissolved)'},SIC(k)):SIC(k)),S.water?SIC('water'):null,S.oil?SIC('oil'):null);
 }
 function sxBin(items,cls,label){
   const L=SEP_LEVELS[SX.i];let st='';
@@ -2542,7 +2601,7 @@ function sxFactory(){
     const shown=run&&run.at>=i;
     cols.push(h('div',{class:'fcol'},h('div',{class:'top'},slot),h('div',{class:'beltseg'},run&&run.at===i?sxToken(run.S):null),
       h('div',{class:'fnote'},shown?run.res.notes[i]:''),
-      m==='magnet'||m==='filter'?sxBin(shown?run.res.bins[i]:null,'bin',m==='magnet'?'Magnet bin':'Filter bin'):null));
+      m&&MACH[m].bin?sxBin(shown?run.res.bins[i]:null,'bin',MACH[m].n+' bin'):null));
   });
   cols.push(h('div',{class:'fcol'},h('div',{class:'top'},h('span',{style:'font-size:34px;line-height:0'},ART.cel('flag'))),
     h('div',{class:'beltseg'},run&&run.at===SX.belt.length?sxToken(run.S):null),h('div',{class:'fnote'},'End of the line'),
@@ -2570,7 +2629,7 @@ async function sxRunBelt(){
 }
 function sxWhy(g,res,bad){
   const nm=icn(g);
-  if(g==='water'&&!res.end.includes('water'))return {covers:[g],text:`Your ${nm} boiled away as steam!`};
+  if(g==='water'&&!res.end.includes('water')&&!res.bins.some(x=>x&&x.includes('water')))return {covers:[g],text:`Your ${nm} boiled away as steam!`};
   let where,items,tip='';
   if(res.end.includes(g)){
     where='the end bin';items=res.end;
@@ -2582,6 +2641,11 @@ function sxWhy(g,res,bad){
   const covers=items.filter(x=>bad.includes(x)),rest=items.filter(x=>!covers.includes(x)).map(x=>SB[x].n.toLowerCase());
   const text=covers.length>1?`Your ${andList(covers.map(icn))} got stuck together in ${where}${rest.length?' with '+andList(rest):''}.`
     :`Your ${nm} got mixed with ${andList(rest)} in ${where}.`;
+  res.notes.forEach((n,i)=>{const m=SX.belt[i];
+    if(m==='tank'&&n.startsWith('Needs water'))tip+=' The density tank only works when there’s water on the belt.';
+    if(m==='funnel'&&n.includes('sunk'))tip+=' Solids sink and drain out with the water layer, so take them out first.';
+    if(m==='funnel'&&n.startsWith('Only one liquid'))tip+=' The funnel needs two liquids that don’t mix.';
+    if(m==='decanter'&&n.includes('floating'))tip+=' A decanter pours floating things off with the liquid.';});
   if(covers.some(x=>SB[x].mag)&&res.notes.some((n,i)=>SX.belt[i]==='magnet'&&n.startsWith('Too wet')))tip+=' The magnet can’t grab through a liquid. Dry it out first!';
   return {covers,text:text+tip};
 }
@@ -2623,14 +2687,15 @@ async function sxStageRun(L,belt,res){
       SXCV3.style.display='block';cv2.style.display='none';
       const bad=L.goal.filter(x=>!res.pure(x));let fail=null;
       if(!res.ok){
-        const g0=bad[0],why=sxWhy(g0,res,bad);fail={text:why.text,type:'pile'};
-        if(g0==='water'&&!res.end.includes('water'))fail.type='steam';
-        else if(res.end.includes(g0)){if(SB[g0].sol&&res.end.includes('water'))fail.type='puddle';}
-        else{fail.type='jam';fail.st=res.bins.findIndex(b=>b&&b.includes(g0));}
+        const g0=bad[0],why=sxWhy(g0,res,bad);fail={text:why.text.split(/(?<=\.)\s/)[0],type:'pile'};
+        const inBin=res.bins.findIndex(x=>x&&x.includes(g0));
+        if(res.end.includes(g0)){if(SB[g0].sol&&res.end.includes('water'))fail.type='puddle';}
+        else if(inBin>=0){fail.type='jam';fail.st=inBin;}
+        else if(g0==='water')fail.type='steam';
       }
-      const names={};Object.keys(MACH).forEach(k=>names[k]=MACH[k].n);
+      const names={},binM={};Object.keys(MACH).forEach(k=>{names[k]=MACH[k].n;binM[k]=!!MACH[k].bin;});
       const my=runId;
-      await m.run({canvas:SXCV3,stage,box,cap:$('sxCap'),skipB:$('sxSkip'),L,belt,res,S0:sepInit(L),names,fail,alive:()=>my===runId});
+      await m.run({canvas:SXCV3,stage,box,cap:$('sxCap'),skipB:$('sxSkip'),L,belt,res,S0:sepInit(L),names,binM,fail,alive:()=>my===runId});
       SXCV3.style.display='none';cv2.style.display='';
       if(m.slow)SX3D=false;
       return;
@@ -2639,6 +2704,7 @@ async function sxStageRun(L,belt,res){
       SX3D=false;if(SXCV3)SXCV3.style.display='none';cv2.style.display='';stage.hidden=true;
     }
   }
+  if(L.tools)return;   // the classic 2D view doesn't know the newer machines, so skip the show on the fallback path
   return sxStageRun2D(L,belt,res);
 }
 function sxStageRun2D(L,belt,res){
