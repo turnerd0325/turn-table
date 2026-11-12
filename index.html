@@ -316,6 +316,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .stage[hidden]{display:none}
 .stagebox{position:relative;width:min(1100px,100%,calc((100vh - 20px)*16/9));aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);background:#0b1020}
 .stagebox canvas{width:100%;height:100%;display:block}
+.stagebox canvas.sxcv3{position:absolute;inset:0}
 .stagecap{position:absolute;left:0;right:0;bottom:0;padding:10px 14px 12px;text-align:center;color:#fff;font-weight:800;font-size:clamp(15px,2.3vw,24px);text-shadow:0 2px 6px rgba(0,0,0,.8);background:linear-gradient(transparent,rgba(0,0,0,.55));pointer-events:none;min-height:1.3em}
 .stageskip{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.92);color:var(--navy);border-color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .spresult{text-align:center;background:#f2f5fb;border-radius:14px;padding:12px;margin-top:10px}
@@ -2442,7 +2443,7 @@ function renderSepSetup(){
       h('b',null,open?L.name:'Locked'),h('div',{class:'mx'},...L.mix.map(k=>SIC(k))),h('div',{class:'st'},starStr(st)));
   }));
 }
-function startSep(i){
+function startSep(i){if(SX3D===null&&!matchMedia('(prefers-reduced-motion:reduce)').matches){SX3D=undefined;setTimeout(()=>import('./sep3d.js').then(mod=>{if(SX3D===undefined)SX3D=mod;}).catch(()=>{SX3D=false;}),1200);}
   const L=SEP_LEVELS[i];
   SX={i,belt:Array(L.slots).fill(null),tool:null,running:false,run:null,hint:0,ran:false,fail:false};
   show('s-sep');$('sxMsg').textContent='';$('sxResult').hidden=true;sxRender();
@@ -2610,8 +2611,37 @@ function sxJudge0(res){
   $('sxResult').hidden=false;
 }
 /* ---- Cinematic belt run: a realistic perspective scene drawn on a canvas (no assets) ---- */
-let SXBED=null;
-function sxStageRun(L,belt,res){
+let SXBED=null,SX3D=null,SXCV3=null;
+async function sxStageRun(L,belt,res){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  if(SX3D!==false){
+    const stage=$('sxStage'),cv2=$('sxCv'),box=stage.querySelector('.stagebox');
+    try{
+      const m=SX3D||(SX3D=await import('./sep3d.js'));
+      if(!m.webglOK())throw new Error('no webgl');
+      if(!SXCV3){SXCV3=document.createElement('canvas');SXCV3.className='sxcv3';SXCV3.setAttribute('aria-hidden','true');box.insertBefore(SXCV3,cv2);}
+      SXCV3.style.display='block';cv2.style.display='none';
+      const bad=L.goal.filter(x=>!res.pure(x));let fail=null;
+      if(!res.ok){
+        const g0=bad[0],why=sxWhy(g0,res,bad);fail={text:why.text,type:'pile'};
+        if(g0==='water'&&!res.end.includes('water'))fail.type='steam';
+        else if(res.end.includes(g0)){if(SB[g0].sol&&res.end.includes('water'))fail.type='puddle';}
+        else{fail.type='jam';fail.st=res.bins.findIndex(b=>b&&b.includes(g0));}
+      }
+      const names={};Object.keys(MACH).forEach(k=>names[k]=MACH[k].n);
+      const my=runId;
+      await m.run({canvas:SXCV3,stage,box,cap:$('sxCap'),skipB:$('sxSkip'),L,belt,res,S0:sepInit(L),names,fail,alive:()=>my===runId});
+      SXCV3.style.display='none';cv2.style.display='';
+      if(m.slow)SX3D=false;
+      return;
+    }catch(e){
+      console.warn('3D belt run unavailable, using the classic view',e);
+      SX3D=false;if(SXCV3)SXCV3.style.display='none';cv2.style.display='';stage.hidden=true;
+    }
+  }
+  return sxStageRun2D(L,belt,res);
+}
+function sxStageRun2D(L,belt,res){
   return new Promise(resolve=>{
     if(matchMedia('(prefers-reduced-motion:reduce)').matches){resolve();return;}
     const stage=$('sxStage'),cv=$('sxCv'),cap=$('sxCap'),skipB=$('sxSkip'),g=cv.getContext('2d');
