@@ -397,6 +397,78 @@ h2 .ico,h1 .ico{color:var(--accent);margin-right:4px}
 .el .n{opacity:.62}
 .etile,.bigtile{border:2px solid rgba(16,21,54,.2);box-shadow:inset 0 -3px 0 rgba(16,21,54,.07)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/*<<NEWCSS*/
+.stdchip{display:inline-block;vertical-align:middle;margin-left:8px;font-size:12px;font-weight:800;letter-spacing:.3px;color:#2f4fb5;background:#e8eeff;border:1.5px solid #b9cbff;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.mcard b .stdchip{font-size:11px;padding:1px 8px;margin-left:7px;position:relative;top:-1px}
+.stdchip.sup{background:#fff;border-style:dashed;color:#5a6c9c}
+.stdnote{grid-column:1/-1;text-align:center;color:var(--muted);font-size:12.5px;margin-top:2px}
+.lzwrap{display:flex;justify-content:center;margin:6px 0}
+#lzBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:14px;box-shadow:0 10px 30px rgba(10,16,40,.35);display:block}
+.lzflow line{animation:lzf 1.1s linear infinite}
+@keyframes lzf{to{stroke-dashoffset:-25}}
+.lzpulse{animation:lzp 1.3s ease-in-out infinite} .lzpulse.fast{animation-duration:.5s}
+@keyframes lzp{50%{opacity:.5}}
+.lzplaced{cursor:grab} .lzplaced.lift{opacity:.25} .lzghostp{opacity:.55}
+.lvmini{height:58px;display:flex;align-items:center} .lzmini{display:block;max-width:100%;height:auto;max-height:56px}
+.lvlock{color:#9aa6bf;font-size:26px;line-height:0}
+.spgoal .tag.bad{background:#ffe9ec;color:#a11f35}
+.lzlegend{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;font-size:13px;color:var(--muted);margin:6px 0 0}
+.lzlegend i{display:inline-block;width:16px;height:16px;border-radius:4px;vertical-align:-3px;margin-right:5px}
+.lzlegend .lgm{background:linear-gradient(135deg,#f4f7fc,#9fb0cc);border:1.5px solid #2c3550}
+.lzlegend .lgg{background:rgba(143,208,255,.45);border:1.5px solid #8fd0ff}
+.lzlegend .lgb{background:#07080c;border:1.5px solid #59627f}
+@media (prefers-reduced-motion:reduce){.lzflow line,.lzpulse{animation:none}}
+#boBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.35);display:block}
+.boflow{animation:bof 1s linear infinite} .boflow.rev{animation-direction:reverse}
+@keyframes bof{to{stroke-dashoffset:-18}}
+.bofix,.bopl{cursor:pointer}
+.lamps{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:8px 0}
+.lampchip{display:inline-flex;align-items:center;gap:2px;background:#eef1f8;border-radius:999px;padding:3px 12px 3px 8px;font-weight:700;font-size:14px;color:#55617d}
+.lampchip svg{vertical-align:middle} .lampchip.on{background:#fff4d1;color:#7a5400} .lampchip.burnt{background:#ffe9ec;color:#a11f35}
+ul.tests{list-style:none;margin:6px 0;padding:0;display:grid;gap:6px}
+ul.tests li{display:flex;gap:10px;align-items:flex-start;background:#f2f5fb;border-radius:10px;padding:8px 12px;font-weight:700;border:2px solid transparent}
+ul.tests li .tk{font-size:18px;width:22px;text-align:center;color:#8a97b1}
+ul.tests li small{display:block;font-weight:600;color:#a11f35}
+ul.tests li.ok{background:#e9f9ef;border-color:#8fd5ae;color:#116b3a} ul.tests li.ok .tk{color:#16a05a}
+ul.tests li.bad{background:#fff0f0;border-color:#f0a3a3;color:#8a1f1f} ul.tests li.bad .tk{color:#d33}
+ul.tests li.run{border-color:var(--accent);background:#eaf1ff}
+@media (prefers-reduced-motion:reduce){.boflow{animation:none}}
+.evscroll{overflow-x:auto;margin:8px 0}
+table.evtbl{border-collapse:separate;border-spacing:0 6px;width:100%;min-width:560px}
+.evtbl th,.evtbl td{padding:8px 8px;text-align:center;font-weight:700;font-size:15px;vertical-align:middle}
+.evtbl td.evn,.evtbl th.evn{text-align:left;white-space:nowrap}
+.evtbl tbody tr{background:#f2f5fb} .evtbl tbody tr td:first-child{border-radius:10px 0 0 10px} .evtbl tbody tr td:last-child{border-radius:0 10px 10px 0}
+.evtbl tr.evmys{background:#eaf1ff;outline:2px solid var(--accent);outline-offset:-2px;border-radius:10px}
+.evtbl td.unk{color:#8a97b1;font-size:20px} .evtbl td.got{color:#1b4fd1}
+.evtbl td.yes{color:#116b3a;background:#e5f7ec} .evtbl td.no{color:#a11f35;background:#ffe9ec}
+.evtbl tr.elim{opacity:.5} .evtbl tr.elim td.evn b{text-decoration:line-through}
+.evtbl tr.only{outline:2px solid #16a05a;outline-offset:-2px}
+button.evtb{display:block;width:100%;border:2px solid #bfd0f5;background:#fff;border-radius:12px;padding:7px 8px;font:inherit;font-weight:800;color:#1b3a8a;cursor:pointer}
+button.evtb small{display:block;font-weight:600;font-size:11px;color:#6b7a99;line-height:1.2;margin-top:2px}
+button.evtb:hover:not(:disabled){background:#eaf1ff;border-color:var(--accent)} button.evtb:disabled{background:#eef1f8;color:#8a97b1;cursor:default}
+button.evtb.ghost,button.evrt.ghost{outline:3px dashed #37e0c1;outline-offset:2px}
+.evgood{color:#116b3a;font-weight:800}
+.evcasebar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:6px 0}
+.evcase{background:#eef1f8;border-radius:999px;padding:3px 12px;font-weight:800;font-size:14px;color:#55617d} .evcase.on{background:#dfe9ff;color:#1b3a8a;outline:2px solid var(--accent)} .evcase.ok{background:#e5f7ec;color:#116b3a}
+.evscene{display:grid;gap:2px;background:#f2f5fb;border-radius:12px;padding:10px 14px;margin:8px 0} .evscene span{font-weight:600;color:#44506b}
+.evtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;margin:8px 0}
+button.evrt{position:relative;text-align:left;border:2px solid #bfd0f5;background:#fff;border-radius:12px;padding:10px 12px 22px;font:inherit;cursor:pointer;min-height:84px}
+button.evrt b{display:block;color:#1b3a8a} button.evrt small{display:block;font-weight:600;color:#55617d;margin-top:2px}
+button.evrt .evbadge{position:absolute;left:12px;bottom:6px;font-size:11px;font-weight:800;border-radius:999px;padding:1px 8px}
+button.evrt.strong .evbadge{background:#e5f7ec;color:#116b3a} button.evrt.weak .evbadge{background:#fff4d1;color:#7a5400}
+button.evrt:hover:not(:disabled){background:#eaf1ff;border-color:var(--accent)}
+button.evrt.done{background:#f2f5fb;border-color:#d5dcea} button.evrt.done small{color:#1b4fd1;font-weight:800}
+.evproof{text-align:center;font-weight:800;color:#8a6a1a;background:#fff4d1;border-radius:10px;padding:6px;margin:6px 0} .evproof.has{background:#e5f7ec;color:#116b3a}
+.evdecide{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+#caBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
+.cahandle{cursor:ns-resize} .cahandle:hover circle{fill:#eaf1ff}
+.caenergy{display:grid;gap:6px;margin:6px 0 4px}
+.caer{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-weight:700;font-size:14px;color:#44506b}
+.cabar{background:#e6ebf5;border-radius:999px;height:16px;overflow:hidden} .cabar i{display:block;height:100%;border-radius:999px;transition:width .08s linear}
+.cabar i.pe{background:#4f86ff} .cabar i.ke{background:#ff9a2e} .cabar i.he{background:#ff4d6a}
+.caspeed{text-align:center;font-weight:800;font-size:18px;color:#1b3a8a}
+@media (max-width:560px){.caer{grid-template-columns:110px 1fr}}
+/*NEWCSS>>*/
 </style>
 </head>
 <body>
@@ -683,6 +755,176 @@ h2 .ico,h1 .ico{color:var(--accent);margin-right:4px}
   </div>
 </section>
 
+<!--<<LZHTML-->
+<!-- LASER MAZE: LEVEL PICKER -->
+<section class="screen" id="s-laser-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="laser"></div><h2><i data-ic="laser"></i>Laser Maze <span class="stdchip">MS-PS4-2</span></h2>
+    <p class="sub">Light up every crystal with the laser! Mirrors reflect light, glass lets it through, and black material soaks it up. Use as few pieces as you can to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag a piece</b> into the maze (or click a piece, then click a square). <b>Click a placed mirror to flip it.</b></li><li>Light <b>every crystal</b> and keep the beam off the <b>alarms</b>. The beam updates as you build.</li></ol>
+    <div class="sepstars" id="lzTotal"></div>
+    <div class="seplevels" id="lzLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- LASER MAZE: PLAY -->
+<section class="screen" id="s-laser" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="lzLvl">1</b>/<span id="lzLvlN">15</span></div>
+    <div class="pill"><i data-ic="sparkle"></i> Pieces <b id="lzUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="lzPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="lzBack">← Levels</button>
+  </div>
+  <div class="card">
+    <div class="clue"><b id="lzName" style="font-size:22px"></b><span id="lzStory"></span></div>
+    <div class="spgoal" id="lzGoal"></div>
+    <div class="infobox" id="lzIntro" hidden></div>
+    <div class="coach" id="lzCoach" role="status"></div>
+    <h4 class="kh"><span class="stepchip">1</span>Pieces <span class="khs">drag one into the maze, or click it and then click a square</span></h4>
+    <div class="toolbox" id="lzTools"></div>
+    <div class="lzlegend"><span><i class="lgm"></i>Mirror <b>reflects</b></span><span><i class="lgg"></i>Glass <b>transmits</b></span><span><i class="lgb"></i>Black <b>absorbs</b></span></div>
+    <h4 class="kh"><span class="stepchip">2</span>The maze <span class="khs">click a mirror to flip it · drag a piece off the maze to take it back</span></h4>
+    <div class="lzwrap"><svg id="lzBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The laser maze"></svg></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
+      <button class="btn ghost" id="lzClear"><i data-ic="x"></i>Clear maze</button>
+      <button class="btn ghost" id="lzHint"><i data-ic="bulb"></i><span id="lzHintTxt">Need a hint?</span></button>
+    </div>
+    <div class="infobox" id="lzHintBox" hidden></div>
+    <div class="msg" id="lzMsg" style="text-align:center;font-size:17px"></div>
+    <div class="spresult" id="lzResult" hidden></div>
+  </div>
+</section>
+<!--LZHTML>>-->
+<!--<<BOHTML-->
+<!-- BLACKOUT: LEVEL PICKER -->
+<section class="screen" id="s-blackout-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="blackout"></div><h2><i data-ic="bolt"></i>Blackout! <span class="stdchip">MS-PS3-6</span></h2>
+    <p class="sub">The city has gone dark! Wire batteries, bulbs and switches so electric current carries energy to every lamp. Use as few pieces as you can to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag along the dashed lines</b> with the Wire tool to build the circuit. Click a switch to open or close it. Click a battery to flip it.</li><li>Press <b>Test the city</b>. Every test must pass: lights on, and lights still on when a bulb burns out!</li></ol>
+    <div class="sepstars" id="boTotal"></div>
+    <div class="seplevels" id="boLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- BLACKOUT: PLAY -->
+<section class="screen" id="s-blackout" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="boLvl">1</b>/<span id="boLvlN">12</span></div>
+    <div class="pill"><i data-ic="bolt"></i> Pieces <b id="boUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="boPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="boBack">← Levels</button>
+  </div>
+  <div class="card">
+    <div class="clue"><b id="boName" style="font-size:22px"></b><span id="boStory"></span></div>
+    <div class="infobox" id="boIntro" hidden></div>
+    <div class="coach" id="boCoach" role="status"></div>
+    <h4 class="kh"><span class="stepchip">1</span>Parts <span class="khs">pick one, then drag along the board · drag a piece off the board to take it back</span></h4>
+    <div class="toolbox" id="boTools"></div>
+    <h4 class="kh"><span class="stepchip">2</span>The circuit <span class="khs">the bulbs glow live as you build · click a switch or battery on the board</span></h4>
+    <div class="lzwrap"><svg id="boBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The circuit board"></svg></div>
+    <div class="lamps" id="boLamps"></div>
+    <h4 class="kh"><span class="stepchip">3</span>Test it</h4>
+    <ul class="tests" id="boTestList"></ul>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
+      <button class="btn" id="boTest" style="font-size:19px"><i data-ic="bolt"></i>Test the city!</button>
+      <button class="btn ghost" id="boClear"><i data-ic="x"></i>Clear board</button>
+      <button class="btn ghost" id="boHint"><i data-ic="bulb"></i><span id="boHintTxt">Need a hint?</span></button>
+    </div>
+    <div class="infobox" id="boHintBox" hidden></div>
+    <div class="msg" id="boMsg" style="text-align:center;font-size:17px"></div>
+    <div class="spresult" id="boResult" hidden></div>
+  </div>
+</section>
+<!--BOHTML>>-->
+<!--<<EVHTML-->
+<!-- EVIDENCE LAB: LEVEL PICKER -->
+<section class="screen" id="s-evidence-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="evidence"></div><h2><i data-ic="flask"></i>Evidence Lab <span class="stdchip">MS-PS1-2 · PS1-7</span></h2>
+    <p class="sub">Mystery samples need a detective! Run tests, read the evidence and name each sample. Then decide whether a change was a chemical reaction. Fewer tests earns a higher rank.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Run tests</b>. Compare the results with the field guide.</li><li><b>Name the sample</b>. A wrong guess costs 2 tests!</li></ol>
+    <div class="sepstars" id="evTotal"></div>
+    <div class="seplevels" id="evLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- EVIDENCE LAB: PLAY -->
+<section class="screen" id="s-evidence" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="evLvl">1</b>/<span id="evLvlN">13</span></div>
+    <div class="pill"><i data-ic="flask"></i> Tests <b id="evUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="evPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="evBack">← Levels</button>
+  </div>
+  <div class="card">
+    <div class="clue"><b id="evName" style="font-size:22px"></b><span id="evStory"></span></div>
+    <div class="infobox" id="evIntro" hidden></div>
+    <div class="coach" id="evCoach" role="status"></div>
+    <div class="evcasebar" id="evCaseBar"></div>
+    <div id="evBench"></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+      <button class="btn good" id="evNextCase" hidden>Next sample ▶</button>
+      <button class="btn ghost" id="evHint"><i data-ic="bulb"></i><span id="evHintTxt">Need a hint?</span></button>
+    </div>
+    <div class="infobox" id="evHintBox" hidden></div>
+    <div class="spresult" id="evResult" hidden></div>
+  </div>
+</section>
+<!--EVHTML>>-->
+<!--<<CAHTML-->
+<!-- COASTER ARCHITECT: LEVEL PICKER -->
+<section class="screen" id="s-coaster-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="coaster"></div><h2><i data-ic="coaster"></i>Coaster Architect <span class="stdchip">MS-PS3-1 · PS3-2</span></h2>
+    <p class="sub">Design a roller coaster that really works! Set the heights, then launch the cart and watch potential energy turn into kinetic energy and heat. Use the lowest lift hill that works to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag the blue handles</b> up or down (or use the Raise and Lower buttons) to set the heights.</li><li>Press <b>Launch</b>. The dashed line shows the energy the cart has left.</li></ol>
+    <div class="sepstars" id="caTotal"></div>
+    <div class="seplevels" id="caLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- COASTER ARCHITECT: PLAY -->
+<section class="screen" id="s-coaster" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="caLvl">1</b>/<span id="caLvlN">10</span></div>
+    <div class="pill"><i data-ic="coaster"></i> Start hill <b id="caUsed">0</b> m</div>
+    <div class="pill">3 <i data-ic="star"></i> at <b id="caPar">0</b> m or lower</div>
+    <button class="btn sm ghost" id="caBack">← Levels</button>
+  </div>
+  <div class="card">
+    <div class="clue"><b id="caName" style="font-size:22px"></b><span id="caStory"></span></div>
+    <div class="infobox" id="caIntro" hidden></div>
+    <div class="coach" id="caCoach" role="status"></div>
+    <h4 class="kh"><span class="stepchip">1</span>Design <span class="khs">drag a blue handle up or down · selected: <b id="caSel">the start hill</b></span></h4>
+    <div class="lzwrap"><svg id="caBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The roller coaster track"></svg></div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0">
+      <button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button>
+    </div>
+    <h4 class="kh"><span class="stepchip">2</span>Energy <span class="khs">drag the slider to scrub the cart along the track</span></h4>
+    <div class="caenergy">
+      <div class="caer"><span>Potential (height)</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
+      <div class="caer"><span>Kinetic (speed)</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
+      <div class="caer"><span>Heat (friction)</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
+      <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div>
+    </div>
+    <input type="range" id="caScrub" min="0" max="100" value="0" aria-label="Cart position" style="width:100%">
+    <h4 class="kh"><span class="stepchip">3</span>Goals</h4>
+    <ul class="tests" id="caGoalList"></ul>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
+      <button class="btn" id="caLaunch" style="font-size:19px"><i data-ic="bolt"></i>Launch!</button>
+      <button class="btn ghost" id="caReset"><i data-ic="x"></i>Reset cart</button>
+      <button class="btn ghost" id="caHint"><i data-ic="bulb"></i><span id="caHintTxt">Need a hint?</span></button>
+    </div>
+    <div class="infobox" id="caHintBox" hidden></div>
+    <div class="spresult" id="caResult" hidden></div>
+  </div>
+</section>
+<!--CAHTML>>-->
 <!-- LIVE (student) -->
 <section class="screen" id="s-live" hidden>
   <div class="warn" id="lvConn" hidden>Reconnecting…</div>
@@ -809,6 +1051,8 @@ const ART=(()=>{
   const INK='#101536',CREAM='#f6efe0',AMBER='#f4b13a';
   /* 24x24 line icons. stroke=currentColor, round caps. */
   const P={
+    laser:'<path d="M2.5 15h8l5-9"/><path d="M11 21l9-9"/><circle cx="2.8" cy="15" r="1.2" fill="currentColor" stroke="none"/>',
+    coaster:'<path d="M2.5 19.5c3-10 6-13 9-7s6 3 9-8"/><path d="M2.5 21.5h19"/>',
     bolt:'<path d="M13.2 2.5 5 13.6h6l-1.2 7.9L19 10.2h-6.2z"/>',
     question:'<circle cx="12" cy="12" r="9.5"/><path d="M9.3 9.4a2.9 2.9 0 1 1 4.4 2.5c-.9.6-1.7 1.1-1.7 2.3"/><circle cx="12" cy="17.5" r=".7" fill="currentColor" stroke="none"/>',
     flask:'<path d="M9.5 3h5M10.4 3v6.3L4.9 19.1a1.7 1.7 0 0 0 1.5 2.5h11.2a1.7 1.7 0 0 0 1.5-2.5l-5.5-9.8V3"/><path d="M7.4 15.2h9.2"/>',
@@ -1075,7 +1319,56 @@ const ART=(()=>{
     return wrap('sep','#46566d',t);
   };
 
-  const thumbs={speed,trivia,lab,atom,balance,class:klass,explore,stats,diner,sep};
+/*<<TTTHUMBS*/
+  const laser=()=>{
+    const beam=`M70 90H160V38H254V116`;
+    let t=`<rect x="206" y="62" width="46" height="96" rx="6" fill="#2b3249"/><rect x="206" y="62" width="46" height="96" rx="6" fill="none" stroke="#4a5476" stroke-width="3"/><rect x="214" y="96" width="30" height="28" rx="5" fill="#8fd0ff" fill-opacity=".3" stroke="#a9dcff" stroke-width="2.5"/><path d="M219 121l20-20" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round"/>`+
+      `<path d="${beam}" fill="none" stroke="#ff2e63" stroke-opacity=".38" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/><path d="${beam}" fill="none" stroke="#ff5d7d" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><path d="${beam}" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`+
+      `<rect x="14" y="68" width="46" height="44" rx="10" fill="#2c3550" stroke="#5a6794" stroke-width="2.5"/><rect x="50" y="78" width="22" height="24" rx="6" fill="#1a2036" stroke="#5a6794" stroke-width="2.5"/><circle cx="73" cy="90" r="8" fill="#ff5d7d"/><circle cx="73" cy="90" r="3.4" fill="#fff"/><circle cx="28" cy="90" r="6" fill="#37e0c1"/>`;
+    [[160,90,'/'],[160,38,'/'],[254,38,'\\']].forEach(([x,y,o])=>{const a=o==='/'?[x-16,y+16,x+16,y-16]:[x-16,y-16,x+16,y+16];
+      t+=`<line x1="${a[0]}" y1="${a[1]}" x2="${a[2]}" y2="${a[3]}" stroke="#2c3550" stroke-width="10" stroke-linecap="round"/><line x1="${a[0]}" y1="${a[1]}" x2="${a[2]}" y2="${a[3]}" stroke="#e8eef8" stroke-width="6" stroke-linecap="round"/>`;});
+    t+=`<circle cx="254" cy="128" r="30" fill="#ffd76a" opacity=".35"/><polygon points="254,100 272,128 254,156 236,128" fill="#f4b13a" stroke="#fff3b8" stroke-width="3"/><polygon points="254,100 272,128 254,122 236,128" fill="#fff" opacity=".4"/>`+
+      `<g transform="translate(110 130)"><path d="M0 0l12-12h26" fill="none" stroke="none"/></g>`+star(296,30,8)+star(36,40,6,CREAM,.8)+star(120,150,5,CREAM,.5);
+    return wrap('laser','#1f2a5a',t);
+  };
+  const blackout=()=>{
+    let t=`<rect x="0" y="118" width="320" height="62" fill="#0c1633"/>`;
+    const bl=[[10,70,30],[44,48,34],[82,84,28],[114,60,36],[206,66,34],[244,40,30],[278,78,34]];
+    bl.forEach(([x,y,w],i)=>{t+=`<rect x="${x}" y="${y}" width="${w}" height="${150-y}" rx="3" fill="#0c1633"/>`;
+      for(let r=0;r<4;r++)for(let c=0;c<2;c++){const on=(i+r*3+c)%3!==0;t+=`<rect x="${x+6+c*(w-20)}" y="${y+8+r*14}" width="8" height="8" rx="2" fill="${on?AMBER:'#1d2a52'}" opacity="${on?.95:.9}"/>`;}});
+    t+=`<circle cx="160" cy="78" r="58" fill="${AMBER}" opacity=".16"/><circle cx="160" cy="78" r="38" fill="${AMBER}" opacity=".2"/>`+
+      `<path d="M160 108V132" stroke="#8d97b5" stroke-width="7" stroke-linecap="round"/><rect x="146" y="106" width="28" height="12" rx="4" fill="#8d97b5"/>`+
+      `<circle cx="160" cy="78" r="28" fill="#ffe28a"/><circle cx="160" cy="78" r="28" fill="none" stroke="#fff3c4" stroke-width="3"/>`+
+      `<path d="M148 92V82q4-12 6-2t6-6 6 8 6-2 2 10" fill="none" stroke="#e8851a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`+
+      `<path d="M148 70a14 14 0 0 1 10-10" stroke="#fff" stroke-width="4" stroke-linecap="round" fill="none" opacity=".8"/>`+
+      `<path d="M168 28l-14 22h10l-6 18 18-26h-11l7-14z" fill="#fff" opacity=".9"/>`+
+      `<rect x="22" y="132" width="54" height="26" rx="6" fill="#2d3a63" stroke="#8d97b5" stroke-width="2.5"/><rect x="76" y="140" width="6" height="10" rx="2" fill="#8d97b5"/><text x="49" y="151" text-anchor="middle" ${sw} font-size="16" fill="${AMBER}">+ −</text>`+
+      `<path d="M76 145H110V136M210 136V145H244" fill="none" stroke="${AMBER}" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 8"/>`+star(300,24,7)+star(30,30,6,CREAM,.8);
+    return wrap('blackout','#17294d',t);
+  };
+  const evidence=()=>{
+    let t=`<rect x="0" y="130" width="320" height="50" fill="#0a4548"/><rect x="0" y="128" width="320" height="6" fill="#0d6a6e"/>`;
+    [[56,'A'],[128,'B'],[200,'C']].forEach(([x,l],i)=>{
+      t+=`<ellipse cx="${x}" cy="132" rx="30" ry="7" fill="#06383b"/><path d="M${x-28} 130q4-30 28-30t28 30z" fill="#fbfaf4"/><path d="M${x-18} 122q6-12 18-12" fill="none" stroke="#e1ddcb" stroke-width="3" stroke-linecap="round"/>`+
+      `<circle cx="${x}" cy="150" r="11" fill="${CREAM}"/><text x="${x}" y="155" text-anchor="middle" ${sw} font-size="14" fill="${INK}">${l}</text>`;});
+    t+=`<path d="M244 32v50a14 14 0 0 0 28 0V32z" fill="#bfeef0" fill-opacity=".5" stroke="#d5f5f6" stroke-width="3"/><path d="M244 62h28v20a14 14 0 0 1-28 0z" fill="#ffd76a" opacity=".9"/><path d="M240 32h36" stroke="#d5f5f6" stroke-width="4" stroke-linecap="round"/>`+
+      [[252,52,3],[262,44,2.4],[258,36,2],[264,56,2.6]].map(([x,y,r])=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff" opacity=".85"/>`).join('')+
+      `<circle cx="112" cy="70" r="40" fill="#e6fbfc" fill-opacity=".18"/><circle cx="112" cy="70" r="40" fill="none" stroke="${CREAM}" stroke-width="9"/><circle cx="112" cy="70" r="40" fill="none" stroke="${INK}" stroke-opacity=".18" stroke-width="2"/>`+
+      `<path d="M84 56a32 32 0 0 1 18-16" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none" opacity=".8"/><path d="M142 100L176 134" stroke="${INK}" stroke-width="16" stroke-linecap="round"/><path d="M142 100L176 134" stroke="#2a2f63" stroke-width="9" stroke-linecap="round"/>`+
+      `<text x="112" y="82" text-anchor="middle" ${sw} font-size="38" fill="${AMBER}">?</text>`+star(300,28,8)+star(30,30,6,CREAM,.8)+star(180,30,5,CREAM,.5);
+    return wrap('evidence','#0f6b70',t);
+  };
+  const coaster=()=>{
+    const path='M0 150C40 150 50 40 110 36C170 32 160 134 214 134C262 134 262 76 320 70';
+    let t=`<rect x="0" y="152" width="320" height="28" fill="#4a2570" opacity=".6"/>`;
+    for(let x=24;x<320;x+=36){const ys={24:148,60:130,96:70,132:60,168:118,204:132,240:130,276:88,312:76}[x]||120;t+=`<path d="M${x} 158V${ys}" stroke="#2f1648" stroke-width="5"/>`;}
+    t+=`<path d="${path}" fill="none" stroke="#2f1648" stroke-width="14" stroke-linecap="round"/><path d="${path}" fill="none" stroke="${CREAM}" stroke-width="7" stroke-linecap="round"/>`+
+      `<g transform="rotate(-6 110 24)"><rect x="90" y="14" width="40" height="18" rx="6" fill="#e2483f"/><rect x="95" y="9" width="30" height="10" rx="4" fill="#ff7a6e"/><circle cx="98" cy="35" r="6" fill="#2a2f63" stroke="${CREAM}" stroke-width="2.4"/><circle cx="122" cy="35" r="6" fill="#2a2f63" stroke="${CREAM}" stroke-width="2.4"/></g>`+
+      `<g transform="translate(236 18)"><rect width="70" height="52" rx="9" fill="#2f1648" opacity=".85"/><rect x="9" y="9" width="52" height="9" rx="4.5" fill="#fff" opacity=".18"/><rect x="9" y="9" width="40" height="9" rx="4.5" fill="${AMBER}"/><rect x="9" y="22" width="52" height="9" rx="4.5" fill="#fff" opacity=".18"/><rect x="9" y="22" width="16" height="9" rx="4.5" fill="#3fd39a"/><rect x="9" y="35" width="52" height="9" rx="4.5" fill="#fff" opacity=".18"/><rect x="9" y="35" width="10" height="9" rx="4.5" fill="#ff8a5c"/></g>`+star(30,34,7)+star(200,30,5,CREAM,.7);
+    return wrap('coaster','#7a3f9e',t);
+  };
+/*TTTHUMBS>>*/
+  const thumbs={speed,trivia,lab,atom,balance,class:klass,explore,stats,diner,sep,laser,blackout,evidence,coaster};
   let uid=0;
   const thumb=n=>{const u=++uid;return thumbs[n]().replace(/id="([^"]+)"/g,(m,i)=>`id="${i}_${u}"`).replace(/url\(#([^)]+)\)/g,(m,i)=>`url(#${i}_${u})`);};
   return {INK,CREAM,AMBER,P,ico,el,logo,thumb,face,cic,cel,names:Object.keys(thumbs),SUBI,MACHI};
@@ -1405,9 +1698,9 @@ try{profiles=JSON.parse(store.get('pte_profiles_v1')||'{}')||{};}catch(e){profil
 const saveAll=()=>store.set('pte_profiles_v1',JSON.stringify(profiles));
 function hash(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(i))|0;return String(x);}
 function newProfile(name,cls,pin){return {name,cls:cls||'',pin,created:Date.now(),speed:{},trivia:{best:0,plays:0},lab:{best:0,plays:0},
-  atom:{},balance:{best:0,plays:0},diner:{},sep:{},missed:{},cloud:null};}
+  atom:{},balance:{best:0,plays:0},diner:{},sep:{},laser:{},blackout:{},evidence:{},coaster:{},missed:{},cloud:null};}
 function fixProfile(P){
-  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};
+  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};
   P.trivia=P.trivia||{best:0,plays:0};P.lab=P.lab||{best:0,plays:0};P.balance=P.balance||{best:0,plays:0};
   if(P.cloud===undefined)P.cloud=null;
   return P;
@@ -1419,12 +1712,12 @@ if(me&&!profiles[me])me=null;
 const prof=()=>profiles[me];
 /* ---- temporary student lock: games listed here are locked for everyone except the owner ----
    To unlock everything, change to:  const LOCKED_GAMES=[];  */
-const LOCKED_GAMES=['lab','atom','balance','diner','sep'];
+const LOCKED_GAMES=['lab','atom','balance','diner','sep','laser','blackout','evidence','coaster'];
 const OWNER_NICK='turner';
 const isOwner=()=>!!(me&&profiles[me]&&String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK);
 const gameLocked=g=>LOCKED_GAMES.includes(g)&&!isOwner();
-const GAME_SCREENS={'s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep'};
-const SHORT_DESC={speed:'Race the clock to find each element on the table.',trivia:'Guess the mystery element from 4 hints.',lab:'Build real compounds like H₂O from atoms.',atom:'Add protons, neutrons and electrons to build atoms.',balance:'Balance chemical equations so no atoms are lost.',diner:'Smash molecules into atoms and cook up the orders.',sep:'Use magnets, filters and heat to separate mixtures.',class:'Join your teacher’s live game with a code.',explore:'Click any element to discover its facts.',stats:'See your best scores and the elements you find tricky.'};
+const GAME_SCREENS={'s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
+const SHORT_DESC={speed:'Race the clock to find each element on the table.',trivia:'Guess the mystery element from 4 hints.',lab:'Build real compounds like H₂O from atoms.',atom:'Add protons, neutrons and electrons to build atoms.',balance:'Balance chemical equations so no atoms are lost.',diner:'Smash molecules into atoms and cook up the orders.',sep:'Use magnets, filters and heat to separate mixtures.',class:'Join your teacher’s live game with a code.',explore:'Click any element to discover its facts.',stats:'See your best scores and the elements you find tricky.',laser:'Light every crystal with mirrors, glass and black blocks.',blackout:'Wire series and parallel circuits to relight the city.',evidence:'Test mystery powders and metals, then name each one.',coaster:'Build a coaster and watch energy change form.'};
 const spRec=(P,key)=>P.speed[key]||(P.speed[key]={best:null,plays:0});
 const atRec=(P,key)=>P.atom[key]||(P.atom[key]={best:0,plays:0});
 const lvRec=(P,game,key)=>P[game][key]||(P[game][key]={best:0,plays:0});
@@ -1480,7 +1773,7 @@ function mergeCloud(P,stats){
     const i=k.indexOf(':'),g=k.slice(0,i),lv=k.slice(i+1),b=Number(sc[k].best),pl=Number(sc[k].plays);
     if(g==='speed'){const r=spRec(P,lv);r.best=r.best==null?b:Math.min(r.best,b);r.plays=Math.max(r.plays,pl);}
     else if(g==='atom'){const r=atRec(P,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
-    else if(g==='diner'||g==='sep'){const r=lvRec(P,g,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
+    else if(g==='diner'||g==='sep'||g==='laser'||g==='blackout'||g==='evidence'||g==='coaster'){const r=lvRec(P,g,lv);r.best=Math.max(r.best,b);r.plays=Math.max(r.plays,pl);}
     else if(g==='trivia'||g==='lab'||g==='balance'){P[g].best=Math.max(P[g].best||0,b);P[g].plays=Math.max(P[g].plays||0,pl);}
   });
   const ms=(stats&&stats.missed)||{};
@@ -1616,6 +1909,10 @@ $('btnLogin').onclick=doLogin;
 ['uName','uPin','uClass'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
 
 /* ---------- MENU ---------- */
+/*<<STDMAP*/
+const STD={speed:['MS-PS1-1',1],trivia:['MS-PS1-1',1],lab:['MS-PS1-1',0],atom:['MS-PS1-1',0],balance:['MS-PS1-5',0],diner:['MS-PS1-5',0],sep:['MS-PS1-8',0],explore:['MS-PS1-1',1],laser:['MS-PS4-2',0],blackout:['MS-PS3-6',0],evidence:['MS-PS1-2 · PS1-7',0],coaster:['MS-PS3-1 · PS3-2',0]};
+/*STDMAP>>*/
+const starLine=(P,g,n)=>gameStars(P,g,n)?`${gameStars(P,g,n)}/${n*3} stars`:'';
 function renderMenu(){
   const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
@@ -1628,7 +1925,7 @@ function renderMenu(){
     if(locked){const bd=h('div',{class:'lockbadge'},I('lock'));art.append(bd);}
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
       onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Coming soon!',kind:'try',at:btn})):fn},art,
-      h('div',{class:'body'},h('b',null,title),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
+      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   $('menuGrid').replaceChildren(
     mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
@@ -1638,10 +1935,17 @@ function renderMenu(){
     mc('m7','balance','Balance It','Balance chemical equations to show that atoms are never lost.',P.balance.plays?`High score: ${P.balance.best}/${ROUND_LEN*3}`:'',startBalance),
     mc('m9','diner','Atom Diner','Smash ingredients into atoms and rebuild them into dishes before customers lose patience!',dnBestLine(P),()=>{renderDinerSetup();show('s-diner-setup');}),
     mc('m10','sep','Separation Station','Build a factory line of magnets, sieves, filters, funnels and stills to split mixtures apart.',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} stars`:'',()=>{renderSepSetup();show('s-sep-setup');}),
+    /*<<NEWCARDS*/
+    mc('m11','laser','Laser Maze','Bounce a laser off mirrors, through glass and around walls to light every crystal.',starLine(P,'laser',LZ_N),()=>{renderLaserSetup();show('s-laser-setup');}),
+    mc('m12','blackout','Blackout!','The city has gone dark! Wire batteries, bulbs and switches to bring the lights back.',starLine(P,'blackout',BO_N),()=>{renderBlackoutSetup();show('s-blackout-setup');}),
+    mc('m13','evidence','Evidence Lab','Run tests on mystery samples and name each one. Fewer tests earns a higher detective rank.',starLine(P,'evidence',EV_N),()=>{renderEvidenceSetup();show('s-evidence-setup');}),
+    mc('m14','coaster','Coaster Architect','Design a roller coaster. Watch potential energy turn into kinetic energy as the cart rolls.',starLine(P,'coaster',CA_N),()=>{renderCoasterSetup();show('s-coaster-setup');}),
+/*NEWCARDS>>*/
     mc('m8','class','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','stats','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
-    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Compound Lab, Atom Builder, Balance It, Atom Diner and Separation Station as locked.')]:[])
+    h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
+    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see only Speed Find and Element Trivia. Everything else shows as locked.')]:[])
   );
 }
 
@@ -2996,6 +3300,1208 @@ $('sxClear').onclick=()=>{if(SX.running)return;SX.belt=SX.belt.map(()=>null);SX.
 $('sxHint').onclick=()=>{if(SX.running||SX.hint>=3)return;SX.hint++;sxHintUI();};
 $('sxBack').onclick=()=>{renderSepSetup();show('s-sep-setup');};
 
+/*<<TTCOMMON*/
+/* ---- shared helpers for the placement games (Laser Maze, Blackout!, Coaster Architect) ---- */
+const ttDrag={d:null,noClick:0};
+function ttDragStart(e,cfg){if(ttDrag.d||(e.button||0)>0)return;ttDrag.d=Object.assign({x0:e.clientX,y0:e.clientY,on:false,ghost:null,id:e.pointerId},cfg);}
+document.addEventListener('pointermove',e=>{const d=ttDrag.d;if(!d||e.pointerId!==d.id)return;
+  if(!d.on){if(Math.hypot(e.clientX-d.x0,e.clientY-d.y0)<7)return;d.on=true;d.ghost=d.makeGhost();document.body.append(d.ghost);if(d.begin)d.begin();}
+  e.preventDefault();d.ghost.style.left=e.clientX+'px';d.ghost.style.top=e.clientY+'px';if(d.move)d.move(e.clientX,e.clientY);},{passive:false});
+function ttDragEnd(e){const d=ttDrag.d;if(!d||e.pointerId!==d.id)return;ttDrag.d=null;if(d.ghost)d.ghost.remove();
+  if(d.on){ttDrag.noClick=performance.now()+350;if(d.end)d.end();if(e.type==='pointerup'&&d.drop)d.drop(e.clientX,e.clientY);}
+  else if(e.type==='pointerup'&&d.click)d.click(e.clientX,e.clientY);}
+document.addEventListener('pointerup',ttDragEnd);document.addEventListener('pointercancel',ttDragEnd);
+const svgEl=html=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstChild;};
+/* stars saved for a level of one of the star-based games */
+const lvStars=(P,g,n)=>(P[g]&&P[g][n]&&P[g][n].best)||0;
+const gameStars=(P,g,count)=>{let t=0;for(let i=1;i<=count;i++)t+=lvStars(P,g,i);return t;};
+function recordStars(g,lv,stars,detail){
+  const P=prof(),r=lvRec(P,g,String(lv));r.plays++;const best=stars>r.best;if(best)r.best=stars;saveAll();
+  cloudSubmit(g,String(lv),stars,detail);return best;}
+const NEWGAMES_UNLOCK_ALL=false;   /* true = every level of the four newer games is open from the start */
+/* Level picker: levels open one after another (each needs a star on the one before) */
+function renderLevelPicker(box,totalBox,g,levels,packs,start,mini){
+  const P=prof();let prev=true;
+  totalBox.textContent=`${gameStars(P,g,levels.length)} / ${levels.length*3} stars`;
+  box.replaceChildren(...levels.flatMap((L,i)=>{
+    const st=lvStars(P,g,i+1),open=NEWGAMES_UNLOCK_ALL||prev;prev=st>0;
+    const b=h('button',{class:'seplv',disabled:!open,onclick:()=>start(i)},h('small',{class:'sub'},'Level '+(i+1)),
+      h('b',null,open?L.name:'Locked'),h('div',{class:'mx lvmini'},open?mini(L):h('span',{class:'lvlock'},I('lock'))),h('div',{class:'st'},starStr(st)));
+    return packs[i]?[h('div',{class:'seppack'},packs[i]),b]:[b];}));
+}
+/* the end-of-level panel */
+function levelResult(box,{stars,line,fact,next,onNext,onRetry,onLevels,retryText}){
+  box.replaceChildren(
+    h('div',{class:'big'},h('span',null,'★'.repeat(stars)),h('span',{class:'dimstar'},'★'.repeat(3-stars))),
+    h('p',null,...line),
+    h('p',{class:'infobox'},I('flask'),' ',h('b',null,'Science says: '),fact),
+    h('div',{style:'display:flex;gap:8px;justify-content:center;flex-wrap:wrap'},
+      next?h('button',{class:'btn good',onclick:onNext},'Next level ▶'):h('button',{class:'btn good',onclick:onLevels},'All levels done! ★'),
+      h('button',{class:'btn ghost',onclick:onRetry},retryText||(stars<3?'Try for 3 ★':'Keep tinkering')),
+      h('button',{class:'btn ghost',onclick:onLevels},'Levels')));
+  box.hidden=false;
+}
+/*TTCOMMON>>*/
+/*<<LZENGINE*/
+const LZ_DIR={'>':[1,0],'<':[-1,0],'^':[0,-1],'v':[0,1]};
+function lzParse(def){
+  const rows=def.map.map(r=>r.split('')),H=rows.length,W=rows[0].length;
+  const L={W,H,cells:[],targets:[],alarms:[],laser:null,name:def.name};
+  for(let y=0;y<H;y++){L.cells.push([]);for(let x=0;x<W;x++){
+    const c=rows[y][x];let t='.';
+    if(LZ_DIR[c]){L.laser={x,y,dx:LZ_DIR[c][0],dy:LZ_DIR[c][1]};t='L';}
+    else if(c==='*'){t='*';L.targets.push({x,y});}
+    else if(c==='!'){t='!';L.alarms.push({x,y});}
+    else if(c==='#'||c==='g'||c==='/'||c==='\\'||c==='t'||c==='u')t=c;
+    L.cells[y].push(t);}}
+  return L;
+}
+/* placed: object "x,y" -> {t:'M'|'T'|'B', o:'/'|'\\'} ; returns beam segments, lit targets, hit alarms */
+function lzTrace(L,placed){
+  const segs=[],lit={},hit={},seen={};
+  const stack=[{x:L.laser.x,y:L.laser.y,dx:L.laser.dx,dy:L.laser.dy,i:1}];
+  const refl=(dx,dy,o)=>o==='/'?[-dy,-dx]:[dy,dx];
+  while(stack.length){
+    let b=stack.pop(),{x,y,dx,dy}=b,sx=x,sy=y;
+    for(let n=0;n<300;n++){
+      const nx=x+dx,ny=y+dy;
+      if(nx<0||ny<0||nx>=L.W||ny>=L.H){segs.push([sx,sy,x+dx*.5,y+dy*.5,b.i]);break;}
+      const k=nx+','+ny,p=placed[k],c=p?p.t:L.cells[ny][nx];
+      const key=k+','+dx+','+dy;if(seen[key]){segs.push([sx,sy,nx,ny,b.i]);break;}seen[key]=1;
+      if(c==='#'||c==='B'||c==='L'){segs.push([sx,sy,nx-dx*.5,ny-dy*.5,b.i]);break;}
+      if(c==='*'){segs.push([sx,sy,nx,ny,b.i]);lit[k]=1;break;}
+      if(c==='!'){segs.push([sx,sy,nx,ny,b.i]);hit[k]=1;break;}
+      if(c==='/'||c==='\\'||c==='M'){
+        const o=c==='M'?p.o:c;segs.push([sx,sy,nx,ny,b.i]);
+        const r=refl(dx,dy,o);dx=r[0];dy=r[1];x=nx;y=ny;sx=nx;sy=ny;continue;}
+      if(c==='T'||c==='t'||c==='u'){
+        const o=c==='T'?p.o:(c==='t'?'/':'\\'),r=refl(dx,dy,o);
+        stack.push({x:nx,y:ny,dx:r[0],dy:r[1],i:b.i/2});
+        b={x:nx,y:ny,dx,dy,i:b.i/2};x=nx;y=ny;continue;}
+      x=nx;y=ny;   /* empty floor or clear glass: light passes straight through */
+    }
+  }
+  const ok=L.targets.every(t=>lit[t.x+','+t.y])&&L.alarms.every(a=>!hit[a.x+','+a.y]);
+  return {segs,lit,hit,ok};
+}
+/* cheapest solution: iterative deepening over cells the beams actually cross */
+function lzSolve(L,inv,maxN){
+  const types=[];Object.keys(inv).forEach(t=>{if(inv[t]>0){if(t==='B')types.push(['B','/']);else{types.push([t,'/']);types.push([t,'\\']);}}});
+  const total=Object.keys(inv).reduce((a,t)=>a+inv[t],0),lim=Math.min(maxN||total,total);
+  for(let k=0;k<=lim;k++){
+    const seen={};
+    const rec=(placed,left,left_inv)=>{
+      const tr=lzTrace(L,placed);
+      if(tr.ok&&left===0)return placed;
+      if(left===0)return null;
+      const cand={};
+      tr.segs.forEach(s=>{
+        const x0=Math.round(s[0]),y0=Math.round(s[1]),x1=Math.floor(s[2]+.5),y1=Math.floor(s[3]+.5);
+        const ax=Math.min(Math.round(s[0]),Math.round(s[2])),bx=Math.max(Math.round(s[0]),Math.round(s[2]));
+        const ay=Math.min(Math.round(s[1]),Math.round(s[3])),by=Math.max(Math.round(s[1]),Math.round(s[3]));
+        for(let yy=ay;yy<=by;yy++)for(let xx=ax;xx<=bx;xx++){
+          if(xx<0||yy<0||xx>=L.W||yy>=L.H)continue;
+          if(L.cells[yy][xx]==='.'&&!placed[xx+','+yy])cand[xx+','+yy]=1;}});
+      for(const ck of Object.keys(cand)){
+        for(const ty of types){
+          if(left_inv[ty[0]]<=0)continue;
+          const np=Object.assign({},placed);np[ck]={t:ty[0],o:ty[1]};
+          const sig=Object.keys(np).sort().map(q=>q+np[q].t+np[q].o).join(';');
+          if(seen[sig])continue;seen[sig]=1;
+          const ni=Object.assign({},left_inv);ni[ty[0]]--;
+          const r=rec(np,left-1,ni);if(r)return r;}}
+      return null;
+    };
+    const r=rec({},k,Object.assign({},inv));
+    if(r)return {n:k,sol:Object.keys(r).map(q=>{const [x,y]=q.split(',').map(Number);return [x,y,r[q].t,r[q].o];})};
+  }
+  return null;
+}
+/*LZENGINE>>*/
+/*<<LZLEVELS*/
+const LZ_LEVELS=[
+ {pack:'Mirrors',name:'First Light',story:'The laser is on! Bounce it onto the crystal to switch on the lab sign.',
+  clue:'A mirror turns a beam. Put one where the beam should change direction.',fact:'A mirror reflects light. The beam leaves at the same angle it arrived.',
+  intro:'New tool: the Mirror. Place it, then click it to flip which way it leans.',
+  map:['....*..','.......','>......','.......','.......'],inv:{M:1}},
+ {pack:'Mirrors',name:'Double Bounce',story:'The crystal is up in the corner. One mirror will not be enough.',
+  clue:'First send the beam up. Then turn it toward the crystal.',fact:'Light can bounce off many mirrors in a row. Each bounce follows the same rule.',
+  map:['.......','......*','.......','....###','>......'],inv:{M:2}},
+ {pack:'Mirrors',name:'Around the Wall',story:'A solid wall blocks the middle. There is one gap along the bottom.',
+  clue:'The beam cannot go through the wall. Find the gap at the bottom.',fact:'Black or solid walls absorb light, so a beam has to go around them.',
+  map:['...#....','...#..*.','>..#....','...#....','........'],inv:{M:3}},
+ {pack:'Mirrors',name:'Zig-Zag',story:'The crystal is at the far end of a zig-zag hall.',
+  clue:'Follow the hall. Every corner of the beam needs a mirror.',fact:'Reflected light keeps its energy. The beam is just as bright after each bounce.',
+  map:['>.......','#######.','........','.#######','.......*'],inv:{M:4}},
+ {pack:'Mirrors',name:'Mirror Maze',story:'Someone left mirrors fixed to the floor. Use them, or work around them.',
+  clue:'Trace the beam first. Where does it go after the fixed mirror?',fact:'The angle in equals the angle out. That is the law of reflection.',
+  map:['........','........','>.\\.....','........','.....\\.*','........'],inv:{M:3}},
+ {pack:'Glass',name:'The Window',story:'A black wall has one glass window. The beam can pass through glass.',
+  clue:'Clear glass lets light through. It does not bend or stop the beam here.',fact:'Clear glass transmits light. Most of the light passes straight through.',
+  intro:'Clear glass transmits light. Black walls absorb it. Aim for the window!',
+  map:['...#...*','...#.###','>..g....','...#....','...#....'],inv:{M:2}},
+ {pack:'Glass',name:'Window Shopping',story:'The window is high up and the laser is down low.',
+  clue:'Aim the beam at the window first. Then steer it to the crystal.',fact:'Windows work because glass transmits light and walls absorb it.',
+  map:['...#...*','...#....','...g....','...#....','...#....','>..#....'],inv:{M:4}},
+ {pack:'Glass',name:'Tilted Glass',story:'Two crystals, one laser. Glass can reflect a little and pass a little.',
+  clue:'Tilted glass splits the beam in two. Send one half to each crystal.',fact:'Real glass both reflects and transmits light. That is why you can see your face in a window.',
+  intro:'New tool: Tilted glass. It reflects part of the beam and lets part through. One beam becomes two!',
+  map:['.......*','........','>.......','........','.......*'],inv:{T:1,M:3}},
+ {pack:'Glass',name:'Two Splits',story:'Both crystals are back by the laser this time.',
+  clue:'Split the beam twice. Each tilted glass sends one part toward a crystal.',fact:'Each split makes the beams weaker. The light energy is shared between them.',
+  map:['*.......','........','>...#...','........','*.......'],inv:{T:2,M:3}},
+ {pack:'Glass',name:'Glass Gauntlet',story:'Glass, walls and a tight route. Think about what each material does.',
+  clue:'Only the glass cell lets the beam through the wall.',fact:'Materials respond to light differently: reflect, transmit or absorb.',
+  map:['....#...*','....g....','>...#....','....#....','....#....','.........'],inv:{M:4,T:1}},
+ {pack:'Shields',name:'Alarm Hall',story:'An alarm sensor sits right in the laser\'s path. Do not set it off!',
+  clue:'Turn the beam before it reaches the alarm.',fact:'Light travels in a straight line until it hits something.',
+  intro:'Red alarms go off if any light hits them. Keep the beam away!',
+  map:['.......*','........','>..!....','........','........'],inv:{M:2}},
+ {pack:'Shields',name:'Block the Beam',story:'A fixed tilted glass splits the beam and one half heads for the alarm.',
+  clue:'Something black can stop the unwanted beam.',fact:'A black surface absorbs light and turns it into a tiny bit of heat.',
+  intro:'New tool: the Black block. It absorbs all light that hits it.',
+  map:['...!....','........','>..t...*','........'],inv:{B:1,M:2}},
+ {pack:'Shields',name:'Shield and Steer',story:'Split the beam, shield one alarm and steer the other half.',
+  clue:'Count the beams. Each one must end up at a crystal or in a black block.',fact:'Engineers shield sensors with black material so stray light does not set them off.',
+  map:['.......*','........','>..t...!','........','..!....*'],inv:{M:4,B:2}},
+ {pack:'Shields',name:'Light Show',story:'Three crystals. One laser. A lot of glass.',
+  clue:'Use tilted glass to share the beam three ways.',fact:'One light source can power many receivers when the beam is split.',
+  map:['..*.....','........','>.......','...!....','..*...*.'],inv:{T:2,M:3,B:1}},
+ {pack:'Shields',name:'Grand Laser Master',story:'The final lab. Two crystals, two alarms, no mistakes.',
+  clue:'Split once, steer with mirrors, and block the leftover beams.',fact:'Reflect, transmit, absorb: that is how light interacts with matter.',
+  map:['*..#...!','........','>..u....','........','...!...*'],inv:{M:4,T:2,B:2}}
+];
+/*LZLEVELS>>*/
+/*<<LZBAKE*/
+const LZ_BAKE=[[1,[[4,2,"M","/"]]],[2,[[1,4,"M","/"],[1,1,"M","/"]]],[3,[[1,2,"M","\\"],[1,4,"M","\\"],[6,4,"M","/"]]],[4,[[7,0,"M","\\"],[7,2,"M","/"],[0,2,"M","/"],[0,4,"M","\\"]]],[2,[[2,3,"M","\\"],[5,3,"M","\\"]]],[2,[[4,2,"M","/"],[4,0,"M","/"]]],[3,[[1,5,"M","/"],[1,2,"M","/"],[7,2,"M","/"]]],[3,[[1,2,"T","/"],[7,2,"M","\\"],[1,0,"M","/"]]],[4,[[1,2,"T","/"],[2,2,"T","\\"],[2,4,"M","/"],[1,0,"M","\\"]]],[3,[[1,2,"M","/"],[1,1,"M","/"],[8,1,"M","/"]]],[2,[[1,2,"M","/"],[1,0,"M","/"]]],[1,[[3,1,"B","/"]]],[3,[[4,2,"M","\\"],[4,4,"M","\\"],[3,0,"M","/"]]],[4,[[1,2,"T","/"],[2,2,"T","\\"],[6,2,"M","\\"],[1,0,"M","/"]]],[4,[[1,2,"M","/"],[1,0,"M","\\"],[1,1,"T","/"],[7,1,"M","\\"]]]];
+/*LZBAKE>>*/
+/*<<LZUI*/
+LZ_LEVELS.forEach((d,i)=>{d.L=lzParse(d);d.par=LZ_BAKE[i][0];d.sol=LZ_BAKE[i][1];});
+const LZ_N=LZ_LEVELS.length;
+const LZ_PACKS={0:'Pack 1: Mirrors',5:'Pack 2: Glass and Windows',10:'Pack 3: Shields and Alarms'};
+const LZT={M:['Mirror','Reflects all the light'],T:['Tilted glass','Reflects some, lets some through'],B:['Black block','Absorbs all the light']};
+const LZ_ORDER=['M','T','B'];
+let LZ=null;
+const lzCur=()=>LZ_LEVELS[LZ.i];
+const lzKey=(x,y)=>x+','+y;
+const lzUsed=()=>Object.keys(LZ.placed).length;
+const lzCount=t=>Object.values(LZ.placed).filter(p=>p.t===t).length;
+const lzLeft=t=>(lzCur().inv[t]||0)-lzCount(t);
+function lzIcon(t,sz){
+  sz=sz||34;let b='';
+  if(t==='M')b='<line x1="7" y1="27" x2="27" y2="7" stroke="#2f3a57" stroke-width="7" stroke-linecap="round"/><line x1="7" y1="27" x2="27" y2="7" stroke="#e3e9f4" stroke-width="4.4" stroke-linecap="round"/><line x1="10" y1="24" x2="24" y2="10" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".8"/>';
+  else if(t==='T')b='<line x1="7" y1="27" x2="27" y2="7" stroke="#5f93c4" stroke-width="7" stroke-linecap="round"/><line x1="7" y1="27" x2="27" y2="7" stroke="#cfeaff" stroke-width="4.4" stroke-linecap="round" opacity=".75"/><line x1="10" y1="24" x2="24" y2="10" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>';
+  else if(t==='B')b='<rect x="5" y="5" width="24" height="24" rx="6" fill="#07080c" stroke="#59627f" stroke-width="2"/><rect x="8" y="8" width="18" height="6" rx="3" fill="#fff" opacity=".12"/>';
+  else b='<path d="M9 9l16 16M25 9L9 25" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>';
+  return `<svg viewBox="0 0 34 34" width="${sz}" height="${sz}" aria-hidden="true">${b}</svg>`;
+}
+const lzMini=d=>{const L=d.L,s=11;let t=`<svg viewBox="0 0 ${L.W*s} ${L.H*s}" width="${L.W*s}" height="${L.H*s}" class="lzmini" aria-hidden="true"><rect width="${L.W*s}" height="${L.H*s}" rx="3" fill="#1a2238"/>`;
+  for(let y=0;y<L.H;y++)for(let x=0;x<L.W;x++){const c=L.cells[y][x];
+    const f=c==='#'?'#59627f':c==='g'?'#8fd0ff':c==='*'?'#f4b13a':c==='!'?'#ff4d6d':c==='L'?'#37e0c1':c==='/'||c==='\\'?'#dfe6f3':c==='t'||c==='u'?'#8fd0ff':null;
+    if(f)t+=`<rect x="${x*s+1}" y="${y*s+1}" width="${s-2}" height="${s-2}" rx="${c==='*'||c==='!'?s/2:1.5}" fill="${f}"/>`;}
+  return svgEl(t+'</svg>');};
+function renderLaserSetup(){renderLevelPicker($('lzLevels'),$('lzTotal'),'laser',LZ_LEVELS,LZ_PACKS,lzStart,lzMini);}
+function lzStart(i){
+  LZ={i,placed:{},tool:null,hint:0,solved:false};
+  show('s-laser');$('lzMsg').textContent='';$('lzResult').hidden=true;lzRender();
+}
+function lzPiece(t,o,cx,cy,cls){
+  const y1=o==='/'?cy+22:cy-22,y2=o==='/'?cy-22:cy+22,x1=cx-22,x2=cx+22;
+  if(t==='B')return `<g class="${cls||''}"><rect x="${cx-26}" y="${cy-26}" width="52" height="52" rx="9" fill="#05060a" stroke="#6b7595" stroke-width="2.4"/><rect x="${cx-20}" y="${cy-21}" width="40" height="9" rx="4" fill="#fff" opacity=".1"/><circle cx="${cx}" cy="${cy+3}" r="9" fill="none" stroke="#6b7595" stroke-width="1.4" opacity=".6"/><circle cx="${cx}" cy="${cy+3}" r="3.5" fill="#6b7595" opacity=".7"/></g>`;
+  if(t==='T')return `<g class="${cls||''}"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#4f86b8" stroke-width="15" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#bfe3ff" stroke-opacity=".72" stroke-width="10" stroke-linecap="round"/><line x1="${x1+4}" y1="${o==='/'?y1-4:y1+4}" x2="${x2-4}" y2="${o==='/'?y2+4:y2-4}" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".9"/></g>`;
+  return `<g class="${cls||''}"><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#2c3550" stroke-width="13" stroke-linecap="round"/><line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="url(#lzMir)" stroke-width="8.5" stroke-linecap="round"/><line x1="${x1+4}" y1="${o==='/'?y1-4:y1+4}" x2="${x2-4}" y2="${o==='/'?y2+4:y2-4}" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".85"/></g>`;
+}
+function lzSvg(){
+  const d=lzCur(),L=d.L,S=64,W=L.W,H=L.H,tr=LZ.tr=lzTrace(L,LZ.placed);
+  let s=`<defs><linearGradient id="lzMir" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f7fc"/><stop offset=".5" stop-color="#aab6cc"/><stop offset="1" stop-color="#eef2f9"/></linearGradient>`+
+   `<radialGradient id="lzGlow"><stop offset="0" stop-color="#ffd76a" stop-opacity=".9"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient>`+
+   `<radialGradient id="lzRed"><stop offset="0" stop-color="#ff3355" stop-opacity=".9"/><stop offset="1" stop-color="#ff3355" stop-opacity="0"/></radialGradient>`+
+   `<linearGradient id="lzGem" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3b8"/><stop offset=".55" stop-color="#f4b13a"/><stop offset="1" stop-color="#d98712"/></linearGradient>`+
+   `<pattern id="lzHatch" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="10" height="10" fill="#2a3149"/><rect width="4" height="10" fill="#343c58"/></pattern>`+
+   `<filter id="lzBlur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter></defs>`+
+   `<rect width="${W*S}" height="${H*S}" rx="14" fill="#141b2f"/>`;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)s+=`<rect x="${x*S+1.5}" y="${y*S+1.5}" width="${S-3}" height="${S-3}" rx="7" fill="${(x+y)%2?'#1b2440':'#18203a'}"/>`;
+  /* fixed pieces */
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){const c=L.cells[y][x],cx=x*S+S/2,cy=y*S+S/2;
+    if(c==='#')s+=`<rect x="${x*S+2}" y="${y*S+2}" width="${S-4}" height="${S-4}" rx="6" fill="url(#lzHatch)" stroke="#4a5476" stroke-width="2"/>`;
+    else if(c==='g')s+=`<rect x="${x*S+6}" y="${y*S+6}" width="${S-12}" height="${S-12}" rx="6" fill="#8fd0ff" fill-opacity=".2" stroke="#a9dcff" stroke-opacity=".9" stroke-width="2"/><path d="M${x*S+14} ${y*S+S-14}L${x*S+S-14} ${y*S+14}M${x*S+14} ${y*S+S-30}L${x*S+S-30} ${y*S+14}" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>`;
+    else if(c==='/'||c==='\\')s+=lzPiece('M',c,cx,cy,'fixed');
+    else if(c==='t'||c==='u')s+=lzPiece('T',c==='t'?'/':'\\',cx,cy,'fixed');}
+  /* beams */
+  const seg=(k)=>tr.segs.map(q=>`<line x1="${q[0]*S+S/2}" y1="${q[1]*S+S/2}" x2="${q[2]*S+S/2}" y2="${q[3]*S+S/2}" ${k(q[4])}/>`).join('');
+  s+=`<g filter="url(#lzBlur)">${seg(i=>`stroke="#ff2e63" stroke-width="16" stroke-linecap="round" opacity="${.35+.45*i}"`)}</g>`+
+     `<g>${seg(i=>`stroke="#ff5d7d" stroke-width="7" stroke-linecap="round" opacity="${.6+.4*i}"`)}${seg(i=>`stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity="${.7+.3*i}"`)}</g>`+
+     `<g class="lzflow">${seg(i=>`stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="3 22" opacity="${.5+.4*i}"`)}</g>`;
+  /* laser, targets, alarms */
+  const ls=L.laser,lcx=ls.x*S+S/2,lcy=ls.y*S+S/2,ang=Math.atan2(ls.dy,ls.dx)*180/Math.PI;
+  s+=`<g transform="rotate(${ang} ${lcx} ${lcy})"><rect x="${lcx-26}" y="${lcy-19}" width="48" height="38" rx="9" fill="#2c3550" stroke="#5a6794" stroke-width="2"/><rect x="${lcx+8}" y="${lcy-10}" width="22" height="20" rx="5" fill="#1a2036" stroke="#5a6794" stroke-width="2"/><circle cx="${lcx+31}" cy="${lcy}" r="7" fill="#ff5d7d"/><circle cx="${lcx+31}" cy="${lcy}" r="3" fill="#fff"/><circle cx="${lcx-12}" cy="${lcy}" r="5" fill="#37e0c1"/></g>`;
+  L.targets.forEach(t=>{const cx=t.x*S+S/2,cy=t.y*S+S/2,on=tr.lit[lzKey(t.x,t.y)];
+    s+=on?`<circle cx="${cx}" cy="${cy}" r="34" fill="url(#lzGlow)" class="lzpulse"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="url(#lzGem)" stroke="#fff3b8" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".35"/>`
+    :`<polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="#4a587a" stroke="#8b9abf" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".12"/>`;});
+  L.alarms.forEach(a=>{const cx=a.x*S+S/2,cy=a.y*S+S/2,on=tr.hit[lzKey(a.x,a.y)];
+    s+=(on?`<circle cx="${cx}" cy="${cy}" r="36" fill="url(#lzRed)" class="lzpulse fast"/>`:'')+`<rect x="${cx-19}" y="${cy+8}" width="38" height="11" rx="4" fill="#3a4263"/><path d="M${cx-17} ${cy+9}a17 17 0 0 1 34 0z" fill="${on?'#ff2d4d':'#7a2638'}" stroke="${on?'#ffd0d8':'#a74a5d'}" stroke-width="2"/><rect x="${cx-4}" y="${cy-9}" width="8" height="12" rx="3" fill="#fff" opacity="${on?.9:.3}"/>`;});
+  /* hint 3: the answer, drawn as a faint ghost */
+  if(LZ.hint>=3)d.sol.forEach(q=>{const cx=q[0]*S+S/2,cy=q[1]*S+S/2;s+=lzPiece(q[2],q[3],cx,cy,'lzghostp')+`<rect x="${q[0]*S+4}" y="${q[1]*S+4}" width="${S-8}" height="${S-8}" rx="8" fill="none" stroke="#37e0c1" stroke-width="2.4" stroke-dasharray="6 6"/>`;});
+  /* placed pieces */
+  Object.keys(LZ.placed).forEach(k=>{const p=LZ.placed[k],q=k.split(',').map(Number);s+=lzPiece(p.t,p.o,q[0]*S+S/2,q[1]*S+S/2,'lzplaced'+(LZ.lift===k?' lift':''));});
+  s+=`<rect id="lzHov" width="${S-6}" height="${S-6}" rx="8" fill="#6aa7ff" fill-opacity=".22" stroke="#9fc4ff" stroke-width="2.4" style="display:none;pointer-events:none"/>`;
+  const sv=$('lzBoard');sv.setAttribute('viewBox',`0 0 ${W*S} ${H*S}`);sv.style.maxWidth=Math.min(W*84,820)+'px';sv.innerHTML=s;
+}
+function lzCell(cx,cy){const r=$('lzBoard').getBoundingClientRect(),L=lzCur().L;
+  const x=Math.floor((cx-r.left)/r.width*L.W),y=Math.floor((cy-r.top)/r.height*L.H);return(x>=0&&y>=0&&x<L.W&&y<L.H)?[x,y]:null;}
+function lzSay(t,kind){const c=$('lzCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+function lzRender(){
+  const d=lzCur(),L=d.L;
+  $('lzLvl').textContent=LZ.i+1;$('lzLvlN').textContent=LZ_N;$('lzUsed').textContent=lzUsed();$('lzPar').textContent=d.par;
+  $('lzName').textContent=d.name;$('lzStory').textContent=d.story;
+  $('lzGoal').replaceChildren(...[h('span',null,'Goal:'),h('span',{class:'tag g'},'◆ Light all '+L.targets.length+' crystal'+(L.targets.length>1?'s':'')),
+    L.alarms.length?h('span',{class:'tag bad'},'● Never touch '+(L.alarms.length>1?'the '+L.alarms.length+' alarms':'the alarm')):null].filter(Boolean));
+  $('lzIntro').hidden=!d.intro;$('lzIntro').textContent=d.intro||'';
+  $('lzTools').replaceChildren(...LZ_ORDER.filter(t=>d.inv[t]).map(t=>{const left=lzLeft(t),b=h('button',{class:'tool'+(LZ.tool===t?' on':''),disabled:left<=0&&LZ.tool!==t,
+      title:LZT[t][0]+': '+LZT[t][1]+'. Drag me onto the maze, or click me and then click a square.',
+      onclick:()=>{if(performance.now()<ttDrag.noClick)return;LZ.tool=LZ.tool===t?null:t;lzRender();}},
+      h('span',{class:'ti'},svgEl(lzIcon(t,30))),h('span',null,h('b',null,LZT[t][0]),h('small',null,LZT[t][1])),h('span',{class:'cost'},'×'+left));
+    b.addEventListener('pointerdown',e=>{if(left<=0)return;ttDragStart(e,{makeGhost:()=>{const g=h('div',{class:'dragghost'},h('span',{class:'ti'},svgEl(lzIcon(t,28))),LZT[t][0]);return g;},
+      drop:(x,y)=>{const c=lzCell(x,y);if(c)lzPlace(c,t,'/');else lzSay('Drop it right onto a square in the maze.');}});});
+    return b;}),
+    h('button',{class:'tool'+(LZ.tool==='X'?' on':''),title:'Remove tool: click a piece to take it back.',onclick:()=>{LZ.tool=LZ.tool==='X'?null:'X';lzRender();}},
+      h('span',{class:'ti'},svgEl(lzIcon('X',30))),h('span',null,h('b',null,'Remove'),h('small',null,'Click a piece to take it back'))));
+  lzSvg();lzCoach();lzHintUI();
+  const tr=LZ.tr;
+  if(tr.ok&&lzUsed()>0){if(!LZ.solved){LZ.solved=true;lzWin();}}
+  else if(LZ.solved){LZ.solved=false;$('lzResult').hidden=true;}
+}
+function lzCoach(){
+  const d=lzCur(),L=d.L,tr=LZ.tr,nl=L.targets.filter(t=>tr.lit[lzKey(t.x,t.y)]).length,hitA=L.alarms.some(a=>tr.hit[lzKey(a.x,a.y)]);
+  if(tr.ok&&lzUsed()>0)return lzSay('Every crystal is lit and no alarm went off. Nice!','go');
+  if(hitA)return lzSay('The beam is hitting an alarm! Turn it away with a mirror, or block it with something black.','alert');
+  if(!lzUsed())return lzSay(LZ.tool?'Now click a square in the maze (or drag the piece there).':'Pick a piece from step 1, then click a square. Follow the red beam!');
+  if(nl)return lzSay(`${nl} of ${L.targets.length} crystals are lit. Keep going!`);
+  const lastCells=tr.segs.length;if(!tr.segs.some(q=>Math.hypot(q[2]-q[0],q[3]-q[1])>0))return lzSay('Follow the beam. Where does it need to turn?');
+  lzSay(LZ.tool?'Click a square on the beam to place your piece. Click a placed mirror to flip it.':'Click a mirror to flip it. Drag a piece off the maze to take it back.');
+}
+function lzPlace(c,t,o){
+  const L=lzCur().L,k=lzKey(c[0],c[1]);
+  if(L.cells[c[1]][c[0]]!=='.'||LZ.placed[k]){lzSay('That square is taken. Pick an empty one.','alert');return;}
+  if(lzLeft(t)<=0){lzSay('You are out of those pieces.','alert');return;}
+  LZ.placed[k]={t,o:o||'/'};lzRender();
+}
+function lzHintUI(){
+  const d=lzCur(),n=LZ.hint;
+  $('lzHintTxt').textContent=['Need a hint?','Another hint','Show me the answer','Answer shown'][n];$('lzHint').disabled=n>=3;
+  const b=$('lzHintBox'),cnt={};d.sol.forEach(q=>{cnt[q[2]]=(cnt[q[2]]||0)+1;});
+  const names=LZ_ORDER.filter(t=>cnt[t]).map(t=>cnt[t]+' '+LZT[t][0].toLowerCase()+(cnt[t]>1&&t!=='B'?'s':cnt[t]>1?'s':''));
+  b.hidden=n===0;b.replaceChildren(...[n>=1?h('div',null,I('bulb'),' ',h('b',null,'Clue: '),d.clue):null,
+    n>=2?h('div',null,I('lens'),' ',h('b',null,'Pieces: '),'This level can be solved with '+d.par+' piece'+(d.par>1?'s':'')+': '+andList(names)+'.'):null,
+    n>=3?h('div',null,I('eye'),' ',h('b',null,'Answer: '),'The dashed squares on the maze show where the pieces go. Click them to flip.'):null]);
+}
+function lzWin(){
+  const d=lzCur(),n=lzUsed(),stars=n<=d.par?3:n<=d.par+1?2:1;
+  if(!(LZ.rec>=stars)){LZ.rec=stars;recordStars('laser',LZ.i+1,stars,{pieces:n,par:d.par});}
+  fx.pop({icon:'sparkle',text:stars===3?'Perfect!':'Crystals lit!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  $('lzMsg').textContent='';
+  levelResult($('lzResult'),{stars,next:LZ.i+1<LZ_N,
+    line:['You used ',h('b',null,n),` piece${n>1?'s':''}. The 3-star target is `,h('b',null,d.par),'.',stars<3?' Can you do it with fewer?':' You found the cheapest way!'],
+    fact:d.fact,onNext:()=>lzStart(LZ.i+1),onRetry:()=>{$('lzResult').hidden=true;},onLevels:()=>{renderLaserSetup();show('s-laser-setup');}});
+}
+$('lzHint').onclick=()=>{if(LZ.hint<3){LZ.hint++;lzRender();}};
+$('lzClear').onclick=()=>{LZ.placed={};LZ.solved=false;$('lzResult').hidden=true;lzRender();};
+$('lzBack').onclick=()=>{renderLaserSetup();show('s-laser-setup');};
+(()=>{const sv=$('lzBoard');
+  sv.addEventListener('pointerdown',e=>{
+    const c=lzCell(e.clientX,e.clientY);if(!c)return;const k=lzKey(c[0],c[1]),p=LZ.placed[k];
+    ttDragStart(e,{
+      makeGhost:()=>p?h('div',{class:'dragghost'},h('span',{class:'ti'},svgEl(lzIcon(p.t,28))),LZT[p.t][0]):h('div',{style:'display:none'}),
+      begin:()=>{if(p){LZ.lift=k;lzSvg();}},
+      end:()=>{LZ.lift=null;},
+      drop:(x,y)=>{if(!p)return;const t=lzCell(x,y);
+        if(!t){delete LZ.placed[k];lzRender();return;}
+        const k2=lzKey(t[0],t[1]);if(k2===k){lzRender();return;}
+        if(lzCur().L.cells[t[1]][t[0]]!=='.'||LZ.placed[k2]){lzRender();return;}
+        delete LZ.placed[k];LZ.placed[k2]=p;lzRender();},
+      click:()=>{
+        if(p){if(LZ.tool==='X'||p.t==='B')delete LZ.placed[k];else p.o=p.o==='/'?'\\':'/';lzRender();return;}
+        if(!LZ.tool||LZ.tool==='X'){lzSay('Pick a piece from step 1 first, then click a square.');return;}
+        lzPlace(c,LZ.tool,'/');}});
+  });
+  sv.addEventListener('pointermove',e=>{const hv=$('lzHov');if(!hv)return;const c=lzCell(e.clientX,e.clientY),L=lzCur().L;
+    if(c&&LZ.tool&&LZ.tool!=='X'&&L.cells[c[1]][c[0]]==='.'&&!LZ.placed[lzKey(c[0],c[1])]){hv.setAttribute('x',c[0]*64+3);hv.setAttribute('y',c[1]*64+3);hv.style.display='';}else hv.style.display='none';});
+  sv.addEventListener('pointerleave',()=>{const hv=$('lzHov');if(hv)hv.style.display='none';});
+})();
+/*LZUI>>*/
+/*<<BOENGINE*/
+const BO_V=1.5,BO_RB=0.1,BO_RW=0.001,BO_P0=Math.pow(BO_V/(1+BO_RB),2);
+const boEdge=(k,cols)=>{const q=k.split(':'),t=q[0],c=+q[1],r=+q[2];return t==='h'?[r*cols+c,r*cols+c+1]:[r*cols+c,(r+1)*cols+c];};
+/* parts: "h:c:r" / "v:c:r" -> {t:'w'|'L'|'S'|'B', id, o:+1|-1 (battery: +1 puts the + end at the right/lower node), open} */
+function boSolve(L,parts,opt){
+  opt=opt||{};const cols=L.cols,n=cols*L.rows,burn=opt.burn||[],openIds=opt.open||[],allOpen=openIds==='*';
+  const A=[],b=[];for(let i=0;i<n;i++){A.push(new Array(n).fill(0));A[i][i]=1e-9;b.push(0);}
+  const stamp=(a,c,g)=>{A[a][a]+=g;A[c][c]+=g;A[a][c]-=g;A[c][a]-=g;};
+  const els=[];
+  Object.keys(parts).forEach(k=>{const p=parts[k],e=boEdge(k,cols);let g=0,kind=p.t;
+    if(p.t==='w')g=1/BO_RW;
+    else if(p.t==='S'){const op=allOpen||(Array.isArray(openIds)&&openIds.indexOf(p.id)>=0)||(opt.useState&&p.open);g=op?0:1/BO_RW;}
+    else if(p.t==='L'){g=(burn.indexOf(p.id)>=0)?0:1;}
+    else if(p.t==='B'){const a=p.o>0?e[0]:e[1],c=p.o>0?e[1]:e[0];g=1/BO_RB;stamp(a,c,g);b[c]+=BO_V/BO_RB;b[a]-=BO_V/BO_RB;els.push({k,p,a,c,g,kind:'B'});return;}
+    if(g>0)stamp(e[0],e[1],g);els.push({k,p,a:e[0],c:e[1],g,kind});});
+  /* gaussian elimination with partial pivoting */
+  const M=A.map((r,i)=>r.concat([b[i]]));
+  for(let i=0;i<n;i++){let m=i;for(let j=i+1;j<n;j++)if(Math.abs(M[j][i])>Math.abs(M[m][i]))m=j;[M[i],M[m]]=[M[m],M[i]];
+    const d=M[i][i];if(Math.abs(d)<1e-14)continue;for(let j=i+1;j<n;j++){const f=M[j][i]/d;if(f===0)continue;for(let k=i;k<=n;k++)M[j][k]-=f*M[i][k];}}
+  const v=new Array(n).fill(0);for(let i=n-1;i>=0;i--){let s=M[i][n];for(let j=i+1;j<n;j++)s-=M[i][j]*v[j];v[i]=Math.abs(M[i][i])<1e-14?0:s/M[i][i];}
+  const out={lamps:{},cur:{},short:false,batt:{}};
+  els.forEach(x=>{
+    if(x.kind==='B'){const vt=v[x.c]-v[x.a],io=(BO_V-vt)/BO_RB;out.batt[x.k]={vt,io};out.cur[x.k]=io;if(io>2&&vt<0.4*BO_V)out.short=true;return;}
+    const I=x.g*(v[x.a]-v[x.c]);out.cur[x.k]=I;
+    if(x.kind==='L'){const P=I*I,r=P/BO_P0;out.lamps[x.p.id]={i:I,p:P,ratio:r,level:r<0.08?0:r<0.6?1:r<2?2:3};}});
+  return out;
+}
+const BO_LV=['off','dim','bright','blazing'];
+const boMeets=(lamp,need)=>{const l=lamp?lamp.level:0;
+  if(need==='off')return l===0;if(need==='lit')return l>=1;if(need==='bright')return l>=2;if(need==='blazing')return l>=3;return false;};
+/* run every test of a level; returns [{ok,label,why}] */
+function boTests(L,parts){
+  const res=[];
+  L.tests.forEach(t=>{
+    if(t.kind==='each'){
+      const sw=Object.keys(parts).filter(k=>parts[k].t==='S'),base=boSolve(L,parts,{});
+      const ids=Object.keys(base.lamps),allLit=ids.every(i=>base.lamps[i].level>=1);
+      let ok=allLit&&sw.length>0,why=allLit?'':'Every lamp needs to light up first.';const covered={};
+      if(ok){sw.forEach(k=>{const r=boSolve(L,parts,{open:[parts[k].id]});const off=ids.filter(i=>r.lamps[i].level===0);
+        off.forEach(i=>covered[i]=1);if(off.length!==1){ok=false;why=off.length?'One switch turns off more than one lamp.':'A switch does nothing. Wire it in series with a lamp.';}});
+        if(ok&&ids.some(i=>!covered[i])){ok=false;why='Every lamp needs its own switch.';}}
+      else if(allLit&&!sw.length)why='Add a switch for each lamp.';
+      if(base.short){ok=false;why='Short circuit!';}
+      res.push({ok,label:t.label,why});return;}
+    const r=boSolve(L,parts,{burn:t.burn||[],open:t.open||[]});
+    let ok=!r.short,why=r.short?'Short circuit! The battery was connected straight to itself.':'';
+    if(ok)Object.keys(t.need).forEach(id=>{if(ok&&!boMeets(r.lamps[id],t.need[id])){ok=false;
+      const lv=r.lamps[id]?BO_LV[r.lamps[id].level]:'missing';why=(L.names&&L.names[id]||id)+' should be '+(t.need[id]==='off'?'off':t.need[id]==='lit'?'lit':t.need[id])+' but is '+lv+'.';}});
+    res.push({ok,label:t.label,why});});
+  return res;
+}
+/*BOENGINE>>*/
+/*<<BOLEVELS*/
+const BOW=(...k)=>Object.fromEntries(k.map(x=>[x,{t:'w'}]));
+const bo_rail=(r,c0,c1)=>{const a=[];for(let c=c0;c<=c1;c++)a.push('h:'+c+':'+r);return a;};
+const BO_LEVELS=[
+ {pack:'Closed Circuits',name:'Lamp Post',story:'The street lamp has gone dark. Connect the battery to the lamp with wire.',
+  clue:'Electricity needs a complete loop. Wire from one end of the battery, through the lamp, and back to the other end.',
+  fact:'A circuit is a closed loop. The battery pushes charges around it and the lamp turns that energy into light.',
+  intro:'New tool: Wire. Click a spot, or drag across spots to lay wire quickly. Every circuit needs a closed loop.',
+  cols:4,rows:2,names:{a:'Street lamp'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:3:0':{t:'L',id:'a'}},
+  tests:[{label:'Light the lamp',need:{a:'bright'}}],
+  sol:{parts:BOW(...bo_rail(0,0,2),...bo_rail(1,0,2))}},
+ {pack:'Closed Circuits',name:'Light Switch',story:'The shop wants a switch so it can turn its lamp off at night.',
+  clue:'The switch has to be part of the loop. When it opens, the loop breaks and the lamp goes out.',
+  fact:'A switch opens or closes the loop. An open switch leaves a gap, so the charges stop moving and the lamp goes out.',
+  intro:'Click the switch on the board to flip it open or closed. The test will try both.',
+  cols:5,rows:2,names:{a:'Shop lamp'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:4:0':{t:'L',id:'a'},'h:2:0':{t:'S',id:'s1',open:false}},
+  tests:[{label:'Switch closed: lamp on',need:{a:'bright'}},{label:'Switch open: lamp off',open:['s1'],need:{a:'off'}}],
+  sol:{parts:BOW('h:0:0','h:1:0','h:3:0',...bo_rail(1,0,3))}},
+ {pack:'Closed Circuits',name:'Twin Lamps',story:'Two lamps on one battery. Get them both glowing.',
+  clue:'Chain the lamps in one loop, one after the other.',
+  fact:'In a series circuit there is only one path, so the same current flows through every part. The energy is shared between the lamps.',
+  cols:6,rows:2,names:{a:'Lamp A',b:'Lamp B'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'h:1:0':{t:'L',id:'a'},'h:3:0':{t:'L',id:'b'}},
+  tests:[{label:'Both lamps glow',need:{a:'lit',b:'lit'}}],
+  sol:{parts:BOW('h:0:0','h:2:0','h:4:0','v:5:0',...bo_rail(1,0,4))}},
+ {pack:'Closed Circuits',name:'Bright Twins',story:'Those twin lamps were dim. The mayor wants both of them BRIGHT.',
+  clue:'Give each lamp its own direct path to the battery. Use two rails, one on top and one on the bottom.',
+  fact:'In a parallel circuit each lamp has its own path to the battery, so each gets the full push and shines brightly.',
+  intro:'Series lamps share the energy and glow dim. Parallel lamps each connect straight to the battery.',
+  cols:5,rows:2,names:{a:'Lamp A',b:'Lamp B'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:2:0':{t:'L',id:'a'},'v:4:0':{t:'L',id:'b'}},
+  tests:[{label:'Both lamps bright',need:{a:'bright',b:'bright'}}],
+  sol:{parts:BOW(...bo_rail(0,0,3),...bo_rail(1,0,3))}},
+ {pack:'Closed Circuits',name:'Burnout Boulevard',story:'Lamps burn out all the time here. One bad bulb must never darken the street.',
+  clue:'In a parallel circuit, the other paths still work when one breaks.',
+  fact:'When one bulb burns out in a series circuit, the loop breaks and everything goes dark. In a parallel circuit the other paths keep working.',
+  cols:7,rows:2,names:{a:'Lamp A',b:'Lamp B',c:'Lamp C'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:2:0':{t:'L',id:'a'},'v:4:0':{t:'L',id:'b'},'v:6:0':{t:'L',id:'c'}},
+  tests:[{label:'All three glow',need:{a:'lit',b:'lit',c:'lit'}},{label:'Lamp B burns out: A and C stay on',burn:['b'],need:{a:'lit',c:'lit'}},{label:'Lamp A burns out: B and C stay on',burn:['a'],need:{b:'lit',c:'lit'}}],
+  sol:{parts:BOW(...bo_rail(0,0,5),...bo_rail(1,0,5))}},
+ {pack:'Parallel Power',name:'Hospital Wing',story:'The school switch must never cut power to the hospital.',
+  clue:'Put the hospital on its own path. Only the school lamp and its switch belong on the other path.',
+  fact:'Devices on separate parallel branches are independent. Opening a switch on one branch does not affect the others.',
+  cols:5,rows:3,names:{h:'Hospital',s:'School'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:2:0':{t:'L',id:'h'},'v:4:0':{t:'L',id:'s'},'v:4:1':{t:'S',id:'s1',open:false}},
+  tests:[{label:'Switch closed: both lit',need:{h:'lit',s:'lit'}},{label:'School switch open: hospital stays on',open:['s1'],need:{h:'lit',s:'off'}}],
+  sol:{parts:BOW(...bo_rail(0,0,3),...bo_rail(2,0,3),'v:0:1','v:2:1')}},
+ {pack:'Parallel Power',name:'Polarity',story:'Two batteries should make one super-bright lamp. Right now it stays dark!',
+  clue:'Batteries have a plus end and a minus end. Click a battery to flip it.',
+  fact:'Batteries in series add their push when they face the same way around the loop. Facing opposite ways, they cancel out.',
+  intro:'Click a battery to flip it. Batteries add up only when they push the same way around the loop.',
+  cols:4,rows:2,names:{a:'Lamp'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:3:0':{t:'B',o:1},'h:1:0':{t:'L',id:'a'}},
+  tests:[{label:'Make the lamp blaze',need:{a:'blazing'}}],
+  sol:{parts:BOW('h:0:0','h:2:0',...bo_rail(1,0,2)),flip:['v:0:0']}},
+ {pack:'Parallel Power',name:'Power Pair',story:'A tall stack of two batteries feeds two lamps. Wire them in parallel for maximum glow.',
+  clue:'Build two rails, top and bottom, and connect each lamp between them.',
+  fact:'More batteries in series means more energy for each charge to give away, so the lamps shine brighter.',
+  cols:5,rows:3,names:{a:'Lamp A',b:'Lamp B'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:0:1':{t:'B',o:1},'v:2:0':{t:'L',id:'a'},'v:4:0':{t:'L',id:'b'}},
+  tests:[{label:'Both lamps blazing',need:{a:'blazing',b:'blazing'}}],
+  sol:{parts:BOW(...bo_rail(0,0,3),...bo_rail(2,0,3),'v:2:1','v:4:1')}},
+ {pack:'Power Grid',name:'Add a Switch',story:'This lamp has no switch at all. Build one into the loop.',
+  clue:'Drag the switch from the tray onto a spot in the loop. The test opens every switch you place.',
+  fact:'A switch must be in series with what it controls. Placed anywhere on the loop, it can break the whole circuit.',
+  intro:'New tool: Switch. Drag it onto the board or click a spot. Click a placed switch to open or close it.',
+  cols:4,rows:2,names:{a:'Lamp'},inv:{S:1},
+  fixed:{'v:0:0':{t:'B',o:1},'v:3:0':{t:'L',id:'a'}},
+  tests:[{label:'Switch closed: lamp on',need:{a:'bright'}},{label:'Switch open: lamp off',open:'*',need:{a:'off'}}],
+  sol:{parts:Object.assign(BOW('h:0:0','h:2:0',...bo_rail(1,0,2)),{'h:1:0':{t:'S',id:'sw1'}})}},
+ {pack:'Power Grid',name:'Own Switches',story:'The mayor wants every lamp to have its own switch, so one can go off while the other stays on.',
+  clue:'Each switch goes in series with a single lamp, on that lamp\'s own branch.',
+  fact:'In a parallel circuit, a switch in one branch controls only that branch. This is how the lights in your house work.',
+  cols:5,rows:3,names:{a:'Lamp A',b:'Lamp B'},inv:{S:2},
+  fixed:{'v:0:0':{t:'B',o:1},'v:2:0':{t:'L',id:'a'},'v:4:0':{t:'L',id:'b'}},
+  tests:[{label:'Every lamp has its own switch',kind:'each'}],
+  sol:{parts:Object.assign(BOW(...bo_rail(0,0,3),...bo_rail(2,0,3),'v:0:1'),{'v:2:1':{t:'S',id:'sw1'},'v:4:1':{t:'S',id:'sw2'}})}},
+ {pack:'Power Grid',name:'Big City',story:'Four districts, two batteries and a lot of wire. Keep the lights on even when a bulb fails.',
+  clue:'Build two long rails and give every district its own path between them.',
+  fact:'Cities wire buildings in parallel so that one failure does not black out everyone else.',
+  cols:7,rows:3,names:{h:'Hospital',s:'School',l:'Library',t:'Stadium'},inv:{},
+  fixed:{'v:0:0':{t:'B',o:1},'v:0:1':{t:'B',o:1},'v:2:0':{t:'L',id:'h'},'v:3:0':{t:'L',id:'s'},'v:4:0':{t:'L',id:'l'},'v:5:0':{t:'L',id:'t'}},
+  tests:[{label:'All four districts lit',need:{h:'lit',s:'lit',l:'lit',t:'lit'}},{label:'School bulb burns out: the rest stay on',burn:['s'],need:{h:'lit',l:'lit',t:'lit'}},{label:'Hospital bulb burns out: the rest stay on',burn:['h'],need:{s:'lit',l:'lit',t:'lit'}}],
+  sol:{parts:BOW(...bo_rail(0,0,4),...bo_rail(2,0,4),'v:2:1','v:3:1','v:4:1','v:5:1')}},
+ {pack:'Power Grid',name:'Grand Grid',story:'The final test. Batteries, switches and burnouts all at once.',
+  clue:'Fix the battery stack first. Then build two branches and give each lamp its own switch.',
+  fact:'Real power grids combine all of these ideas: series batteries for more push, parallel branches for independence, and switches for control.',
+  cols:5,rows:3,names:{a:'Lamp A',b:'Lamp B'},inv:{S:2},
+  fixed:{'v:0:0':{t:'B',o:1},'v:0:1':{t:'B',o:-1},'v:2:0':{t:'L',id:'a'},'v:4:0':{t:'L',id:'b'}},
+  tests:[{label:'Both lamps blazing',need:{a:'blazing',b:'blazing'}},{label:'Lamp A burns out: B stays on',burn:['a'],need:{b:'bright'}},{label:'Lamp B burns out: A stays on',burn:['b'],need:{a:'bright'}},{label:'Every lamp has its own switch',kind:'each'}],
+  sol:{parts:Object.assign(BOW(...bo_rail(0,0,3),...bo_rail(2,0,3)),{'v:2:1':{t:'S',id:'sw1'},'v:4:1':{t:'S',id:'sw2'}}),flip:['v:0:1']}}
+];
+const BO_N=BO_LEVELS.length;
+/*BOLEVELS>>*/
+/*<<BOUI*/
+const BO_PACKS={0:'Pack 1: Closed Circuits',5:'Pack 2: Parallel Power',8:'Pack 3: Power Grid'};
+const BOS=120,BOP=58;
+const BOT={w:['Wire','Click or drag along the lines'],S:['Switch','Opens or closes the loop'],B:['Battery','Pushes the charges'],L:['Bulb','Glows when charges flow through it']};
+const BO_STATE=['off','dim','bright','blazing'];
+let BO=null;
+const boCur=()=>BO_LEVELS[BO.i];
+const boPt=(c,r)=>[BOP+c*BOS,BOP+r*BOS];
+const boEnds=k=>{const q=k.split(':'),c=+q[1],r=+q[2];return q[0]==='h'?[boPt(c,r),boPt(c+1,r)]:[boPt(c,r),boPt(c,r+1)];};
+const boAllEdges=L=>{const a=[];for(let r=0;r<L.rows;r++)for(let c=0;c<L.cols;c++){if(c<L.cols-1)a.push('h:'+c+':'+r);if(r<L.rows-1)a.push('v:'+c+':'+r);}return a;};
+const boPlacedCount=()=>Object.values(BO.parts).filter(p=>!p.fixed).length;
+const boLeft=t=>(boCur().inv[t]||0)-Object.values(BO.parts).filter(p=>!p.fixed&&p.t===t).length;
+function boIcon(t,sz){
+  sz=sz||34;let b='';
+  if(t==='w')b='<path d="M4 24 15 10l5 8 10-12" fill="none" stroke="#8a4f1c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 24 15 10l5 8 10-12" fill="none" stroke="#f0a35a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>';
+  else if(t==='S')b='<circle cx="7" cy="23" r="3.4" fill="#5a6794"/><circle cx="27" cy="23" r="3.4" fill="#5a6794"/><path d="M7 23 22 8" stroke="#f4b13a" stroke-width="3.6" stroke-linecap="round"/>';
+  else if(t==='B')b='<rect x="5" y="9" width="24" height="16" rx="4" fill="#2d3a63" stroke="#8d97b5" stroke-width="2"/><path d="M15 12v10" stroke="#fff" stroke-width="3"/><path d="M21 15v4" stroke="#fff" stroke-width="3"/><path d="M9 17h4M23 17h4" stroke="#8d97b5" stroke-width="2"/>';
+  else if(t==='L')b='<circle cx="17" cy="14" r="8.5" fill="#ffe28a" stroke="#d58a1e" stroke-width="2"/><path d="M13 14l2-4 2 4 2-4 2 4" stroke="#e8851a" stroke-width="1.6" fill="none"/><rect x="13" y="22" width="8" height="6" rx="2" fill="#8d97b5"/>';
+  else b='<path d="M9 9l16 16M25 9L9 25" stroke="#c0392b" stroke-width="4" stroke-linecap="round"/>';
+  return `<svg viewBox="0 0 34 34" width="${sz}" height="${sz}" aria-hidden="true">${b}</svg>`;
+}
+const boMini=L=>{const s=14,w=(L.cols-1)*s+12,h2=(L.rows-1)*s+12;let t=`<svg viewBox="0 0 ${w} ${h2}" width="${w}" height="${h2}" class="lzmini" aria-hidden="true"><rect width="${w}" height="${h2}" rx="4" fill="#1a2238"/>`;
+  for(let r=0;r<L.rows;r++)for(let c=0;c<L.cols;c++)t+=`<circle cx="${6+c*s}" cy="${6+r*s}" r="1.8" fill="#6b7595"/>`;
+  Object.keys(L.fixed).forEach(k=>{const p=L.fixed[k],q=k.split(':'),c=+q[1],r=+q[2],x=6+c*s+(q[0]==='h'?s/2:0),y=6+r*s+(q[0]==='v'?s/2:0);
+    t+=`<circle cx="${x}" cy="${y}" r="3.4" fill="${p.t==='L'?'#f4b13a':p.t==='B'?'#37e0c1':'#ff8a5c'}"/>`;});
+  return svgEl(t+'</svg>');};
+function renderBlackoutSetup(){renderLevelPicker($('boLevels'),$('boTotal'),'blackout',BO_LEVELS,BO_PACKS,boStart,boMini);}
+function boStart(i){
+  const L=BO_LEVELS[i];BO={i,parts:{},tool:null,hint:0,results:null,view:null,swn:0,solved:false,testing:false};
+  Object.keys(L.fixed).forEach(k=>{BO.parts[k]=Object.assign({fixed:true,open:false},L.fixed[k]);});
+  show('s-blackout');$('boMsg').textContent='';$('boResult').hidden=true;boRender();
+}
+function boLiveParts(){return BO.parts;}
+function boSim(){const L=boCur(),v=BO.view;return boSolve(L,BO.parts,{useState:!v,burn:v?v.burn:[],open:v?v.open:[]});}
+function boSay(t,kind){const c=$('boCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+function boPartG(k,p,sim,view){
+  const e=boEnds(k),a=e[0],b=e[1],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,ang=k[0]==='h'?0:90,I=sim.cur[k]||0,flow=Math.abs(I)>0.04;
+  const wst=`stroke="#7a4616" stroke-width="10" stroke-linecap="round"`,wst2=`stroke="${flow?'#ffc56b':'#e59b52'}" stroke-width="5.5" stroke-linecap="round"`;
+  const cls=p.fixed?'bofix':'bopl';
+  if(p.t==='w'){
+    let s=`<g class="${cls}"><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst}/><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst2}/>`;
+    if(flow)s+=`<line class="boflow${I<0?' rev':''}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 17" style="animation-duration:${Math.max(.35,Math.min(1.6,1.4/Math.abs(I)))}s"/>`;
+    return s+'</g>';}
+  let g=`<g class="${cls}" transform="translate(${mx} ${my}) rotate(${ang})"><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst}/><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst2}/>`;
+  let extra='';
+  if(p.t==='L'){
+    const L0=sim.lamps[p.id],lv=L0?L0.level:0,burnt=view&&view.burn&&view.burn.indexOf(p.id)>=0,r=L0?Math.min(1,L0.ratio/2.2):0;
+    if(burnt){g+=`<circle r="25" fill="#2a2f45" stroke="#5a6285" stroke-width="3"/><path d="M-10 8l5-12 5 10 5-12 5 12" stroke="#7a7f99" stroke-width="2" fill="none"/><path d="M-14 -14l28 28M14 -14l-28 28" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round"/>`;}
+    else{
+      if(lv>0)extra=`<circle cx="${mx}" cy="${my}" r="${34+r*46}" fill="url(#boGlow)" opacity="${.35+.65*Math.min(1,r*1.6)}"/>`;
+      g+=`<circle r="25" fill="${lv?(lv>=3?'#fff6cf':'#ffe9a3'):'#3a4263'}" fill-opacity="${lv?.55+Math.min(.45,r):0.9}" stroke="${lv?'#ffd76a':'#6b7595'}" stroke-width="3"/><path d="M-11 9l5-13 5 11 5-13 5 13" stroke="${lv?'#ff8a1e':'#7f89aa'}" stroke-width="${lv?3:2.4}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;}
+  }else if(p.t==='S'){
+    const op=(!view&&p.open)||(view&&(view.open==='*'||(Array.isArray(view.open)&&view.open.indexOf(p.id)>=0)));
+    g+=`<rect x="-28" y="-17" width="56" height="34" rx="9" fill="#2d3a63" stroke="#8d97b5" stroke-width="2.4"/><circle cx="-18" cy="3" r="4.4" fill="#cfd6ea"/><circle cx="18" cy="3" r="4.4" fill="#cfd6ea"/><line x1="-18" y1="3" x2="${op?10:18}" y2="${op?-14:3}" stroke="${op?'#ff8a5c':'#ffd76a'}" stroke-width="5" stroke-linecap="round"/>`;
+    extra='';
+  }else if(p.t==='B'){
+    const pos=p.o>0?1:-1;
+    g+=`<rect x="-30" y="-20" width="60" height="40" rx="9" fill="#2d3a63" stroke="#8d97b5" stroke-width="2.4"/><line x1="${pos*7}" y1="-14" x2="${pos*7}" y2="14" stroke="#fff" stroke-width="5" stroke-linecap="round"/><line x1="${-pos*7}" y1="-8" x2="${-pos*7}" y2="8" stroke="#aab4d1" stroke-width="7" stroke-linecap="round"/>`+
+       `<g transform="rotate(${-ang})"><text x="${ang?0:pos*21}" y="${ang?(pos*21+5):5}" text-anchor="middle" font-size="16" font-weight="900" fill="#ffd76a" font-family="system-ui">+</text><text x="${ang?0:-pos*21}" y="${ang?(-pos*21+5):5}" text-anchor="middle" font-size="18" font-weight="900" fill="#aab4d1" font-family="system-ui">−</text></g>`;
+    if(sim.short)extra=`<circle cx="${mx}" cy="${my}" r="40" fill="url(#boRed)" class="lzpulse fast"/>`;
+  }
+  if(p.fixed)g+=`<circle cx="-24" cy="-12" r="2.2" fill="#8d97b5"/><circle cx="24" cy="12" r="2.2" fill="#8d97b5"/>`;
+  return extra+g+'</g>';
+}
+function boSvg(){
+  const L=boCur(),sim=BO.sim=boSim(),view=BO.view,w=(L.cols-1)*BOS+BOP*2,hh=(L.rows-1)*BOS+BOP*2;
+  let s=`<defs><radialGradient id="boGlow"><stop offset="0" stop-color="#ffe28a" stop-opacity=".95"/><stop offset=".5" stop-color="#ffb347" stop-opacity=".35"/><stop offset="1" stop-color="#ffb347" stop-opacity="0"/></radialGradient><radialGradient id="boRed"><stop offset="0" stop-color="#ff3355" stop-opacity=".9"/><stop offset="1" stop-color="#ff3355" stop-opacity="0"/></radialGradient></defs>`+
+    `<rect width="${w}" height="${hh}" rx="16" fill="#10182e"/>`;
+  boAllEdges(L).forEach(k=>{if(BO.parts[k])return;const e=boEnds(k);s+=`<line x1="${e[0][0]}" y1="${e[0][1]}" x2="${e[1][0]}" y2="${e[1][1]}" stroke="#2a3558" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12"/>`;});
+  if(BO.hint>=3){const sol=L.sol;Object.keys(sol.parts).forEach(k=>{const p=sol.parts[k],e=boEnds(k);
+    s+=p.t==='w'?`<line x1="${e[0][0]}" y1="${e[0][1]}" x2="${e[1][0]}" y2="${e[1][1]}" stroke="#37e0c1" stroke-width="7" stroke-linecap="round" stroke-dasharray="10 8" opacity=".75"/>`
+    :`<g transform="translate(${(e[0][0]+e[1][0])/2} ${(e[0][1]+e[1][1])/2})"><circle r="26" fill="none" stroke="#37e0c1" stroke-width="4" stroke-dasharray="8 6"/></g>`;});
+    (sol.flip||[]).forEach(k=>{const e=boEnds(k);s+=`<g transform="translate(${(e[0][0]+e[1][0])/2} ${(e[0][1]+e[1][1])/2})"><rect x="-34" y="-26" width="68" height="52" rx="12" fill="none" stroke="#37e0c1" stroke-width="4" stroke-dasharray="8 6"/></g>`;});}
+  Object.keys(BO.parts).forEach(k=>{s+=boPartG(k,BO.parts[k],sim,view);});
+  for(let r=0;r<L.rows;r++)for(let c=0;c<L.cols;c++){const p=boPt(c,r);s+=`<circle cx="${p[0]}" cy="${p[1]}" r="8" fill="#10182e" stroke="#aab4d1" stroke-width="3"/>`;}
+  /* names under lamps */
+  Object.keys(BO.parts).forEach(k=>{const p=BO.parts[k];if(p.t!=='L')return;const e=boEnds(k),mx=(e[0][0]+e[1][0])/2,my=(e[0][1]+e[1][1])/2,q=k.split(':'),L0=sim.lamps[p.id],lv=L0?L0.level:0;
+    const burnt=view&&view.burn&&view.burn.indexOf(p.id)>=0,nm=L.names[p.id]||p.id,st=burnt?'burned out':BO_STATE[lv];
+    const tx=q[0]==='h'?mx:(+q[1]<L.cols-1?mx+40:mx-40),ty=q[0]==='h'?my+50:my-2,an=q[0]==='h'?'middle':(+q[1]<L.cols-1?'start':'end');
+    s+=`<text x="${tx}" y="${ty}" text-anchor="${an}" font-size="15" font-weight="800" fill="#e8eeff" font-family="system-ui">${nm}</text><text x="${tx}" y="${ty+17}" text-anchor="${an}" font-size="13" font-weight="700" fill="${burnt?'#ff8a8a':lv?'#ffd76a':'#7f89aa'}" font-family="system-ui">${st}</text>`;});
+  s+=`<line id="boHov" stroke="#6aa7ff" stroke-width="14" stroke-linecap="round" opacity=".4" style="display:none;pointer-events:none"/>`;
+  const sv=$('boBoard');sv.setAttribute('viewBox',`0 0 ${w} ${hh}`);sv.style.maxWidth=Math.min(w*1.15,920)+'px';sv.innerHTML=s;
+}
+function boEdgeAt(cx,cy){
+  const sv=$('boBoard'),L=boCur(),pt=sv.createSVGPoint();pt.x=cx;pt.y=cy;const ctm=sv.getScreenCTM();if(!ctm)return null;const q=pt.matrixTransform(ctm.inverse());
+  let best=null,bd=1e9;
+  boAllEdges(L).forEach(k=>{const e=boEnds(k),x1=e[0][0],y1=e[0][1],x2=e[1][0],y2=e[1][1],dx=x2-x1,dy=y2-y1;
+    let t=((q.x-x1)*dx+(q.y-y1)*dy)/(dx*dx+dy*dy);t=Math.max(0,Math.min(1,t));
+    const px=x1+t*dx,py=y1+t*dy,d=Math.hypot(q.x-px,q.y-py),mid=Math.hypot(q.x-(x1+x2)/2,q.y-(y1+y2)/2),sc=d+mid*.12;
+    if(sc<bd){bd=sc;best={k,d};}});
+  return best&&best.d<44?best.k:null;
+}
+function boRender(){
+  const d=boCur();
+  $('boLvl').textContent=BO.i+1;$('boLvlN').textContent=BO_N;$('boUsed').textContent=boPlacedCount();$('boPar').textContent=Object.keys(d.sol.parts).length;
+  $('boName').textContent=d.name;$('boStory').textContent=d.story;
+  $('boIntro').hidden=!d.intro;$('boIntro').textContent=d.intro||'';
+  const tools=['w',...['S','B','L'].filter(t=>d.inv[t])];
+  $('boTools').replaceChildren(...tools.map(t=>{const left=t==='w'?null:boLeft(t),b=h('button',{class:'tool'+(BO.tool===t?' on':''),disabled:t!=='w'&&left<=0&&BO.tool!==t,
+      title:BOT[t][0]+': '+BOT[t][1]+(t==='w'?'.':'. Drag me onto the board, or click me and then click a spot.'),
+      onclick:()=>{if(performance.now()<ttDrag.noClick)return;BO.tool=BO.tool===t?null:t;boRender();}},
+      h('span',{class:'ti'},svgEl(boIcon(t,30))),h('span',null,h('b',null,BOT[t][0]),h('small',null,BOT[t][1])),t==='w'?null:h('span',{class:'cost'},'×'+left));
+    if(t!=='w')b.addEventListener('pointerdown',e=>{if(left<=0)return;ttDragStart(e,{makeGhost:()=>h('div',{class:'dragghost'},h('span',{class:'ti'},svgEl(boIcon(t,28))),BOT[t][0]),
+      drop:(x,y)=>{const k=boEdgeAt(x,y);if(k)boPlace(k,t);else boSay('Drop it right onto a line between the dots.','alert');}});});
+    return b;}),
+    h('button',{class:'tool'+(BO.tool==='X'?' on':''),title:'Remove tool: click a piece to take it back.',onclick:()=>{BO.tool=BO.tool==='X'?null:'X';boRender();}},
+      h('span',{class:'ti'},svgEl(boIcon('X',30))),h('span',null,h('b',null,'Remove'),h('small',null,'Click a piece to take it back'))));
+  const sim=boSvg();
+  const S=BO.sim;
+  $('boLamps').replaceChildren(...Object.keys(BO.parts).filter(k=>BO.parts[k].t==='L').map(k=>{const id=BO.parts[k].id,lv=S.lamps[id]?S.lamps[id].level:0,burnt=BO.view&&BO.view.burn&&BO.view.burn.indexOf(id)>=0;
+    return h('span',{class:'lampchip'+(lv?' on':'')+(burnt?' burnt':'')},svgEl(boIcon('L',20)),` ${d.names[id]||id}: `,h('b',null,burnt?'burned out':BO_STATE[lv]));}));
+  boTestsUI();boCoach();boHintUI();
+  $('boTest').disabled=BO.testing;$('boTest').classList.toggle('pulse',!BO.testing&&!BO.results&&boPlacedCount()>0);
+}
+function boCoach(){
+  const d=boCur(),S=BO.sim,ids=Object.keys(S.lamps),lit=ids.filter(i=>S.lamps[i].level>0).length;
+  if(BO.testing)return boSay('Testing the city…');
+  if(S.short)return boSay('SHORT CIRCUIT! A path with no lamp lets the battery empty itself. Break that direct path.','alert');
+  if(!boPlacedCount()&&!Object.values(BO.parts).some(p=>p.t==='w'))return boSay(BO.tool==='w'?'Click the dashed lines between the dots, or drag along them, to lay wire.':'Pick the Wire tool in step 1, then drag along the dashed lines.');
+  if(!lit)return boSay('No current is flowing yet. Is there a closed loop all the way around?');
+  boSay(`${lit} of ${ids.length} lamps are glowing. When you think it is right, press Test the city.`);
+}
+function boPlace(k,t){
+  const L=boCur();if(BO.parts[k]){boSay('That spot is taken. Pick an empty line.','alert');return;}
+  if(t==='w'){BO.parts[k]={t:'w'};}
+  else{if(boLeft(t)<=0){boSay('You are out of those.','alert');return;}
+    BO.parts[k]=t==='S'?{t:'S',id:'sw'+(++BO.swn),open:false}:t==='B'?{t:'B',o:1}:{t:'L',id:'x'+(++BO.swn)};}
+  boChanged();
+}
+function boChanged(){BO.results=null;BO.view=null;BO.solved=false;$('boResult').hidden=true;boRender();}
+function boTestsUI(){
+  const d=boCur(),R=BO.results;
+  $('boTestList').replaceChildren(...d.tests.map((t,i)=>{const r=R&&R[i];
+    return h('li',{class:r?(r.ok?'ok':'bad'):''},h('span',{class:'tk'},r?(r.ok?'✓':'✗'):'○'),h('span',null,t.label,r&&!r.ok&&r.why?h('small',null,' '+r.why):null));}));
+}
+async function boRunTests(){
+  if(BO.testing)return;const d=boCur(),my=runId;BO.testing=true;BO.results=d.tests.map(()=>null);BO.view=null;$('boResult').hidden=true;boRender();
+  const all=boTests(d,BO.parts);
+  for(let i=0;i<d.tests.length;i++){
+    const t=d.tests[i];BO.view=t.kind==='each'?null:{burn:t.burn||[],open:t.open||[]};
+    BO.results=all.map((r,j)=>j<i?r:null);boRender();$('boTestList').children[i]&&$('boTestList').children[i].classList.add('run');
+    await sleep(750);if(my!==runId||!BO)return;
+    BO.results=all.map((r,j)=>j<=i?r:null);BO.view=null;boRender();await sleep(280);if(my!==runId||!BO)return;}
+  BO.testing=false;BO.view=null;BO.results=all;boRender();
+  if(all.every(r=>r.ok))boWin();else{fx.pop({icon:'question',text:'Not yet',kind:'oops'});boSay(all.find(r=>!r.ok).why||'One of the tests failed. Read the red note.','alert');}
+}
+function boWin(){
+  const d=boCur(),n=boPlacedCount(),par=Object.keys(d.sol.parts).length,stars=n<=par?3:n<=par+2?2:1;
+  BO.solved=true;
+  if(!(BO.rec>=stars)){BO.rec=stars;recordStars('blackout',BO.i+1,stars,{parts:n,par});}
+  fx.pop({icon:'bolt',text:stars===3?'City relit!':'Lights on!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  levelResult($('boResult'),{stars,next:BO.i+1<BO_N,
+    line:['You used ',h('b',null,n),` piece${n>1?'s':''}. The 3-star target is `,h('b',null,par),'.',stars<3?' Can you do it with fewer?':' Efficient wiring!'],
+    fact:d.fact,onNext:()=>boStart(BO.i+1),onRetry:()=>{$('boResult').hidden=true;},onLevels:()=>{renderBlackoutSetup();show('s-blackout-setup');}});
+}
+function boHintUI(){
+  const d=boCur(),n=BO.hint;
+  $('boHintTxt').textContent=['Need a hint?','Another hint','Show me the answer','Answer shown'][n];$('boHint').disabled=n>=3;
+  const b=$('boHintBox'),cnt={};Object.values(d.sol.parts).forEach(p=>{cnt[p.t]=(cnt[p.t]||0)+1;});
+  const nm={w:'wire',S:'switch',B:'battery',L:'bulb'},list=Object.keys(cnt).map(t=>cnt[t]+' '+nm[t]+(cnt[t]>1?'s':''));
+  b.hidden=n===0;b.replaceChildren(...[n>=1?h('div',null,I('bulb'),' ',h('b',null,'Clue: '),d.clue):null,
+    n>=2?h('div',null,I('lens'),' ',h('b',null,'Pieces: '),'This level can be solved with '+Object.keys(d.sol.parts).length+' pieces: '+andList(list)+'.'+(d.sol.flip?' You will also need to flip a battery.':'')):null,
+    n>=3?h('div',null,I('eye'),' ',h('b',null,'Answer: '),'The teal dashes on the board show where the pieces go.'+(d.sol.flip?' The teal box shows which battery to flip.':'')):null]);
+}
+$('boHint').onclick=()=>{if(BO.hint<3){BO.hint++;boRender();}};
+$('boTest').onclick=boRunTests;
+$('boClear').onclick=()=>{const L=boCur();BO.parts={};Object.keys(L.fixed).forEach(k=>{BO.parts[k]=Object.assign({fixed:true,open:false},L.fixed[k]);});BO.swn=0;boChanged();};
+$('boBack').onclick=()=>{renderBlackoutSetup();show('s-blackout-setup');};
+(()=>{const sv=$('boBoard');let paint=null;
+  const apply=k=>{if(!k)return;const p=BO.parts[k];
+    if(paint.mode==='add'&&!p){BO.parts[k]={t:'w'};paint.n++;}
+    else if(paint.mode==='erase'&&p&&!p.fixed&&p.t==='w'){delete BO.parts[k];paint.n++;}};
+  sv.addEventListener('pointerdown',e=>{
+    if(BO.testing)return;const k=boEdgeAt(e.clientX,e.clientY);if(!k)return;const p=BO.parts[k];
+    if((BO.tool==='w'&&(!p||p.t==='w'&&!p.fixed))||(BO.tool==='X'&&p&&p.t==='w'&&!p.fixed)){
+      paint={mode:(p&&p.t==='w')?'erase':'add',n:0,id:e.pointerId,x:e.clientX,y:e.clientY};apply(k);try{sv.setPointerCapture(e.pointerId);}catch(_){}
+      if(paint.n)boRender();return;}
+    ttDragStart(e,{
+      makeGhost:()=>p&&!p.fixed&&p.t!=='w'?h('div',{class:'dragghost'},h('span',{class:'ti'},svgEl(boIcon(p.t,28))),BOT[p.t][0]):h('div',{style:'display:none'}),
+      drop:(x,y)=>{if(!p||p.fixed||p.t==='w')return;const k2=boEdgeAt(x,y),r=$('boBoard').getBoundingClientRect();
+        const inside=x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom;
+        if(!inside){delete BO.parts[k];boChanged();return;}
+        if(k2&&k2!==k&&!BO.parts[k2]){BO.parts[k2]=p;delete BO.parts[k];boChanged();}},
+      click:()=>{
+        if(p){
+          if(BO.tool==='X'&&!p.fixed){delete BO.parts[k];boChanged();return;}
+          if(p.t==='S'){p.open=!p.open;BO.results=null;BO.solved=false;$('boResult').hidden=true;boRender();return;}
+          if(p.t==='B'){p.o=-p.o;boChanged();return;}
+          if(p.t==='w'&&!p.fixed&&BO.tool==='X'){delete BO.parts[k];boChanged();return;}
+          if(p.t==='L')boSay('Lamps stay where they are. Wire to them!');return;}
+        if(BO.tool&&BO.tool!=='w'&&BO.tool!=='X'){boPlace(k,BO.tool);return;}
+        boSay(BO.tool==='X'?'Nothing to remove there.':'Pick a tool in step 1 first.');}});
+  });
+  sv.addEventListener('pointermove',e=>{
+    if(paint&&e.pointerId===paint.id){const n0=paint.n;const sx=paint.x,sy=paint.y;
+      for(let t=1;t<=6;t++)apply(boEdgeAt(sx+(e.clientX-sx)*t/6,sy+(e.clientY-sy)*t/6));
+      paint.x=e.clientX;paint.y=e.clientY;if(paint.n!==n0)boRender();return;}
+    const hv=$('boHov');if(!hv)return;const k=boEdgeAt(e.clientX,e.clientY);
+    if(k&&BO.tool&&BO.tool!=='X'&&!BO.parts[k]){const en=boEnds(k);hv.setAttribute('x1',en[0][0]);hv.setAttribute('y1',en[0][1]);hv.setAttribute('x2',en[1][0]);hv.setAttribute('y2',en[1][1]);hv.style.display='';}else hv.style.display='none';});
+  const endp=e=>{if(paint&&e.pointerId===paint.id){const n=paint.n;paint=null;if(n){BO.results=null;BO.view=null;BO.solved=false;$('boResult').hidden=true;boRender();}}};
+  sv.addEventListener('pointerup',endp);sv.addEventListener('pointercancel',endp);
+  sv.addEventListener('pointerleave',()=>{const hv=$('boHov');if(hv)hv.style.display='none';});
+})();
+/*BOUI>>*/
+/*<<EVDATA*/
+const EV_TESTS={
+  look:{n:'Look closely',q:'What does it look like?'},
+  water:{n:'Add water',q:'Stir it into water'},
+  vinegar:{n:'Add vinegar',q:'Drop vinegar on it'},
+  iodine:{n:'Add iodine',q:'Drop iodine on it'},
+  heat:{n:'Heat it',q:'Warm a pinch over a flame'},
+  magnet:{n:'Magnet',q:'Hold a magnet close'},
+  conduct:{n:'Conductivity',q:'Does the bulb light in a circuit?'},
+  density:{n:'Density check',q:'Weigh it and measure its volume'}};
+const EV_SUBS={
+  sugar:{n:'Sugar',look:'White crystals',water:'Dissolves',vinegar:'No change',iodine:'Stays brown',heat:'Melts, browns',magnet:'No pull',conduct:'Bulb off',density:'1.6 g/mL'},
+  salt:{n:'Table salt',look:'White crystals',water:'Dissolves',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb lights',density:'2.2 g/mL'},
+  soda:{n:'Baking soda',look:'Fine white powder',water:'Dissolves',vinegar:'Fizzes!',iodine:'Stays brown',heat:'Gives off gas',magnet:'No pull',conduct:'Bulb lights',density:'2.2 g/mL'},
+  cornstarch:{n:'Cornstarch',look:'Fine white powder',water:'Cloudy',vinegar:'No change',iodine:'Turns blue-black',heat:'Tans, clumps',magnet:'No pull',conduct:'Bulb off',density:'1.5 g/mL'},
+  flour:{n:'Flour',look:'Fine white powder',water:'Cloudy',vinegar:'No change',iodine:'Turns blue-black',heat:'Browns, burns',magnet:'No pull',conduct:'Bulb off',density:'1.4 g/mL'},
+  chalk:{n:'Chalk powder',look:'Gritty white powder',water:'Does not dissolve',vinegar:'Fizzes!',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb off',density:'2.7 g/mL'},
+  iron:{n:'Iron filings',look:'Shiny dark bits',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'Sticks!',conduct:'Bulb off',density:'7.9 g/mL'},
+  epsom:{n:'Epsom salt',look:'White crystals',water:'Dissolves',vinegar:'No change',iodine:'Stays brown',heat:'Crumbles',magnet:'No pull',conduct:'Bulb lights',density:'1.7 g/mL'},
+  citric:{n:'Citric acid',look:'White crystals',water:'Dissolves',vinegar:'No change',iodine:'Stays brown',heat:'Melts, yellows',magnet:'No pull',conduct:'Bulb lights',density:'1.7 g/mL'},
+  sand:{n:'Sand',look:'Gritty tan grains',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb off',density:'2.6 g/mL'},
+  gold:{n:'Gold',look:'Shiny yellow metal',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb lights',density:'19.3 g/mL'},
+  brass:{n:'Brass',look:'Shiny yellow metal',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb lights',density:'8.5 g/mL'},
+  pyrite:{n:'Fool\'s gold',look:'Shiny yellow crystals',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb off',density:'5.0 g/mL'},
+  leadbar:{n:'Painted lead',look:'Yellow painted block',water:'Does not dissolve',vinegar:'No change',iodine:'Stays brown',heat:'No change',magnet:'No pull',conduct:'Bulb lights',density:'11.3 g/mL'}};
+/* reaction-or-not tests */
+const EV_RT={
+  gas:{n:'New gas?',q:'Look for new bubbles (not from boiling)',strong:true},
+  solid:{n:'New solid?',q:'Look for a new solid or crust',strong:true},
+  smell:{n:'New smell or light?',q:'Waft a sniff. Look for a glow.',strong:true},
+  props:{n:'Same properties?',q:'Compare with the starting stuff',strong:true},
+  color:{n:'Color change?',q:'Compare the color to before',strong:false},
+  temp:{n:'Temperature change?',q:'Touch the container',strong:false}};
+const EV_SC={
+  soda_vin:{n:'Baking soda + vinegar',story:'You stir baking soda into a cup of vinegar.',truth:'chem',
+    gas:[1,'Tons of new gas bubbles'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[0,'No. The gas and liquid are new stuff'],color:[0,'Still clear'],temp:[1,'The cup gets colder']},
+  salt_water:{n:'Salt + water',story:'You stir table salt into warm water until it vanishes.',truth:'phys',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[1,'Yes. Still salt and water (evaporate it to get salt back)'],color:[0,'Still clear'],temp:[0,'No change']},
+  ice:{n:'Ice melting',story:'An ice cube sits in a warm room.',truth:'phys',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[1,'Yes. Melted ice is still water (freeze it to get ice)'],color:[0,'Still clear'],temp:[1,'It feels cold']},
+  dye:{n:'Food coloring + water',story:'You drop red food coloring into a glass of water.',truth:'phys',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[1,'Yes. Still dye and water, just spread out'],color:[1,'The water turns pink'],temp:[0,'No change']},
+  rust:{n:'Rusting nail',story:'A nail has sat in salty water for a week.',truth:'chem',
+    gas:[0,'No new gas'],solid:[1,'A flaky orange crust formed'],smell:[0,'Nothing new to smell'],props:[0,'No. Rust is crumbly and not magnetic'],color:[1,'Orange-brown patches'],temp:[0,'No change']},
+  paper:{n:'Tearing paper',story:'You rip a sheet of paper into little bits.',truth:'phys',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[1,'Yes. Every piece is still paper'],color:[0,'Same color'],temp:[0,'No change']},
+  match:{n:'Burning a match',story:'You strike a match and let it burn down.',truth:'chem',
+    gas:[1,'Smoke and gas are given off'],solid:[1,'Black ash is left behind'],smell:[1,'Smoky smell and bright light'],props:[0,'No. Ash is not wood'],color:[1,'Wood turns black'],temp:[1,'It gets hot']},
+  sandiron:{n:'Sand + iron filings',story:'You stir sand and iron filings together in a bowl.',truth:'phys',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[1,'Yes. A magnet pulls the iron back out'],color:[0,'Just a speckled mix'],temp:[0,'No change']},
+  alka:{n:'Fizzy tablet in water',story:'You drop a fizzy antacid tablet into a glass of water.',truth:'chem',
+    gas:[1,'Streams of new bubbles'],solid:[0,'No new solid'],smell:[0,'Nothing new to smell'],props:[0,'No. The tablet is gone and gas escapes'],color:[0,'Still clear'],temp:[0,'No change']},
+  egg:{n:'Frying an egg',story:'You crack an egg onto a hot pan.',truth:'chem',
+    gas:[0,'No new gas'],solid:[1,'The runny egg turns solid'],smell:[1,'It smells cooked'],props:[0,'No. You cannot un-fry an egg'],color:[1,'Clear turns white'],temp:[1,'It is hot (but the pan is hot too)']},
+  caramel:{n:'Heating sugar',story:'You heat sugar in a pan until it turns brown.',truth:'chem',
+    gas:[0,'No new gas'],solid:[0,'No new solid'],smell:[1,'A sweet burnt-sugar smell'],props:[0,'No. Caramel is not sugar anymore'],color:[1,'White turns brown'],temp:[1,'It is hot']}};
+/* answer logic ------------------------------------------------------------ */
+function evSubsOK(cands,tests,secret){ /* do these tests separate secret from every other candidate? */
+  return cands.every(c=>c===secret||tests.some(t=>EV_SUBS[c][t]!==EV_SUBS[secret][t]));}
+function evParPowder(cs){
+  const ts=cs.tests,n=ts.length;let best=99,bs=null;
+  for(let m=1;m<(1<<n);m++){const sub=ts.filter((t,i)=>m>>i&1);if(sub.length<best&&evSubsOK(cs.cands,sub,cs.secret)){best=sub.length;bs=sub;}}
+  if(!bs)throw new Error('unsolvable '+cs.secret);
+  return {par:best,set:bs};
+}
+function evProof(sc,done,avail){ /* what do the finished tests prove? 'chem' | 'phys' | null */
+  const S=EV_SC[sc];
+  for(const t of done){if(EV_RT[t].strong&&t!=='props'&&S[t][0])return 'chem';}
+  if(done.indexOf('props')>=0)return S.props[0]?'phys':'chem';
+  if(avail.indexOf('props')<0&&['gas','solid','smell'].every(t=>done.indexOf(t)>=0))return 'phys';
+  return null;
+}
+function evParReact(cs){
+  const ts=cs.tests,n=ts.length;let best=99,bs=null;
+  for(let m=1;m<(1<<n);m++){const sub=ts.filter((t,i)=>m>>i&1);if(sub.length<best&&evProof(cs.sc,sub,ts)){best=sub.length;bs=sub;}}
+  if(!bs)throw new Error('no proof '+cs.sc);
+  if(evProof(cs.sc,bs,ts)!==EV_SC[cs.sc].truth)throw new Error('proof disagrees '+cs.sc);
+  return {par:best,set:bs};
+}
+const EVP=['look','water','vinegar','iodine','heat','magnet','conduct'],EVR=['gas','solid','smell','props','color','temp'],EVR2=['gas','solid','smell','color','temp'];
+const EV_LEVELS=[
+ {pack:'Pack 1: Kitchen Powders',name:'Kitchen Mix-Up',kind:'powder',
+  story:'Three white powders from the pantry lost their labels. Which one is baking soda?',
+  clue:'Baking soda is a base. Acids like vinegar make it bubble.',
+  intro:'New tool: the field guide. Each row shows what a substance does in each test. Run a test on the mystery sample, then match its result to a row.',
+  fact:'A chemical reaction between an acid (vinegar) and baking soda makes carbon dioxide gas. That gas is the fizz.',
+  cases:[{cands:['sugar','salt','soda'],secret:'soda',tests:['look','water','vinegar']}]},
+ {pack:null,name:'Starch Detective',kind:'powder',
+  story:'A cook mixed up a jar of cornstarch. Find it among these four.',
+  clue:'Iodine turns starchy foods blue-black. Starch makes water cloudy, too.',
+  fact:'Iodine reacts with starch to make a deep blue-black color. Chemists use that to find starch in foods.',
+  cases:[{cands:['sugar','cornstarch','soda','chalk'],secret:'cornstarch',tests:['look','water','vinegar','iodine']}]},
+ {pack:null,name:'Sweet or Salty?',kind:'powder',
+  story:'Two jars look the same: white crystals. One of them is sugar. Which?',
+  clue:'Looks can fool you. Try a test that depends on what the stuff is made of.',
+  fact:'Sugar is made of molecules, so it does not carry current. Salt breaks into charged particles in water, so the bulb lights.',
+  cases:[{cands:['sugar','salt','epsom'],secret:'sugar',tests:['look','water','vinegar','heat','conduct']}]},
+ {pack:null,name:'Flour Power',kind:'powder',
+  story:'Cornstarch, flour and baking soda all look alike. Name the flour.',
+  clue:'Flour and cornstarch both have starch. Which test might tell them apart?',
+  fact:'Flour also contains proteins and other stuff, so it browns and burns when heated. Pure cornstarch just tans.',
+  cases:[{cands:['flour','cornstarch','soda'],secret:'flour',tests:['look','water','vinegar','iodine','heat']}]},
+ {pack:null,name:'Three Samples',kind:'powder',
+  story:'The lab has three mystery samples today. Name all three!',
+  clue:'Each sample has its own list of candidates. Pick the best test for each one.',
+  fact:'Every pure substance has its own set of properties. Like a fingerprint, they identify what it is.',
+  cases:[{cands:['sugar','salt','soda'],secret:'soda',tests:['water','vinegar','heat']},
+         {cands:['iron','sand','chalk'],secret:'iron',tests:['water','vinegar','magnet']},
+         {cands:['salt','citric','epsom'],secret:'salt',tests:['look','heat','conduct']}]},
+ {pack:'Pack 2: Tough Cases',name:'Two Tests Needed',kind:'powder',
+  story:'The heat lamp is broken. With only these tests, find the table salt.',
+  clue:'No single test points to salt. Combine two tests to rule out every other candidate.',
+  intro:'Some cases need more than one test. Each test narrows the list. Use as few as you can.',
+  fact:'Scientists often use two or three properties together. One property alone can match many substances.',
+  cases:[{cands:['salt','soda','sugar','chalk'],secret:'salt',tests:['look','vinegar','conduct']}]},
+ {pack:null,name:'Dark Dust',kind:'powder',
+  story:'A sample from the workshop floor. Is it iron, sand or chalk?',
+  clue:'One tool is great for metal. Another one is great for chalk.',
+  fact:'Iron is one of only a few elements that magnets pull. That makes sorting scrap metal easy.',
+  cases:[{cands:['iron','sand','chalk','soda'],secret:'chalk',tests:['water','vinegar','magnet']}]},
+ {pack:null,name:'Salt Family',kind:'powder',
+  story:'Epsom salt, table salt and citric acid look like twins. Find the Epsom salt.',
+  clue:'All three dissolve and light the bulb. Think about what happens when you heat them.',
+  fact:'Epsom salt holds water inside its crystals. Heat drives that water out and the crystals crumble.',
+  cases:[{cands:['epsom','salt','citric','sugar'],secret:'epsom',tests:['look','water','iodine','heat','conduct']}]},
+ {pack:null,name:'Weigh It In',kind:'powder',
+  story:'Four jars have different weights for the same scoop. Use density to find the table salt.',
+  clue:'Density is mass divided by volume. Every substance has its own density.',
+  intro:'New test: Density check. Density is how much mass fits in a certain volume (g/mL).',
+  fact:'Density = mass ÷ volume. It does not change with the size of the sample, so it helps identify a substance.',
+  cases:[{cands:['salt','sugar','cornstarch','chalk'],secret:'salt',tests:['look','density','heat']}]},
+ {pack:null,name:'Fool\'s Gold',kind:'powder',
+  story:'A pawn shop customer brings in a shiny yellow bar. Is it real gold, or a fake?',
+  clue:'Several metals look the same. Which test can tell them apart for sure?',
+  fact:'Gold is extremely dense (19.3 g/mL). Fake gold is lighter, so density catches the cheat every time.',
+  cases:[{cands:['gold','brass','pyrite','leadbar'],secret:'gold',tests:['look','magnet','density']}]},
+ {pack:null,name:'Mystery Trio',kind:'powder',
+  story:'Three tricky samples. The tools in each case are limited. Be smart!',
+  clue:'Check the tests available for each sample before you choose.',
+  fact:'A good investigator plans tests that rule out the most suspects at once.',
+  cases:[{cands:['salt','soda','sugar','chalk'],secret:'salt',tests:['look','vinegar','conduct']},
+         {cands:['flour','cornstarch','chalk','sand'],secret:'flour',tests:['look','water','iodine','heat']},
+         {cands:['cornstarch','flour'],secret:'cornstarch',tests:['look','iodine','heat']}]},
+ {pack:'Pack 3: Reaction or Not?',name:'Fizz or Fake?',kind:'react',
+  story:'Three events happened in the lab. Did a chemical reaction make new stuff, or was it only a physical change?',
+  clue:'Look for strong evidence: a new gas, a new solid, a new smell or light, or new properties.',
+  intro:'Run evidence tests. Some are strong proof. Others (color, temperature) are only weak clues. When you have strong proof, decide.',
+  fact:'In a chemical reaction the atoms rearrange to make NEW substances with new properties. In a physical change the substance stays the same.',
+  cases:[{sc:'soda_vin',tests:EVR},{sc:'salt_water',tests:EVR},{sc:'ice',tests:EVR}]},
+ {pack:null,name:'Weak Clues',kind:'react',
+  story:'A color change and a temperature change are tempting clues. Are they proof?',
+  clue:'A color change alone does not prove a reaction. Dye spreading in water changes the color too.',
+  fact:'Color and temperature changes can come from physical changes, such as dissolving. You need strong evidence to be sure.',
+  cases:[{sc:'dye',tests:EVR},{sc:'rust',tests:EVR},{sc:'paper',tests:EVR}]},
+ {pack:null,name:'Broken Comparer',kind:'react',
+  story:'The properties kit is broken. Use the other tests to decide.',
+  clue:'To call it physical, you must check for new gas, new solid and new smell and find none.',
+  fact:'Proving something did NOT happen takes more work. You have to rule out every sign of a reaction.',
+  cases:[{sc:'match',tests:EVR2},{sc:'sandiron',tests:EVR2},{sc:'alka',tests:EVR2}]},
+ {pack:null,name:'Cold Case',kind:'react',
+  story:'The final cases. Watch out for weak clues that point the wrong way.',
+  clue:'Cold, hot, and colored can all happen in a physical change. Look for strong proof.',
+  fact:'You cannot un-fry an egg. New substances with new properties are the sign of a chemical change.',
+  cases:[{sc:'dye',tests:EVR2},{sc:'egg',tests:EVR2},{sc:'ice',tests:EVR2}]}
+];
+EV_LEVELS.forEach(L=>{L.cases.forEach(c=>{const r=L.kind==='powder'?evParPowder(c):evParReact(c);c.par=r.par;c.set=r.set;});
+  L.par=L.cases.reduce((a,c)=>a+c.par,0);L.slack=L.kind==='react'?L.cases.length:0;});
+const EV_N=EV_LEVELS.length;
+/*EVDATA>>*/
+/*<<EVUI*/
+const EV_PACKS={0:'Pack 1: Kitchen Powders',5:'Pack 2: Tough Cases',11:'Pack 3: Reaction or Not?'};
+let EVS=null;
+const evLv=()=>EV_LEVELS[EVS.i],evCase=()=>evLv().cases[EVS.ci];
+const evMini=L=>{const pw=L.kind==='powder',col=pw?'#6aa7ff':'#ff8a5c';
+  const b=pw?`<path d="M11 4h10M13 4v8l-6 11a3 3 0 0 0 3 4h12a3 3 0 0 0 3-4l-6-11V4" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round"/><path d="M9.5 19h13" stroke="${col}" stroke-width="2.4"/><circle cx="14" cy="23" r="1.4" fill="${col}"/><circle cx="19" cy="22" r="1.1" fill="${col}"/>`
+  :`<circle cx="9" cy="16" r="5" fill="none" stroke="${col}" stroke-width="2.4"/><circle cx="23" cy="16" r="5" fill="none" stroke="#37e0c1" stroke-width="2.4"/><path d="M14 16h4m-1.8-2.2L18 16l-1.8 2.2" fill="none" stroke="#8d97b5" stroke-width="2" stroke-linecap="round"/>`;
+  return svgEl(`<svg viewBox="0 0 32 32" width="40" height="40" aria-hidden="true">${b}</svg>`);};
+function renderEvidenceSetup(){renderLevelPicker($('evLevels'),$('evTotal'),'evidence',EV_LEVELS,EV_PACKS,evStart,evMini);}
+function evStart(i){
+  EVS={i,ci:0,done:[],used:0,wrong:[],hint:0,caseOK:false,done_all:false,rec:EVS&&EVS.i===i?EVS.rec:0};
+  show('s-evidence');$('evResult').hidden=true;evRender();
+}
+function evSay(t,kind){const c=$('evCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+function evRunTest(t){
+  if(EVS.caseOK||EVS.done.indexOf(t)>=0)return;
+  EVS.done.push(t);EVS.used++;fx.pop({icon:'flask',text:(EV_TESTS[t]||EV_RT[t]).n,kind:'tip',size:'small'});evRender();
+}
+function evCaseStats(){
+  const L=evLv(),cs=evCase();
+  if(L.kind==='powder'){
+    const sec=EV_SUBS[cs.secret];
+    const alive=cs.cands.filter(c=>!EVS.wrong.includes(c)&&EVS.done.every(t=>EV_SUBS[c][t]===sec[t]));
+    return {alive};
+  }
+  return {proof:evProof(cs.sc,EVS.done,cs.tests)};
+}
+function evBench(){
+  const L=evLv(),cs=evCase(),st=evCaseStats(),box=$('evBench'),ghost=EVS.hint>=3;
+  if(L.kind==='powder'){
+    const sec=EV_SUBS[cs.secret];
+    const head=h('tr',null,h('th',{class:'evn'},'Substance'),...cs.tests.map(t=>{
+      const dn=EVS.done.indexOf(t)>=0,isg=ghost&&cs.set.indexOf(t)>=0;
+      return h('th',null,h('button',{class:'evtb'+(dn?' done':'')+(isg?' ghost':''),disabled:dn||EVS.caseOK,title:EV_TESTS[t].q,onclick:()=>evRunTest(t)},EV_TESTS[t].n,h('small',null,dn?'done':EV_TESTS[t].q)));}),h('th',null,''));
+    const mystery=h('tr',{class:'evmys'},h('td',{class:'evn'},h('b',null,'❓ Mystery sample')),...cs.tests.map(t=>h('td',{class:EVS.done.indexOf(t)>=0?'got':'unk'},EVS.done.indexOf(t)>=0?sec[t]:'?')),h('td',null,''));
+    const rows=cs.cands.map(c=>{
+      const bad=EVS.wrong.includes(c),dead=bad||EVS.done.some(t=>EV_SUBS[c][t]!==sec[t]);
+      return h('tr',{class:'evrow'+(dead?' elim':'')+(!dead&&EVS.done.length&&st.alive.length===1?' only':'')},
+        h('td',{class:'evn'},h('b',null,EV_SUBS[c].n)),
+        ...cs.tests.map(t=>{const dn=EVS.done.indexOf(t)>=0,mis=dn&&EV_SUBS[c][t]!==sec[t];return h('td',{class:dn?(mis?'no':'yes'):''},EV_SUBS[c][t]);}),
+        h('td',null,EVS.caseOK?(c===cs.secret?h('b',{class:'evgood'},'✓ Correct'):''):h('button',{class:'btn sm'+(dead?' ghost':''),disabled:bad,onclick:()=>evNamePowder(c)},bad?'Not this':'It is this!')));});
+    box.replaceChildren(h('div',{class:'evscroll'},h('table',{class:'evtbl'},h('thead',null,head),h('tbody',null,mystery,...rows))));
+  }else{
+    const S=EV_SC[cs.sc];
+    const tiles=cs.tests.map(t=>{const dn=EVS.done.indexOf(t)>=0,r=EV_RT[t],v=S[t];
+      return h('button',{class:'evrt'+(dn?' done':'')+(r.strong?' strong':' weak')+(ghost&&cs.set.indexOf(t)>=0?' ghost':''),disabled:dn||EVS.caseOK,onclick:()=>evRunTest(t)},
+        h('b',null,r.n),h('small',null,dn?v[1]:r.q),h('span',{class:'evbadge'},r.strong?'Strong proof':'Weak clue'));});
+    const proof=st.proof;
+    box.replaceChildren(
+      h('div',{class:'evscene'},h('b',null,S.n),h('span',null,S.story)),
+      h('div',{class:'evtiles'},...tiles),
+      h('div',{class:'evproof'+(proof?' has':'')},proof?'✔ You have strong proof. Make your call!':'No strong proof yet. Keep testing.'),
+      EVS.caseOK?h('div',{class:'evgood'},'✓ Correct: '+(S.truth==='chem'?'chemical reaction':'physical change')+'. Properties check: '+S.props[1]+'.'):
+      h('div',{class:'evdecide'},h('button',{class:'btn',onclick:()=>evDeclare('chem')},'🧪 Chemical reaction'),h('button',{class:'btn',onclick:()=>evDeclare('phys')},'🧊 Physical change')));
+  }
+}
+function evRender(){
+  const L=evLv(),cs=evCase(),n=L.cases.length;
+  $('evLvl').textContent=EVS.i+1;$('evLvlN').textContent=EV_N;$('evUsed').textContent=EVS.used;$('evPar').textContent=L.par+L.slack;
+  $('evName').textContent=L.name;$('evStory').textContent=L.story;$('evIntro').hidden=!L.intro;$('evIntro').textContent=L.intro||'';
+  $('evCaseBar').replaceChildren(...L.cases.map((c,k)=>h('span',{class:'evcase'+(k<EVS.ci||(k===EVS.ci&&EVS.caseOK)?' ok':k===EVS.ci?' on':'')},L.kind==='powder'?'Sample '+(k+1):EV_SC[c.sc].n.split(' ')[0]+'…',' ',k<EVS.ci||(k===EVS.ci&&EVS.caseOK)?'✓':'')));
+  $('evCaseBar').hidden=n<2;
+  evBench();evCoach();evHintUI();
+  $('evNextCase').hidden=!(EVS.caseOK&&EVS.ci<n-1);
+}
+function evCoach(){
+  const L=evLv(),st=evCaseStats();
+  if(EVS.caseOK)return evSay(EVS.ci<evLv().cases.length-1?'Case solved! Press Next sample.':'All samples named!');
+  if(L.kind==='powder'){
+    if(!EVS.done.length)return evSay('Pick a test (the buttons at the top of each column). Then match the result to a row.');
+    if(st.alive.length===1)return evSay('Only one substance still fits. Press its "It is this!" button.');
+    return evSay(`${st.alive.length} substances still fit. Run another test to rule more out.`);
+  }
+  if(!EVS.done.length)return evSay('Run evidence tests. Strong tests give proof; weak ones are just clues.');
+  evSay(st.proof?'You have strong proof. Make your call!':'Weak clues are not enough. Look for strong proof.');
+}
+function evNamePowder(c){
+  const cs=evCase();
+  if(c===cs.secret){EVS.caseOK=true;fx.pop({icon:'flask',text:'Case solved!',kind:'great'});fx.confetti(30);evCaseDone();return;}
+  EVS.wrong.push(c);EVS.used+=2;fx.pop({icon:'question',text:'Not that one (+2)',kind:'oops'});
+  evSay(EV_SUBS[c].n+' does not match your evidence for every test. A wrong answer costs 2 tests.','alert');evRender();
+}
+function evDeclare(a){
+  const cs=evCase(),S=EV_SC[cs.sc],proof=evProof(cs.sc,EVS.done,cs.tests);
+  if(!proof){evSay('You need strong proof first: a new gas, solid, smell or light, or the properties check. Keep testing!','alert');return;}
+  if(a===S.truth){EVS.caseOK=true;fx.pop({icon:'flask',text:'Correct!',kind:'great'});fx.confetti(30);evCaseDone();return;}
+  EVS.used+=2;fx.pop({icon:'question',text:'Check the proof (+2)',kind:'oops'});evSay('Look at the strong evidence again. Did new stuff form? A wrong call costs 2 tests.','alert');evRender();
+}
+function evCaseDone(){
+  const L=evLv();evRender();
+  if(EVS.ci>=L.cases.length-1)setTimeout(evWin,650);
+}
+function evWin(){
+  const L=evLv(),n=L.cases.length,allow=L.par+L.slack,stars=EVS.used<=allow?3:EVS.used<=allow+2*n?2:1;
+  if(!(EVS.rec>=stars)){EVS.rec=stars;recordStars('evidence',EVS.i+1,stars,{tests:EVS.used,par:L.par});}
+  fx.pop({icon:'flask',text:stars===3?'Master detective!':'Case closed!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  levelResult($('evResult'),{stars,next:EVS.i+1<EV_N,
+    line:['You ran ',h('b',null,EVS.used),` test${EVS.used===1?'':'s'} (counting penalties). 3 stars needs `,h('b',null,allow),' or fewer.',stars<3?' Can you spot the best test sooner?':' Sharp detective work!'],
+    fact:L.fact,onNext:()=>evStart(EVS.i+1),onRetry:()=>evStart(EVS.i),onLevels:()=>{renderEvidenceSetup();show('s-evidence-setup');}});
+}
+function evHintUI(){
+  const L=evLv(),cs=evCase(),n=EVS.hint;
+  $('evHintTxt').textContent=['Need a hint?','Another hint','Show me the best tests','Answer shown'][n];$('evHint').disabled=n>=3||EVS.caseOK;
+  const nm=t=>(EV_TESTS[t]||EV_RT[t]).n,b=$('evHintBox');
+  b.hidden=n===0;
+  b.replaceChildren(...[n>=1?h('div',null,I('bulb'),' ',h('b',null,'Clue: '),L.clue):null,
+    n>=2?h('div',null,I('lens'),' ',h('b',null,'Tip: '),'This sample can be named with '+cs.par+' test'+(cs.par>1?'s':'')+'. Check which test gives a different result for just one candidate.'):null,
+    n>=3?h('div',null,I('eye'),' ',h('b',null,'Best tests: '),cs.set.map(nm).join(' + ')+' (outlined in teal).'):null]);
+}
+$('evHint').onclick=()=>{if(EVS.hint<3){EVS.hint++;evRender();}};
+$('evBack').onclick=()=>{renderEvidenceSetup();show('s-evidence-setup');};
+$('evNextCase').onclick=()=>{EVS.ci++;EVS.done=[];EVS.wrong=[];EVS.caseOK=false;EVS.hint=0;$('evResult').hidden=true;evRender();};
+/*EVUI>>*/
+/*<<CAENGINE*/
+const CA_MINDH=0.5,CA_G=10,CA_SEG=12,CA_LOOPN=28;
+/* monotone cubic interpolation of heights between track posts (never overshoots) */
+function caSlopes(y){const n=y.length,d=[],m=[];
+  for(let i=0;i<n-1;i++)d.push(y[i+1]-y[i]);
+  m.push(d[0]);for(let i=1;i<n-1;i++)m.push(d[i-1]*d[i]<=0?0:(d[i-1]+d[i])/2);m.push(d[n-2]);
+  for(let i=0;i<n-1;i++){if(d[i]===0){m[i]=0;m[i+1]=0;}else{const a=m[i]/d[i],b=m[i+1]/d[i],s=a*a+b*b;if(s>9){const t=3/Math.sqrt(s);m[i]=t*a*d[i];m[i+1]=t*b*d[i];}}}
+  return m;}
+function caHerm(y,m,i,u){const u2=u*u,u3=u2*u;return (2*u3-3*u2+1)*y[i]+(u3-2*u2+u)*m[i]+(-2*u3+3*u2)*y[i+1]+(u3-u2)*m[i+1];}
+/* every sample of the cart's ride. Hs[0] is the start height. */
+function caSamples(L,Hs){
+  const n=Hs.length,m=caSlopes(Hs),h0=Hs[0],fr=L.fr,out=[];
+  for(let j=0;j<n-1;j++){
+    for(let q=(j===0?0:1);q<=CA_SEG;q++){const u=q/CA_SEG,k=j+u,y=caHerm(Hs,m,j,u),Eh=h0-fr*k;
+      out.push({k,y,Eh,dh:Eh-y,req:(q===CA_SEG&&k>0)?CA_MINDH:0,post:q===CA_SEG?j+1:-1,loop:false});}
+    const pt=L.pts[j+1];
+    if(pt&&pt.loop&&j+1<n){const r=pt.loop,b=Hs[j+1],Eh=h0-fr*(j+1);
+      for(let q=1;q<=CA_LOOPN;q++){const th=2*Math.PI*q/CA_LOOPN,y=b+r*(1-Math.cos(th));
+        out.push({k:j+1,y,Eh,dh:Eh-y,req:Math.max(0,-r*Math.cos(th)/2),post:-1,loop:true,th,r,b});}}
+  }
+  return out;
+}
+const caFirstFail=S=>{for(let i=1;i<S.length;i++)if(S[i].dh<S[i].req-1e-9)return i;return -1;};
+function caGoals(L,Hs){
+  const S=caSamples(L,Hs),f=caFirstFail(S),n=Hs.length,h0=Hs[0],fr=L.fr,res=[];
+  const at=i=>{const E=h0-fr*i;return Math.max(0,E-Hs[i]);};
+  const sp=i=>Math.sqrt(2*CA_G*at(i));
+  let why='';
+  if(f>=0){const s=S[f];why=s.loop?'It ran out of speed at the top of a loop (needs enough energy to stay on the track).':`It ran out of energy near hill ${Math.min(n-1,Math.ceil(s.k))}. The energy line dropped to the track.`;}
+  res.push({label:'Cart makes it to the end',ok:f<0,why});
+  (L.goals||[]).forEach(g=>{
+    if(g.t==='minv'){const v=sp(g.at);res.push({label:`Speed at "${g.name}": at least ${g.v} m/s`,ok:v>=g.v-1e-9,why:`Right now it is ${v.toFixed(1)} m/s.`});}
+    if(g.t==='maxv'){const v=sp(g.at);res.push({label:`Speed at "${g.name}": no more than ${g.v} m/s`,ok:v<=g.v+1e-9&&f<0,why:`Right now it is ${v.toFixed(1)} m/s.`});}
+    if(g.t==='minh'){res.push({label:`"${g.name}" is at least ${g.h} m tall`,ok:Hs[g.at]>=g.h,why:`It is ${Hs[g.at]} m now.`});}
+  });
+  return {S,f,res,ok:res.every(r=>r.ok)};
+}
+const caEditable=L=>L.pts.map((p,i)=>i>0&&p.lo!==undefined?i:-1).filter(i=>i>=0);
+function caSolve(L){ /* lowest start height that can work (brute force over editable posts) */
+  const ed=caEditable(L);
+  for(let h0=L.pts[0].lo;h0<=L.pts[0].hi;h0++){
+    const Hs=L.pts.map((p,i)=>i===0?h0:p.lo===undefined?p.h:p.lo);
+    const found=(function r(k){if(k===ed.length)return caGoals(L,Hs).ok;const p=L.pts[ed[k]];for(let v=p.lo;v<=p.hi;v++){Hs[ed[k]]=v;if(r(k+1))return true;}return false;})(0);
+    if(found)return {par:h0,Hs:Hs.slice()};
+  }
+  return null;
+}
+/*CAENGINE>>*/
+/*<<CALEVELS*/
+const CA_HMAX=16;
+const caP=(lo,hi)=>({lo,hi});
+const CA_LEVELS=[
+ {pack:'Pack 1: Hills',name:'First Drop',fr:0,story:'Get the cart over the 6 m hill. Raise the starting hill until the energy line clears it.',
+  clue:'The cart can never rise higher than where it started. The dashed energy line shows its limit.',
+  intro:'Drag the big start hill up or down. Potential energy (height) turns into kinetic energy (speed) as the cart rolls down. Press Launch to test it.',
+  fact:'Energy is conserved. All the cart\'s energy starts as potential energy at the top. It can only climb a hill as tall as the one it started from.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:6},{h:0}],goals:[]},
+ {pack:null,name:'Speed Trap',fr:0,story:'The speed camera at the bottom needs 14 m/s or more. How high must the start be?',
+  clue:'Speed depends on how far the cart has dropped. Check the speed readout as you raise the hill.',
+  fact:'Kinetic energy is ½mv². The farther the cart drops, the more potential energy turns into kinetic energy, and the faster it goes.',
+  pts:[caP(3,CA_HMAX),{h:0,name:'the bottom'},{h:4},{h:0}],goals:[{t:'minv',at:1,v:14,name:'the bottom'}]},
+ {pack:null,name:'Thrill Hill',fr:0,story:'Park managers want a thrilling second hill: at least 9 m tall! Build it, then make sure the cart can still get over it.',
+  clue:'First raise the middle hill to 9 m. Then raise the start until the cart clears it.',
+  fact:'Taller hills give a bigger thrill but need more starting energy. Engineers always start a coaster with its highest hill.',
+  pts:[caP(3,CA_HMAX),{h:0},{lo:0,hi:14,name:'the thrill hill'},{h:2},{h:0}],goals:[{t:'minh',at:2,h:9,name:'the thrill hill'}]},
+ {pack:null,name:'Gentle Landing',fr:0,story:'Riders must arrive at the end platform at 8 m/s or slower. Raise the end platform to slow the cart.',
+  clue:'A higher end platform means the cart has dropped less by the end, so it keeps less speed.',
+  fact:'A cart that ends higher has more potential energy left and less kinetic energy. That means it is moving slower.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:8},{lo:0,hi:14,name:'the end platform'}],goals:[{t:'maxv',at:3,v:8,name:'the end platform'}]},
+ {pack:'Pack 2: Friction',name:'Heat Loss',fr:0.5,story:'Friction turns some energy into heat on every stretch of track. Get the cart over both hills!',
+  clue:'The energy line now slopes down. That is energy escaping as heat. Make sure it stays above every hill.',
+  intro:'New: friction. Some of the cart\'s energy turns into thermal energy (heat) as it rolls. Watch the red heat bar grow.',
+  fact:'Friction does not destroy energy. It changes some into thermal energy. The total energy stays the same.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:6},{h:0},{h:5},{h:0}],goals:[]},
+ {pack:null,name:'Long Ride',fr:0.8,story:'A long track means more friction. Reach the end past three hills.',
+  clue:'The last hill is the hardest. Friction has been stealing energy the whole way.',
+  fact:'The longer the track, the more energy turns into heat. That is why real coasters get shorter hills toward the end.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:7},{h:0},{h:6},{h:0},{h:5},{h:0}],goals:[]},
+ {pack:null,name:'Fast and Far',fr:0.6,story:'Build a tall middle hill (8 m) and still hit 15 m/s at the bottom after it.',
+  clue:'Fast bottom plus tall hill plus friction: the start height must beat all three.',
+  fact:'Engineers balance height, speed and friction. Raising the lift hill costs energy, so they use the lowest hill that works.',
+  pts:[caP(3,CA_HMAX),{h:0},{lo:0,hi:12,name:'the tall hill'},{h:0,name:'the second bottom'},{h:6},{h:0}],goals:[{t:'minh',at:2,h:8,name:'the tall hill'},{t:'minv',at:3,v:15,name:'the second bottom'}]},
+ {pack:'Pack 3: Loops & Safety',name:'Loop the Loop',fr:0.4,story:'Add a 3 m radius loop. The cart must stay on the track at the very top.',
+  clue:'At the top of a loop, the cart needs enough speed to stay pressed to the track. That takes extra height.',
+  intro:'Loops need a minimum speed at the top. The loop top is 2 × radius high, and the cart needs 2.5 × radius of starting energy.',
+  fact:'To stay on a loop, the cart needs a start height of at least 2.5 times the loop radius. Slower, and gravity pulls it off the track.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:0,loop:3},{h:0}],goals:[]},
+ {pack:null,name:'Twin Loops',fr:0.5,story:'Two loops in a row: a small one, then a big one. Friction takes energy from the first one.',
+  clue:'Check the second loop. It needs more height, and the cart has already lost some energy.',
+  fact:'Each trip through a loop costs a bit of energy to friction, so later loops should be smaller than earlier ones.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:0,loop:2},{h:0},{h:0,loop:3},{h:0}],goals:[]},
+ {pack:null,name:'Grand Coaster',fr:0.5,story:'The final design! Build a 7 m hill, loop the loop, and stop the cart gently: no more than 6 m/s at the end.',
+  clue:'Raise the end platform to slow the cart. Then check every goal in the list.',
+  fact:'Real coaster designers use exactly this energy accounting: lift hill, hills, loops, friction and brakes all have to add up.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:0,loop:2},{h:0},{lo:0,hi:14,name:'the big hill'},{h:0},{lo:0,hi:16,name:'the end platform'}],
+  goals:[{t:'minh',at:4,h:7,name:'the big hill'},{t:'maxv',at:6,v:6,name:'the end platform'}]}
+];
+CA_LEVELS.forEach(L=>{const r=caSolve(L);if(!r)throw new Error('unsolvable '+L.name);L.par=r.par;L.solHs=r.Hs;});
+const CA_N=CA_LEVELS.length;
+/*CALEVELS>>*/
+/*<<CAUI*/
+const CA_PACKS={0:'Pack 1: Hills',4:'Pack 2: Friction',7:'Pack 3: Loops & Safety'};
+const CAW=900,CAH=440,CAG=402,CAM=22,CAX0=80,CAX1=840;
+let CAS=null;
+const caLvl=()=>CA_LEVELS[CAS.i];
+const caXk=k=>CAX0+k*(CAX1-CAX0)/(caLvl().pts.length-1);
+const caY=y=>CAG-y*CAM;
+const caMini=L=>{const n=L.pts.length,w=44,hh=30,hs=L.pts.map((p,i)=>i===0?L.par:p.h!==undefined?p.h:(p.lo+p.hi)/2),mx=Math.max(...hs,8);
+  let d='';hs.forEach((v,i)=>{d+=(i?'L':'M')+(2+i*(w-4)/(n-1)).toFixed(1)+' '+(hh-3-v/mx*(hh-8)).toFixed(1);});
+  const lp=L.pts.map((p,i)=>p.loop?`<circle cx="${2+i*(w-4)/(n-1)}" cy="${hh-3-p.loop*1.7}" r="${p.loop*1.4}" fill="none" stroke="#ff8a5c" stroke-width="1.6"/>`:'').join('');
+  return svgEl(`<svg viewBox="0 0 ${w} ${hh}" width="${w+10}" height="${hh+4}" aria-hidden="true"><path d="${d}" fill="none" stroke="#6aa7ff" stroke-width="2.4" stroke-linejoin="round"/>${lp}</svg>`);};
+function renderCoasterSetup(){renderLevelPicker($('caLevels'),$('caTotal'),'coaster',CA_LEVELS,CA_PACKS,caStart,caMini);}
+function caStart(i){
+  const L=CA_LEVELS[i];
+  CAS={i,Hs:L.pts.map((p,k)=>k===0?Math.min(p.hi,L.par+3<p.hi?Math.max(p.lo,5):p.lo+2):p.h!==undefined?p.h:p.lo),sel:0,hint:0,raf:0,pos:0,run:false,fail:-1,rec:CAS&&CAS.i===i?CAS.rec:0};
+  show('s-coaster');$('caResult').hidden=true;caRender(true);
+}
+function caSay(t,kind){const c=$('caCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+function caStop(){if(CAS&&CAS.raf){cancelAnimationFrame(CAS.raf);CAS.raf=0;}if(CAS)CAS.run=false;}
+function caCartAt(S,pos){const a=Math.max(0,Math.min(S.length-1,Math.floor(pos))),b=Math.min(S.length-1,a+1),f=pos-a,A=S[a],B=S[b];
+  const px=s=>s.loop?caXk(s.k)+s.r*CAM*Math.sin(s.th):caXk(s.k),py=s=>caY(s.y);
+  const x=px(A)+(px(B)-px(A))*f,y=py(A)+(py(B)-py(A))*f,ang=Math.atan2(py(B)-py(A),px(B)-px(A))*180/Math.PI;
+  const dh=A.dh+(B.dh-A.dh)*f,Eh=A.Eh+(B.Eh-A.Eh)*f,yy=A.y+(B.y-A.y)*f;
+  return {x,y,ang:Math.abs(b-a)?ang:0,dh,Eh,yy};}
+function caBoardSvg(G){
+  const L=caLvl(),Hs=CAS.Hs,S=G.S,n=Hs.length,h0=Hs[0];
+  let s=`<defs><linearGradient id="caSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc4ff"/><stop offset="1" stop-color="#d9f1ff"/></linearGradient></defs><rect width="${CAW}" height="${CAH}" rx="16" fill="url(#caSky)"/>`;
+  for(let m=0;m<=CA_HMAX;m+=4)s+=`<line x1="0" y1="${caY(m)}" x2="${CAW}" y2="${caY(m)}" stroke="#ffffff" stroke-opacity=".55" stroke-width="1"/><text x="8" y="${caY(m)-3}" font-size="11" font-weight="700" fill="#4a6a8a" font-family="system-ui">${m} m</text>`;
+  s+=`<rect y="${CAG}" width="${CAW}" height="${CAH-CAG}" fill="#5c8a4f"/><rect y="${CAG}" width="${CAW}" height="6" fill="#3f6a36"/>`;
+  /* energy line */
+  s+=`<path d="M${caXk(0)} ${caY(h0)} L${caXk(n-1)} ${caY(h0-L.fr*(n-1))}" stroke="#0b8f7a" stroke-width="3" stroke-dasharray="9 7" fill="none"/><text x="${caXk(n-1)-4}" y="${caY(h0-L.fr*(n-1))-8}" text-anchor="end" font-size="13" font-weight="800" fill="#0b6f5f" font-family="system-ui">energy line</text>`;
+  /* supports */
+  Hs.forEach((v,i)=>{s+=`<line x1="${caXk(i)}" y1="${caY(v)}" x2="${caXk(i)}" y2="${CAG}" stroke="#7b8294" stroke-width="${i===0?9:5}" stroke-linecap="round"/>`;});
+  /* track */
+  let d='';S.forEach((p,i)=>{const x=p.loop?caXk(p.k)+p.r*CAM*Math.sin(p.th):caXk(p.k);d+=(i?'L':'M')+x.toFixed(1)+' '+caY(p.y).toFixed(1);});
+  s+=`<path d="${d}" fill="none" stroke="#3b2a1e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#e8a64a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+  if(CAS.hint>=3)L.solHs.forEach((v,i)=>{if(L.pts[i].h===undefined||i===0)s+=`<circle cx="${caXk(i)}" cy="${caY(v)}" r="16" fill="none" stroke="#37e0c1" stroke-width="4" stroke-dasharray="6 5"/>`;});
+  /* handles */
+  Hs.forEach((v,i)=>{const p=L.pts[i],ed=i===0||p.lo!==undefined,sel=CAS.sel===i,x=caXk(i),y=caY(v);
+    if(ed)s+=`<g class="cahandle${sel?' sel':''}" data-pt="${i}"><circle cx="${x}" cy="${y}" r="${i===0?20:17}" fill="${sel?'#2f6bff':'#fff'}" stroke="#2f6bff" stroke-width="4"/><path d="M${x-6} ${y+2}l6-8 6 8M${x-6} ${y+5}l6 8 6-8" fill="none" stroke="${sel?'#fff':'#2f6bff'}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+    else s+=`<circle cx="${x}" cy="${y}" r="6" fill="#55617d"/>`;
+    const nm=i===0?'start':'';s+=`<text x="${x}" y="${y-(ed?27:14)}" text-anchor="middle" font-size="14" font-weight="800" fill="#1b2a4a" font-family="system-ui">${nm?nm+' ':''}${v} m</text>`;});
+  /* failure mark */
+  if(CAS.fail>=0){const c=caCartAt(S,CAS.fail);s+=`<g transform="translate(${c.x} ${c.y-30})"><circle r="15" fill="#ff3355"/><path d="M-6 -6l12 12M6 -6l-12 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></g>`;}
+  /* cart */
+  const c=caCartAt(S,CAS.pos);
+  s+=`<g id="caCart" transform="translate(${c.x.toFixed(1)} ${c.y.toFixed(1)}) rotate(${(CAS.fail>=0&&CAS.pos>=CAS.fail?0:c.ang).toFixed(1)})"><rect x="-17" y="-24" width="34" height="18" rx="6" fill="#ff4d4d" stroke="#8a1f1f" stroke-width="2.4"/><rect x="-11" y="-30" width="22" height="9" rx="4" fill="#ffd0a0" stroke="#8a1f1f" stroke-width="2"/><circle cx="-10" cy="-4" r="5" fill="#2a2f45"/><circle cx="10" cy="-4" r="5" fill="#2a2f45"/></g>`;
+  const sv=$('caBoard');sv.setAttribute('viewBox',`0 0 ${CAW} ${CAH}`);sv.innerHTML=s;
+  return c;
+}
+function caRender(reset){
+  const L=caLvl(),G=CAS.G=caGoals(L,CAS.Hs);
+  if(reset)CAS.pos=0;
+  $('caLvl').textContent=CAS.i+1;$('caLvlN').textContent=CA_N;$('caUsed').textContent=CAS.Hs[0];$('caPar').textContent=L.par;
+  $('caName').textContent=L.name;$('caStory').textContent=L.story;$('caIntro').hidden=!L.intro;$('caIntro').textContent=L.intro||'';
+  const c=caBoardSvg(G);
+  caBars(c);
+  $('caGoalList').replaceChildren(...G.res.map(r=>h('li',{class:r.ok?'ok':'bad'},h('span',{class:'tk'},r.ok?'✓':'✗'),h('span',null,r.label,!r.ok&&r.why?h('small',null,' '+r.why):null))));
+  const p=L.pts[CAS.sel],ed=CAS.sel===0||p.lo!==undefined;
+  $('caSel').textContent=CAS.sel===0?'the start hill':(p.name||('hill '+CAS.sel));
+  $('caUp').disabled=CAS.run||!ed||CAS.Hs[CAS.sel]>=(CAS.sel===0?L.pts[0].hi:p.hi);$('caDown').disabled=CAS.run||!ed||CAS.Hs[CAS.sel]<=(CAS.sel===0?L.pts[0].lo:p.lo);
+  $('caLaunch').disabled=CAS.run;
+  $('caScrub').max=G.S.length-1;$('caScrub').value=Math.round(CAS.pos);
+  caCoach();caHintUI();
+}
+function caBars(c){
+  const L=caLvl(),h0=CAS.Hs[0],hs=Math.max(0,c.yy),ke=Math.max(0,c.dh),heat=Math.max(0,h0-c.Eh),T=Math.max(h0,1);
+  $('caPE').style.width=(hs/T*100)+'%';$('caKE').style.width=(ke/T*100)+'%';$('caHE').style.width=(heat/T*100)+'%';
+  $('caSpeed').textContent=Math.sqrt(2*CA_G*ke).toFixed(1);
+}
+function caCoach(){
+  const G=CAS.G,L=caLvl();
+  if(CAS.run)return caSay('The cart is rolling. Watch potential energy turn into kinetic energy!');
+  if(CAS.fail>=0)return caSay(G.res[0].why||'The cart stalled. Raise the start hill.','alert');
+  if(G.ok)return caSay('Every goal is checked. Press Launch!');
+  const bad=G.res.find(r=>!r.ok);caSay(bad.label.indexOf('Cart makes')===0?'The cart will not make it. Raise the start hill so the dashed energy line stays above the track.':'Goal not met yet: '+bad.label+'.');
+}
+function caAdjust(dv){
+  if(CAS.run)return;const L=caLvl(),i=CAS.sel,p=L.pts[i],lo=i===0?L.pts[0].lo:p.lo,hi=i===0?L.pts[0].hi:p.hi;
+  if(i>0&&p.lo===undefined)return;
+  const v=Math.max(lo,Math.min(hi,CAS.Hs[i]+dv));if(v===CAS.Hs[i])return;
+  CAS.Hs[i]=v;CAS.fail=-1;CAS.pos=0;$('caResult').hidden=true;caRender();
+}
+function caLaunch(){
+  if(CAS.run)return;const G=CAS.G=caGoals(caLvl(),CAS.Hs),S=G.S,end=G.f>=0?G.f:S.length-1;
+  CAS.fail=-1;CAS.pos=0;CAS.run=true;$('caResult').hidden=true;caRender();let last=performance.now();const my=CAS;
+  const step=now=>{
+    if(CAS!==my||!CAS.run)return;const dt=Math.max(0,Math.min(0.05,(now-last)/1000));last=now;
+    const i=Math.max(0,Math.min(S.length-1,Math.floor(CAS.pos))),v=Math.sqrt(2*CA_G*Math.max(0,S[i].dh));
+    CAS.pos=Math.min(end,CAS.pos+dt*(5+v*1.6));
+    const c=caBoardSvg(G);caBars(c);$('caScrub').value=Math.round(CAS.pos);
+    if(CAS.pos>=end){CAS.run=false;CAS.raf=0;
+      if(G.f>=0){CAS.fail=G.f;CAS.pos=G.f;fx.pop({icon:'question',text:'Stalled!',kind:'oops'});}
+      caRender();
+      if(G.f<0&&G.ok)caWin();
+      else if(G.f<0)caSay('The cart finished, but a goal in the list is not met. Fix the red items and try again.','alert');
+      return;}
+    CAS.raf=requestAnimationFrame(step);};
+  CAS.raf=requestAnimationFrame(step);
+}
+function caWin(){
+  const L=caLvl(),h0=CAS.Hs[0],stars=h0<=L.par?3:h0<=L.par+2?2:1;
+  if(!(CAS.rec>=stars)){CAS.rec=stars;recordStars('coaster',CAS.i+1,stars,{h:h0,par:L.par});}
+  fx.pop({icon:'bolt',text:stars===3?'Perfect ride!':'What a ride!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  levelResult($('caResult'),{stars,next:CAS.i+1<CA_N,
+    line:['Your start hill was ',h('b',null,h0+' m'),'. The 3-star design needs only ',h('b',null,L.par+' m'),'.',stars<3?' A lower lift hill saves energy. Can you trim it?':' Efficient engineering!'],
+    fact:L.fact,onNext:()=>caStart(CAS.i+1),onRetry:()=>{$('caResult').hidden=true;},onLevels:()=>{caStop();renderCoasterSetup();show('s-coaster-setup');}});
+}
+function caHintUI(){
+  const L=caLvl(),n=CAS.hint;
+  $('caHintTxt').textContent=['Need a hint?','Another hint','Show me the answer','Answer shown'][n];$('caHint').disabled=n>=3;
+  const b=$('caHintBox');b.hidden=n===0;
+  b.replaceChildren(...[n>=1?h('div',null,I('bulb'),' ',h('b',null,'Clue: '),L.clue):null,
+    n>=2?h('div',null,I('lens'),' ',h('b',null,'Tip: '),`The best start hill is between ${Math.max(L.pts[0].lo,L.par-2)} and ${L.par+2} m tall.`):null,
+    n>=3?h('div',null,I('eye'),' ',h('b',null,'Answer: '),`Start at ${L.par} m. The teal circles show where to set the hills.`):null]);
+}
+$('caHint').onclick=()=>{if(CAS.hint<3){CAS.hint++;caRender();}};
+$('caLaunch').onclick=caLaunch;
+$('caReset').onclick=()=>{caStop();CAS.pos=0;CAS.fail=-1;$('caResult').hidden=true;caRender();};
+$('caUp').onclick=()=>caAdjust(1);$('caDown').onclick=()=>caAdjust(-1);
+$('caBack').onclick=()=>{caStop();renderCoasterSetup();show('s-coaster-setup');};
+$('caScrub').oninput=e=>{caStop();CAS.pos=+e.target.value;CAS.fail=-1;const c=caBoardSvg(CAS.G);caBars(c);};
+(()=>{const sv=$('caBoard');let drag=null;
+  const toH=e=>{const r=sv.getBoundingClientRect(),y=(e.clientY-r.top)*CAH/r.height;return Math.round((CAG-y)/CAM);};
+  sv.addEventListener('pointerdown',e=>{
+    if(CAS.run)return;const g=e.target.closest&&e.target.closest('[data-pt]');if(!g)return;
+    const i=+g.getAttribute('data-pt');CAS.sel=i;drag={i,id:e.pointerId};try{sv.setPointerCapture(e.pointerId);}catch(_){}
+    e.preventDefault();caRender();});
+  sv.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;
+    const L=caLvl(),p=L.pts[drag.i],lo=drag.i===0?L.pts[0].lo:p.lo,hi=drag.i===0?L.pts[0].hi:p.hi,v=Math.max(lo,Math.min(hi,toH(e)));
+    if(v!==CAS.Hs[drag.i]){CAS.Hs[drag.i]=v;CAS.fail=-1;CAS.pos=0;$('caResult').hidden=true;caRender();}});
+  const end=e=>{if(drag&&e.pointerId===drag.id)drag=null;};
+  sv.addEventListener('pointerup',end);sv.addEventListener('pointercancel',end);
+})();
+/*CAUI>>*/
+/*<<NEWREG*/
+const NEWG=[{key:'laser',name:'Laser Maze',std:'MS-PS4-2',n:LZ_N,lv:LZ_LEVELS},{key:'blackout',name:'Blackout!',std:'MS-PS3-6',n:BO_N,lv:BO_LEVELS},{key:'evidence',name:'Evidence Lab',std:'MS-PS1-2 · PS1-7',n:EV_N,lv:EV_LEVELS},{key:'coaster',name:'Coaster Architect',std:'MS-PS3-1 · PS3-2',n:CA_N,lv:CA_LEVELS}];
+const NEWGK=Object.fromEntries(NEWG.map(g=>[g.key,g]));
+/*NEWREG>>*/
 /* ================= CLASS GAME (LIVE) ================= */
 const ansText=(q,a)=>q.type==='find'?(EL[a-1]?`${EL[a-1].name} (${EL[a-1].sym})`:String(a)):(q.choices&&q.choices[a]!=null?String(q.choices[a]):String(a));
 const catWord=e=>CATS[e.cat][0].toLowerCase();
@@ -3274,6 +4780,7 @@ function renderStats(){
   rows.push(['Balance It',P.balance.plays?`${P.balance.best}/${ROUND_LEN*3}`:'—',P.balance.plays]);
   Object.keys(DN_LEVELS).forEach(k=>{const r=P.diner[k];rows.push([`Atom Diner · ${DN_LEVELS[k][0]}`,r&&r.plays?`${r.best} coins`:'—',r?r.plays:0]);});
   rows.push(['Separation Station',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} ★`:'—',Object.values(P.sep).reduce((a,r)=>a+(r.plays||0),0)]);
+  NEWG.forEach(g=>rows.push([g.name,gameStars(P,g.key,g.n)?`${gameStars(P,g.key,g.n)}/${g.n*3} ★`:'—',Object.values(P[g.key]||{}).reduce((a,r)=>a+(r.plays||0),0)]));
   $('statsBody').replaceChildren(
     h('p',{class:'sub'},`${P.name}${P.cls?' · Class '+P.cls:''}`),
     h('table',{class:'dt'},h('tr',null,h('th',null,'Game'),h('th',null,'Best'),h('th',null,'Rounds played')),
@@ -3284,16 +4791,18 @@ function renderStats(){
 
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
-const GAME_NAMES={speed:'Speed Find',trivia:'Trivia',lab:'Compound Lab',atom:'Atom Builder',balance:'Balance It',diner:'Atom Diner',sep:'Separation Station'};
+const GAME_NAMES={speed:'Speed Find',trivia:'Trivia',lab:'Compound Lab',atom:'Atom Builder',balance:'Balance It',diner:'Atom Diner',sep:'Separation Station',laser:'Laser Maze',blackout:'Blackout!',evidence:'Evidence Lab',coaster:'Coaster Architect'};
 function levelLabel(game,level){
   if(game==='speed'){const l=level[0],s=level.slice(1);return `${LEVELS[l]?LEVELS[l].name:'L'+l}${s?' · '+styleName(s):''}`;}
   if(game==='atom')return ATLEVELS[level]?ATLEVELS[level][0]:'Level '+level;
   if(game==='diner')return DN_LEVELS[level]?DN_LEVELS[level][0]:'Shift '+level;
   if(game==='sep')return SEP_LEVELS[level-1]?`${level}. ${SEP_LEVELS[level-1].name}`:'Level '+level;
+  if(NEWGK[game]){const L=NEWGK[game].lv[level-1];return L?`${level}. ${L.name}`:'Level '+level;}
   return '';
 }
-const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':game==='diner'?Number(v)+' coins':game==='sep'?'★'.repeat(Number(v)):String(Number(v));
+const scoreLabel=(game,v)=>game==='speed'?fmtT(Number(v))+' avg':game==='diner'?Number(v)+' coins':(game==='sep'||NEWGK[game])?'★'.repeat(Number(v)):String(Number(v));
 const sepTotalOf=S=>{let t=0;for(let i=1;i<=SEP_LEVELS.length;i++){const r=sc(S,'sep:'+i);if(r)t+=Number(r.best);}return t;};
+const newTotOf=(S,g)=>{let t=0;for(let i=1;i<=g.n;i++){const r=sc(S,g.key+':'+i);if(r)t+=Number(r.best);}return t;};
 const dinerOf=S=>['1','2','3'].map(l=>sc(S,'diner:'+l)?String(Number(sc(S,'diner:'+l).best)):'–').join(' / ');
 const when=t=>{if(!t)return '—';const d=new Date(t);return isNaN(d)?'—':d.toLocaleDateString(undefined,{month:'short',day:'numeric'})+' '+d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});};
 const sc=(S,k)=>S&&S.stats&&S.stats.scores&&S.stats.scores[k];
@@ -3329,7 +4838,7 @@ function renderTeacher(){
   const list=TDATA.filter(s=>(cls==='*'||(s.class||'')===cls)&&(!q||s.name.toLowerCase().includes(q)));
   $('tCount').textContent=`${list.length} of ${TDATA.length} students`;
   const tb=$('tTable');
-  tb.replaceChildren(h('tr',null,['Student','Class','Speed L1','Speed L2','Speed L3','Trivia','Lab','Atom','Balance','Diner','Sep ★','Rounds','Last played','Actions'].map(x=>h('th',null,x))),
+  tb.replaceChildren(h('tr',null,['Student','Class','Speed L1','Speed L2','Speed L3','Trivia','Lab','Atom','Balance','Diner','Sep ★',...NEWG.map(g=>g.name.replace('!','')+' ★'),'Rounds','Last played','Actions'].map(x=>h('th',null,x))),
     ...list.map(S=>{
       const sp=l=>bestOf(S,['speed:'+l],v=>fmtT(Number(v[0].best)));
       const num=k=>bestOf(S,[k],v=>String(Number(v[0].best)));
@@ -3338,6 +4847,7 @@ function renderTeacher(){
         h('td',null,sp(1)),h('td',null,sp(2)),h('td',null,sp(3)),h('td',null,num('trivia:')),h('td',null,num('lab:')),
         h('td',null,atom==='– / – / –'?'—':atom),h('td',null,num('balance:')),
         h('td',null,dinerOf(S)==='– / – / –'?'—':dinerOf(S)),h('td',null,sepTotalOf(S)?sepTotalOf(S)+'/'+SEP_LEVELS.length*3:'—'),
+        ...NEWG.map(g=>h('td',null,newTotOf(S,g)?newTotOf(S,g)+'/'+g.n*3:'—')),
         h('td',null,totalRounds(S)),h('td',null,when(S.last_seen)),
         h('td',{class:'acts'},
           h('button',{class:'btn sm ghost',onclick:()=>showHistory(S)},'History'),' ',
@@ -3345,7 +4855,7 @@ function renderTeacher(){
           h('button',{class:'btn sm ghost',onclick:()=>teacherPin(S)},'Reset PIN'),' ',
           h('button',{class:'btn sm warn2',onclick:()=>teacherDelete(S)},'Delete')));
     }));
-  if(!list.length)tb.append(h('tr',null,h('td',{colspan:14},TDATA.length?'No students match.':'No students have made an account yet.')));
+  if(!list.length)tb.append(h('tr',null,h('td',{colspan:14+NEWG.length},TDATA.length?'No students match.':'No students have made an account yet.')));
 }
 async function tcall(fn,args){
   try{const r=await rpc(fn,Object.assign({p_teacher:TPASS},args),15000);if(r&&r.ok)return r;
@@ -3379,8 +4889,8 @@ function downloadCSV(rows,name){
 }
 $('tExport').onclick=()=>{
   const g=(S,k,d)=>{const r=sc(S,k);return r?(d?(Number(r.best)/1000).toFixed(2):Number(r.best)):'';};
-  const rows=[['Nickname','Class','Speed L1 best avg (s)','Speed L2 best avg (s)','Speed L3 best avg (s)','Trivia high score (/40)','Lab high score (/30)','Atom L1 (/30)','Atom L2 (/30)','Atom L3 (/30)','Balance It (/30)','Diner Breakfast (coins)','Diner Lunch (coins)','Diner Dinner (coins)','Separation stars (/'+SEP_LEVELS.length*3+')','Rounds played','Last played']];
-  TDATA.forEach(S=>rows.push([S.name,S.class||'',g(S,'speed:1',1),g(S,'speed:2',1),g(S,'speed:3',1),g(S,'trivia:'),g(S,'lab:'),g(S,'atom:1'),g(S,'atom:2'),g(S,'atom:3'),g(S,'balance:'),g(S,'diner:1'),g(S,'diner:2'),g(S,'diner:3'),sepTotalOf(S)||'',totalRounds(S),S.last_seen||'']));
+  const rows=[['Nickname','Class','Speed L1 best avg (s)','Speed L2 best avg (s)','Speed L3 best avg (s)','Trivia high score (/40)','Lab high score (/30)','Atom L1 (/30)','Atom L2 (/30)','Atom L3 (/30)','Balance It (/30)','Diner Breakfast (coins)','Diner Lunch (coins)','Diner Dinner (coins)','Separation stars (/'+SEP_LEVELS.length*3+')',...NEWG.map(g=>g.name+' stars (/'+g.n*3+')'),'Rounds played','Last played']];
+  TDATA.forEach(S=>rows.push([S.name,S.class||'',g(S,'speed:1',1),g(S,'speed:2',1),g(S,'speed:3',1),g(S,'trivia:'),g(S,'lab:'),g(S,'atom:1'),g(S,'atom:2'),g(S,'atom:3'),g(S,'balance:'),g(S,'diner:1'),g(S,'diner:2'),g(S,'diner:3'),sepTotalOf(S)||'',...NEWG.map(g=>newTotOf(S,g)||''),totalRounds(S),S.last_seen||'']));
   downloadCSV(rows,'turn-table-summary.csv');
 };
 $('tExportAll').onclick=async()=>{
