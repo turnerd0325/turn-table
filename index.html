@@ -460,7 +460,7 @@ button.evrt:hover:not(:disabled){background:#eaf1ff;border-color:var(--accent)}
 button.evrt.done{background:#f2f5fb;border-color:#d5dcea} button.evrt.done small{color:#1b4fd1;font-weight:800}
 .evproof{text-align:center;font-weight:800;color:#8a6a1a;background:#fff4d1;border-radius:10px;padding:6px;margin:6px 0} .evproof.has{background:#e5f7ec;color:#116b3a}
 .evdecide{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
-#caBoard{width:100%;height:auto;max-height:calc(100vh - 330px);min-height:260px;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
+#caBoard{width:auto;max-width:100%;height:auto;max-height:calc(100vh - 285px);min-height:220px;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
 .cahandle{cursor:ns-resize} .cahandle:hover circle{fill:#eaf1ff}
 .caenergy{display:grid;gap:6px;margin:6px 0 4px}
 .caer{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;font-weight:700;font-size:14px;color:#44506b}
@@ -480,6 +480,67 @@ button.evrt.done{background:#f2f5fb;border-color:#d5dcea} button.evrt.done small
 ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8px} ul.cagoals li .tk{font-size:15px;width:16px}
 .caenergy{margin:0;gap:4px} .caspeed{font-size:15px;text-align:left}
 @media (max-width:900px){.cagrid{grid-template-columns:1fr} #caBoard{max-height:46vh}}
+/* ---- one-screen play layout ---- */
+.onescr{padding:10px 14px}
+.onescr .cacl{margin:0 0 6px;padding:6px 12px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.onescr .cacl span{font-size:14px}
+.onescr .coach{margin:5px 0;padding:6px 12px;font-size:15px}
+.ogrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:12px;align-items:start}
+.oside{display:grid;gap:7px;align-content:start}
+.osl{font-weight:800;font-size:13px;color:#44506b;text-transform:uppercase;letter-spacing:.03em;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.osl small{font-weight:600;text-transform:none;letter-spacing:0;color:#6b7a99;font-size:12px}
+.oside .toolbox{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.oside .tool{padding:4px 8px;border-width:2px;max-width:none;gap:6px;border-radius:12px}
+.oside .tool small{display:none} .oside .tool b{font-size:14px}
+.oside .infobox{margin:0;padding:6px 10px;font-size:13px}
+.oside .spgoal{margin:0;font-size:14px}
+.oside .lzlegend{margin:0;font-size:12px;flex-wrap:wrap}
+.oside ul.tests{gap:4px;margin:0} .oside ul.tests li{padding:4px 8px;font-size:13px;gap:8px} .oside ul.tests li .tk{font-size:15px;width:16px}
+.oside .lamps{margin:0}
+.omain .lamps{margin:6px 0 0;gap:6px} .omain .lampchip{font-size:13px;padding:2px 10px 2px 6px}
+#lzBoard{max-height:calc(100vh - 225px);min-height:220px;width:auto;max-width:100%}
+#boBoard{max-height:calc(100vh - 250px);min-height:240px;width:auto;max-width:100%}
+.omain .lzwrap{margin:0}
+/* win panel floats over the screen so nothing scrolls */
+.onescr .spresult:not([hidden]){position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(580px,92vw);max-height:90vh;overflow:auto;z-index:60;background:#fff;border-radius:18px;box-shadow:0 0 0 100vmax rgba(10,16,40,.5),0 20px 60px rgba(0,0,0,.4);padding:16px}
+/* evidence */
+.evtop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.evtop .coach{flex:1 1 360px;margin:5px 0}
+.evbtns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.evbtns .evcasebar{margin:0}
+.onescr .evscroll{margin:2px 0} .onescr table.evtbl{border-spacing:0 4px}
+.onescr .evtbl th,.onescr .evtbl td{padding:5px 8px;font-size:14px}
+.onescr button.evtb{padding:5px 8px} .onescr button.evtb small{font-size:10.5px}
+.onescr .evscene{margin:4px 0;padding:6px 12px}
+.onescr .evtiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:4px 0}
+.onescr button.evrt{min-height:0;padding:7px 10px 22px}
+.onescr .evproof{margin:4px 0;padding:4px}
+.onescr .evdecide{margin:4px 0}
+@media (max-width:900px){.ogrid{grid-template-columns:1fr} #lzBoard,#boBoard{max-height:44vh} .onescr .evtiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* hide footer and trim page padding while a one-screen game is open */
+body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidden]),#s-coaster:not([hidden])) footer{display:none}
+body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidden]),#s-coaster:not([hidden])) main{padding-bottom:6px;padding-top:8px}
+.caspeed{margin-left:auto;font-size:14px;color:#1b3a8a;text-transform:none;letter-spacing:0}
+.cagoals li small{display:none} .cagoals li:first-child small{display:inline}
+.oside .toolbox{grid-template-columns:repeat(3,minmax(0,1fr))}
+.oside .tool{padding:4px 6px;gap:4px} .oside .tool .ti svg{width:24px;height:24px}
+.oside .tool .cost{margin-left:auto}
+.oside .osl small.hide{display:none}
+.caer{font-size:13px} .cabar{height:13px}
+.oside{gap:5px} .ogrid{gap:10px}
+.onescr .coach{margin:3px 0;padding:4px 10px;font-size:14px} .onescr .cacl{margin:0 0 4px;padding:4px 12px}
+.onescr{padding:8px 12px}
+.cagoals li{padding:3px 8px!important} .oside ul.tests li{padding:3px 8px}
+.oside .carow .btn,.oside .btn{padding-top:6px;padding-bottom:6px}
+body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidden]),#s-coaster:not([hidden])) .hud{margin-bottom:6px}
+body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidden]),#s-coaster:not([hidden])) .hud .pill{padding:4px 12px}
+.caenergy.cah{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:center;margin:6px 0 0}
+.caenergy.cah .caer{grid-template-columns:62px 1fr;gap:6px}
+.caenergy.cah .caspeed{margin:0;white-space:nowrap}
+@media (max-width:900px){.caenergy.cah{grid-template-columns:1fr 1fr}}
+.hintfloat{position:fixed;left:50%;bottom:10px;transform:translateX(-50%);width:min(760px,94vw);z-index:45;box-shadow:0 10px 30px rgba(10,16,40,.35);cursor:pointer;margin:0!important;background:#fffbe8!important;border:2px solid #f2c94c!important;font-size:14px!important;padding:8px 12px!important}
+.hintfloat::after{content:"tap to hide";display:block;text-align:right;font-size:11px;color:#8a6a1a}
+.hintfloat[data-closed="1"]{display:none}
 /*NEWCSS>>*/
 </style>
 </head>
@@ -788,22 +849,24 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
     <div class="pill">3 <i data-ic="star"></i> uses <b id="lzPar">0</b> or fewer</div>
     <button class="btn sm ghost" id="lzBack">← Levels</button>
   </div>
-  <div class="card">
-    <div class="clue"><b id="lzName" style="font-size:22px"></b><span id="lzStory"></span></div>
-    <div class="spgoal" id="lzGoal"></div>
-    <div class="infobox" id="lzIntro" hidden></div>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="lzName" style="font-size:20px"></b><span id="lzStory"></span></div>
     <div class="coach" id="lzCoach" role="status"></div>
-    <h4 class="kh"><span class="stepchip">1</span>Pieces <span class="khs">drag one into the maze, or click it and then click a square</span></h4>
-    <div class="toolbox" id="lzTools"></div>
-    <div class="lzlegend"><span><i class="lgm"></i>Mirror <b>reflects</b></span><span><i class="lgg"></i>Glass <b>transmits</b></span><span><i class="lgb"></i>Black <b>absorbs</b></span></div>
-    <h4 class="kh"><span class="stepchip">2</span>The maze <span class="khs">click a mirror to flip it · drag a piece off the maze to take it back</span></h4>
-    <div class="lzwrap"><svg id="lzBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The laser maze"></svg></div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
-      <button class="btn ghost" id="lzClear"><i data-ic="x"></i>Clear maze</button>
-      <button class="btn ghost" id="lzHint"><i data-ic="bulb"></i><span id="lzHintTxt">Need a hint?</span></button>
+    <div class="ogrid">
+      <div class="omain"><div class="lzwrap"><svg id="lzBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The laser maze"></svg></div></div>
+      <div class="oside">
+        <div class="infobox" id="lzIntro" hidden></div>
+        <div class="spgoal" id="lzGoal"></div>
+        <div class="osl"><span class="stepchip">1</span>Pieces <small>drag into the maze, or click a piece then a square</small></div>
+        <div class="toolbox" id="lzTools"></div>
+        <div class="lzlegend"><span><i class="lgm"></i>Mirror <b>reflects</b></span><span><i class="lgg"></i>Glass <b>transmits</b></span><span><i class="lgb"></i>Black <b>absorbs</b></span></div>
+        <div class="osl"><small>Click a mirror to flip it · drag a piece off the maze to take it back</small></div>
+        <div class="carow"><button class="btn ghost sm" id="lzClear"><i data-ic="x"></i>Clear</button>
+          <button class="btn ghost sm" id="lzHint"><i data-ic="bulb"></i><span id="lzHintTxt">Need a hint?</span></button></div>
+        <div class="infobox hintfloat" id="lzHintBox" hidden></div>
+        <div class="msg" id="lzMsg" style="text-align:center;font-size:15px"></div>
+      </div>
     </div>
-    <div class="infobox" id="lzHintBox" hidden></div>
-    <div class="msg" id="lzMsg" style="text-align:center;font-size:17px"></div>
     <div class="spresult" id="lzResult" hidden></div>
   </div>
 </section>
@@ -829,24 +892,26 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
     <div class="pill">3 <i data-ic="star"></i> uses <b id="boPar">0</b> or fewer</div>
     <button class="btn sm ghost" id="boBack">← Levels</button>
   </div>
-  <div class="card">
-    <div class="clue"><b id="boName" style="font-size:22px"></b><span id="boStory"></span></div>
-    <div class="infobox" id="boIntro" hidden></div>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="boName" style="font-size:20px"></b><span id="boStory"></span></div>
     <div class="coach" id="boCoach" role="status"></div>
-    <h4 class="kh"><span class="stepchip">1</span>Parts <span class="khs">pick one, then drag along the board · drag a piece off the board to take it back</span></h4>
-    <div class="toolbox" id="boTools"></div>
-    <h4 class="kh"><span class="stepchip">2</span>The circuit <span class="khs">the bulbs glow live as you build · click a switch or battery on the board</span></h4>
-    <div class="lzwrap"><svg id="boBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The circuit board"></svg></div>
-    <div class="lamps" id="boLamps"></div>
-    <h4 class="kh"><span class="stepchip">3</span>Test it</h4>
-    <ul class="tests" id="boTestList"></ul>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
-      <button class="btn" id="boTest" style="font-size:19px"><i data-ic="bolt"></i>Test the city!</button>
-      <button class="btn ghost" id="boClear"><i data-ic="x"></i>Clear board</button>
-      <button class="btn ghost" id="boHint"><i data-ic="bulb"></i><span id="boHintTxt">Need a hint?</span></button>
+    <div class="ogrid">
+      <div class="omain">
+        <div class="lzwrap"><svg id="boBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The circuit board"></svg></div>
+        <div class="lamps" id="boLamps"></div>
+      </div>
+      <div class="oside">
+        <div class="infobox" id="boIntro" hidden></div>
+        <div class="osl"><span class="stepchip">1</span>Parts <small>pick one, drag along the board · drag a piece off to take it back</small></div>
+        <div class="toolbox" id="boTools"></div>
+        <div class="carow"><button class="btn" id="boTest" style="font-size:17px"><i data-ic="bolt"></i>Test the city!</button></div>
+        <ul class="tests" id="boTestList"></ul>
+        <div class="carow"><button class="btn ghost sm" id="boClear"><i data-ic="x"></i>Clear</button>
+          <button class="btn ghost sm" id="boHint"><i data-ic="bulb"></i><span id="boHintTxt">Need a hint?</span></button></div>
+        <div class="infobox hintfloat" id="boHintBox" hidden></div>
+        <div class="msg" id="boMsg" style="text-align:center;font-size:15px"></div>
+      </div>
     </div>
-    <div class="infobox" id="boHintBox" hidden></div>
-    <div class="msg" id="boMsg" style="text-align:center;font-size:17px"></div>
     <div class="spresult" id="boResult" hidden></div>
   </div>
 </section>
@@ -867,22 +932,22 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
 <!-- EVIDENCE LAB: PLAY -->
 <section class="screen" id="s-evidence" hidden>
   <div class="hud">
-    <div class="pill">Level <b id="evLvl">1</b>/<span id="evLvlN">13</span></div>
+    <div class="pill">Level <b id="evLvl">1</b>/<span id="evLvlN">15</span></div>
     <div class="pill"><i data-ic="flask"></i> Tests <b id="evUsed">0</b></div>
     <div class="pill">3 <i data-ic="star"></i> uses <b id="evPar">0</b> or fewer</div>
     <button class="btn sm ghost" id="evBack">← Levels</button>
   </div>
-  <div class="card">
-    <div class="clue"><b id="evName" style="font-size:22px"></b><span id="evStory"></span></div>
-    <div class="infobox" id="evIntro" hidden></div>
-    <div class="coach" id="evCoach" role="status"></div>
-    <div class="evcasebar" id="evCaseBar"></div>
-    <div id="evBench"></div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
-      <button class="btn good" id="evNextCase" hidden>Next sample ▶</button>
-      <button class="btn ghost" id="evHint"><i data-ic="bulb"></i><span id="evHintTxt">Need a hint?</span></button>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="evName" style="font-size:20px"></b><span id="evStory"></span></div>
+    <div class="evtop">
+      <div class="coach" id="evCoach" role="status"></div>
+      <div class="evbtns"><div class="evcasebar" id="evCaseBar"></div>
+        <button class="btn good sm" id="evNextCase" hidden>Next sample ▶</button>
+        <button class="btn ghost sm" id="evHint"><i data-ic="bulb"></i><span id="evHintTxt">Need a hint?</span></button></div>
     </div>
-    <div class="infobox" id="evHintBox" hidden></div>
+    <div class="infobox" id="evIntro" hidden></div>
+    <div class="infobox hintfloat" id="evHintBox" hidden></div>
+    <div id="evBench"></div>
     <div class="spresult" id="evResult" hidden></div>
   </div>
 </section>
@@ -908,30 +973,26 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
     <div class="pill">3 <i data-ic="star"></i> at <b id="caPar">0</b> m or lower</div>
     <button class="btn sm ghost" id="caBack">← Levels</button>
   </div>
-  <div class="card cacard">
+  <div class="card cacard onescr">
     <div class="clue cacl"><b id="caName" style="font-size:20px"></b><span id="caStory"></span></div>
-    <div class="infobox" id="caIntro" hidden></div>
     <div class="coach" id="caCoach" role="status"></div>
-    <div class="cagrid">
+    <div class="cagrid ogrid">
       <div class="camain">
         <div class="lzwrap"><svg id="caBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The roller coaster track"></svg></div>
+        <div class="caenergy cah"><div class="caer"><span>Potential</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
+          <div class="caer"><span>Kinetic</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
+          <div class="caer"><span>Heat</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
+          <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div></div>
         <div class="caslide"><span>Scrub the cart</span><input type="range" id="caScrub" min="0" max="100" value="0" aria-label="Cart position"></div>
       </div>
       <div class="caside">
-        <div class="casec"><div class="casecl"><span class="stepchip">1</span>Design <small>drag a blue handle · selected: <b id="caSel">the start hill</b></small></div>
-          <div class="carow"><button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button></div></div>
-        <div class="carow"><button class="btn" id="caLaunch" style="font-size:19px;flex:1"><i data-ic="bolt"></i>Launch!</button>
+        <div class="infobox" id="caIntro" hidden></div>
+        <div class="osl"><span class="stepchip">1</span>Design <small>drag a blue handle · selected: <b id="caSel">the start hill</b></small></div>
+        <div class="carow"><button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button><button class="btn ghost sm" id="caHint" title="Need a hint?"><i data-ic="bulb"></i><span id="caHintTxt">Hint</span></button></div>
+        <div class="carow"><button class="btn" id="caLaunch" style="font-size:19px;flex:2"><i data-ic="bolt"></i>Launch!</button>
           <button class="btn ghost" id="caReset" title="Reset cart"><i data-ic="x"></i>Reset</button></div>
-        <div class="casec"><div class="casecl"><span class="stepchip">2</span>Energy</div>
-          <div class="caenergy">
-            <div class="caer"><span>Potential</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
-            <div class="caer"><span>Kinetic</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
-            <div class="caer"><span>Heat</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
-            <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div>
-          </div></div>
-        <div class="casec"><div class="casecl"><span class="stepchip">3</span>Goals</div><ul class="tests cagoals" id="caGoalList"></ul></div>
-        <button class="btn ghost sm" id="caHint"><i data-ic="bulb"></i><span id="caHintTxt">Need a hint?</span></button>
-        <div class="infobox" id="caHintBox" hidden></div>
+        <div class="osl"><span class="stepchip">2</span>Goals</div><ul class="tests cagoals" id="caGoalList"></ul>
+        <div class="infobox hintfloat" id="caHintBox" hidden></div>
       </div>
     </div>
     <div class="spresult" id="caResult" hidden></div>
@@ -1713,7 +1774,7 @@ function hash(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(
 function newProfile(name,cls,pin){return {name,cls:cls||'',pin,created:Date.now(),speed:{},trivia:{best:0,plays:0},lab:{best:0,plays:0},
   atom:{},balance:{best:0,plays:0},diner:{},sep:{},laser:{},blackout:{},evidence:{},coaster:{},missed:{},cloud:null};}
 function fixProfile(P){
-  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};
+  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};
   P.trivia=P.trivia||{best:0,plays:0};P.lab=P.lab||{best:0,plays:0};P.balance=P.balance||{best:0,plays:0};
   if(P.cloud===undefined)P.cloud=null;
   return P;
@@ -3354,6 +3415,8 @@ function levelResult(box,{stars,line,fact,next,onNext,onRetry,onLevels,retryText
       h('button',{class:'btn ghost',onclick:onLevels},'Levels')));
   box.hidden=false;
 }
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.hintfloat');if(b)b.dataset.closed='1';});
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#lzHint,#boHint,#evHint,#caHint'))document.querySelectorAll('.hintfloat').forEach(x=>{x.dataset.closed='';});},true);
 /*TTCOMMON>>*/
 /*<<LZENGINE*/
 const LZ_DIR={'>':[1,0],'<':[-1,0],'^':[0,-1],'v':[0,1]};
