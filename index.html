@@ -460,14 +460,26 @@ button.evrt:hover:not(:disabled){background:#eaf1ff;border-color:var(--accent)}
 button.evrt.done{background:#f2f5fb;border-color:#d5dcea} button.evrt.done small{color:#1b4fd1;font-weight:800}
 .evproof{text-align:center;font-weight:800;color:#8a6a1a;background:#fff4d1;border-radius:10px;padding:6px;margin:6px 0} .evproof.has{background:#e5f7ec;color:#116b3a}
 .evdecide{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
-#caBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
+#caBoard{width:100%;height:auto;max-height:calc(100vh - 330px);min-height:260px;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
 .cahandle{cursor:ns-resize} .cahandle:hover circle{fill:#eaf1ff}
 .caenergy{display:grid;gap:6px;margin:6px 0 4px}
-.caer{display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center;font-weight:700;font-size:14px;color:#44506b}
+.caer{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;font-weight:700;font-size:14px;color:#44506b}
 .cabar{background:#e6ebf5;border-radius:999px;height:16px;overflow:hidden} .cabar i{display:block;height:100%;border-radius:999px;transition:width .08s linear}
 .cabar i.pe{background:#4f86ff} .cabar i.ke{background:#ff9a2e} .cabar i.he{background:#ff4d6a}
 .caspeed{text-align:center;font-weight:800;font-size:18px;color:#1b3a8a}
-@media (max-width:560px){.caer{grid-template-columns:110px 1fr}}
+
+.cacard{padding:12px 16px}
+.cacl{margin:0 0 6px;padding:8px 12px} .cacard .coach{margin:6px 0}
+.cagrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+.caside{display:grid;gap:8px}
+.casecl{font-weight:800;font-size:13px;color:#44506b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.casecl small{font-weight:600;text-transform:none;letter-spacing:0;color:#6b7a99}
+.carow{display:flex;gap:8px}
+.carow .btn{flex:1}
+.caslide{display:flex;align-items:center;gap:10px;margin-top:6px;font-weight:700;font-size:13px;color:#55617d} .caslide input{flex:1}
+ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8px} ul.cagoals li .tk{font-size:15px;width:16px}
+.caenergy{margin:0;gap:4px} .caspeed{font-size:15px;text-align:left}
+@media (max-width:900px){.cagrid{grid-template-columns:1fr} #caBoard{max-height:46vh}}
 /*NEWCSS>>*/
 </style>
 </head>
@@ -896,31 +908,32 @@ button.evrt.done{background:#f2f5fb;border-color:#d5dcea} button.evrt.done small
     <div class="pill">3 <i data-ic="star"></i> at <b id="caPar">0</b> m or lower</div>
     <button class="btn sm ghost" id="caBack">← Levels</button>
   </div>
-  <div class="card">
-    <div class="clue"><b id="caName" style="font-size:22px"></b><span id="caStory"></span></div>
+  <div class="card cacard">
+    <div class="clue cacl"><b id="caName" style="font-size:20px"></b><span id="caStory"></span></div>
     <div class="infobox" id="caIntro" hidden></div>
     <div class="coach" id="caCoach" role="status"></div>
-    <h4 class="kh"><span class="stepchip">1</span>Design <span class="khs">drag a blue handle up or down · selected: <b id="caSel">the start hill</b></span></h4>
-    <div class="lzwrap"><svg id="caBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The roller coaster track"></svg></div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0">
-      <button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button>
+    <div class="cagrid">
+      <div class="camain">
+        <div class="lzwrap"><svg id="caBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The roller coaster track"></svg></div>
+        <div class="caslide"><span>Scrub the cart</span><input type="range" id="caScrub" min="0" max="100" value="0" aria-label="Cart position"></div>
+      </div>
+      <div class="caside">
+        <div class="casec"><div class="casecl"><span class="stepchip">1</span>Design <small>drag a blue handle · selected: <b id="caSel">the start hill</b></small></div>
+          <div class="carow"><button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button></div></div>
+        <div class="carow"><button class="btn" id="caLaunch" style="font-size:19px;flex:1"><i data-ic="bolt"></i>Launch!</button>
+          <button class="btn ghost" id="caReset" title="Reset cart"><i data-ic="x"></i>Reset</button></div>
+        <div class="casec"><div class="casecl"><span class="stepchip">2</span>Energy</div>
+          <div class="caenergy">
+            <div class="caer"><span>Potential</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
+            <div class="caer"><span>Kinetic</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
+            <div class="caer"><span>Heat</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
+            <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div>
+          </div></div>
+        <div class="casec"><div class="casecl"><span class="stepchip">3</span>Goals</div><ul class="tests cagoals" id="caGoalList"></ul></div>
+        <button class="btn ghost sm" id="caHint"><i data-ic="bulb"></i><span id="caHintTxt">Need a hint?</span></button>
+        <div class="infobox" id="caHintBox" hidden></div>
+      </div>
     </div>
-    <h4 class="kh"><span class="stepchip">2</span>Energy <span class="khs">drag the slider to scrub the cart along the track</span></h4>
-    <div class="caenergy">
-      <div class="caer"><span>Potential (height)</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
-      <div class="caer"><span>Kinetic (speed)</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
-      <div class="caer"><span>Heat (friction)</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
-      <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div>
-    </div>
-    <input type="range" id="caScrub" min="0" max="100" value="0" aria-label="Cart position" style="width:100%">
-    <h4 class="kh"><span class="stepchip">3</span>Goals</h4>
-    <ul class="tests" id="caGoalList"></ul>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px">
-      <button class="btn" id="caLaunch" style="font-size:19px"><i data-ic="bolt"></i>Launch!</button>
-      <button class="btn ghost" id="caReset"><i data-ic="x"></i>Reset cart</button>
-      <button class="btn ghost" id="caHint"><i data-ic="bulb"></i><span id="caHintTxt">Need a hint?</span></button>
-    </div>
-    <div class="infobox" id="caHintBox" hidden></div>
     <div class="spresult" id="caResult" hidden></div>
   </div>
 </section>
@@ -1700,7 +1713,7 @@ function hash(s){let x=5381;for(let i=0;i<s.length;i++)x=((x<<5)+x+s.charCodeAt(
 function newProfile(name,cls,pin){return {name,cls:cls||'',pin,created:Date.now(),speed:{},trivia:{best:0,plays:0},lab:{best:0,plays:0},
   atom:{},balance:{best:0,plays:0},diner:{},sep:{},laser:{},blackout:{},evidence:{},coaster:{},missed:{},cloud:null};}
 function fixProfile(P){
-  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};
+  P.speed=P.speed||{};P.atom=P.atom||{};P.missed=P.missed||{};P.diner=P.diner||{};P.sep=P.sep||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};P.laser=P.laser||{};P.blackout=P.blackout||{};P.evidence=P.evidence||{};P.coaster=P.coaster||{};
   P.trivia=P.trivia||{best:0,plays:0};P.lab=P.lab||{best:0,plays:0};P.balance=P.balance||{best:0,plays:0};
   if(P.cloud===undefined)P.cloud=null;
   return P;
@@ -4467,6 +4480,7 @@ function caWin(){
   const L=caLvl(),h0=CAS.Hs[0],stars=h0<=L.par?3:h0<=L.par+2?2:1;
   if(!(CAS.rec>=stars)){CAS.rec=stars;recordStars('coaster',CAS.i+1,stars,{h:h0,par:L.par});}
   fx.pop({icon:'bolt',text:stars===3?'Perfect ride!':'What a ride!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
+  setTimeout(()=>{try{$('caResult').scrollIntoView({block:'nearest',behavior:'smooth'});}catch(_){}},60);
   levelResult($('caResult'),{stars,next:CAS.i+1<CA_N,
     line:['Your start hill was ',h('b',null,h0+' m'),'. The 3-star design needs only ',h('b',null,L.par+' m'),'.',stars<3?' A lower lift hill saves energy. Can you trim it?':' Efficient engineering!'],
     fact:L.fact,onNext:()=>caStart(CAS.i+1),onRetry:()=>{$('caResult').hidden=true;},onLevels:()=>{caStop();renderCoasterSetup();show('s-coaster-setup');}});
