@@ -3082,8 +3082,51 @@ async function sxStageRun(L,belt,res){
       SX3D=false;if(SXCV3)SXCV3.style.display='none';cv2.style.display='';stage.hidden=true;
     }
   }
-  if(L.tools)return;   // the classic 2D view doesn't know the newer machines, so skip the show on the fallback path
+  if(L.tools)return sxStageRunLite(L,belt,res);   // the classic 2D view doesn't know the newer machines, so use the simple step-by-step view
   return sxStageRun2D(L,belt,res);
+}
+/* ---- Simple step-by-step belt view: works on any device, with any machine (used when 3D is unavailable) ---- */
+function sxStageRunLite(L,belt,res){
+  return new Promise(resolve=>{
+    const stage=$('sxStage'),cv=$('sxCv'),cap=$('sxCap'),skipB=$('sxSkip'),g=cv.getContext('2d');
+    const my=runId,W=1024,H=576,ms=[];belt.forEach((m,i)=>{if(m)ms.push({m,i});});
+    const N=ms.length,T0=.8,STEP=1.5,TEND=T0+N*STEP+1.4;let done=false,raf=0,t0=0,lastI=-1;
+    const nm=k=>(typeof SB!=='undefined'&&SB[k]&&SB[k].n)||k;
+    const colW=Math.min(190,(W-120)/Math.max(N,1)),x0=(W-colW*N)/2,by=H*.46;
+    function finish(){if(done)return;done=true;cancelAnimationFrame(raf);document.removeEventListener('keydown',onKey,true);skipB.onclick=null;stage.hidden=true;resolve();}
+    function onKey(e){if(e.key===' '||e.key==='Enter'||e.key==='Escape'){e.preventDefault();e.stopPropagation();finish();}}
+    function draw(t){
+      g.setTransform(cv.width/W,0,0,cv.height/H,0,0);
+      g.fillStyle='#2b3140';g.fillRect(0,0,W,H);
+      g.fillStyle='#3a4156';g.fillRect(0,by-16,W,32);
+      g.fillStyle='#58607a';for(let x=((-t*60)%40+40)%40;x<W;x+=40)g.fillRect(x,by-3,20,6);
+      const pos=t<T0?-.5:Math.min(N,(t-T0)/STEP);
+      ms.forEach((s,k)=>{
+        const cx=x0+colW*(k+.5),on=pos>=k&&pos<k+1,past=pos>=k+1;
+        g.fillStyle=on?'#ffd166':(past?'#8fd3a8':'#c9d1e6');g.beginPath();g.roundRect?g.roundRect(cx-colW*.4,by-110,colW*.8,70,12):g.rect(cx-colW*.4,by-110,colW*.8,70);g.fill();
+        g.fillStyle='#1c2233';g.font='bold 22px system-ui,sans-serif';g.textAlign='center';g.fillText(MACH[s.m].n,cx,by-68);
+        if(MACH[s.m].bin&&past){
+          const got=res.bins[s.i]||[];g.fillStyle='#e07a5f';g.fillRect(cx-colW*.4,by+50,colW*.8,56);
+          g.fillStyle='#fff';g.font='bold 17px system-ui,sans-serif';g.fillText('BIN',cx,by+72);
+          g.font='15px system-ui,sans-serif';g.fillText(got.length?got.map(nm).join(', ').slice(0,22):'(empty)',cx,by+95);
+        }
+      });
+      const bx=pos<0?60:x0+colW*Math.min(pos,N)+(pos>=N?0:0);
+      const px=pos<0?60+(t/T0)*(x0-60):(pos>=N?Math.min(W-60,x0+colW*N+(t-T0-N*STEP)*120):bx);
+      g.fillStyle='#f4a261';g.beginPath();g.arc(px,by-26,18,0,7);g.fill();g.fillStyle='#e76f51';g.beginPath();g.arc(px-8,by-30,7,0,7);g.arc(px+9,by-22,6,0,7);g.fill();
+      const i=Math.min(N-1,Math.max(0,Math.floor(pos)));
+      if(pos>=0&&pos<N&&i!==lastI){lastI=i;cap.textContent=MACH[ms[i].m].n+': '+res.notes[ms[i].i];}
+      if(t>=T0+N*STEP)cap.textContent=res.ok?'Pure! Every goal substance made it into its own bin!':'Not pure yet. Check your result below.';
+    }
+    function frame(now){
+      if(done)return;if(my!==runId){finish();return;}
+      if(!t0)t0=now;const t=(now-t0)/1000;draw(t);if(t>=TEND){finish();return;}raf=requestAnimationFrame(frame);
+    }
+    skipB.onclick=finish;document.addEventListener('keydown',onKey,true);
+    stage.hidden=false;cv.style.display='';{const r=cv.getBoundingClientRect(),PX=Math.max(1,Math.min(2,Math.min(devicePixelRatio||1,2)*r.width/W));cv.width=Math.round(W*PX);cv.height=Math.round(H*PX);}
+    cap.textContent='The belt is running…';try{skipB.focus({preventScroll:true});}catch(e){}
+    raf=requestAnimationFrame(frame);
+  });
 }
 function sxStageRun2D(L,belt,res){
   return new Promise(resolve=>{
