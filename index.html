@@ -1786,7 +1786,7 @@ if(me&&!profiles[me])me=null;
 const prof=()=>profiles[me];
 /* ---- temporary student lock: games listed here are locked for everyone except the owner ----
    To unlock everything, change to:  const LOCKED_GAMES=[];  */
-const LOCKED_GAMES=['lab','atom','balance','diner','sep','laser','blackout','evidence','coaster'];
+const LOCKED_GAMES=['lab','balance','diner','sep','laser','blackout','evidence','coaster'];
 const OWNER_NICK='turner';
 const isOwner=()=>!!(me&&profiles[me]&&String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK);
 const gameLocked=g=>LOCKED_GAMES.includes(g)&&!isOwner();
@@ -2019,7 +2019,7 @@ function renderMenu(){
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','stats','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
     h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
-    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see only Speed Find and Element Trivia. Everything else shows as locked.')]:[])
+    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Speed Find, Element Trivia, Explore the Table and Atom Builder. Everything else shows as locked.')]:[])
   );
 }
 
