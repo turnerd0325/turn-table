@@ -542,6 +542,13 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .hintfloat::after{content:"tap to hide";display:block;text-align:right;font-size:11px;color:#8a6a1a}
 .hintfloat[data-closed="1"]{display:none}
 /*NEWCSS>>*/
+.bdstrip{margin:2px 0 10px}.bdstripb{font:inherit;display:inline-flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px 14px 4px 8px;cursor:pointer;color:var(--ink)}.bdstripb:hover{border-color:var(--accent)}.bdstripb .bdtxt{font-size:14px}.bdstripb .bdtxt b{font-weight:800}
+.bdcard{display:flex;gap:18px;flex-wrap:wrap;align-items:center;background:linear-gradient(135deg,#1d2740,#2c3a63);color:#fff;border-radius:16px;padding:16px 18px;margin:8px 0 12px}.bdcard .sub{color:#c7d2ee}.bdname{font-size:24px;font-weight:800}.bdrank{font-weight:800;font-size:18px;color:#f8dc7a}.bdrank span{font-weight:600;font-size:13px;color:#c7d2ee;margin-left:8px}.bdbar{height:8px;background:rgba(255,255,255,.2);border-radius:99px;margin-top:6px;overflow:hidden;max-width:320px}.bdbar i{display:block;height:100%;background:#f8dc7a;border-radius:99px}
+.bdpins{display:flex;gap:8px}.bdslot{width:68px;height:68px;border:2px dashed rgba(255,255,255,.35);border-radius:14px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);font-size:26px}
+.bddetail{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#f3f6fd;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:6px;min-height:60px}.bdbig{flex:none;line-height:0}
+.bdh{margin:14px 0 6px}.bdh span{font-weight:500;font-size:13px;color:var(--muted)}
+.bdgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
+.bdb{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 4px 6px;cursor:pointer;color:var(--ink);text-align:center}.bdb:hover{border-color:var(--accent);transform:translateY(-1px)}.bdb.lock{background:#f1f3f8}.bdb.static{cursor:default}.bdb.static:hover{border-color:var(--line);transform:none}.bdb b{font-size:12.5px;line-height:1.2}.bdb em{font-style:normal;font-size:11.5px;color:var(--muted);font-weight:700}.bdsv,.bdbig{line-height:0}
 </style>
 </head>
 <body>
@@ -580,6 +587,7 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 <section class="screen" id="s-menu" hidden>
   <h1 id="menuHello">Pick a game</h1>
   <p class="sub">Mr. Turner's periodic table challenge. Pick a game and show what you know!</p>
+  <div class="bdstrip" id="bdStrip"></div>
   <div class="menu-grid" id="menuGrid"></div>
 </section>
 
@@ -1059,7 +1067,7 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 <!-- STATS -->
 <section class="screen" id="s-stats" hidden>
   <div class="card">
-    <h2><i data-ic="chart"></i>My Stats</h2>
+    <h2><i data-ic="chart"></i>My Profile</h2>
     <div id="statsBody"></div>
     <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
   </div>
@@ -1834,6 +1842,7 @@ async function flushQueue(){
   }finally{flushing=false;setSyncBadge();}
 }
 function cloudSubmit(game,level,value,detail){
+  try{bdPlayed(game);}catch(e){}
   const rec={user:me,cid:me+'-'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),game,
     level:String(level==null?'':level),value:Math.round(value*100)/100,detail:detail||{},missed:pendMissed};
   pendMissed={};
@@ -1988,7 +1997,7 @@ const STD={speed:['MS-PS1-1',1],trivia:['MS-PS1-1',1],lab:['MS-PS1-1',0],atom:['
 /*STDMAP>>*/
 const starLine=(P,g,n)=>gameStars(P,g,n)?`${gameStars(P,g,n)}/${n*3} stars`:'';
 function renderMenu(){
-  const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;
+  const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;try{bdStrip();bdCheck();}catch(e){}
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
   const ab=Object.values(P.atom).map(r=>r.best).filter(x=>x>0);
   const mc=(cls,ic,title,desc,best,fn)=>{const art=h('div',{class:'art'});art.innerHTML=ART.thumb(ic);
@@ -2017,7 +2026,7 @@ function renderMenu(){
 /*NEWCARDS>>*/
     mc('m8','class','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
-    mc('m5','stats','My Stats','See your best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
+    mc('m5','stats','My Profile','See your badges, rank, best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
     h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
     ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Speed Find, Element Trivia, Explore the Table and Atom Builder. Everything else shows as locked.')]:[])
   );
@@ -2117,7 +2126,7 @@ function spFinish(){
   S.locked=true;clearInterval(spTimer);
   const avg=mean(S.times),P=prof(),rec=spRec(P,S.key),prev=rec.best;
   rec.plays++;const isBest=prev==null||avg<prev;if(isBest)rec.best=avg;saveAll();
-  cloudSubmit('speed',S.key,avg,{mistakes:S.mistakes,n:S.queue.length,style:S.style||'name'});
+  bdSpeedDone(avg,S.mistakes);cloudSubmit('speed',S.key,avg,{mistakes:S.mistakes,n:S.queue.length,style:S.style||'name'});
   const paired=S.queue.map((it,i)=>({e:it.e,t:S.times[i]}));
   const slow=paired.slice().sort((a,b)=>b.t-a.t).slice(0,3).map(x=>x.e.sym);
   const lvl=S.level,style=S.style,perfect=S.mistakes===0;
@@ -2199,7 +2208,7 @@ function trGuess(n){
 }
 function trFinishQ(ok){
   T.done=true;const e=T.target,pts=ok?5-T.shown:0;T.score+=pts;
-  T.results.push({e,pts,hints:T.shown,ok});
+  T.results.push({e,pts,hints:T.shown,ok});bdTriviaQ(e.sym,ok,T.shown);
   if(!ok)bumpMissed(e.sym);
   trCells[e.n].classList.remove('out');trCells[e.n].classList.add('hit');
   $('trScore').textContent=T.score;renderHints(false);
@@ -2214,7 +2223,7 @@ function trFinishQ(ok){
 $('trNext').onclick=()=>{T.i++;if(T.i>=T.queue.length)return trEnd();trQuestion();};
 $('trQuit').onclick=goMenu;
 function trEnd(){
-  const P=prof(),rec=P.trivia,prev=rec.best;rec.plays++;const isBest=T.score>prev;if(isBest)rec.best=T.score;saveAll();cloudSubmit('trivia','',T.score,{n:T.queue.length});
+  const P=prof(),rec=P.trivia,prev=rec.best;rec.plays++;const isBest=T.score>prev;if(isBest)rec.best=T.score;saveAll();bdTriviaEnd(T.results);cloudSubmit('trivia','',T.score,{n:T.queue.length});
   const right=T.results.filter(r=>r.ok).length,max=T.queue.length*4;
   const title=T.score>=max*.85?'Element Master!':T.score>=max*.6?'Lab Pro!':T.score>=max*.35?'Rising Scientist':'Keep Exploring!';
   showEnd({emoji:T.score>=max*.6?'trophy':'question',title,big:`${T.score}/${max}`,sub:`${right} of ${T.queue.length} solved`,
@@ -4871,6 +4880,7 @@ function startExplore(){
   $('exInfo').replaceChildren(h('h2',null,'Click an element!'),h('p',{class:'sub'},'Tap any square on the periodic table to see its facts.'));
 }
 function exPick(n){
+  bdExplore(n);
   clearCells(exCells);exCells[n].classList.add('sel');
   const e=EL[n-1],col=CATS[e.cat][1];
   $('exInfo').replaceChildren(
@@ -4887,6 +4897,7 @@ function exPick(n){
 }
 
 /* ================= STATS ================= */
+$('userName').addEventListener('click',()=>{if(me&&profiles[me]){renderStats();show('s-stats');}});$('userName').style.cursor='pointer';$('userName').title='My Profile';
 const speedLabel=k=>{const l=k[0],s=k.slice(1);return `Speed Find · ${LEVELS[l]?LEVELS[l].name:'Level '+l}${s?' · '+styleName(s):''}`;};
 function renderStats(){
   const P=prof();
@@ -4902,11 +4913,210 @@ function renderStats(){
   rows.push(['Separation Station',sepStars(P)?`${sepStars(P)}/${SEP_LEVELS.length*3} ★`:'—',Object.values(P.sep).reduce((a,r)=>a+(r.plays||0),0)]);
   NEWG.forEach(g=>rows.push([g.name,gameStars(P,g.key,g.n)?`${gameStars(P,g.key,g.n)}/${g.n*3} ★`:'—',Object.values(P[g.key]||{}).reduce((a,r)=>a+(r.plays||0),0)]));
   $('statsBody').replaceChildren(
-    h('p',{class:'sub'},`${P.name}${P.cls?' · Class '+P.cls:''}`),
+    ...bdProfileNodes(),
     h('table',{class:'dt'},h('tr',null,h('th',null,'Game'),h('th',null,'Best'),h('th',null,'Rounds played')),
       ...rows.map(r=>h('tr',null,h('td',null,r[0]),h('td',null,r[1]),h('td',null,r[2])))),
     h('h3',{style:'margin-top:16px'},'Elements to practice'),
     trick.length?h('div',{class:'tchips',style:'justify-content:flex-start'},trick.map(([s])=>h('span',{class:'tchip slow'},`${BYSYM[s]?BYSYM[s].name:s} (${s})`))):h('p',{class:'sub'},'Play a few rounds and your tricky elements will show up here.'));
+}
+
+/* ================= BADGES ================= */
+const BD_T=[['Cu','#c8793a','#f0b27a','Copper'],['Ag','#aab4c3','#e1e7f0','Silver'],['Au','#e3ae2f','#f8dc7a','Gold'],['Pt','#62c1d6','#b4ecf7','Platinum']];
+const BD_S=['★','#8a63d2','#eadfff','Secret'];
+const BD_FAMS=[['d','Dedication','Earned by showing up and playing.'],['m','Mastery','Earned by getting good.'],['s','Secret','Hidden until you find them.']];
+const BD_FRAME={d:'M0,-50 L43,-25 L43,25 L0,50 L-43,25 L-43,-25 Z',m:'M-40,-42 H40 V10 Q40,42 0,54 Q-40,42 -40,10 Z',s:'M0,-54 L50,0 L0,54 L-50,0 Z'};
+const BD_RANKS=[[0,'Apprentice'],[6,'Lab tech'],[16,'Chemist'],[32,'Senior chemist'],[55,'Professor'],[85,'Nobel laureate']];
+const bdS='stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"';
+const BD_G={
+ bolt:'<polygon points="4,-22 -12,2 -1,2 -5,22 13,-4 2,-4" fill="currentColor"/>',
+ flame:'<path d="M0,-22 C10,-10 14,-2 12,8 C10,18 -10,18 -12,8 C-14,0 -6,-6 -4,-14 C-2,-10 2,-12 0,-22 Z" fill="currentColor"/>',
+ clock:`<circle r="16" ${bdS}/><polyline points="0,-9 0,0 8,4" ${bdS}/>`,
+ calendar:`<rect x="-16" y="-14" width="32" height="30" rx="3" ${bdS}/><line x1="-16" y1="-5" x2="16" y2="-5" ${bdS}/><line x1="-8" y1="-20" x2="-8" y2="-10" ${bdS}/><line x1="8" y1="-20" x2="8" y2="-10" ${bdS}/><polyline points="-7,6 -2,11 8,1" ${bdS}/>`,
+ globe:`<circle r="16" ${bdS}/><ellipse rx="7" ry="16" ${bdS}/><line x1="-16" y1="0" x2="16" y2="0" ${bdS}/>`,
+ lens:`<circle cx="-3" cy="-3" r="13" ${bdS}/><line x1="7" y1="7" x2="18" y2="18" ${bdS}/>`,
+ hourglass:`<path d="M-12,-20 H12 L0,0 L12,20 H-12 L0,0 Z" ${bdS}/>`,
+ cursor:`<polygon points="-4,-18 -4,12 3,6 8,18 13,15 8,3 17,3" fill="currentColor"/><line x1="-22" y1="-8" x2="-12" y2="-8" ${bdS}/><line x1="-26" y1="0" x2="-12" y2="0" ${bdS}/>`,
+ target:`<circle cy="-2" r="18" ${bdS}/><circle cy="-2" r="9" ${bdS}/><circle cy="-2" r="3" fill="currentColor"/>`,
+ stars:'<g transform="translate(0,-4)"><polygon points="0,-14 3.3,-4.5 13.3,-4.3 5.3,1.7 8.2,11.3 0,5.6 -8.2,11.3 -5.3,1.7 -13.3,-4.3 -3.3,-4.5" fill="currentColor"/></g><g transform="translate(-17,8) scale(.6)"><polygon points="0,-14 3.3,-4.5 13.3,-4.3 5.3,1.7 8.2,11.3 0,5.6 -8.2,11.3 -5.3,1.7 -13.3,-4.3 -3.3,-4.5" fill="currentColor"/></g><g transform="translate(17,8) scale(.6)"><polygon points="0,-14 3.3,-4.5 13.3,-4.3 5.3,1.7 8.2,11.3 0,5.6 -8.2,11.3 -5.3,1.7 -13.3,-4.3 -3.3,-4.5" fill="currentColor"/></g>',
+ flask:`<path d="M-6,-20 H6 V-6 L18,16 Q20,20 14,20 H-14 Q-20,20 -18,16 L-6,-6 Z" ${bdS}/><line x1="-12" y1="9" x2="12" y2="9" ${bdS}/>`,
+ laser:`<polyline points="-22,14 0,-8 22,14" ${bdS}/><line x1="-9" y1="-15" x2="9" y2="3" stroke="currentColor" stroke-width="6" stroke-linecap="round"/>`,
+ bulb:`<path d="M-9,8 A14,14 0 1 1 9,8 V12 H-9 Z" ${bdS}/><line x1="-6" y1="19" x2="6" y2="19" ${bdS}/>`,
+ tube:`<path d="M-7,-20 V10 A7,7 0 0 0 7,10 V-20" ${bdS}/><line x1="-11" y1="-20" x2="11" y2="-20" ${bdS}/><line x1="-7" y1="-1" x2="7" y2="-1" ${bdS}/>`,
+ coaster:`<path d="M-22,12 C-12,-24 2,-24 8,2 C12,18 18,-4 22,-12" ${bdS}/><line x1="-22" y1="20" x2="22" y2="20" ${bdS}/>`,
+ atom:`<circle r="4" fill="currentColor"/><ellipse rx="21" ry="8" fill="none" stroke="currentColor" stroke-width="2.5"/><ellipse rx="21" ry="8" transform="rotate(60)" fill="none" stroke="currentColor" stroke-width="2.5"/><ellipse rx="21" ry="8" transform="rotate(-60)" fill="none" stroke="currentColor" stroke-width="2.5"/>`,
+ mol:`<line x1="-12" y1="8" x2="0" y2="-12" ${bdS}/><line x1="12" y1="8" x2="0" y2="-12" ${bdS}/><circle cx="-12" cy="9" r="6" fill="currentColor"/><circle cx="12" cy="9" r="6" fill="currentColor"/><circle cy="-12" r="8" fill="currentColor"/>`,
+ scale:`<line y1="-20" y2="16" ${bdS}/><line x1="-18" y1="-12" x2="18" y2="-12" ${bdS}/><path d="M-24,2 H-12 M12,2 H24" ${bdS}/><line x1="-8" y1="20" x2="8" y2="20" ${bdS}/>`,
+ therm:`<rect x="-4" y="-22" width="8" height="28" rx="4" ${bdS}/><circle cy="14" r="8" fill="currentColor"/>`,
+ back:`<path d="M14,-8 A16,16 0 1 0 14,8" ${bdS}/><polygon points="14,-18 21,-6 8,-6" fill="currentColor"/>`,
+ check:`<circle r="17" ${bdS}/><polyline points="-8,1 -2,8 9,-6" ${bdS}/>`,
+ t_Ne:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">Ne</text>',
+ t_Au:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">Au</text>',
+ t_10:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">10</text>',
+ t_3x:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">3×</text>',
+ t_Og:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">Og</text>',
+ t_q:'<text y="9" text-anchor="middle" style="font:700 28px system-ui,sans-serif" fill="currentColor">?</text>'
+};
+function bdSvg(b,t,px){
+  const lock=t<0,sec=b&&b.fam==='s',tc=lock?['','#4b5266','#79829a']:(sec?BD_S:BD_T[t]);
+  const fam=b?b.fam:'s',F=BD_FRAME[fam],sc=fam==='m'?'translate(0,2) scale(.8)':'scale(.8)';
+  return `<svg viewBox="-56 -58 112 116" width="${px}" height="${px}" aria-hidden="true"><path d="${F}" fill="${tc[1]}"/><g transform="${sc}"><path d="${F}" fill="#1d2740"/></g><g style="color:${tc[2]}" opacity="${lock?.5:1}">${BD_G[b?b.g:'t_q']}</g></svg>`;
+}
+const bdDays=P=>{const a=P.act&&P.act.days;return Array.isArray(a)?a:[];};
+const bdIso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+function bdNextSchool(s){const d=new Date(s+'T12:00:00');do{d.setDate(d.getDate()+1);}while(d.getDay()===0||d.getDay()===6);return bdIso(d);}
+function bdStreak(P){const ds=[...new Set(bdDays(P))].sort();let best=0,run=0,prev=null;ds.forEach(d=>{const dt=new Date(d+'T12:00:00'),wk=dt.getDay()===0||dt.getDay()===6;run=(prev&&bdNextSchool(prev)===d)?run+1:1;prev=d;if(run>best)best=run;});return best;}
+const bdAct=P=>{const a=P.act||(P.act={});a.sec=a.sec||0;a.days=a.days||[];a.long=a.long||0;a.perfect=a.perfect||0;a.exp=a.exp||[];a.flags=a.flags||{};a.dg=a.dg||{};return a;};
+const bdGames=P=>['speed','atom','diner','sep','laser','blackout','evidence','coaster'].filter(g=>Object.values(P[g]||{}).some(r=>r&&r.plays>0)).length+['trivia','lab','balance'].filter(g=>P[g]&&P[g].plays>0).length+((P.act&&P.act.exp&&P.act.exp.length)?1:0);
+const bdPlays=P=>{let t=0;['speed','atom','diner','sep','laser','blackout','evidence','coaster'].forEach(g=>Object.values(P[g]||{}).forEach(r=>{if(r)t+=r.plays||0;}));['trivia','lab','balance'].forEach(g=>{t+=(P[g]&&P[g].plays)||0;});return t;};
+const bdSolved=(P,g,n)=>{let c=0;for(let i=1;i<=n;i++)if(lvStars(P,g,i)>0)c++;return c;};
+const bdThree=P=>{let c=0;for(let i=1;i<=SEP_LEVELS.length;i++)if(lvStars(P,'sep',i)>=3)c++;NEWG.forEach(g=>{for(let i=1;i<=g.n;i++)if(lvStars(P,g.key,i)>=3)c++;});return c;};
+const bdFast=P=>{const v=Object.values(P.speed||{}).filter(r=>r&&r.plays&&r.best!=null).map(r=>r.best);return v.length?Math.min(...v):Infinity;};
+const bdComeback=P=>['sep','laser','blackout','evidence','coaster','diner'].some(g=>Object.values(P[g]||{}).some(r=>r&&r.plays>=6&&r.best>0));
+const bdHas=(P,arr)=>{const e=bdAct(P).exp;return arr.every(n=>e.includes(n));};
+const BADGES=[
+ {id:'spark',fam:'d',name:'Spark',g:'bolt',th:[1,10,50,150],val:P=>bdPlays(P),d:v=>`Play ${v} round${v>1?'s':''}`},
+ {id:'streak',fam:'d',name:'On a streak',g:'flame',th:[2,3,5,10],val:P=>bdStreak(P),d:v=>`Play ${v} school days in a row`},
+ {id:'regular',fam:'d',name:'Regular',g:'calendar',th:[2,5,10,20],val:P=>[...new Set(bdDays(P))].length,d:v=>`Play on ${v} different days`},
+ {id:'labrat',fam:'d',name:'Lab rat',g:'clock',th:[15,60,180,300],val:P=>Math.floor(bdAct(P).sec/60),d:v=>`${v} minutes of play time`},
+ {id:'marathon',fam:'d',name:'Marathoner',g:'hourglass',th:[10,20,30,45],val:P=>Math.floor(bdAct(P).long/60),d:v=>`Play ${v} minutes in one sitting`},
+ {id:'explorer',fam:'d',name:'Explorer',g:'globe',th:[2,3,4,6],val:P=>bdGames(P),d:v=>`Try ${v} different games`},
+ {id:'curious',fam:'d',name:'Curious',g:'lens',th:[5,25,60,118],val:P=>bdAct(P).exp.length,d:v=>`Open ${v} elements in Explore the Table`},
+ {id:'lightning',fam:'m',name:'Lightning',g:'cursor',th:[3000,2000,1500,1000],low:1,val:P=>bdFast(P),d:v=>`Finish a Speed Find round averaging under ${v/1000} second${v===1000?'':'s'}`},
+ {id:'sharp',fam:'m',name:'Sharpshooter',g:'target',th:[1,3,10,25],val:P=>bdAct(P).perfect,d:v=>`${v} Speed Find round${v>1?'s':''} with zero mistakes`},
+ {id:'mystery',fam:'m',name:'Mystery solver',g:'lens',th:[20,28,34,40],val:P=>(P.trivia&&P.trivia.best)||0,d:v=>`Score ${v}+ in Element Trivia`},
+ {id:'atom',fam:'m',name:'Atom architect',g:'atom',th:[15,40,70,90],val:P=>Object.values(P.atom||{}).reduce((a,r)=>a+((r&&r.best)||0),0),d:v=>`${v} total best points in Atom Builder`},
+ {id:'triple',fam:'m',name:'Triple star',g:'stars',th:[1,5,15,40],val:P=>bdThree(P),d:v=>`Earn 3 stars on ${v} level${v>1?'s':''}`},
+ {id:'pure',fam:'m',name:'Pure genius',g:'flask',game:'sep',th:[1,8,18,27],val:P=>bdSolved(P,'sep',SEP_LEVELS.length),d:v=>`Solve ${v} Separation Station levels`},
+ {id:'lz',fam:'m',name:'Beam me up',g:'laser',game:'laser',th:[1,5,10,15],val:P=>bdSolved(P,'laser',LZ_N),d:v=>`Solve ${v} Laser Maze levels`},
+ {id:'bo',fam:'m',name:'Lights on',g:'bulb',game:'blackout',th:[1,4,8,12],val:P=>bdSolved(P,'blackout',BO_N),d:v=>`Solve ${v} Blackout! levels`},
+ {id:'ev',fam:'m',name:'Detective',g:'tube',game:'evidence',th:[1,5,10,15],val:P=>bdSolved(P,'evidence',EV_N),d:v=>`Solve ${v} Evidence Lab cases`},
+ {id:'ca',fam:'m',name:'Thrill builder',g:'coaster',game:'coaster',th:[1,3,6,10],val:P=>bdSolved(P,'coaster',10),d:v=>`Solve ${v} Coaster Architect levels`},
+ {id:'lab',fam:'m',name:'Compound chemist',g:'mol',game:'lab',th:[10,20,26,30],val:P=>(P.lab&&P.lab.best)||0,d:v=>`Score ${v}+ in Compound Lab`},
+ {id:'bal',fam:'m',name:'Equation balancer',g:'scale',game:'balance',th:[10,20,26,30],val:P=>(P.balance&&P.balance.best)||0,d:v=>`Score ${v}+ in Balance It`},
+ {id:'mercury',fam:'s',name:'Mercury rising',g:'therm',desc:'Name Mercury (Hg) in Element Trivia using only the first hint.',test:P=>!!bdAct(P).flags.mercury},
+ {id:'comeback',fam:'s',name:'Comeback kid',g:'back',desc:'Beat a level after playing it 6 or more times.',test:P=>bdComeback(P)},
+ {id:'ace',fam:'s',name:'Trivia ace',g:'t_10',desc:'Solve all 10 mysteries in one Element Trivia round.',test:P=>!!bdAct(P).flags.ace},
+ {id:'clean',fam:'s',name:'Clean sweep',g:'check',desc:'Finish a Speed Find round with zero mistakes and under 2 seconds per element.',test:P=>!!bdAct(P).flags.clean},
+ {id:'noble',fam:'s',name:'Noble crew',g:'t_Ne',desc:'Open all seven noble gases in Explore the Table.',test:P=>bdHas(P,[2,10,18,36,54,86,118])},
+ {id:'alch',fam:'s',name:'Alchemist',g:'t_Au',desc:'Open copper, silver, gold and platinum in Explore the Table.',test:P=>bdHas(P,[29,47,78,79])},
+ {id:'ends',fam:'s',name:'Both ends',g:'t_Og',desc:'Open the first and the very last element on the table.',test:P=>bdHas(P,[1,118])},
+ {id:'switch',fam:'s',name:'Switch hitter',g:'t_3x',desc:'Play three different games in one day.',test:P=>Object.values(bdAct(P).dg).some(a=>Array.isArray(a)&&a.length>=3)}
+];
+const bdList=()=>BADGES.filter(b=>!b.game||!gameLocked(b.game));
+function bdTier(b,P){
+  if(b.fam==='s')return b.test(P)?0:-1;
+  const v=b.val(P);let t=-1;b.th.forEach((x,i)=>{if(b.low?(v<=x&&isFinite(v)):v>=x)t=i;});return t;
+}
+const bdName=(b,t)=>b.fam==='s'?b.name:`${b.name} · ${BD_T[t][0]}`;
+function bdPoints(P){let p=0;bdList().forEach(b=>{const t=bdTier(b,P);if(t>=0)p+=b.fam==='s'?4:t+1;});return p;}
+function bdRank(p){let r=BD_RANKS[0],nx=null;BD_RANKS.forEach((x,i)=>{if(p>=x[0]){r=x;nx=BD_RANKS[i+1]||null;}});return {name:r[1],next:nx};}
+function bdToast(gains,first){
+  try{
+    if(gains.length>3||(first&&gains.length>1)){fx.pop({icon:'sparkle',text:`${gains.length} badges earned! Open My Profile`,kind:'great',size:'big'});fx.confetti(40);return;}
+    gains.forEach(([b,t],i)=>setTimeout(()=>{fx.pop({icon:'star',text:'Badge: '+bdName(b,t),kind:'great',size:'big'});fx.confetti(30);},i*1700));
+  }catch(e){}
+}
+function bdCheck(){
+  try{
+    const P=prof();if(!P)return;const first=!P.bd,old=P.bd||{},nb=Object.assign({},old),gains=[];
+    bdList().forEach(b=>{const t=bdTier(b,P);if(t>=0&&(old[b.id]===undefined||t>old[b.id])){nb[b.id]=t;gains.push([b,t]);}});
+    if(gains.length){P.bd=nb;P.bdAt=P.bdAt||{};gains.forEach(([b,t])=>{P.bdAt[b.id+':'+t]=Date.now();});saveAll();bdToast(gains,first);}
+    else if(first){P.bd=nb;saveAll();}
+  }catch(e){}
+}
+/* ---- activity tracking (play time, days, explore, flags) ---- */
+let bdLast=0,bdSess=0,bdSave=0;
+['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,()=>{bdLast=Date.now();},{passive:true,capture:true}));
+setInterval(()=>{
+  try{
+    const P=me&&profiles[me];if(!P)return;
+    if(document.hidden||Date.now()-bdLast>45000){bdSess=0;return;}
+    const a=bdAct(P);a.sec+=5;bdSess+=5;if(bdSess>a.long)a.long=bdSess;
+    const d=bdIso(new Date());if(!a.days.includes(d))a.days.push(d);
+    if(++bdSave>=6){bdSave=0;saveAll();bdCheck();}
+  }catch(e){}
+},5000);
+function bdPlayed(game){
+  try{const P=prof();if(!P)return;const a=bdAct(P),d=bdIso(new Date());if(!a.days.includes(d))a.days.push(d);
+    const l=a.dg[d]||(a.dg[d]=[]);if(!l.includes(game))l.push(game);
+    const ks=Object.keys(a.dg).sort();if(ks.length>30)ks.slice(0,ks.length-30).forEach(k=>delete a.dg[k]);
+    saveAll();setTimeout(bdCheck,400);}catch(e){}
+}
+function bdSpeedDone(avg,mistakes){try{const P=prof();if(!P)return;const a=bdAct(P);if(mistakes===0){a.perfect++;if(avg<2000)a.flags.clean=1;}saveAll();}catch(e){}}
+function bdTriviaQ(sym,ok,hints){try{const P=prof();if(!P)return;if(ok&&sym==='Hg'&&hints===1){bdAct(P).flags.mercury=1;saveAll();}}catch(e){}}
+function bdTriviaEnd(results){try{const P=prof();if(!P)return;if(results.length>=10&&results.every(r=>r.ok)){bdAct(P).flags.ace=1;saveAll();}}catch(e){}}
+function bdExplore(n){try{const P=prof();if(!P)return;const a=bdAct(P);if(!a.exp.includes(n)){a.exp.push(n);saveAll();bdCheck();}}catch(e){}}
+/* ---- profile UI ---- */
+let bdSel=null;
+const bdDate=t=>{try{return new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});}catch(e){return '';}};
+function bdBtn(b,P,onPick,px){
+  const t=bdTier(b,P),node=h('button',{class:'bdb'+(t<0?' lock':''),title:t<0?b.name+' (locked)':bdName(b,t),'aria-label':b.name+(t<0?', locked':', '+(b.fam==='s'?'secret badge earned':BD_T[t][3]))});
+  const sv=h('span',{class:'bdsv'});sv.innerHTML=bdSvg(b,t,px);node.append(sv);
+  return {node,t};
+}
+function bdDetail(P){
+  const box=$('bdDetail');if(!box)return;
+  const b=BADGES.find(x=>x.id===bdSel);
+  if(!b){box.replaceChildren(h('p',{class:'sub',style:'margin:0'},'Tap a badge to see how to earn it and to pin it to your profile.'));return;}
+  const t=bdTier(b,P),pinned=(P.pins||[]).includes(b.id),kids=[];
+  const big=h('span',{class:'bdbig'});big.innerHTML=bdSvg(b,t,84);
+  const txt=h('div',{style:'flex:1;min-width:0'});
+  txt.append(h('b',{style:'font-size:17px'},t>=0?bdName(b,t):b.name));
+  if(b.fam==='s'){txt.append(h('p',{class:'sub',style:'margin:4px 0 0'},b.desc));if(t>=0&&P.bdAt&&P.bdAt[b.id+':0'])txt.append(h('p',{class:'sub',style:'margin:4px 0 0'},'Earned '+bdDate(P.bdAt[b.id+':0'])));}
+  else{
+    const v=b.val(P),nx=t+1<b.th.length?t+1:null;
+    txt.append(h('p',{class:'sub',style:'margin:4px 0 0'},t>=0?`You have ${BD_T[t][3]}: ${b.d(b.th[t])}.`:'Not earned yet.'));
+    if(nx!==null)txt.append(h('p',{class:'sub',style:'margin:4px 0 0'},`Next, ${BD_T[nx][3]} (${BD_T[nx][0]}): ${b.d(b.th[nx])}.`+(b.low?'':` You're at ${Math.min(v,9999)}.`)));
+    else txt.append(h('p',{class:'sub',style:'margin:4px 0 0'},'Top tier. Nice work!'));
+  }
+  box.replaceChildren(big,txt);
+  if(t>=0){box.append(h('button',{class:'btn sm '+(pinned?'ghost':''),onclick:()=>{
+    const pins=(P.pins||[]).filter(x=>x!==b.id);if(!pinned){pins.push(b.id);while(pins.length>3)pins.shift();}P.pins=pins;saveAll();renderStats();}},pinned?'Unpin':'Pin to my profile'));}
+}
+function bdProfileNodes(){
+  try{
+    const P=prof(),pts=bdPoints(P),rk=bdRank(pts),list=bdList();
+    const earnedN=list.filter(b=>bdTier(b,P)>=0).length;
+    const card=h('div',{class:'bdcard'});
+    const left=h('div',{style:'flex:1;min-width:200px'},
+      h('div',{class:'bdname'},P.name),
+      h('div',{class:'sub',style:'margin:2px 0 6px'},(P.cls?'Class '+P.cls+' · ':'')+earnedN+' of '+list.length+' badges'),
+      h('div',{class:'bdrank'},rk.name,h('span',null,pts+' badge points')),
+      rk.next?h('div',{class:'bdbar'},h('i',{style:`width:${Math.min(100,Math.round((pts-BD_RANKS.find(r=>r[1]===rk.name)[0])/(rk.next[0]-BD_RANKS.find(r=>r[1]===rk.name)[0])*100))}%`})):null,
+      rk.next?h('div',{class:'sub',style:'margin-top:3px;font-size:12.5px'},`${rk.next[0]-pts} more points to ${rk.next[1]}`):h('div',{class:'sub',style:'margin-top:3px'},'Top rank reached!'));
+    const slots=h('div',{class:'bdpins'});
+    for(let i=0;i<3;i++){const id=(P.pins||[])[i],b=id&&BADGES.find(x=>x.id===id);
+      if(b&&bdTier(b,P)>=0){const {node}=bdBtn(b,P,null,68);node.onclick=()=>{bdSel=b.id;bdDetail(P);};slots.append(node);}
+      else slots.append(h('span',{class:'bdslot',title:'Pin a badge from the wall below'},'+'));}
+    card.append(left,h('div',null,h('div',{class:'sub',style:'font-size:12px;text-align:center;margin-bottom:4px'},'Showcase'),slots));
+    const out=[card,h('div',{class:'bddetail',id:'bdDetail'})];
+    BD_FAMS.forEach(([f,title,sub])=>{
+      const grp=list.filter(b=>b.fam===f);if(!grp.length)return;
+      const grid=h('div',{class:'bdgrid'});
+      if(f==='s'){
+        const got=grp.filter(b=>bdTier(b,P)>=0),left2=grp.length-got.length;
+        got.forEach(b=>{const {node,t}=bdBtn(b,P,null,76);node.append(h('b',null,b.name));node.onclick=()=>{bdSel=b.id;bdDetail(P);};grid.append(node);});
+        for(let i=0;i<left2;i++){const nd=h('div',{class:'bdb lock static'});const sv=h('span',{class:'bdsv'});sv.innerHTML=bdSvg(null,-1,76);nd.append(sv,h('b',null,'Secret'));grid.append(nd);}
+      }else grp.forEach(b=>{
+        const {node,t}=bdBtn(b,P,null,76);node.append(h('b',null,b.name));
+        node.append(h('em',null,t>=0?BD_T[t][0]:'locked'));
+        node.onclick=()=>{bdSel=b.id;bdDetail(P);};grid.append(node);});
+      out.push(h('h3',{class:'bdh'},title,h('span',null,' '+sub)),grid);
+    });
+    out.push(h('h3',{style:'margin-top:18px'},'Stats'));
+    setTimeout(()=>bdDetail(P),0);
+    return out;
+  }catch(e){return [];}
+}
+function bdStrip(){
+  try{
+    const el=$('bdStrip');if(!el)return;const P=prof();if(!P){el.replaceChildren();return;}
+    const pts=bdPoints(P),rk=bdRank(pts),pins=(P.pins||[]).map(id=>BADGES.find(b=>b.id===id)).filter(b=>b&&bdTier(b,P)>=0);
+    const btn=h('button',{class:'bdstripb',title:'Open my profile',onclick:()=>{renderStats();show('s-stats');}});
+    pins.forEach(b=>{const s=h('span',{class:'bdsv'});s.innerHTML=bdSvg(b,bdTier(b,P),34);btn.append(s);});
+    btn.append(h('span',{class:'bdtxt'},h('b',null,rk.name),` · ${pts} badge points`+(pins.length?'':' · tap to see your badges')));
+    el.replaceChildren(btn);
+  }catch(e){}
 }
 
 /* ================= TEACHER ================= */
