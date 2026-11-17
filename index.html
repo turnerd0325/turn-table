@@ -563,6 +563,25 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .ftmed{flex:none;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#3a2a00;background:radial-gradient(circle at 35% 30%,#fff3b0,#f5b700);border:3px solid #fff3b0}.ftmed.r2{background:radial-gradient(circle at 35% 30%,#fff,#aab4c3);border-color:#fff}.ftmed.r3{background:radial-gradient(circle at 35% 30%,#ffd8b0,#c8793a);border-color:#ffd8b0}
 .ftxt{display:flex;flex-direction:column;line-height:1.25}.ftxt b{font-size:17px;color:#f8dc7a}.ftxt span{font-size:14px;color:#e7edff}
 @media(max-width:720px){#feedBar{margin:0 6px}}
+.sciwait{display:none!important}body.sci-open{overflow:hidden}
+.sci-back{position:fixed;inset:0;z-index:300;background:rgba(15,23,42,.78);display:flex;align-items:center;justify-content:center;padding:10px}
+.sci-card{background:#fff;border-radius:18px;width:min(660px,100%);max-height:96vh;overflow:auto;padding:16px 20px;box-shadow:0 18px 50px rgba(0,0,0,.45);border-top:8px solid var(--accent2)}
+.sci-head{display:flex;align-items:center;gap:10px;font-size:20px;margin-bottom:8px}.sci-ico{width:34px;height:34px;border-radius:50%;background:var(--accent2);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:20px}
+.sci-game{margin-left:auto;font-size:13px;background:#eef1fb;color:var(--muted);border-radius:999px;padding:3px 10px;font-weight:700}
+.sci-how{background:#eaf1ff;border:2px solid #b9cdfa;border-radius:12px;padding:8px 14px;font-size:15px;line-height:1.4}.sci-how ol{margin:4px 0 6px;padding-left:20px}.sci-ex{background:#fff;border-radius:8px;padding:4px 10px;display:inline-block;font-size:14px}
+.sci-q{font-size:20px;font-weight:800;line-height:1.3;margin:12px 0 8px;color:var(--navy)}
+#sciIn{width:100%;font:inherit;font-size:18px;padding:10px 12px;border:3px solid var(--line);border-radius:12px;resize:none}#sciIn:focus{outline:none;border-color:var(--accent2)}
+.sci-row{display:flex;align-items:center;gap:12px;margin:8px 0}.sci-tries{color:var(--muted);font-weight:700}
+.sci-fb{display:flex;flex-direction:column;gap:6px}.sci-fb:empty{display:none}
+.sci-warn{background:#fff6dd;border:2px solid #f5b700;border-radius:10px;padding:8px 12px;font-weight:700}
+.sci-bad{background:#ffe8e8;border:2px solid #d64545;border-radius:10px;padding:8px 12px;font-weight:700}
+.sci-head2{font-weight:900;font-size:17px;color:var(--navy)}
+.sci-got{list-style:none;margin:0;padding:0;color:#157a42;font-weight:700}
+.sci-hint{background:#eef6ff;border-left:6px solid var(--accent);border-radius:8px;padding:8px 12px;font-size:16px}
+.sci-start{background:#f3ecff;border-left:6px solid var(--accent2);border-radius:8px;padding:8px 12px}
+.sci-model{background:#fff6dd;border-left:6px solid #f5b700;border-radius:8px;padding:8px 12px}
+.sci-ok{background:#e6f8ee;border:2px solid #1f9d55;border-radius:12px;padding:10px 14px;margin-bottom:8px}
+.sci-skip{margin-top:8px}
 </style>
 </head>
 <body>
@@ -1814,6 +1833,8 @@ const LOCKED_GAMES=['speed','lab','balance','diner','sep','laser','blackout','ev
 const OWNER_NICK='turner';
 const isOwner=()=>!!(me&&profiles[me]&&String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK);
 const gameLocked=g=>LOCKED_GAMES.includes(g)&&!isOwner();
+var scGame='speed';
+var SC_SCREEN={'s-speed-setup':'speed','s-speed':'speed','s-trivia':'trivia','s-explore':'explore','s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
 const GAME_SCREENS={'s-speed-setup':'speed','s-speed':'speed','s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
 const SHORT_DESC={speed:'Race the clock to find each element on the table.',trivia:'Guess the mystery element from 4 hints.',lab:'Build real compounds like H₂O from atoms.',atom:'Add protons, neutrons and electrons to build atoms.',balance:'Balance chemical equations so no atoms are lost.',diner:'Smash molecules into atoms and cook up the orders.',sep:'Use magnets, filters and heat to separate mixtures.',class:'Join your teacher’s live game with a code.',explore:'Click any element to discover its facts.',stats:'See your best scores and the elements you find tricky.',laser:'Light every crystal with mirrors, glass and black blocks.',blackout:'Wire series and parallel circuits to relight the city.',evidence:'Test mystery powders and metals, then name each one.',coaster:'Build a coaster and watch energy change form.'};
 const spRec=(P,key)=>P.speed[key]||(P.speed[key]={best:null,plays:0});
@@ -1886,6 +1907,7 @@ function stopAll(){runId++;clearInterval(spTimer);clearInterval(liveTimer);clear
 function show(id){
   if(me&&GAME_SCREENS[id]&&gameLocked(GAME_SCREENS[id])){stopAll();renderMenu();id='s-menu';}
   stopAll();$('fx').replaceChildren();
+  try{if(SC_SCREEN[id])scGame=SC_SCREEN[id];}catch(e){}
   document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));
   $('userChip').hidden=!me; if(me)$('userName').replaceChildren(I('user'),prof().name);
   window.scrollTo(0,0);
@@ -3075,7 +3097,7 @@ function sxJudge0(res){
       next?h('button',{class:'btn good',onclick:()=>startSep(SX.i+1)},'Next level ▶'):h('button',{class:'btn good',onclick:()=>{renderSepSetup();show('s-sep-setup');}},'All levels done! ★'),
       h('button',{class:'btn ghost',onclick:()=>{$('sxResult').hidden=true;}},stars<3?'Try for 3 ★':'Keep tinkering'),
       h('button',{class:'btn ghost',onclick:()=>{renderSepSetup();show('s-sep-setup');}},'Levels')));
-  $('sxResult').hidden=false;
+  $('sxResult').hidden=false;sciHold($('sxResult'),'sep');
 }
 /* ---- Cinematic belt run: a realistic perspective scene drawn on a canvas (no assets) ---- */
 let SXBED=null,SX3D=null,SXCV3=null;
@@ -4896,7 +4918,7 @@ function startExplore(){
   $('exInfo').replaceChildren(h('h2',null,'Click an element!'),h('p',{class:'sub'},'Tap any square on the periodic table to see its facts.'));
 }
 function exPick(n){
-  bdExplore(n);
+  bdExplore(n);sciExplore(n);
   clearCells(exCells);exCells[n].classList.add('sel');
   const e=EL[n-1],col=CATS[e.cat][1];
   $('exInfo').replaceChildren(
@@ -4970,6 +4992,8 @@ const BD_G={
  t_10:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">10</text>',
  t_3x:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">3×</text>',
  t_Og:'<text y="8" text-anchor="middle" style="font:700 22px system-ui,sans-serif" fill="currentColor">Og</text>',
+ chat:`<path d="M-18,-16 H18 V8 H4 L-6,18 V8 H-18 Z" ${bdS}/>`,
+ t_1:'<text y="8" text-anchor="middle" style="font:700 20px system-ui,sans-serif" fill="currentColor">1st</text>',
  t_q:'<text y="9" text-anchor="middle" style="font:700 28px system-ui,sans-serif" fill="currentColor">?</text>'
 };
 function bdSvg(b,t,px){
@@ -5009,6 +5033,8 @@ const BADGES=[
  {id:'ca',fam:'m',name:'Thrill builder',g:'coaster',game:'coaster',th:[1,3,6,10],val:P=>bdSolved(P,'coaster',10),d:v=>`Solve ${v} Coaster Architect levels`},
  {id:'lab',fam:'m',name:'Compound chemist',g:'mol',game:'lab',th:[10,20,26,30],val:P=>(P.lab&&P.lab.best)||0,d:v=>`Score ${v}+ in Compound Lab`},
  {id:'bal',fam:'m',name:'Equation balancer',g:'scale',game:'balance',th:[10,20,26,30],val:P=>(P.balance&&P.balance.best)||0,d:v=>`Score ${v}+ in Balance It`},
+ {id:'thinker',fam:'m',name:'Deep thinker',g:'chat',th:[3,15,40,80],val:P=>(P.sci&&P.sci.ok)||0,d:v=>`Answer ${v} Science Check question${v>1?'s':''} correctly`},
+ {id:'sharpmind',fam:'s',name:'Sharp mind',g:'t_1',desc:'Get 5 Science Check questions right on the very first try.',test:P=>!!(P.sci&&P.sci.first>=5)},
  {id:'mercury',fam:'s',name:'Mercury rising',g:'therm',desc:'Name Mercury (Hg) in Element Trivia using only the first hint.',test:P=>!!bdAct(P).flags.mercury},
  {id:'comeback',fam:'s',name:'Comeback kid',g:'back',desc:'Beat a level after playing it 6 or more times.',test:P=>bdComeback(P)},
  {id:'ace',fam:'s',name:'Trivia ace',g:'t_10',desc:'Solve all 10 mysteries in one Element Trivia round.',test:P=>!!bdAct(P).flags.ace},
@@ -5200,6 +5226,399 @@ async function feedPoll(){
 }
 setInterval(feedPoll,7000);setInterval(feedPump,400);setTimeout(feedPoll,1500);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)feedPoll();});
+
+/* ================= SCIENCE CHECK: answer checker + question bank ================= */
+const SC_FUNC=new Set('the a an is are was were be been of in on to and or because so it they them that this these those with for as by from at can will has have had its their then than if when which while into out up down more less not no each every all one both'.split(' '));
+const scNorm=s=>String(s).toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9*\s]/g,' ').split(/\s+/).filter(Boolean);
+function scStem(w){
+  if(/^\d+$/.test(w))return w;
+  if(w.length>3&&w.endsWith('ies'))w=w.slice(0,-3)+'y';else if(w.length>3&&w.endsWith('s')&&!w.endsWith('ss'))w=w.slice(0,-1);
+  if(w.length>4&&w.endsWith('ing'))w=w.slice(0,-3);else if(w.length>3&&w.endsWith('ed'))w=w.slice(0,-2);
+  return w;
+}
+function scLev(a,b){
+  const m=a.length,n=b.length;if(Math.abs(m-n)>2)return 9;
+  let p=[];for(let j=0;j<=n;j++)p[j]=j;
+  for(let i=1;i<=m;i++){const c=[i];for(let j=1;j<=n;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=c;}
+  return p[n];
+}
+function scWord(alt,raw,stems){
+  if(alt.endsWith('*')){const pre=alt.slice(0,-1);return raw.some(w=>w.startsWith(pre));}
+  const a=scStem(alt);
+  return stems.some(s=>s===a||(a.length>=5&&!/\d/.test(a)&&s[0]===a[0]&&scLev(s,a)<=(a.length>=9?2:1)));
+}
+function scHits(q,text){
+  const raw=scNorm(text),stems=raw.map(scStem);
+  return q.groups.map(g=>g.k.some(alt=>scNorm(alt).every(t=>scWord(t,raw,stems))));
+}
+function scGrade(q,text){
+  const t=String(text).trim(),words=scNorm(t).filter(w=>/[a-z]/.test(w));
+  if(words.length<5)return {kind:'form',msg:`That is too short. Write a full sentence with at least 5 words. You wrote ${words.length}.`};
+  if(!/^[A-Z]/.test(t))return {kind:'form',msg:'Start your sentence with a capital letter.'};
+  if(!/[.!?]["')”]*$/.test(t))return {kind:'form',msg:'End your sentence with a period.'};
+  if(new Set(words.filter(w=>SC_FUNC.has(w))).size<2)return {kind:'form',msg:'Write a real sentence with connecting words like "the", "is", "are", "because" or "of", not just a list of science words.'};
+  const low=t.toLowerCase();
+  const hit=scHits(q,t);
+  for(const b of q.bad||[])if(b.re.test(low))return {kind:'bad',msg:b.msg,hit};
+  return hit.every(Boolean)?{kind:'ok',hit}:{kind:'miss',hit};
+}
+const SQ=(id,g,q,groups,model,starter,bad)=>({id,g:g.split(' '),q,groups:groups.map(([k,got,hints])=>({k,got,hints})),model,starter,bad:bad||[]});
+const SC_BANK=[
+/* ---- Speed Find / periodic table organization ---- */
+SQ('sp1','speed explore','Elements in the same column (group) of the periodic table are alike. Explain how they are alike.',[
+ [['similar','alike','same','share*','common','resembl*','like each other'],'You said they are alike. Good!',['What word describes elements that sit in the same column? Think of how much they match.','Say that the elements in a group are similar to each other.','Use the word "similar" in your sentence.']],
+ [['propert*','behav*','react*','characteristic*','trait*','chemical'],'You named what is alike. Nice!',['Now say WHAT is alike. Think about how the elements act when they meet other substances.','They are similar in their properties and in how they react.','Finish with "...properties" or "...react in similar ways."']]],
+ 'Elements in the same group have similar properties and react in similar ways.','Elements in the same group have...'),
+SQ('sp2','speed explore','What do the elements in the same row (period) of the periodic table have in common?',[
+ [['same','equal','share*','common','identical'],'You described what they share. Good!',['The question asks what the elements in a row have in common. Start with "They have the same..."','Say that they all have the same number of something.','Say "the same number of..."']],
+ [['shell*','energy level*','orbit*','layer*','electron shell*'],'You named the electron shells. Great!',['Think about the atoms. What do the elements in one row have the same number of around the nucleus?','Each row matches how many energy levels the electrons fill. Another word for energy levels is shells.','Say "...the same number of electron shells."']]],
+ 'Elements in the same period have the same number of electron shells.','Elements in the same period have...'),
+SQ('sp3','speed explore','Where are the metals found on the periodic table?',[
+ [['left','far left','west'],'You found the correct side. Good!',['Look at the colors on the table. Which side of the staircase has most of the metals?','Most metals are on one side. Is it the left, the right, or the middle?','Say "on the left side."']],
+ [['metal*'],'You mentioned the metals.',['Make sure your sentence says what is on the left.','Use the word "metals."','Start with "The metals are..."']]],
+ 'The metals are on the left side and in the middle of the periodic table.','The metals are...',
+ [{re:/metals?\s+(are|is|can be found)\s+(on\s+)?(the\s+)?(far\s+)?right/,msg:'Look again. The nonmetals are mostly on the right side. Where are the metals?'}]),
+SQ('sp4','speed explore','What are metalloids, and where are they on the table?',[
+ [['between','border*','staircase','stair*','zigzag','zig zag','along','divid*','separat*','middle','boundary','line'],'You described where they are. Good!',['Look for the staircase line on the table. Where are the metalloids compared with the metals and nonmetals?','The metalloids sit right along the staircase between two groups of elements.','Say they are "along the staircase between the metals and nonmetals."']],
+ [['both','mix*','in between','some of each','half','like metals and nonmetals','properties of metals and nonmetals','characteristics of both','combination'],'You told what they are like. Nice!',['Metalloids have a special mix of properties. What kinds of elements do they act like?','They act partly like metals and partly like nonmetals.','Say "...and have properties of both metals and nonmetals."']]],
+ 'Metalloids sit along the staircase between the metals and nonmetals, and they have properties of both.','Metalloids are...'),
+SQ('sp5','speed explore trivia','In what order are the elements arranged on the periodic table?',[
+ [['atomic number*','proton*','number of proton*','atomic numbers'],'You named the ordering rule. Great!',['Each element has a number in its square. What does that number count inside the atom?','The elements are ordered by their atomic number, which is the number of protons.','Say "by their number of protons (atomic number)."']],
+ [['increas*','order*','arrang*','go up','goes up','ascend*','higher','grow*','left to right','more','rise*','add*'],'You described the direction. Good!',['Do the numbers get bigger or smaller as you move across the table?','The atomic number gets bigger as you move from left to right.','Say "...increasing from left to right."']]],
+ 'The elements are arranged in order of increasing atomic number, which is their number of protons.','The elements are arranged...'),
+/* ---- Trivia ---- */
+SQ('tr1','trivia explore','The noble gases in Group 18 almost never react. Why do you think that is?',[
+ [['full','filled','complete','stable','eight','8','satisf*','happy'],'You said their shell is complete. Good!',['Think about the outer electrons of a noble gas atom. Is there room for more?','Their outermost shell is already full, so the atoms are stable.','Say "...their outer shell is full."']],
+ [['outer*','valence','shell*','energy level*','electron*'],'You named the outer electrons.',['Say WHICH part of the atom is full.','It is about the electrons in the outer energy level.','Use the words "outer shell."']]],
+ 'Noble gases hardly react because their outer electron shell is full, so they are stable.','Noble gases hardly react because...'),
+SQ('tr2','trivia explore','Why do the elements in Group 1 react in similar ways?',[
+ [['same','one','1','equal','identical','single'],'You said they share the same number. Good!',['Elements in a group match in something about their electrons. What do they share?','They all have the same number of electrons in one special place.','Say "...the same number of outer electrons."']],
+ [['outer*','valence','outermost','last shell','last energy level'],'You named the outer electrons. Great!',['Which electrons matter most when atoms react? The ones farthest from the nucleus.','The electrons on the outside of the atom decide how it reacts.','Use the words "outer electrons."']]],
+ 'Elements in Group 1 react in similar ways because they all have the same number of outer electrons.','Group 1 elements react in similar ways because...'),
+SQ('tr3','trivia explore','Why is the periodic table called "periodic"?',[
+ [['repeat*','pattern*','again','recurring','regular','cycle*','cycl*','over and over'],'You said something repeats. Good!',['The word periodic means something happens again and again. What does that for the elements?','There is a pattern that repeats as you move across each row.','Say "...a pattern repeats."']],
+ [['propert*','behav*','characteristic*','trait*','react*'],'You named what repeats. Nice!',['What about the elements repeats? Think about what each element is like.','It is the properties of the elements that repeat.','Use the word "properties."']]],
+ 'The table is called periodic because the properties of the elements repeat in a regular pattern.','The table is called periodic because...'),
+SQ('tr4','trivia lab','What is the difference between an element and a compound?',[
+ [['one','single','only','pure','same','kind','type'],'You described an element. Good!',['An element is made of just one thing. What is it made of?','An element has only one kind of atom.','Say "an element has only one kind of atom."']],
+ [['two or more','more than one','two','combin*','bond*','different elements','joined','multiple','several'],'You described a compound. Nice!',['A compound is made of more than one kind of element joined together.','A compound has two or more different elements that are chemically bonded.','Say "a compound has two or more different elements bonded together."']]],
+ 'An element has only one kind of atom, but a compound has two or more different elements bonded together.','An element has... but a compound has...'),
+SQ('tr5','trivia atom','What does the atomic number of an element tell you?',[
+ [['proton*'],'You named the protons. Great!',['The atomic number counts one kind of particle in the nucleus. Which one?','It is the number of protons in each atom.','Say "...the number of protons."']],
+ [['element','identi*','determin*','which','what kind','type','defin*','unique','different','name'],'You said it identifies the element. Nice!',['Why is that number important? What does it decide about the atom?','The number of protons tells you which element the atom is.','Say "...which element it is."']]],
+ 'The atomic number tells you the number of protons, which identifies which element the atom is.','The atomic number tells you...'),
+SQ('tr6','trivia explore','What happens to the atomic number as you move from left to right across a row?',[
+ [['increas*','go up','goes up','get bigger','gets bigger','grow*','higher','rise*','more','add*','larger','ascend*'],'You said it gets bigger. Good!',['Look at the numbers in the squares as you go across. Do they get bigger or smaller?','The atomic number increases as you move right.','Say "...it increases."']],
+ [['one','1','each'],'You said by how much.',['By how much does it change from one square to the next?','It goes up by one for each element.','Say "...by one with each element."']]],
+ 'The atomic number increases by one with each element as you move from left to right.','As you move to the right...'),
+/* ---- Explore ---- */
+SQ('ex1','explore','How does the periodic table help you predict how an element will behave?',[
+ [['group*','column*','neighbor*','neighbour*','near*','next to','beside','same column','position','place','location'],'You used the element\'s place on the table. Good!',['Think about where an element sits. What can its neighbors tell you?','Elements in the same group or column act alike.','Say "...elements in the same column behave in a similar way."']],
+ [['similar','alike','same','predict*','behav*','react*','propert*'],'You said they act alike. Nice!',['What do neighbors have in common? Think about properties.','Elements near each other or in the same group have similar properties.','Use the words "similar properties."']]],
+ 'An element sits near others in its group that have similar properties, so I can predict how it will behave.','The periodic table helps me predict because...'),
+SQ('ex2','explore','Where are the most reactive metals on the periodic table?',[
+ [['left','far left','group 1','first column','alkali','west'],'You found the right location. Good!',['The most reactive metals are in the first column. Which side of the table is that?','They are on the far left side, in Group 1.','Say "...on the far left side, in Group 1."']],
+ [['reactive','react*','metal*'],'You mentioned the metals.',['Make sure your sentence tells where the metals are found.','Use the words "reactive metals."','Start with "The most reactive metals are..."']]],
+ 'The most reactive metals are on the far left side of the table, in Group 1.','The most reactive metals are...'),
+SQ('ex3','explore','Where are the most reactive nonmetals found on the periodic table?',[
+ [['right','group 17','halogen*','second to last','next to the noble','near the noble','far right','east'],'You found the right area. Good!',['The most reactive nonmetals are near the right edge, just before the noble gases.','They are in Group 17, which is next to the last column.','Say "...in Group 17, near the right side."']],
+ [['nonmetal*','react*'],'You mentioned the nonmetals.',['Make sure your sentence tells where they are.','Use the word "nonmetals."','Start with "The most reactive nonmetals are..."']]],
+ 'The most reactive nonmetals are in Group 17, on the right side of the table next to the noble gases.','The most reactive nonmetals are...'),
+/* ---- Compound Lab ---- */
+SQ('lb1','lab','What is a compound?',[
+ [['two or more','more than one','two','multiple','several','different','2'],'You said more than one kind. Good!',['A compound is not made of only one thing. How many kinds of elements does it have?','A compound has two or more different elements.','Say "...two or more different elements."']],
+ [['bond*','combin*','joined','chemically','together','connect*','attach*'],'You said they are joined. Nice!',['How are those elements held to each other?','The atoms are chemically bonded together.','Say "...chemically bonded together."']]],
+ 'A compound is a substance made of two or more different elements that are chemically bonded together.','A compound is...',
+ [{re:/\bmix(ed|ture)?\b/,msg:'A mixture is different from a compound. In a compound the atoms are joined by chemical bonds. Try again without the word mix.'}]),
+SQ('lb2','lab','Why is water (H₂O) a compound and not a mixture?',[
+ [['bond*','chemically','joined','combin*','connect*'],'You said the atoms are joined. Good!',['What holds the hydrogen and oxygen atoms together in water?','They are chemically bonded together.','Say "...the atoms are chemically bonded."']],
+ [['fixed','ratio*','same proportion*','always','exact*','set','definite','specific','2 to 1','two to one','same amount*','same number*'],'You said the amounts are fixed. Great!',['Think about the amounts. Is there always the same amount of each atom in water?','Water always has the same ratio: 2 hydrogen atoms for each oxygen atom.','Say "...in a fixed ratio."']]],
+ 'Water is a compound because hydrogen and oxygen atoms are chemically bonded together in a fixed ratio.','Water is a compound because...'),
+SQ('lb3','lab balance diner','In the formula H₂O, what does the small number 2 tell you?',[
+ [['two','2'],'You mentioned the number two.',['Look at the small number written after H. What does it count?','It tells how many hydrogen atoms there are.','Say "...there are two hydrogen atoms."']],
+ [['hydrogen','h'],'You said it is about hydrogen.',['The small number only belongs to the symbol right before it. Which element is that?','It applies to hydrogen.','Say "...two hydrogen atoms."']],
+ [['atom*','particle*'],'You said it counts atoms.',['What does the little number count?','It counts atoms.','Use the word "atoms."']]],
+ 'The small number 2 tells you that there are two hydrogen atoms in one water molecule.','The small number 2 tells me...'),
+SQ('lb4','lab diner','How are the properties of a compound different from the elements that make it up?',[
+ [['different','new','unlike','not the same','change*','unique','own'],'You said they are different. Good!',['Think about table salt. Is it like the dangerous metal and poisonous gas it is made from?','A compound does not act like the elements it is made from.','Say "...a compound has different properties."']],
+ [['propert*','characteristic*','behav*','trait*'],'You named properties. Nice!',['What is different? Think about how the substance looks and acts.','The properties are different.','Use the word "properties."']]],
+ 'A compound has different properties than the elements that make it up.','A compound has...'),
+SQ('lb5','lab evidence','Can a compound be separated into its elements just by filtering or sorting? Explain.',[
+ [['chemical*','reaction*'],'You said a chemical reaction is needed. Great!',['Physical tricks like filtering will not work. What kind of change is needed to break the bonds?','It takes a chemical reaction to break a compound apart.','Say "...it needs a chemical reaction."']],
+ [['cant','cannot','no','not','need*','only','requir*','must','impossible'],'You answered the question. Good!',['Answer the question. Can it be done by filtering?','No, it cannot be done by filtering.','Start with "No, a compound cannot..."']]],
+ 'No, a compound cannot be filtered apart because its atoms are bonded, so it needs a chemical reaction to separate it.','No, a compound cannot...'),
+/* ---- Atom Builder ---- */
+SQ('at1','atom','Which particle in an atom has a positive charge, and where is it found?',[
+ [['proton*'],'You named the proton. Great!',['One particle in the atom is positive. Hint: its name starts with pro.','The protons are positive.','Say "Protons have a positive charge."']],
+ [['nucle*','center','centre','middle','core'],'You found its location. Good!',['Where in the atom are the positive particles?','They are in the nucleus at the center of the atom.','Say "...found in the nucleus."']]],
+ 'Protons have a positive charge and are found in the nucleus at the center of the atom.','Protons have a positive charge and...',
+ [{re:/electron\w*\s+(is|are|has|have|carry|carries)\s+(a\s+)?positiv/,msg:'Check again. Electrons are negative. Which particle is positive?'}]),
+SQ('at2','atom','Why does a neutral atom have the same number of protons and electrons?',[
+ [['cancel*','balanc*','equal*','neutral','zero','offset','even out','same'],'You said the charges balance. Good!',['What happens when you add an equal amount of positive and negative?','The charges cancel out so the atom has no overall charge.','Say "...the charges cancel out."']],
+ [['positive','negative','charge*','plus','minus'],'You mentioned the charges. Nice!',['What do protons and electrons carry that must balance?','The positive charge of the protons balances the negative charge of the electrons.','Use the words "positive" and "negative."']]],
+ 'A neutral atom has equal numbers of protons and electrons so the positive and negative charges cancel out.','A neutral atom has equal numbers because...'),
+SQ('at3','atom','What happens to the charge of an atom when it gains an electron?',[
+ [['negativ*','minus'],'You said it becomes negative. Good!',['Electrons carry a certain charge. If you add one, which way does the atom go?','Adding negative electrons makes the atom negative.','Say "...it becomes negative."']],
+ [['ion','charged','charge*'],'You said it becomes charged. Nice!',['An atom with extra or missing electrons has a special name.','It becomes a charged particle called an ion.','Use the word "ion."']]],
+ 'When an atom gains an electron it becomes a negatively charged ion.','When an atom gains an electron...'),
+SQ('at4','atom','What makes an isotope of an element different from the normal atom of that element?',[
+ [['neutron*'],'You named the neutrons. Great!',['All isotopes of an element keep the same number of protons. What particle changes?','The number of neutrons changes.','Say "...a different number of neutrons."']],
+ [['different','more','fewer','extra','less','chang*','vary','varies','differ*'],'You said the number is not the same. Good!',['Is the number the same or not?','An isotope has more or fewer neutrons than the normal atom.','Say "...a different number of neutrons."']]],
+ 'An isotope has a different number of neutrons than the normal atom of that element.','An isotope has...'),
+SQ('at5','atom','Where is most of the mass of an atom found, and why?',[
+ [['nucle*','center','centre','middle','core'],'You found the location. Good!',['Which part of the atom holds the heavy particles?','Most of the mass is in the nucleus.','Say "...in the nucleus."']],
+ [['heav*','mass*','bigger','larger','weigh*','massive','tiny electron*','electrons are small','electrons are light'],'You explained why. Great!',['Compare protons and neutrons with electrons. How different are they?','Protons and neutrons are much heavier than electrons.','Say "...because protons and neutrons are much heavier than electrons."']]],
+ 'Most of the mass of an atom is in the nucleus because protons and neutrons are much heavier than electrons.','Most of the mass is in...'),
+SQ('at6','atom','How are the electrons arranged in an atom?',[
+ [['shell*','energy level*','orbit*','layer*','ring*','cloud*'],'You described how they are arranged. Good!',['Electrons are not scattered randomly. They are in organized layers.','Electrons are arranged in energy levels or shells.','Say "...in shells around the nucleus."']],
+ [['around','outside','surround*','nucle*','circle*','outer'],'You said where they are.',['Where are the shells compared with the nucleus?','They are around the nucleus.','Say "...around the nucleus."']]],
+ 'Electrons are arranged in shells, or energy levels, around the nucleus.','Electrons are arranged...'),
+/* ---- Balance It ---- */
+SQ('ba1','balance','Why must a chemical equation have the same number of each kind of atom on both sides?',[
+ [['conserv*','creat*','destroy*','lost','lose','disappear*','vanish*','gain*','made','appear*'],'You said atoms are not made or lost. Great!',['Think about what happens to atoms in a reaction. Can they appear from nowhere?','Atoms cannot be created or destroyed in a chemical reaction.','Say "...atoms are never created or destroyed."']],
+ [['atom*','matter','mass'],'You named the atoms.',['What is being kept the same on both sides?','The atoms.','Use the word "atoms."']]],
+ 'Atoms are never created or destroyed in a chemical reaction, so the same atoms must be on both sides.','Both sides must match because...'),
+SQ('ba2','balance','What is the difference between reactants and products in a chemical equation?',[
+ [['start*','begin*','before','original','used','go in','goes in','left','react with','mix together'],'You described the reactants. Good!',['Reactants are on the left of the arrow. What are they in the reaction?','Reactants are the starting substances.','Say "reactants are the starting substances."']],
+ [['new','made','form*','produc*','after','result*','end','right','created'],'You described the products. Great!',['Products are on the right of the arrow. What are they?','Products are the new substances that are made.','Say "products are the new substances formed."']]],
+ 'Reactants are the starting substances, and products are the new substances that are formed.','Reactants are... and products are...'),
+SQ('ba3','balance','What does a coefficient, the big number in front of a formula, tell you?',[
+ [['how many','number','amount','count*','quantity'],'You said it tells a number. Good!',['A coefficient is about amounts. What does it count?','It tells how many of that substance there are.','Say "...how many molecules there are."']],
+ [['molecule*','atom*','particle*','unit*','substance*','compound*','formula*'],'You said what it counts.',['What does the number count? The whole formula, not just one atom.','It counts whole molecules or units of the substance.','Use the word "molecules."']]],
+ 'A coefficient tells you how many molecules or units of that substance there are.','A coefficient tells you...'),
+SQ('ba4','balance diner','What does a subscript, the small number written below a symbol, tell you?',[
+ [['how many','number','amount','count*','quantity'],'You said it tells a number. Good!',['A subscript is about amounts. What does it count?','It tells how many atoms there are.','Say "...how many atoms."']],
+ [['atom*'],'You said it counts atoms.',['What does it count in the molecule?','It counts atoms of that element in one molecule.','Use the word "atoms."']]],
+ 'A subscript tells you how many atoms of that element are in one molecule.','A subscript tells you...'),
+SQ('ba5','balance','Is mass gained or lost in a chemical reaction? Explain.',[
+ [['same','equal','conserv*','constant','unchang*','stay*','neither','no change','remain*'],'You said the mass stays the same. Great!',['Think about the law of conservation of mass. Does the total change?','The total mass stays the same.','Say "...the total mass stays the same."']],
+ [['mass','total','matter','weight','atom*'],'You named what is kept.',['What stays the same?','The total mass of everything in the reaction.','Use the words "total mass."']]],
+ 'No, the total mass stays the same because atoms are only rearranged in a chemical reaction.','No, mass is not gained or lost because...'),
+/* ---- Atom Diner ---- */
+SQ('dn1','diner','In your own words, what is a molecule?',[
+ [['two or more','more than one','two','multiple','several','group','2'],'You said it has more than one atom. Good!',['A molecule is bigger than a single atom. How many atoms does it have?','It has two or more atoms.','Say "...two or more atoms."']],
+ [['atom*'],'You named the atoms.',['What is a molecule made of?','It is made of atoms.','Use the word "atoms."']],
+ [['bond*','joined','together','connect*','stuck','combin*','attach*','held'],'You said the atoms are joined. Nice!',['What happens between the atoms?','They are bonded together.','Say "...bonded together."']]],
+ 'A molecule is two or more atoms that are bonded together.','A molecule is...'),
+SQ('dn2','diner','How can you tell which atoms are in a molecule from its formula, such as CO₂?',[
+ [['symbol*','letter*','abbreviation*'],'You said the letters show the elements. Good!',['Look at the letters in the formula. What do they stand for?','The letters are symbols for the elements.','Say "the letters are symbols for the elements."']],
+ [['number*','subscript*','how many','small','count*'],'You said the numbers matter. Great!',['What do the small numbers tell you?','The small numbers tell how many atoms of each element.','Say "...the small numbers tell how many atoms."']]],
+ 'The letters are symbols for the elements, and the small numbers tell how many atoms of each element there are.','The letters are...'),
+SQ('dn3','diner','Why do you need the exact right number of each atom to build a molecule?',[
+ [['different','another','new','change*','wrong','not the same','other'],'You said a different number gives something different. Good!',['What happens if you add one extra atom to a molecule?','A different number of atoms makes a different substance.','Say "...it would make a different substance."']],
+ [['substance*','molecule*','compound*','formula*','material*','thing'],'You named what changes.',['What changes if the atoms change?','The molecule or substance changes.','Use the word "substance."']]],
+ 'A different number of atoms makes a different substance, so the formula needs the exact right amounts.','You need the exact number because...'),
+SQ('dn4','diner balance','When a molecule is taken apart and rebuilt, are the atoms used up? Explain.',[
+ [['rearrang*','reus*','recycl*','regroup*','reassembl*','rebuil*','rebuilt','same atoms','conserv*','again','new way','new molecule*','new combination*'],'You said the atoms are reused. Great!',['Think about LEGO bricks. If you take a model apart, are the bricks gone?','The atoms are not used up. They are rearranged into new molecules.','Say "...the atoms are rearranged into new molecules."']],
+ [['not','no','never','still','stay*','same','remain*','cannot'],'You answered the question.',['Answer the question directly. Are they used up?','No, they are not used up.','Start with "No, the atoms are not used up..."']]],
+ 'No, the atoms are not used up because they are only rearranged into new molecules.','No, the atoms...'),
+SQ('dn5','diner lab','What is the difference between an atom and a molecule?',[
+ [['smaller','single','one','individual','simplest','basic','alone'],'You described the atom. Good!',['An atom is the simpler one. How many atoms is an atom?','An atom is a single particle.','Say "an atom is a single particle."']],
+ [['two or more','more than one','two','bond*','joined','together','group','many','multiple','2'],'You described the molecule. Nice!',['A molecule is made from atoms. How many?','A molecule is two or more atoms bonded together.','Say "a molecule is two or more atoms bonded together."']]],
+ 'An atom is a single particle, but a molecule is two or more atoms bonded together.','An atom is... but a molecule is...'),
+/* ---- Separation Station ---- */
+SQ('se1','sep evidence','A magnet can separate iron filings from sand. What property of iron makes that work?',[
+ [['magnet*','attract*','pull*','stick*','stuck'],'You said it is magnetic. Great!',['Think about what a magnet does to some metals.','Iron is magnetic, so the magnet attracts it.','Say "iron is magnetic."']],
+ [['iron','filing*','metal*','it'],'You named the iron.',['Make sure your sentence says which material has the property.','It is the iron that is attracted.','Use the word "iron."']]],
+ 'Iron is magnetic, so a magnet attracts it and leaves the sand behind.','Iron is...'),
+SQ('se2','sep evidence','Why does a filter separate sand from water?',[
+ [['large*','big*','bigger','larger','too','size'],'You said the sand is too big. Good!',['Compare the size of sand grains with the size of the water particles.','The sand pieces are bigger than the openings.','Say "the sand grains are too big to fit through."']],
+ [['hole*','pore*','gap*','opening*','paper','tiny','small','through','pass*'],'You described the filter. Great!',['What does a filter have that lets some things pass?','A filter has tiny holes that let water pass.','Say "...tiny holes that let the water through."']]],
+ 'A filter has tiny holes that let the water pass through, but the sand grains are too big to fit.','A filter works because...'),
+SQ('se3','sep','How does evaporation separate salt from salt water?',[
+ [['evaporat*','gas','vapor*','steam','boil*','heat*','turns into'],'You said the water evaporates. Good!',['Heating changes the water into a gas. What happens to the water?','The water evaporates and leaves.','Say "the water evaporates."']],
+ [['salt','left','behind','remain*','stays','stay'],'You said the salt is left. Great!',['What is left in the dish after the water is gone?','The salt stays behind.','Say "...the salt is left behind."']]],
+ 'The water evaporates into a gas and the salt is left behind.','The water...'),
+SQ('se4','sep evidence','Why can you separate a mixture using physical properties without changing the substances?',[
+ [['keep*','same','unchang*','still','retain*','not chang*','remain*','own'],'You said the substances do not change. Good!',['In a mixture, do the substances turn into new ones?','Each substance in a mixture keeps its own properties.','Say "...each substance keeps its own properties."']],
+ [['propert*','size','densit*','magnetic','boiling','characteristic*'],'You named properties.',['What stays the same for each substance?','Its properties, like size, density, or being magnetic.','Use the word "properties."']]],
+ 'In a mixture each substance keeps its own properties, so they can be separated without changing them.','You can separate them because...'),
+SQ('se5','sep evidence','Why does oil float on top of water?',[
+ [['dens*','heav*','weigh*','light*'],'You compared the density. Great!',['Think about which liquid is lighter for the same amount.','Oil has a lower density than water.','Say "oil is less dense than water."']],
+ [['less','lower','smaller','lighter','than','float*'],'You made a comparison.',['Compare the oil to water. Is it more or less?','Oil is less dense.','Use the words "less dense."']]],
+ 'Oil floats because it is less dense than water.','Oil floats because...'),
+SQ('se6','sep','How does distillation separate two liquids that have different boiling points?',[
+ [['boil*','evaporat*','heat*','vapor*'],'You said it uses heat. Good!',['What do you do to the mixture first?','You heat the mixture so the liquid with the lower boiling point boils first.','Say "...the liquid with the lower boiling point boils first."']],
+ [['cool*','condens*','collect*','liquid again','turns back'],'You said the vapor is cooled. Great!',['What happens to the gas after it leaves the mixture?','The gas is cooled so it condenses and is collected.','Say "...the vapor is cooled and condensed."']]],
+ 'The mixture is heated so the liquid with the lower boiling point boils first, and its vapor is cooled and collected.','In distillation...'),
+/* ---- Laser Maze ---- */
+SQ('lz1','laser','What is the law of reflection?',[
+ [['angle*'],'You named the angles. Good!',['The law of reflection compares two angles. What are they about?','The angle the light comes in at and the angle it leaves at.','Say "the angle of the incoming light..."']],
+ [['equal*','same','match*','identical','is the angle'],'You said they match. Great!',['How do the two angles compare?','They are equal.','Say "...equals the angle of the reflected light."']]],
+ 'The angle of the incoming light equals the angle of the reflected light.','The angle of...'),
+SQ('lz2','laser','What happens when a beam of light hits a clear piece of glass at an angle?',[
+ [['pass*','through','transmit*','goes through','continue*'],'You said some light goes through. Good!',['Is glass opaque? What can the light do?','Some of the light passes through the glass.','Say "some light passes through."']],
+ [['reflect*','bounce*','bounc*','off'],'You said some light reflects. Great!',['Not all of the light goes through. What does the rest do?','Some of the light is reflected.','Say "...and some is reflected."']]],
+ 'Some of the light passes through the glass and some of the light is reflected.','Some of the light...'),
+SQ('lz3','laser','Why does the laser beam get weaker each time it passes through tilted glass?',[
+ [['energy','light','beam','brightness','intensity','power'],'You named the light energy. Good!',['Think about what happens to the light\'s energy when the glass splits the beam.','The beam\'s energy is split up.','Say "the beam loses some of its energy."']],
+ [['split*','reflect*','absorb*','lost','lose*','divid*','some','part','less','shared'],'You said some is lost or split. Great!',['Where does the missing light go?','Part of the light is reflected and some is absorbed.','Say "...some light reflects away."']]],
+ 'Some of the light is reflected away or absorbed each time, so less energy continues in the beam.','The beam gets weaker because...'),
+SQ('lz4','laser','Why can light not pass through a black block?',[
+ [['absorb*','soak*','take*','takes in'],'You said the block absorbs the light. Great!',['What does a black surface do with the light that hits it?','A black block absorbs the light.','Say "a black block absorbs light."']],
+ [['light','energy','beam','laser'],'You named the light.',['What does the block absorb?','It absorbs the light energy.','Use the word "light."']]],
+ 'A black block absorbs the light, so the light cannot pass through it.','A black block...'),
+SQ('lz5','laser','How do we see an object that does not make its own light?',[
+ [['reflect*','bounce*','bounc*'],'You said light reflects off the object. Great!',['Where does the light go after it hits the object?','Light reflects off the object.','Say "light reflects off the object."']],
+ [['eye*','retina*','see*','our'],'You said it reaches our eyes. Good!',['Where does the reflected light end up?','It enters our eyes.','Say "...and enters our eyes."']]],
+ 'Light reflects off the object and enters our eyes, so we can see it.','We see an object when...'),
+/* ---- Blackout ---- */
+SQ('bo1','blackout','What does a circuit need so that a bulb will light up?',[
+ [['complete*','closed','loop*','circle*','unbroken','continuous','path','full'],'You said the path must be complete. Great!',['Think about a path the electricity follows. Can there be gaps?','It needs a complete, closed loop with no gaps.','Say "...a complete loop."']],
+ [['battery','batteries','source','power','cell','voltage'],'You named the power source. Good!',['What pushes the electricity around the loop?','A battery or power source is needed.','Use the word "battery."']]],
+ 'A circuit needs a battery and a complete closed loop so the electricity can flow through the bulb.','A bulb lights up when...'),
+SQ('bo2','blackout','What happens to the bulbs in a series circuit if one switch is open?',[
+ [['out','off','stop*','dark','not light*','no light','turn off','go off','all'],'You said the bulbs go out. Good!',['If the loop has a gap, what happens to the electricity?','All the bulbs in that loop will go off.','Say "...all the bulbs go out."']],
+ [['broken','break','open','gap','path','loop','circuit','current','flow*','stop*'],'You said why. Great!',['What does an open switch do to the circuit?','The open switch breaks the circuit so no current flows.','Say "...because the open switch breaks the circuit."']]],
+ 'All the bulbs go out because the open switch breaks the circuit, so no current can flow.','The bulbs...'),
+SQ('bo3','blackout','Why can a bulb burn out if too much current goes through it?',[
+ [['heat*','hot','overheat*','melt*','burn*','warm*'],'You said it gets too hot. Great!',['What does electrical energy turn into inside the thin wire of a bulb?','Too much current makes the wire overheat.','Say "...the wire gets too hot."']],
+ [['too much','more than','excess*','too many','extra','overload*','large','too high','too strong','too'],'You said there is too much. Good!',['What is the problem with the amount of current?','There is more current than the bulb can handle.','Say "...there is too much current."']]],
+ 'Too much current makes the wire in the bulb overheat and burn out.','A bulb burns out because...'),
+SQ('bo4','blackout','Describe the energy change that happens in a lit bulb.',[
+ [['electric*'],'You started with electrical energy. Good!',['What kind of energy comes from the battery?','Electrical energy goes into the bulb.','Say "electrical energy..."']],
+ [['light','radiant'],'You said light is made. Great!',['What useful energy comes out of a bulb?','The bulb gives off light.','Say "...turns into light."']],
+ [['heat*','thermal','warm*'],'You also said some becomes heat. Excellent!',['A bulb also gets warm. What other energy is made?','Some of the energy becomes heat.','Say "...and some heat."']]],
+ 'A bulb changes electrical energy into light and some heat.','A bulb changes...'),
+SQ('bo5','blackout','What is the job of a battery in a circuit?',[
+ [['energy','power','push*','voltage','electricity','provid*','supply*','suppl*'],'You said it provides energy. Great!',['What does the battery give to the circuit?','The battery gives the charges energy.','Say "...provides energy."']],
+ [['charge*','current','electron*','flow*','move*','circuit','bulb*','light*'],'You said it makes things move. Good!',['What does that energy make happen in the wires?','It pushes the charges so they flow.','Say "...to make the charges flow."']]],
+ 'The battery provides energy that pushes the charges so they flow around the circuit.','The battery...'),
+/* ---- Evidence Lab ---- */
+SQ('ev1','evidence','What is some evidence that a chemical reaction has happened?',[
+ [['gas','bubbl*','fizz*','color*','colour*','temperature*','heat*','light','precipitat*','solid','smell*','odor*','odour*','hot','cold','glow*'],'You named good evidence. Great!',['Think about what you can see or feel when substances react.','Bubbles, a color change, a temperature change, or a new solid can all show a reaction.','Say "...bubbles or a color change."']],
+ [['new','different','another','product*','substance*'],'You said a new substance forms. Excellent!',['What is made in a chemical reaction?','A new substance is made.','Say "...a new substance is formed."']]],
+ 'A chemical reaction makes a new substance, shown by evidence such as bubbles or a color change.','Evidence of a chemical reaction is...'),
+SQ('ev2','evidence','What is density?',[
+ [['mass','matter','stuff','weight','heavy'],'You said it is about mass. Good!',['Density compares two things. One is how much matter there is.','It is the mass of the material.','Say "mass..."']],
+ [['volume','space','size','amount','fit*','per','in a','given'],'You said it compares to space. Great!',['The mass is compared with what?','It is the mass in a certain volume.','Say "...in a given volume."']]],
+ 'Density is the amount of mass in a given volume of a material.','Density is...'),
+SQ('ev3','evidence sep','Why can density help identify a powder or a metal?',[
+ [['different','unique','each','own','characteristic*','specific','special'],'You said each substance is different. Good!',['Is the density of every material the same?','Each substance has its own density.','Say "each substance has its own density."']],
+ [['substance*','material*','powder*','metal*','element*'],'You named the materials.',['Compare the density with a known list. What do you compare?','Materials can be matched to a known density.','Use the word "substance."']],
+ [['not change*','same','doesnt change','stay*','any size','any amount','regardless','constant'],'You said the density stays the same. Excellent!',['Does a small piece and a big piece of the same material have a different density?','The density stays the same no matter how big the sample is.','Say "...the density stays the same for any size."']]],
+ 'Each substance has its own density that stays the same for any size, so it can be used to identify the material.','Density helps because...'),
+SQ('ev4','evidence','Why is one clue, such as color alone, weak evidence for identifying a substance?',[
+ [['same','similar','alike','share*','look the same','look alike'],'You said different substances can look alike. Good!',['Can two different powders both be white?','Different substances can have the same color.','Say "different substances can look the same."']],
+ [['more','several','multiple','many','another','other','two','additional','tests','test'],'You said you need more evidence. Great!',['What should you do instead of trusting one clue?','You should use more than one test.','Say "...so we need more than one test."']]],
+ 'Different substances can look the same, so you need more than one test to be sure.','One clue is weak because...'),
+SQ('ev5','evidence lab','What is the difference between a physical change and a chemical change?',[
+ [['same','still','no new','not new','unchang*','not make','doesnt make','does not make'],'You described the physical change. Good!',['In a physical change, is the substance the same afterward?','In a physical change the substance stays the same.','Say "in a physical change the substance stays the same."']],
+ [['new','different','another'],'You described the chemical change. Great!',['In a chemical change, what is made?','A new substance is formed.','Say "...in a chemical change a new substance forms."']]],
+ 'In a physical change the substance stays the same, but in a chemical change a new substance forms.','In a physical change... but in a chemical change...'),
+/* ---- Coaster Architect ---- */
+SQ('ca1','coaster','At the top of the first hill, what kind of energy does the cart have the most of?',[
+ [['potential','stored','gravitational'],'You named potential energy. Great!',['Energy that is stored because of height has a special name.','It is potential energy.','Say "potential energy."']],
+ [['high*','top','height','tall*','up'],'You connected it to height. Good!',['Why is the energy highest there? Think about the cart\'s position.','It is because the cart is at its highest point.','Say "...because it is at the highest point."']]],
+ 'At the top of the hill the cart has the most potential energy because it is at its highest point.','At the top of the hill...'),
+SQ('ca2','coaster','What happens to the cart\'s potential energy as it rolls down a hill?',[
+ [['kinetic','motion','moving','speed*','fast*'],'You named motion energy. Great!',['As the cart speeds up it gains another kind of energy. What is it called?','The energy of motion is called kinetic energy.','Say "...into kinetic energy."']],
+ [['convert*','chang*','turn*','transform*','transfer*','becom*','into','goes'],'You said it changes. Good!',['What happens to the potential energy? Does it disappear?','It changes into another kind of energy.','Say "...is converted into kinetic energy."']]],
+ 'The potential energy is converted into kinetic energy as the cart speeds up.','As the cart rolls down...'),
+SQ('ca3','coaster','Why can the next hill not be taller than the first hill?',[
+ [['energy'],'You said it is about energy. Good!',['The cart only has so much energy to begin with. What does that limit?','The cart cannot have more energy than it started with.','Use the word "energy."']],
+ [['friction','heat*','lost','lose*','less','thermal','air','cannot','cant','not enough','never','more than'],'You said energy is lost or limited. Great!',['What takes some energy away as the cart moves?','Friction turns some energy into heat, so the cart has less energy.','Say "...friction turns some energy into heat."']]],
+ 'The cart cannot have more energy than it started with, and friction turns some energy into heat.','The next hill cannot be taller because...'),
+SQ('ca4','coaster','Where does some of the cart\'s energy go because of friction?',[
+ [['heat*','thermal','warm*','hot'],'You said it becomes heat. Great!',['Rub your hands together. What do you feel?','Friction changes some energy into heat.','Say "...into heat."']],
+ [['energy','track','wheels','air','surroundings','around','lost','away'],'You said where it goes.',['Where does that heat go?','It warms the wheels, track and air.','Say "...it warms the track and the air."']]],
+ 'Friction changes some of the cart\'s energy into heat, which warms the track and the air.','Friction changes...'),
+SQ('ca5','coaster','Why does a cart have to start higher to make it all the way around a loop?',[
+ [['energy','speed*','fast*','kinetic','momentum','potential'],'You said it is about energy and speed. Good!',['What does a higher start give the cart?','A higher start gives the cart more energy.','Say "...it has more energy."']],
+ [['enough','more','extra','need*','requir*','must','top of the loop','stay on'],'You said it needs enough. Great!',['What must the cart have at the top of the loop?','It needs enough speed to stay on the track.','Say "...enough speed to make it around."']]],
+ 'A higher start gives the cart more energy, so it has enough speed to make it around the loop.','The cart has to start higher because...')
+];
+
+/* ================= SCIENCE CHECK: pop-up question UI ================= */
+let scOpen=false,scQueue=[],scLastId=null,scExCount=0;const scExSeen=new Set();
+function sciPick(game,P){
+  const pool=SC_BANK.filter(q=>q.g.includes(game));if(!pool.length)return null;
+  const S=(P.sci&&P.sci.seen)||{},unseen=pool.filter(q=>!S[q.id]);
+  if(unseen.length)return unseen[Math.floor(Math.random()*unseen.length)];
+  const old=pool.slice().sort((a,b)=>(S[a.id].last||0)-(S[b.id].last||0)).slice(0,Math.max(2,Math.ceil(pool.length/2))).filter(q=>q.id!==scLastId);
+  if(!old.length)return pool[0];
+  old.sort((a,b)=>(S[b.id].tries||0)-(S[a.id].tries||0));
+  return Math.random()<.5?old[0]:old[Math.floor(Math.random()*old.length)];
+}
+function sciGateThen(game,fn){
+  try{
+    const P=me&&profiles[me];if(!P){fn();return;}
+    const q=sciPick(game,P);if(!q){fn();return;}
+    scQueue.push({q,game,fn});if(!scOpen)sciNext();
+  }catch(e){try{fn();}catch(e2){}}
+}
+function sciHold(box,game){box.classList.add('sciwait');sciGateThen(game,()=>box.classList.remove('sciwait'));}
+const sciGameName=g=>g==='explore'?'Explore the Table':(GAME_NAMES[g]||g);
+function sciNext(){
+  const it=scQueue.shift();if(!it)return;scOpen=true;
+  const {q,game,fn}=it,P=profiles[me],st={tries:0,miss:{},prev:0};
+  const back=h('div',{class:'sci-back',role:'dialog','aria-modal':'true','aria-label':'Science check question'});
+  const inp=h('textarea',{id:'sciIn',rows:'3',maxlength:'320',placeholder:'Type your full sentence here...',spellcheck:'true',autocomplete:'off'});
+  const fb=h('div',{class:'sci-fb','aria-live':'polite'});
+  const triesEl=h('span',{class:'sci-tries'},'Try 1');
+  const btn=h('button',{class:'btn good',type:'button'},'Check my answer');
+  const how=h('div',{class:'sci-how'},h('b',null,'How to answer'),
+    h('ol',null,
+      h('li',null,'Type your answer as a ',h('b',null,'full sentence'),' (at least 5 words).'),
+      h('li',null,'Start with a ',h('b',null,'capital letter'),' and end with a ',h('b',null,'period'),'.'),
+      h('li',null,'You cannot keep playing until your answer is right, but we will give you hints!')),
+    h('div',{class:'sci-ex'},'Example: ',h('i',null,'Atoms are the smallest building blocks of matter.')));
+  const close=()=>{back.remove();document.body.classList.remove('sci-open');scOpen=false;};
+  const finish=()=>{close();try{fn();}catch(e){}setTimeout(()=>{if(scQueue.length&&!scOpen)sciNext();},200);};
+  const card=h('div',{class:'sci-card'},
+    h('div',{class:'sci-head'},h('span',{class:'sci-ico'},'?'),h('b',null,'Science Check'),h('span',{class:'sci-game'},sciGameName(game))),
+    how,h('div',{class:'sci-q'},q.q),inp,h('div',{class:'sci-row'},btn,triesEl),fb);
+  if(isOwner())card.append(h('button',{class:'btn ghost sm sci-skip',type:'button',onclick:()=>{close();try{fn();}catch(e){}setTimeout(()=>{if(scQueue.length&&!scOpen)sciNext();},200);}},'Skip (teacher only)'));
+  back.append(card);document.body.append(back);document.body.classList.add('sci-open');
+  const warn=msg=>fb.replaceChildren(h('div',{class:'sci-warn'},msg));
+  function submit(){
+    const text=inp.value;
+    if(!text.trim()){warn('Type your answer first. Use a full sentence.');inp.focus();return;}
+    const r=scGrade(q,text);
+    if(r.kind==='form'){warn(r.msg);inp.focus();return;}
+    st.tries++;triesEl.textContent='Try '+(st.tries+1);
+    if(r.kind==='ok'){
+      inp.disabled=true;btn.hidden=true;triesEl.hidden=true;
+      const go=h('button',{class:'btn good',type:'button'},'Continue ▶');
+      fb.replaceChildren(h('div',{class:'sci-ok'},h('b',null,st.tries===1?'Correct on the first try! Great thinking.':'Correct! Nice work sticking with it.'),
+        h('p',{class:'infobox',style:'margin:8px 0'},h('b',null,'Science says: '),q.model)),go);
+      try{fx.confetti(40);}catch(e){}
+      go.onclick=()=>{
+        try{const Pf=profiles[me];if(Pf){const s=Pf.sci||(Pf.sci={seen:{},ok:0,first:0}),o=(s.seen||(s.seen={}))[q.id]||{};
+          s.seen[q.id]={ok:(o.ok||0)+1,tries:(o.tries||0)+st.tries,last:Date.now()};s.ok=(s.ok||0)+1;if(st.tries===1)s.first=(s.first||0)+1;saveAll();scLastId=q.id;bdCheck();}}catch(e){}
+        finish();};
+      setTimeout(()=>{try{go.focus();}catch(e){}},50);return;
+    }
+    r.hit.forEach((x,i)=>{if(!x)st.miss[i]=(st.miss[i]||0)+1;});
+    const n=r.hit.filter(Boolean).length,tot=q.groups.length,kids=[];
+    const closer=n>st.prev;st.prev=Math.max(st.prev,n);
+    if(r.kind==='bad')kids.push(h('div',{class:'sci-bad'},r.msg));
+    else kids.push(h('div',{class:'sci-head2'},n===0?'Not yet. Let us think it through.':(closer?'You are getting closer!':(n/tot>=.5?'Good start. Keep going!':'Not quite yet. Try again.'))));
+    const got=q.groups.filter((g,i)=>r.hit[i]);
+    if(got.length)kids.push(h('ul',{class:'sci-got'},got.map(g=>h('li',null,'✓ '+g.got))));
+    const mi=r.hit.findIndex(x=>!x);
+    if(mi>=0){const g=q.groups[mi],lvl=Math.min((st.miss[mi]||1)-1,g.hints.length-1);kids.push(h('div',{class:'sci-hint'},h('b',null,'Hint: '),g.hints[lvl]));}
+    if(st.tries>=3&&q.starter)kids.push(h('div',{class:'sci-start'},h('b',null,'Sentence starter: '),q.starter));
+    if(st.tries>=5)kids.push(h('div',{class:'sci-model'},h('b',null,'Here is a model answer to learn from: '),h('i',null,q.model),h('div',{style:'margin-top:4px'},'Read it, then type the idea as a full sentence.')));
+    fb.replaceChildren(...kids);inp.focus();
+  }
+  btn.onclick=submit;
+  inp.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit();}});
+  back.addEventListener('keydown',e=>{
+    if(e.key==='Tab'){const f=[...back.querySelectorAll('textarea,button')].filter(x=>!x.disabled&&!x.hidden);if(!f.length)return;
+      const a=document.activeElement,i=f.indexOf(a);e.preventDefault();f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus();}
+    e.stopPropagation();});
+  setTimeout(()=>{try{inp.focus();}catch(e){}},60);
+}
+document.addEventListener('keydown',e=>{if(scOpen&&!(e.target.closest&&e.target.closest('.sci-back'))){e.stopImmediatePropagation();e.preventDefault();}},true);
+/* ---- hook into every game's finish screens ---- */
+(function(){
+  const se0=showEnd;showEnd=function(o){const g=scGame;sciGateThen(g,()=>se0(o));};
+  const lr0=levelResult;levelResult=function(box,o){lr0(box,o);if(o&&o.stars>0)sciHold(box,scGame);};
+})();
+function sciExplore(n){
+  try{if(scExSeen.has(n))return;scExSeen.add(n);if(++scExCount>=6){scExCount=0;scExSeen.clear();setTimeout(()=>sciGateThen('explore',()=>{}),350);}}catch(e){}
+}
 
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
