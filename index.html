@@ -549,11 +549,26 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .bdh{margin:14px 0 6px}.bdh span{font-weight:500;font-size:13px;color:var(--muted)}
 .bdgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px}
 .bdb{font:inherit;display:flex;flex-direction:column;align-items:center;gap:2px;background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 4px 6px;cursor:pointer;color:var(--ink);text-align:center}.bdb:hover{border-color:var(--accent);transform:translateY(-1px)}.bdb.lock{background:#f1f3f8}.bdb.static{cursor:default}.bdb.static:hover{border-color:var(--line);transform:none}.bdb b{font-size:12.5px;line-height:1.2}.bdb em{font-style:normal;font-size:11.5px;color:var(--muted);font-weight:700}.bdsv,.bdbig{line-height:0}
+#feedBar{flex:1;min-width:0;position:relative;height:30px;margin:0 10px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+#feedBar::before{content:"LIVE";position:absolute;z-index:2;left:0;top:0;bottom:0;display:none}
+.fchip{position:absolute;left:0;top:0;height:30px;display:inline-flex;align-items:center;gap:0;white-space:nowrap;font-size:13.5px;color:#e7edff;padding:0 4px;will-change:transform}
+#feedBar.still .fchip{position:static;display:flex;justify-content:center}
+.fchip b{font-weight:800;color:#fff}.fchip .fsc{color:#8fe3b0}
+.fchip.top{color:#3a2a00}.fchip.top b,.fchip.top .fsc{color:#3a2a00}.fchip.top{background:linear-gradient(90deg,#f8dc7a,#f5b700);border-radius:999px;padding:0 12px 0 6px}
+.ftag{background:#14213d;color:#f8dc7a;font-weight:800;border-radius:999px;padding:1px 8px;margin-right:6px;font-size:12px}
+#feedTop{position:fixed;top:58px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2a1f00,#5a4300);border:3px solid #f8dc7a;color:#fff;border-radius:16px;padding:10px 18px 10px 12px;box-shadow:0 10px 30px rgba(0,0,0,.35);cursor:pointer;max-width:92vw}
+#feedTop.in{animation:ftIn .45s cubic-bezier(.2,1.3,.4,1) both}#feedTop.out{animation:ftOut .35s ease-in both}
+@keyframes ftIn{from{opacity:0;transform:translate(-50%,-30px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes ftOut{to{opacity:0;transform:translate(-50%,-24px) scale(.95)}}
+.ftmed{flex:none;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;color:#3a2a00;background:radial-gradient(circle at 35% 30%,#fff3b0,#f5b700);border:3px solid #fff3b0}.ftmed.r2{background:radial-gradient(circle at 35% 30%,#fff,#aab4c3);border-color:#fff}.ftmed.r3{background:radial-gradient(circle at 35% 30%,#ffd8b0,#c8793a);border-color:#ffd8b0}
+.ftxt{display:flex;flex-direction:column;line-height:1.25}.ftxt b{font-size:17px;color:#f8dc7a}.ftxt span{font-size:14px;color:#e7edff}
+@media(max-width:720px){#feedBar{margin:0 6px}}
 </style>
 </head>
 <body>
 <header>
   <div class="brand" id="brand"><i data-logo="30"></i><span>Turn-Table</span></div>
+  <div id="feedBar" hidden role="marquee" aria-label="Live scores from other players"></div>
   <div id="userChip" hidden>
     <span class="who" id="userName"></span>
     <span class="sync ok" id="syncBadge"></span>
@@ -561,6 +576,7 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
     <button class="btn sm ghost" id="btnLogout">Log out</button>
   </div>
 </header>
+<div id="feedTop" hidden role="status" aria-live="polite"></div>
 <div class="warn" id="warn" hidden><i data-ic="warning"></i>This browser is blocking saved data, so your scores will disappear when you close the page.</div>
 
 <main>
@@ -5118,6 +5134,72 @@ function bdStrip(){
     el.replaceChildren(btn);
   }catch(e){}
 }
+
+/* ================= LIVE SCORE BAR ================= */
+let feedLast=0,feedUser=null,feedBusy=false,feedHist=[],feedQ=[],feedTopQ=[],feedRot=0,feedNext=0,feedStaticT=0,feedTopShowing=false;
+const FEED_SPEED=70;
+const feedScore=it=>{const g=it.game,v=Number(it.value);
+  if(g==='speed')return fmtT(v)+' avg';if(g==='trivia')return v+'/'+ROUND_LEN*4;if(g==='lab'||g==='balance'||g==='atom')return v+'/'+ROUND_LEN*3;
+  if(g==='diner')return v+' coins';return v>=1?'★'.repeat(Math.min(3,Math.round(v))):'tried it';};
+const feedWhere=it=>{let l='';try{l=levelLabel(it.game,String(it.level));}catch(e){}return (GAME_NAMES[it.game]||it.game)+(l?' · '+l:'');};
+const feedAgo=t=>{const m=Math.round((Date.now()-t)/60000);if(m<2)return '';if(m<60)return ` · ${m}m ago`;const h2=Math.round(m/60);return h2<24?` · ${h2}h ago`:'';};
+function feedChip(it){
+  const el=h('span',{class:'fchip'+(it.top?' top':'')});
+  if(it.top)el.append(h('span',{class:'ftag'},'★ #'+it.top));
+  el.append(h('b',null,it.nick),` · ${feedWhere(it)}: `,h('b',{class:'fsc'},feedScore(it)),feedAgo(it.t));
+  return el;
+}
+function feedSpawn(it){
+  const bar=$('feedBar'),W=bar.clientWidth;if(!W)return 600;
+  const el=feedChip(it);bar.append(el);const cw=el.offsetWidth,dur=(W+cw)/FEED_SPEED*1000;
+  const a=el.animate([{transform:`translateX(${-cw}px)`},{transform:`translateX(${W}px)`}],{duration:dur,easing:'linear',fill:'forwards'});
+  a.onfinish=()=>el.remove();return (cw+48)/FEED_SPEED*1000;
+}
+function feedPump(){
+  try{
+    const bar=$('feedBar');if(!bar||bar.hidden)return;
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches){
+      if(Date.now()<feedStaticT)return;const it=feedQ.shift()||feedHist[feedRot++%Math.max(1,feedHist.length)];if(!it)return;
+      bar.replaceChildren(feedChip(it));bar.classList.add('still');feedStaticT=Date.now()+4500;return;
+    }
+    if(Date.now()<feedNext)return;
+    const it=feedQ.shift()||(feedHist.length?feedHist[feedRot++%feedHist.length]:null);if(!it)return;
+    feedNext=Date.now()+feedSpawn(it);
+  }catch(e){}
+}
+function feedShowTop(){
+  try{
+    if(feedTopShowing||!feedTopQ.length)return;const it=feedTopQ.shift();feedTopShowing=true;
+    const box=$('feedTop'),mine=profiles[me]&&String(profiles[me].name).toLowerCase()===String(it.nick).toLowerCase();
+    const medal=['','1st','2nd','3rd'][it.top];
+    box.replaceChildren(h('div',{class:'ftmed r'+it.top},'#'+it.top),
+      h('div',{class:'ftxt'},h('b',null,mine?`You just hit ${medal} place overall!`:`${it.nick} just hit ${medal} place overall!`),
+        h('span',null,`${feedWhere(it)} · ${feedScore(it)}`)));
+    box.hidden=false;box.classList.remove('out');void box.offsetWidth;box.classList.add('in');
+    try{fx.confetti(it.top===1?90:50);}catch(e){}
+    const done=()=>{if(!feedTopShowing)return;box.classList.remove('in');box.classList.add('out');setTimeout(()=>{box.hidden=true;feedTopShowing=false;setTimeout(feedShowTop,500);},350);};
+    box.onclick=done;setTimeout(done,it.top===1?8000:6000);
+  }catch(e){feedTopShowing=false;}
+}
+async function feedPoll(){
+  if(feedBusy)return;const P=me&&profiles[me];
+  const bar=$('feedBar');
+  if(!P||!P.cloud||$('userChip').hidden){bar.hidden=true;if(feedUser){feedUser=null;feedLast=0;feedHist=[];feedQ=[];bar.replaceChildren();}return;}
+  if(document.hidden)return;
+  if(feedUser!==me){feedUser=me;feedLast=0;feedHist=[];feedQ=[];bar.replaceChildren();}
+  feedBusy=true;
+  try{
+    const r=await rpc('tt_feed',{p_id:P.cloud.id,p_token:P.cloud.token,p_after:feedLast},7000);
+    if(r&&r.ok&&Array.isArray(r.items)){
+      const seed=feedLast===0;
+      r.items.forEach(it=>{if(it.id>feedLast)feedLast=it.id;feedHist.push(it);if(!seed){feedQ.push(it);if(it.top)feedTopQ.push(it);}});
+      if(feedHist.length>14)feedHist=feedHist.slice(-14);
+      bar.hidden=!feedHist.length;feedShowTop();
+    }
+  }catch(e){}finally{feedBusy=false;}
+}
+setInterval(feedPoll,7000);setInterval(feedPump,400);setTimeout(feedPoll,1500);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)feedPoll();});
 
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
