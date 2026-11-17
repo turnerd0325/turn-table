@@ -1810,11 +1810,11 @@ if(me&&!profiles[me])me=null;
 const prof=()=>profiles[me];
 /* ---- temporary student lock: games listed here are locked for everyone except the owner ----
    To unlock everything, change to:  const LOCKED_GAMES=[];  */
-const LOCKED_GAMES=['lab','balance','diner','sep','laser','blackout','evidence','coaster'];
+const LOCKED_GAMES=['speed','lab','balance','diner','sep','laser','blackout','evidence','coaster'];
 const OWNER_NICK='turner';
 const isOwner=()=>!!(me&&profiles[me]&&String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK);
 const gameLocked=g=>LOCKED_GAMES.includes(g)&&!isOwner();
-const GAME_SCREENS={'s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
+const GAME_SCREENS={'s-speed-setup':'speed','s-speed':'speed','s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
 const SHORT_DESC={speed:'Race the clock to find each element on the table.',trivia:'Guess the mystery element from 4 hints.',lab:'Build real compounds like H₂O from atoms.',atom:'Add protons, neutrons and electrons to build atoms.',balance:'Balance chemical equations so no atoms are lost.',diner:'Smash molecules into atoms and cook up the orders.',sep:'Use magnets, filters and heat to separate mixtures.',class:'Join your teacher’s live game with a code.',explore:'Click any element to discover its facts.',stats:'See your best scores and the elements you find tricky.',laser:'Light every crystal with mirrors, glass and black blocks.',blackout:'Wire series and parallel circuits to relight the city.',evidence:'Test mystery powders and metals, then name each one.',coaster:'Build a coaster and watch energy change form.'};
 const spRec=(P,key)=>P.speed[key]||(P.speed[key]={best:null,plays:0});
 const atRec=(P,key)=>P.atom[key]||(P.atom[key]={best:0,plays:0});
@@ -2044,7 +2044,7 @@ function renderMenu(){
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','stats','My Profile','See your badges, rank, best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
     h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
-    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Speed Find, Element Trivia, Explore the Table and Atom Builder. Everything else shows as locked.')]:[])
+    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Element Trivia, Explore the Table and Atom Builder. Everything else shows as locked.')]:[])
   );
 }
 
@@ -4997,8 +4997,8 @@ const BADGES=[
  {id:'marathon',fam:'d',name:'Marathoner',g:'hourglass',th:[10,20,30,45],val:P=>Math.floor(bdAct(P).long/60),d:v=>`Play ${v} minutes in one sitting`},
  {id:'explorer',fam:'d',name:'Explorer',g:'globe',th:[2,3,4,6],val:P=>bdGames(P),d:v=>`Try ${v} different games`},
  {id:'curious',fam:'d',name:'Curious',g:'lens',th:[5,25,60,118],val:P=>bdAct(P).exp.length,d:v=>`Open ${v} elements in Explore the Table`},
- {id:'lightning',fam:'m',name:'Lightning',g:'cursor',th:[3000,2000,1500,1000],low:1,val:P=>bdFast(P),d:v=>`Finish a Speed Find round averaging under ${v/1000} second${v===1000?'':'s'}`},
- {id:'sharp',fam:'m',name:'Sharpshooter',g:'target',th:[1,3,10,25],val:P=>bdAct(P).perfect,d:v=>`${v} Speed Find round${v>1?'s':''} with zero mistakes`},
+ {id:'lightning',fam:'m',game:'speed',name:'Lightning',g:'cursor',th:[3000,2000,1500,1000],low:1,val:P=>bdFast(P),d:v=>`Finish a Speed Find round averaging under ${v/1000} second${v===1000?'':'s'}`},
+ {id:'sharp',fam:'m',game:'speed',name:'Sharpshooter',g:'target',th:[1,3,10,25],val:P=>bdAct(P).perfect,d:v=>`${v} Speed Find round${v>1?'s':''} with zero mistakes`},
  {id:'mystery',fam:'m',name:'Mystery solver',g:'lens',th:[20,28,34,40],val:P=>(P.trivia&&P.trivia.best)||0,d:v=>`Score ${v}+ in Element Trivia`},
  {id:'atom',fam:'m',name:'Atom architect',g:'atom',th:[15,40,70,90],val:P=>Object.values(P.atom||{}).reduce((a,r)=>a+((r&&r.best)||0),0),d:v=>`${v} total best points in Atom Builder`},
  {id:'triple',fam:'m',name:'Triple star',g:'stars',th:[1,5,15,40],val:P=>bdThree(P),d:v=>`Earn 3 stars on ${v} level${v>1?'s':''}`},
@@ -5012,7 +5012,7 @@ const BADGES=[
  {id:'mercury',fam:'s',name:'Mercury rising',g:'therm',desc:'Name Mercury (Hg) in Element Trivia using only the first hint.',test:P=>!!bdAct(P).flags.mercury},
  {id:'comeback',fam:'s',name:'Comeback kid',g:'back',desc:'Beat a level after playing it 6 or more times.',test:P=>bdComeback(P)},
  {id:'ace',fam:'s',name:'Trivia ace',g:'t_10',desc:'Solve all 10 mysteries in one Element Trivia round.',test:P=>!!bdAct(P).flags.ace},
- {id:'clean',fam:'s',name:'Clean sweep',g:'check',desc:'Finish a Speed Find round with zero mistakes and under 2 seconds per element.',test:P=>!!bdAct(P).flags.clean},
+ {id:'clean',fam:'s',game:'speed',name:'Clean sweep',g:'check',desc:'Finish a Speed Find round with zero mistakes and under 2 seconds per element.',test:P=>!!bdAct(P).flags.clean},
  {id:'noble',fam:'s',name:'Noble crew',g:'t_Ne',desc:'Open all seven noble gases in Explore the Table.',test:P=>bdHas(P,[2,10,18,36,54,86,118])},
  {id:'alch',fam:'s',name:'Alchemist',g:'t_Au',desc:'Open copper, silver, gold and platinum in Explore the Table.',test:P=>bdHas(P,[29,47,78,79])},
  {id:'ends',fam:'s',name:'Both ends',g:'t_Og',desc:'Open the first and the very last element on the table.',test:P=>bdHas(P,[1,118])},
