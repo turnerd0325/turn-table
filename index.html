@@ -856,18 +856,20 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 @keyframes tscur{50%{opacity:0}}
 .tt-body{animation:ttbob 3.2s ease-in-out infinite;transform-origin:50% 100%}
 @keyframes ttbob{50%{transform:translateY(-4px)}}
-.tt-arm{transform-box:view-box;transform-origin:140px 108px;animation:ttwave 1.5s ease-in-out infinite}
-.tsay.talk .tt-arm{animation-duration:.8s}
-@keyframes ttwave{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(14deg)}}
 .tt-eye{transform-box:fill-box;transform-origin:center;animation:ttblink 4.6s infinite}
 @keyframes ttblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
-.tt-open{display:none;transform-box:fill-box;transform-origin:50% 0}
-.tsay.talk .tt-open{display:block;animation:ttmouth .22s ease-in-out infinite alternate}
-.tsay.talk .tt-smile{display:none}
-@keyframes ttmouth{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.tt-open{transform-box:fill-box;transform-origin:50% 0}
+.tsay.talk .tt-open{animation:ttmouth .2s ease-in-out infinite alternate}
+@keyframes ttmouth{from{transform:scaleY(.55)}to{transform:scaleY(1.05)}}
+.tsay.talk .tt-hands{animation:tthand .2s ease-in-out infinite alternate}
+@keyframes tthand{from{transform:translateY(0)}to{transform:translateY(-1.6px)}}
+.tt-shout path{opacity:.7}
+.tsay.talk .tt-shout path{animation:ttsh .55s ease-out infinite}
+.tsay.talk .tt-shout path:nth-child(2){animation-delay:.12s}.tsay.talk .tt-shout path:nth-child(3){animation-delay:.24s}
+@keyframes ttsh{0%{opacity:0}35%{opacity:1}100%{opacity:.15}}
 .tt-brow{animation:ttbrow 4.6s ease-in-out infinite}
 @keyframes ttbrow{0%,60%,100%{transform:translateY(0)}70%{transform:translateY(-2px)}}
-@media (max-width:640px){.tsay{flex-direction:column;align-items:flex-start}.tsay .tch{width:110px}.tsay .bub{margin:0 0 0 0;width:100%;box-sizing:border-box}.tsay .bub::before,.tsay .bub::after{display:none}}
+@media (max-width:640px){.tsay{flex-direction:column;align-items:flex-start}.tsay .tch,.tsay.sm .tch{width:120px}.tsay.sm .bub{margin:0;width:100%;box-sizing:border-box}.tsay .bub{margin:0 0 0 0;width:100%;box-sizing:border-box}.tsay .bub::before,.tsay .bub::after{display:none}}
 .secthead{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:10px 0 0;font-weight:900;letter-spacing:-.3px;color:var(--navy)}
 .secthead.teach{font-size:clamp(32px,4.6vw,48px);line-height:1}
 .secthead.teach .ico{width:1em;height:1em;color:#e0a21e;stroke-width:2}
@@ -879,11 +881,11 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .teachrow .mcard{height:100%}
 .teachside{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0}
 .teachside .teachnote{grid-column:auto;font-size:clamp(14px,1.35vw,17px);line-height:1.4;padding:0 4px}
-.tsay.sm{margin:0;align-items:center}
-.tsay.sm .tch{width:clamp(84px,9.5vw,132px)}
-.tsay.sm .bub{margin-bottom:0;padding:clamp(12px,1.6vw,22px) clamp(16px,2vw,28px);border-width:4px;border-radius:26px}
-.tsay.sm .bub::before{bottom:auto;top:50%;margin-top:-12px;left:-23px;border-width:13px 21px 13px 0}
-.tsay.sm .bub::after{bottom:auto;top:50%;margin-top:-9px;left:-14px;border-width:10px 16px 10px 0}
+.tsay.sm{--cw:clamp(96px,10.5vw,146px);margin:0;align-items:flex-start;gap:0}
+.tsay.sm .tch{width:var(--cw)}
+.tsay.sm .bub{margin:calc(var(--cw)*.444 - 36px) 0 0 calc(var(--cw)*-.06);padding:clamp(12px,1.6vw,22px) clamp(16px,2vw,28px);border-width:4px;border-radius:26px}
+.tsay.sm .bub::before{bottom:auto;top:23px;left:-23px;border-width:13px 21px 13px 0}
+.tsay.sm .bub::after{bottom:auto;top:27px;left:-14px;border-width:9px 16px 9px 0}
 .tsay.sm .msg{font-size:clamp(22px,2.7vw,38px);min-height:0}
 @media (max-width:640px){.teachrow{grid-template-columns:1fr}}
 .teachnote{grid-column:2/-1;align-self:center;font-size:clamp(18px,2vw,22px);line-height:1.45;color:#3a4a6b;padding:6px 8px}
@@ -2653,7 +2655,7 @@ $('btnLogin').onclick=doLogin;
 const STD={speed:['MS-PS1-1',1],trivia:['MS-PS1-1',1],lab:['MS-PS1-1',0],atom:['MS-PS1-1',0],balance:['MS-PS1-5',0],diner:['MS-PS1-5',0],sep:['MS-PS1-8',0],explore:['MS-PS1-1',1],laser:['MS-PS4-2',0],blackout:['MS-PS3-6',0],evidence:['MS-PS1-2 · PS1-7',0],coaster:['MS-PS3-1 · PS3-2',0]};
 /*STDMAP>>*/
 const starLine=(P,g,n)=>gameStars(P,g,n)?`${gameStars(P,g,n)}/${n*3} stars`:'';
-const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated cartoon teacher with short blond hair, blue eyes, tan glasses, a blue dress shirt and slacks">
+const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated cartoon teacher with short blond hair, blue eyes, tan glasses, a blue dress shirt and slacks, shouting with both hands cupped at his mouth">
 <ellipse cx="100" cy="288" rx="52" ry="6" fill="rgba(20,32,64,.15)"/>
 <g class="tt-body">
  <rect x="68" y="184" width="28" height="94" rx="7" fill="#2c3a55"/><rect x="104" y="184" width="28" height="94" rx="7" fill="#2c3a55"/>
@@ -2665,20 +2667,14 @@ const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated ca
  <path d="M100 122 L100 182" stroke="#2f62a8" stroke-width="2"/>
  <circle cx="100" cy="138" r="2.4" fill="#e8f0fb"/><circle cx="100" cy="156" r="2.4" fill="#e8f0fb"/><circle cx="100" cy="173" r="2.4" fill="#e8f0fb"/>
  <rect x="116" y="134" width="20" height="22" rx="3" fill="#2f62a8" opacity=".55"/><rect x="121" y="128" width="3" height="16" rx="1.5" fill="#fff"/>
- <path d="M58 112 Q38 142 42 178 L58 180 Q60 148 72 124 Z" fill="#3c78c8"/>
- <circle cx="50" cy="185" r="9" fill="#f3c9a5"/>
  <rect x="91" y="86" width="18" height="24" rx="6" fill="#e3b08a"/>
  <path d="M84 100 L100 126 L91 128 L76 106 Z" fill="#f4f8fd"/><path d="M116 100 L100 126 L109 128 L124 106 Z" fill="#f4f8fd"/>
- <g class="tt-arm">
-  <path d="M138 108 Q168 98 176 64 L160 58 Q156 86 132 96 Z" fill="#3c78c8"/>
-  <circle cx="169" cy="55" r="10" fill="#f3c9a5"/><path d="M162 50 Q165 42 169 44 M168 47 Q172 40 175 43" stroke="#e3b08a" stroke-width="3" stroke-linecap="round" fill="none"/>
- </g>
  <circle cx="66" cy="66" r="7" fill="#e9b996"/><circle cx="134" cy="66" r="7" fill="#e9b996"/>
  <ellipse cx="100" cy="62" rx="35" ry="39" fill="#f3c9a5"/>
  <path d="M63 60 Q58 22 100 18 Q144 22 137 60 Q133 42 114 38 Q102 46 84 40 Q68 44 63 60 Z" fill="#eac45e"/>
  <path d="M80 30 Q96 20 116 28" stroke="#f8e08e" stroke-width="5" stroke-linecap="round" fill="none"/>
  <path d="M64 56 Q60 66 63 72 Q66 60 70 52 Z M136 56 Q140 66 137 72 Q134 60 130 52 Z" fill="#d9ae48"/>
- <g class="tt-brow" stroke="#b88a2f" stroke-width="3.2" stroke-linecap="round" fill="none"><path d="M79 50 Q87 45 95 49"/><path d="M105 49 Q113 45 121 50"/></g>
+ <g class="tt-brow" stroke="#b88a2f" stroke-width="3.2" stroke-linecap="round" fill="none"><path d="M79 46 Q87 40 95 45"/><path d="M105 45 Q113 40 121 46"/></g>
  <g class="tt-eye"><ellipse cx="87" cy="63" rx="6.4" ry="5.8" fill="#fff"/><circle cx="88" cy="63" r="3.9" fill="#3b8fe0"/><circle cx="88" cy="63" r="1.8" fill="#12315c"/><circle cx="89.3" cy="61.6" r="1.2" fill="#fff"/></g>
  <g class="tt-eye"><ellipse cx="113" cy="63" rx="6.4" ry="5.8" fill="#fff"/><circle cx="114" cy="63" r="3.9" fill="#3b8fe0"/><circle cx="114" cy="63" r="1.8" fill="#12315c"/><circle cx="115.3" cy="61.6" r="1.2" fill="#fff"/></g>
  <g fill="rgba(190,225,255,.22)" stroke="#d6b080" stroke-width="3.2" stroke-linejoin="round"><rect x="75" y="53" width="25" height="20" rx="8"/><rect x="100" y="53" width="25" height="20" rx="8"/></g>
@@ -2686,8 +2682,18 @@ const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated ca
  <path d="M75 61 L66 60 M125 61 L134 60" stroke="#d6b080" stroke-width="3" stroke-linecap="round"/>
  <path d="M100 68 Q96 78 101 80" stroke="#d99f7a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
  <circle cx="78" cy="80" r="6" fill="#f09a8a" opacity=".35"/><circle cx="122" cy="80" r="6" fill="#f09a8a" opacity=".35"/>
- <path class="tt-smile" d="M88 88 Q100 99 112 88" stroke="#9a3f3f" stroke-width="3.2" fill="none" stroke-linecap="round"/>
- <g class="tt-open"><path d="M89 87 Q100 102 111 87 Q100 90 89 87 Z" fill="#7a2a2a"/><path d="M91 88 Q100 91 109 88 L108 91 Q100 93 92 91 Z" fill="#fff"/></g>
+ <g class="tt-open"><ellipse cx="100" cy="91" rx="11" ry="10" fill="#6e1f24"/><path d="M90 85 Q100 82 110 85 L109 88 Q100 86 91 88 Z" fill="#fff"/><ellipse cx="100" cy="97" rx="6" ry="3.6" fill="#e0636b"/></g>
+ <g class="tt-shout" fill="none" stroke="#3c78c8" stroke-width="4" stroke-linecap="round"><path d="M148 78 Q158 92 148 106"/><path d="M158 70 Q174 92 158 114"/><path d="M168 62 Q190 92 168 122"/></g>
+ <g class="tt-hands">
+  <path d="M62 116 L32 150 L68 102" stroke="#3c78c8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M138 116 L168 150 L132 102" stroke="#3c78c8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M64 106 L69 100 M136 106 L131 100" stroke="#2f62a8" stroke-width="17" stroke-linecap="round"/>
+  <ellipse cx="76" cy="91" rx="9" ry="12" fill="#f3c9a5" transform="rotate(18 76 91)"/>
+  <ellipse cx="124" cy="91" rx="9" ry="12" fill="#f3c9a5" transform="rotate(-18 124 91)"/>
+  <path d="M80 82 Q88 84 88 91 M80 89 Q88 91 88 98 M81 96 Q87 97 87 102" stroke="#e3b08a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  <path d="M120 82 Q112 84 112 91 M120 89 Q112 91 112 98 M119 96 Q113 97 113 102" stroke="#e3b08a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ </g>
+</g>
 </g>
 </svg>`;
 function teacherSay(msgs,opts){
@@ -2735,7 +2741,7 @@ function renderMenu(){
   $('menuGrid').replaceChildren(
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
     h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
-      teacherSay(['This platform is used to study for science, not to just play around.'],{small:true}),
+      teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
       h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'))),
     h('div',{class:'secthead stud'},'For students'),
     mc('m8','class','Join a Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
