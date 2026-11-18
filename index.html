@@ -7251,7 +7251,7 @@ function renderFeedback(){
   const ta=h('textarea',{id:'fbText',rows:'6',maxlength:'800',placeholder:'Example: In Compound Lab, add an Undo button. When I click the wrong atom I have to start the whole compound over, and that wastes time I could spend learning.'});
   const cnt=h('div',{class:'fb-count'});
   const agree=h('input',{type:'checkbox',id:'fbAgree'});
-  const btn=h('button',{class:'btn good',type:'button',disabled:'disabled'},'Send feedback');
+  const btn=h('button',{class:'btn good',type:'button',disabled:'disabled'},'Send to your teacher');
   const msg=h('div',{class:'fb-msg','aria-live':'polite'});
   const mine=h('div',{class:'fb-mine'});
   const upd=()=>{
@@ -7270,11 +7270,11 @@ function renderFeedback(){
     }catch(e){mine.replaceChildren();}
   }
   btn.onclick=async()=>{
-    btn.disabled=true;msg.replaceChildren(h('div',null,'Sending…'));
+    btn.disabled=true;msg.replaceChildren(h('div',null,'Sending to your teacher…'));
     let r=null;
     try{r=await rpc('tt_feedback_submit',{p_id:P.cloud.id,p_token:P.cloud.token,p_game:gsel.value,p_kind:ksel.value,p_message:ta.value},12000);}catch(e){r=null;}
     if(!r){msg.replaceChildren(h('div',{class:'fb-bad'},"Couldn't reach the server. Your text is still here. Try again."));upd();return;}
-    if(r.ok){ta.value='';agree.checked=false;msg.replaceChildren(h('div',{class:'fb-ok'},h('b',null,'Thank you! Your feedback was sent. '),'Your teacher will read it. Remember, not every idea can be used.'));upd();loadMine();return;}
+    if(r.ok){ta.value='';agree.checked=false;msg.replaceChildren(h('div',{class:'fb-ok'},h('b',null,'Thank you! Your feedback was sent to your teacher. '),'Your teacher will read it. Remember, not every idea can be used.'));upd();loadMine();return;}
     msg.replaceChildren(h('div',{class:'fb-bad'},FB_ERR[r.error]||'That did not work. Try again.'));upd();
   };
   box.replaceChildren(
