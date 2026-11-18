@@ -836,6 +836,38 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .cg-grid .mcard .art{aspect-ratio:16/9}
 .cg-grid .mcard b{font-size:22px}
 .cg-grid .mcard span{font-size:15.5px}
+/* ---- animated teacher + speech bubble ---- */
+.tsay{grid-column:1/-1;display:flex;align-items:flex-end;gap:clamp(6px,1.4vw,18px);margin:4px 0 6px}
+.tsay .tch{flex:none;width:clamp(120px,15vw,190px);cursor:pointer;-webkit-tap-highlight-color:transparent;border:0;background:none;padding:0}
+.tsay .tch svg{width:100%;height:auto;display:block;overflow:visible}
+.tsay .bub{position:relative;flex:1;min-width:0;background:#fff;border:5px solid var(--navy);border-radius:30px;padding:clamp(16px,2.2vw,30px) clamp(18px,2.6vw,36px);box-shadow:0 10px 0 rgba(20,32,64,.14);margin-bottom:clamp(30px,5vw,70px);animation:tspop .5s cubic-bezier(.2,1.3,.4,1) both;transform-origin:0 70%}
+.tsay .bub::before{content:"";position:absolute;left:-27px;bottom:34px;border:16px solid transparent;border-right:24px solid var(--navy);border-left:0}
+.tsay .bub::after{content:"";position:absolute;left:-17px;bottom:38px;border:12px solid transparent;border-right:19px solid #fff;border-left:0}
+.tsay .msg{margin:0;font-weight:900;color:var(--navy);line-height:1.18;letter-spacing:-.4px;font-size:clamp(24px,3.4vw,44px);min-height:2.4em;overflow-wrap:break-word}
+.tsay .msg .cur{display:inline-block;width:.09em;height:.95em;background:#3c78c8;margin-left:3px;vertical-align:-.1em;animation:tscur .8s steps(1) infinite}
+.tsay .bfoot{display:flex;align-items:center;gap:12px;margin-top:10px}
+.tsay .dots{display:flex;gap:7px;flex:1}
+.tsay .dots i{width:11px;height:11px;border-radius:50%;background:#cfd8ea;transition:background .2s,transform .2s}
+.tsay .dots i.on{background:#3c78c8;transform:scale(1.25)}
+.tsay .nx{font:inherit;font-weight:900;font-size:clamp(15px,1.6vw,20px);padding:9px 18px;border-radius:999px;border:3px solid var(--navy);background:#ffd24a;color:var(--navy);cursor:pointer;box-shadow:0 4px 0 rgba(20,32,64,.25)}
+.tsay .nx:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(20,32,64,.25)}
+.tsay .nx:focus-visible,.tsay .tch:focus-visible{outline:4px solid #3c78c8;outline-offset:3px;border-radius:14px}
+@keyframes tspop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+@keyframes tscur{50%{opacity:0}}
+.tt-body{animation:ttbob 3.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes ttbob{50%{transform:translateY(-4px)}}
+.tt-arm{transform-box:view-box;transform-origin:140px 108px;animation:ttwave 1.5s ease-in-out infinite}
+.tsay.talk .tt-arm{animation-duration:.8s}
+@keyframes ttwave{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(14deg)}}
+.tt-eye{transform-box:fill-box;transform-origin:center;animation:ttblink 4.6s infinite}
+@keyframes ttblink{0%,93%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+.tt-open{display:none;transform-box:fill-box;transform-origin:50% 0}
+.tsay.talk .tt-open{display:block;animation:ttmouth .22s ease-in-out infinite alternate}
+.tsay.talk .tt-smile{display:none}
+@keyframes ttmouth{from{transform:scaleY(.35)}to{transform:scaleY(1)}}
+.tt-brow{animation:ttbrow 4.6s ease-in-out infinite}
+@keyframes ttbrow{0%,60%,100%{transform:translateY(0)}70%{transform:translateY(-2px)}}
+@media (max-width:640px){.tsay{flex-direction:column;align-items:flex-start}.tsay .tch{width:110px}.tsay .bub{margin:0 0 0 0;width:100%;box-sizing:border-box}.tsay .bub::before,.tsay .bub::after{display:none}}
 .secthead{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:10px 0 0;font-weight:900;letter-spacing:-.3px;color:var(--navy)}
 .secthead.teach{font-size:clamp(32px,4.6vw,48px);line-height:1}
 .secthead.teach .ico{width:1em;height:1em;color:#e0a21e;stroke-width:2}
@@ -2610,6 +2642,70 @@ $('btnLogin').onclick=doLogin;
 const STD={speed:['MS-PS1-1',1],trivia:['MS-PS1-1',1],lab:['MS-PS1-1',0],atom:['MS-PS1-1',0],balance:['MS-PS1-5',0],diner:['MS-PS1-5',0],sep:['MS-PS1-8',0],explore:['MS-PS1-1',1],laser:['MS-PS4-2',0],blackout:['MS-PS3-6',0],evidence:['MS-PS1-2 · PS1-7',0],coaster:['MS-PS3-1 · PS3-2',0]};
 /*STDMAP>>*/
 const starLine=(P,g,n)=>gameStars(P,g,n)?`${gameStars(P,g,n)}/${n*3} stars`:'';
+const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated cartoon teacher with short blond hair, blue eyes, tan glasses, a blue dress shirt and slacks">
+<ellipse cx="100" cy="288" rx="52" ry="6" fill="rgba(20,32,64,.15)"/>
+<g class="tt-body">
+ <rect x="68" y="184" width="28" height="94" rx="7" fill="#2c3a55"/><rect x="104" y="184" width="28" height="94" rx="7" fill="#2c3a55"/>
+ <rect x="97" y="196" width="6" height="80" fill="#243049"/>
+ <ellipse cx="80" cy="282" rx="20" ry="8" fill="#1c2233"/><ellipse cx="121" cy="282" rx="20" ry="8" fill="#1c2233"/>
+ <path d="M56 108 Q100 92 144 108 L150 190 L50 190 Z" fill="#3c78c8"/>
+ <path d="M56 108 Q50 140 52 190 L72 190 Q70 140 76 104 Z" fill="#2f62a8" opacity=".5"/>
+ <rect x="50" y="182" width="100" height="9" rx="3" fill="#3a2a1e"/><rect x="94" y="181" width="12" height="11" rx="2" fill="#d9b24a"/>
+ <path d="M100 122 L100 182" stroke="#2f62a8" stroke-width="2"/>
+ <circle cx="100" cy="138" r="2.4" fill="#e8f0fb"/><circle cx="100" cy="156" r="2.4" fill="#e8f0fb"/><circle cx="100" cy="173" r="2.4" fill="#e8f0fb"/>
+ <rect x="116" y="134" width="20" height="22" rx="3" fill="#2f62a8" opacity=".55"/><rect x="121" y="128" width="3" height="16" rx="1.5" fill="#fff"/>
+ <path d="M58 112 Q38 142 42 178 L58 180 Q60 148 72 124 Z" fill="#3c78c8"/>
+ <circle cx="50" cy="185" r="9" fill="#f3c9a5"/>
+ <rect x="91" y="86" width="18" height="24" rx="6" fill="#e3b08a"/>
+ <path d="M84 100 L100 126 L91 128 L76 106 Z" fill="#f4f8fd"/><path d="M116 100 L100 126 L109 128 L124 106 Z" fill="#f4f8fd"/>
+ <g class="tt-arm">
+  <path d="M138 108 Q168 98 176 64 L160 58 Q156 86 132 96 Z" fill="#3c78c8"/>
+  <circle cx="169" cy="55" r="10" fill="#f3c9a5"/><path d="M162 50 Q165 42 169 44 M168 47 Q172 40 175 43" stroke="#e3b08a" stroke-width="3" stroke-linecap="round" fill="none"/>
+ </g>
+ <circle cx="66" cy="66" r="7" fill="#e9b996"/><circle cx="134" cy="66" r="7" fill="#e9b996"/>
+ <ellipse cx="100" cy="62" rx="35" ry="39" fill="#f3c9a5"/>
+ <path d="M63 60 Q58 22 100 18 Q144 22 137 60 Q133 42 114 38 Q102 46 84 40 Q68 44 63 60 Z" fill="#eac45e"/>
+ <path d="M80 30 Q96 20 116 28" stroke="#f8e08e" stroke-width="5" stroke-linecap="round" fill="none"/>
+ <path d="M64 56 Q60 66 63 72 Q66 60 70 52 Z M136 56 Q140 66 137 72 Q134 60 130 52 Z" fill="#d9ae48"/>
+ <g class="tt-brow" stroke="#b88a2f" stroke-width="3.2" stroke-linecap="round" fill="none"><path d="M79 50 Q87 45 95 49"/><path d="M105 49 Q113 45 121 50"/></g>
+ <g class="tt-eye"><ellipse cx="87" cy="63" rx="6.4" ry="5.8" fill="#fff"/><circle cx="88" cy="63" r="3.9" fill="#3b8fe0"/><circle cx="88" cy="63" r="1.8" fill="#12315c"/><circle cx="89.3" cy="61.6" r="1.2" fill="#fff"/></g>
+ <g class="tt-eye"><ellipse cx="113" cy="63" rx="6.4" ry="5.8" fill="#fff"/><circle cx="114" cy="63" r="3.9" fill="#3b8fe0"/><circle cx="114" cy="63" r="1.8" fill="#12315c"/><circle cx="115.3" cy="61.6" r="1.2" fill="#fff"/></g>
+ <g fill="rgba(190,225,255,.22)" stroke="#d6b080" stroke-width="3.2" stroke-linejoin="round"><rect x="75" y="53" width="25" height="20" rx="8"/><rect x="100" y="53" width="25" height="20" rx="8"/></g>
+ <path d="M97 62 Q100 59 103 62" stroke="#d6b080" stroke-width="3" fill="none" stroke-linecap="round"/>
+ <path d="M75 61 L66 60 M125 61 L134 60" stroke="#d6b080" stroke-width="3" stroke-linecap="round"/>
+ <path d="M100 68 Q96 78 101 80" stroke="#d99f7a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+ <circle cx="78" cy="80" r="6" fill="#f09a8a" opacity=".35"/><circle cx="122" cy="80" r="6" fill="#f09a8a" opacity=".35"/>
+ <path class="tt-smile" d="M88 88 Q100 99 112 88" stroke="#9a3f3f" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+ <g class="tt-open"><path d="M89 87 Q100 102 111 87 Q100 90 89 87 Z" fill="#7a2a2a"/><path d="M91 88 Q100 91 109 88 L108 91 Q100 93 92 91 Z" fill="#fff"/></g>
+</g>
+</svg>`;
+function teacherSay(msgs,opts){
+  opts=opts||{};const list=msgs.slice();let i=0,tm=null;
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const root=h('div',{class:'tsay'});
+  const ch=h('button',{class:'tch',type:'button','aria-label':'Teacher. Tap for the next tip.'});ch.innerHTML=TEACHER_SVG;
+  const msg=h('p',{class:'msg',role:'status','aria-live':'polite'});
+  const dots=h('div',{class:'dots','aria-hidden':'true'},...list.map(()=>h('i')));
+  const nx=h('button',{class:'nx',type:'button'},'Next tip ›');
+  const bub=h('div',{class:'bub'},msg,h('div',{class:'bfoot'},dots,list.length>1?nx:null));
+  root.append(ch,bub);
+  const stop=()=>{if(tm){clearInterval(tm);tm=null;}root.classList.remove('talk');};
+  const say=k=>{
+    stop();i=(k+list.length)%list.length;const t=list[i];
+    [...dots.children].forEach((d,j)=>d.classList.toggle('on',j===i));
+    if(reduce){msg.textContent=t;return;}
+    let n=0;root.classList.add('talk');msg.textContent='';
+    const cur=h('span',{class:'cur'});
+    tm=setInterval(()=>{
+      if(!root.isConnected&&n>0){stop();return;}
+      n+=2;msg.textContent=t.slice(0,n);if(n<t.length)msg.append(cur);else stop();
+    },28);
+  };
+  const next=()=>say(i+1);
+  nx.onclick=next;ch.onclick=next;
+  say(0);
+  return root;
+}
 function renderMenu(){
   const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;try{bdStrip();bdCheck();}catch(e){}
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
@@ -2626,6 +2722,11 @@ function renderMenu(){
     return btn;};
   const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
   $('menuGrid').replaceChildren(
+    teacherSay([`Welcome to Turn-Table, ${P.name}! Pick a game, beat your best score, and show what you know.`,
+      'Every game ends with a Science Check. Write one full sentence to keep playing. You can do it!',
+      'Stuck? Tap the Hint button. Hints help you learn, not just win.',
+      'Mistakes are how scientists learn. Try again and watch your score climb!',
+      'Is your teacher running a class game? Tap Join a Class Game and type the code.']),
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
     tcard,
     h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'),
