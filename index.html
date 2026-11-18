@@ -1050,6 +1050,44 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 
 .jg-board.still .jg-tile,.jg-board.still .jg-cat{animation:none}
 
+
+/* teacher accounts */
+.tlink{color:var(--accent);font-weight:700;cursor:pointer;text-decoration:underline}
+.td-top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.td-plan{display:inline-block;margin-top:6px;background:#e8efff;color:var(--accent);font-weight:800;font-size:13px;border-radius:999px;padding:3px 12px}
+.td-plan.bad{background:#fde8e8;color:var(--bad)}
+.td-banner{background:#fff4d6;border:2px solid #f0c24a;border-radius:12px;padding:10px 14px;font-weight:600;margin:0 0 12px}
+.td-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.td-chip{font:inherit;font-weight:800;border:2px solid var(--line);background:#fff;border-radius:999px;padding:7px 16px;cursor:pointer}
+.td-chip small{font-weight:700;color:var(--muted)}
+.td-chip.on{border-color:var(--accent);background:#e8efff;color:var(--accent)}
+.td-chip.arch{opacity:.6}
+.td-chip.add{border-style:dashed;color:var(--accent)}
+.td-class{display:flex;flex-wrap:wrap;gap:16px;align-items:stretch;margin-bottom:6px}
+.td-code{background:linear-gradient(135deg,#14213d,#2a3f7a);color:#fff;border-radius:16px;padding:14px 22px;min-width:260px}
+.td-code .lbl{font-weight:700;opacity:.8;font-size:13px;letter-spacing:.6px;text-transform:uppercase}
+.td-code .big{font-size:clamp(34px,5vw,52px);font-weight:900;letter-spacing:.14em;line-height:1.15;font-family:ui-monospace,Menlo,Consolas,monospace}
+.td-code .how{font-size:13px;opacity:.9;max-width:300px;line-height:1.35}
+.td-acts{display:flex;flex-wrap:wrap;gap:8px;align-content:center}
+.td-sec{margin:18px 0 6px;font-size:20px}
+.td-games{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-top:10px}
+.swt{background:#fff;border:2px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,opacity .15s}
+.swt.on{border-color:#7cc99a}
+.swt.off{opacity:.78;background:#f3f5fa}
+.swt .art{height:78px;display:flex;align-items:center;justify-content:center;background:#eef3fb;overflow:hidden}
+.swt .art svg{height:100%;width:auto;max-width:100%}
+.swt.off .art{filter:grayscale(.85)}
+.swt .row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px}
+.swt .nm{font-weight:800;font-size:14px;line-height:1.15}
+.swt .st{font-size:12px;font-weight:800;color:var(--good)}
+.swt.off .st{color:var(--bad)}
+.sw{position:relative;flex:none;width:58px;height:32px;border-radius:999px;border:0;background:#c3cadb;cursor:pointer;transition:background .18s;padding:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .18s}
+.sw[aria-checked="true"]{background:var(--good)}
+.sw[aria-checked="true"]::after{transform:translateX(26px)}
+.sw:focus-visible{outline:3px solid #7aa2ff;outline-offset:2px}
+.cg-class{justify-content:center;margin:2px 0 10px}
+.cg-class select{font:inherit;font-weight:700;padding:7px 10px;border:2px solid var(--line);border-radius:10px;background:#fff}
 </style>
 </head>
 <body>
@@ -1079,17 +1117,18 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
     </div>
     <div class="field"><label for="uName">Nickname</label><input type="text" id="uName" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
     <div class="field"><label for="uPin">4-digit PIN</label><input type="password" id="uPin" maxlength="4" inputmode="numeric" autocomplete="off"></div>
-    <div class="field" id="classField" hidden><label for="uClass">Class code <small>(your teacher will tell you — optional)</small></label><input type="text" id="uClass" maxlength="12" autocomplete="off"></div>
+    <div class="field" id="classField" hidden><label for="uClass">Class code <small>(6 letters and numbers from your teacher)</small></label><input type="text" id="uClass" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase;letter-spacing:3px;font-weight:800"></div>
     <div class="msg bad" id="loginMsg"></div>
     <button class="btn" id="btnLogin" style="width:100%">Log in</button>
     <div id="nameList" style="margin-top:14px" hidden><small class="sub">Tap your nickname:</small><div class="chips" id="nameChips"></div></div>
+    <p style="text-align:center;margin:16px 0 0"><a class="tlink" id="loginTeacher" role="button" tabindex="0">Teacher? Sign in or create an account</a></p>
   </div>
 </section>
 
 <!-- MENU -->
 <section class="screen" id="s-menu" hidden>
   <h1 id="menuHello">Pick a game</h1>
-  <p class="sub">Mr. Turner's periodic table challenge. Pick a game and show what you know!</p>
+  <p class="sub" id="menuSub">Pick a game and show what you know!</p>
   <div class="bdstrip" id="bdStrip"></div>
   <div class="menu-grid" id="menuGrid"></div>
 </section>
@@ -1518,6 +1557,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
   </div>
   <h1 class="cg-h1">Class Games</h1>
   <p class="sub cg-sub">Teacher-led games for the whole class. Put your screen on the projector. Students join on their own Chromebooks.</p>
+  <div class="tbar cg-class" id="cgClassBar"></div>
   <div class="cg-grid" id="cgGrid"></div>
 </section>
 
@@ -1706,6 +1746,56 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 </section>
 
 <!-- TEACHER -->
+<!-- TEACHER ACCOUNTS -->
+<section class="screen" id="s-tauth" hidden>
+  <div class="card center">
+    <div class="hero"><i data-ic="cap"></i></div>
+    <h1 style="text-align:center;margin:0 0 4px">Teacher sign in</h1>
+    <p class="sub" style="text-align:center">Run class games, see your students' scores, and switch games on or off for your class.</p>
+    <div id="taForm">
+      <div class="seg"><button id="taModeIn" class="on" type="button">Sign in</button><button id="taModeUp" type="button">Create account</button></div>
+      <div id="taUpOnly" hidden>
+        <div class="field"><label for="taName">Your name <small>(students will see this)</small></label><input type="text" id="taName" maxlength="60" placeholder="Mr. Turner" autocomplete="name"></div>
+        <div class="field"><label for="taSchool">School <small>(optional)</small></label><input type="text" id="taSchool" maxlength="80" autocomplete="organization"></div>
+      </div>
+      <div class="field"><label for="taEmail">Email</label><input type="email" id="taEmail" autocomplete="email" autocapitalize="off" spellcheck="false"></div>
+      <div class="field"><label for="taPass">Password <small id="taPassHint" hidden>(at least 8 characters)</small></label><input type="password" id="taPass" autocomplete="current-password"></div>
+      <label class="fb-agree" id="taAgreeRow" hidden><input type="checkbox" id="taAgree"><span>I am a teacher or school staff member. I will follow my school's student privacy rules. Students only use a nickname and a PIN.</span></label>
+      <div class="msg bad" id="taMsg"></div>
+      <button class="btn" id="taGo" type="button" style="width:100%">Sign in</button>
+      <p style="text-align:center;margin:12px 0 0" id="taForgotRow"><a class="tlink" id="taForgot" role="button" tabindex="0">Forgot your password?</a></p>
+    </div>
+    <div id="taCheck" hidden>
+      <h2 style="text-align:center">Check your email</h2>
+      <p class="sub" id="taCheckTxt" style="text-align:center"></p>
+      <p style="text-align:center"><button class="btn ghost" id="taCheckBack" type="button">Back to sign in</button></p>
+    </div>
+    <p style="margin:14px 0 0;text-align:center"><button class="btn ghost sm" id="taBack" type="button">← Back to students</button></p>
+  </div>
+</section>
+
+<section class="screen" id="s-trecover" hidden>
+  <div class="card center">
+    <h1 style="text-align:center">Choose a new password</h1>
+    <div class="field"><label for="rcPass">New password <small>(at least 8 characters)</small></label><input type="password" id="rcPass" autocomplete="new-password"></div>
+    <div class="msg bad" id="rcMsg"></div>
+    <button class="btn" id="rcGo" type="button" style="width:100%">Save password</button>
+  </div>
+</section>
+
+<section class="screen" id="s-tdash" hidden>
+  <div id="tdBody"></div>
+</section>
+
+<section class="screen" id="s-tfound" hidden>
+  <div class="card">
+    <h2><i data-ic="key"></i>Founder panel</h2>
+    <p class="sub">Every teacher account on Turn-Table. Only you can see this page.</p>
+    <div class="tbar"><button class="btn sm" id="tfoRefresh" type="button">↻ Refresh</button><button class="btn sm ghost" id="tfoBack" type="button">← Dashboard</button></div>
+    <div class="tscroll"><table class="dt" id="tfoTable"></table></div>
+  </div>
+</section>
+
 <section class="screen" id="s-teacher" hidden>
   <div class="card">
     <h2><i data-ic="cap"></i>Teacher Panel</h2>
@@ -1716,8 +1806,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
       <button class="btn sm ghost" id="tExportAll"><i data-ic="download"></i>Every round (CSV)</button>
       <button class="btn sm ghost" id="tClassGames"><i data-ic="live"></i>Class Games</button>
       <button class="btn sm ghost" id="tFeedback"><i data-ic="chat"></i>Student feedback</button>
-      <button class="btn sm ghost" id="tPass"><i data-ic="key"></i>Change passcode</button>
-      <button class="btn sm ghost" id="tBack">← Back</button>
+      <button class="btn sm ghost" id="tBack">← Dashboard</button>
     </div>
     <div class="tbar">
       <select id="tClass" aria-label="Class"></select>
@@ -2412,10 +2501,12 @@ const fx={
 /* ---------- CLOUD (score server) ---------- */
 const CLOUD={url:'https://alhnylmjsvumbjnhsior.supabase.co',key:'sb_publishable_e4aF29PL8QOahV0ZM2DYbw_OYBHvez1'};
 async function rpc(fn,args,ms){
+  const hd={'apikey':CLOUD.key,'Content-Type':'application/json'};
+  if(fn.startsWith('tt_a_')){if(!(await taFresh()))throw new Error('noauth');hd.Authorization='Bearer '+TA.s.access_token;}
   const c=new AbortController(),t=setTimeout(()=>c.abort(),ms||9000);
   try{
     const r=await fetch(CLOUD.url+'/rest/v1/rpc/'+fn,{method:'POST',signal:c.signal,
-      headers:{'apikey':CLOUD.key,'Content-Type':'application/json'},body:JSON.stringify(args||{})});
+      headers:hd,body:JSON.stringify(args||{})});
     if(!r.ok)throw new Error('http '+r.status);
     return await r.json();
   }finally{clearTimeout(t);}
@@ -2447,10 +2538,260 @@ if(me&&!profiles[me])me=null;
 const prof=()=>profiles[me];
 /* ---- temporary student lock: games listed here are locked for everyone except the owner ----
    To unlock everything, change to:  const LOCKED_GAMES=[];  */
-const LOCKED_GAMES=['speed','balance','sep','laser','blackout','evidence','coaster'];
+const DEFAULT_OFF=['speed','balance','sep','laser','blackout','evidence','coaster'];
+const classOff=()=>{const P=me&&profiles[me];if(!P)return [];return P.cinfo===undefined?DEFAULT_OFF:((P.cinfo&&P.cinfo.games_off)||[]);};
 const OWNER_NICK='turner';
 const isOwner=()=>!!(me&&profiles[me]&&String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK);
-const gameLocked=g=>LOCKED_GAMES.includes(g)&&!isOwner();
+const gameLocked=g=>classOff().includes(g)&&!isOwner();
+/* ================= TEACHER ACCOUNTS (email + password, checked by the server) ================= */
+const TA={s:null,me:null,cls:null,next:'dash'};
+try{TA.s=JSON.parse(store.get('tt_ta')||'null');}catch(e){TA.s=null;}
+TA.cls=store.get('tt_tcls')||null;
+const taSave=()=>store.set('tt_ta',TA.s?JSON.stringify(TA.s):'');
+async function authCall(path,o){
+  o=o||{};const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);
+  const hd={'apikey':CLOUD.key,'Content-Type':'application/json'};if(o.token)hd.Authorization='Bearer '+o.token;
+  try{
+    const r=await fetch(CLOUD.url+'/auth/v1'+path+(o.query?'?'+o.query:''),{method:o.method||'POST',signal:c.signal,headers:hd,body:o.body?JSON.stringify(o.body):undefined});
+    let j={};try{j=await r.json();}catch(e){}
+    return {ok:r.ok,status:r.status,j:j||{}};
+  }finally{clearTimeout(t);}
+}
+function taSet(j){
+  TA.s={access_token:j.access_token,refresh_token:j.refresh_token,expires_at:j.expires_at||Math.floor(Date.now()/1000)+(j.expires_in||3600),user:j.user||(TA.s&&TA.s.user)||null};taSave();
+}
+async function taFresh(){
+  if(!TA.s)return false;
+  if(TA.s.expires_at-Math.floor(Date.now()/1000)>60)return true;
+  try{
+    const r=await authCall('/token',{query:'grant_type=refresh_token',body:{refresh_token:TA.s.refresh_token}});
+    if(r.ok&&r.j.access_token){taSet(r.j);return true;}
+    if(r.status>=400&&r.status<500){TA.s=null;TA.me=null;taSave();}
+  }catch(e){}
+  return false;
+}
+const taRedirect=()=>location.origin+location.pathname;
+const showT=id=>{show(id);$('userChip').hidden=true;};
+const curClass=()=>{const K=(TA.me&&TA.me.classes)||[];return K.find(c=>c.id===TA.cls)||K.find(c=>!c.archived)||K[0]||null;};
+let taMode='in',taBusy=false;
+function taMsg(t,good){$('taMsg').textContent=t;$('taMsg').className='msg '+(good?'good':'bad');}
+function setTaMode(m){
+  taMode=m;$('taModeIn').classList.toggle('on',m==='in');$('taModeUp').classList.toggle('on',m==='up');
+  $('taUpOnly').hidden=$('taAgreeRow').hidden=$('taPassHint').hidden=(m!=='up');
+  $('taForgotRow').hidden=(m==='up');$('taGo').textContent=m==='up'?'Create my teacher account':'Sign in';
+  $('taPass').autocomplete=m==='up'?'new-password':'current-password';taMsg('');
+}
+function openTAuth(msg,good){
+  $('taForm').hidden=false;$('taCheck').hidden=true;setTaMode('in');if(msg)taMsg(msg,good);
+  showT('s-tauth');
+}
+async function taSubmit(){
+  if(taBusy)return;
+  const email=$('taEmail').value.trim().toLowerCase(),pw=$('taPass').value;
+  if(!/^\S+@\S+\.\S+$/.test(email))return taMsg('Type your email address.');
+  let name='',school='';
+  if(taMode==='up'){
+    name=$('taName').value.trim();school=$('taSchool').value.trim();
+    if(name.length<2)return taMsg('Type your name, like Mr. Turner.');
+    if(pw.length<8)return taMsg('Use a password with at least 8 characters.');
+    if(!$('taAgree').checked)return taMsg('Please tick the box to confirm.');
+  }else if(!pw)return taMsg('Type your password.');
+  taBusy=true;$('taGo').disabled=true;taMsg('Working…',true);
+  try{
+    if(taMode==='up'){
+      const r=await authCall('/signup',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email,password:pw,data:{name,school}}});
+      if(!r.ok){
+        const c=r.j.error_code||r.j.code||'';
+        return taMsg(c==='weak_password'?'That password is too easy to guess. Try a longer one with letters and numbers.':(c==='over_email_send_rate_limit'||r.status===429)?'Too many emails were sent just now. Wait a few minutes and try again.':c==='user_already_exists'?'That email already has an account. Tap Sign in.':'Could not create the account. Check the email and try again.');
+      }
+      if(r.j.access_token){taSet(r.j);return await taAfterLogin();}
+      $('taCheckTxt').textContent=`We sent a link to ${email}. Open it to confirm your email, then come back and sign in. It can take a minute, and it may land in spam.`;
+      $('taForm').hidden=true;$('taCheck').hidden=false;
+    }else{
+      const r=await authCall('/token',{query:'grant_type=password',body:{email,password:pw}});
+      if(!r.ok){
+        const c=r.j.error_code||'';
+        return taMsg(c==='email_not_confirmed'?'Please confirm your email first. Open the link we sent you.':r.status===429?'Too many tries. Wait a minute and try again.':'That email and password do not match.');
+      }
+      taSet(r.j);taMsg('');await taAfterLogin();
+    }
+  }catch(e){taMsg("Can't reach the server. Check the Wi-Fi and try again.");}
+  finally{taBusy=false;$('taGo').disabled=false;}
+}
+async function taForgot(){
+  const email=$('taEmail').value.trim().toLowerCase();
+  if(!/^\S+@\S+\.\S+$/.test(email))return taMsg('Type your email above first, then tap this again.');
+  try{
+    const r=await authCall('/recover',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email}});
+    taMsg(r.status===429?'Too many emails were sent just now. Wait a few minutes.':'If that email has an account, a reset link is on its way.',r.status!==429);
+  }catch(e){taMsg("Can't reach the server.");}
+}
+async function taEnter(){
+  if(!(await taFresh()))return false;
+  let r=null;
+  try{r=await rpc('tt_a_me',{},12000);}catch(e){return false;}
+  if(r&&r.error==='noprofile'){
+    if(!(TA.s.user&&TA.s.user.user_metadata)){const u=await authCall('/user',{method:'GET',token:TA.s.access_token});if(u.ok){TA.s.user=u.j;taSave();}}
+    const md=(TA.s.user&&TA.s.user.user_metadata)||{};
+    r=await rpc('tt_a_start',{p_name:md.name||String((TA.s.user&&TA.s.user.email)||'Teacher').split('@')[0],p_school:md.school||''},12000);
+  }
+  if(!r||!r.ok){TA.me=null;return false;}
+  TA.me=r;const C=curClass();TA.cls=C?C.id:null;return true;
+}
+async function taAfterLogin(){
+  if(!(await taEnter())){TA.s=null;TA.me=null;taSave();return openTAuth('That account could not be opened. Try again.');}
+  taGo();
+}
+function taGo(){
+  const n=TA.next;TA.next='dash';
+  if(n==='cg'){renderCG();showT('s-cg');}else if(n==='roster')openRoster();else openDash();
+}
+async function ensureTeacher(next){
+  if(TA.me&&(await taFresh()))return true;
+  if(TA.s&&(await taEnter()))return true;
+  TA.next=next||'dash';openTAuth();return false;
+}
+async function taRefresh(){try{const r=await rpc('tt_a_me',{},10000);if(r&&r.ok){TA.me=r;const C=curClass();TA.cls=C?C.id:null;}}catch(e){}}
+async function taLogout(){
+  const tok=TA.s&&TA.s.access_token;TA.s=null;TA.me=null;taSave();TDATA=[];
+  try{if(tok)await authCall('/logout',{token:tok});}catch(e){}
+  if(me)goMenu();else{renderLogin();show('s-login');}
+}
+function taHash(){
+  const hs=location.hash.slice(1);
+  if(!hs||!/access_token=|error_description=|error_code=/.test(hs))return false;
+  const p=new URLSearchParams(hs);
+  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
+  if(p.get('error_description')){openTAuth(p.get('error_description').replace(/\+/g,' ')+' Sign in, or tap Forgot your password for a new link.');return true;}
+  if(p.get('access_token')){
+    TA.s={access_token:p.get('access_token'),refresh_token:p.get('refresh_token'),expires_at:+p.get('expires_at')||Math.floor(Date.now()/1000)+(+p.get('expires_in')||3600),user:null};taSave();
+    if(p.get('type')==='recovery'){$('rcPass').value='';$('rcMsg').textContent='';showT('s-trecover');}
+    else{TA.next='dash';taAfterLogin();}
+    return true;
+  }
+  return false;
+}
+async function taSetPassword(){
+  const pw=$('rcPass').value;
+  if(pw.length<8){$('rcMsg').className='msg bad';$('rcMsg').textContent='Use at least 8 characters.';return;}
+  $('rcGo').disabled=true;
+  try{
+    const r=await authCall('/user',{method:'PUT',token:TA.s&&TA.s.access_token,body:{password:pw}});
+    if(!r.ok){$('rcMsg').className='msg bad';$('rcMsg').textContent=(r.j.error_code==='same_password')?'Pick a password you have not used before.':(r.j.error_code==='weak_password'?'That password is too easy to guess.':'That did not work. Ask for a new reset link.');return;}
+    await taAfterLogin();
+  }catch(e){$('rcMsg').className='msg bad';$('rcMsg').textContent="Can't reach the server.";}
+  finally{$('rcGo').disabled=false;}
+}
+$('taModeIn').onclick=()=>setTaMode('in');$('taModeUp').onclick=()=>setTaMode('up');
+$('taGo').onclick=taSubmit;$('taForgot').onclick=taForgot;$('rcGo').onclick=taSetPassword;
+$('taCheckBack').onclick=()=>openTAuth();
+$('taBack').onclick=()=>{if(me)goMenu();else{renderLogin();show('s-login');}};
+['taEmail','taPass','taName','taSchool'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')taSubmit();}));
+$('rcPass').addEventListener('keydown',e=>{if(e.key==='Enter')taSetPassword();});
+const tlinkKey=(id,fn)=>{$(id).onclick=fn;$(id).addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fn();}});};
+tlinkKey('loginTeacher',()=>{TA.next='dash';ensureTeacher('dash').then(ok=>{if(ok)taGo();});});
+
+/* ---- teacher dashboard: classes, join code, game switches ---- */
+const SW_GAMES=[['speed','Speed Find'],['trivia','Element Trivia'],['explore','Explore the Table'],['lab','Compound Lab'],['atom','Atom Builder'],['balance','Balance It'],['diner','Atom Diner'],['sep','Separation Station'],['laser','Laser Maze'],['blackout','Blackout!'],['evidence','Evidence Lab'],['coaster','Coaster Architect']];
+async function openDash(){
+  if(!(await ensureTeacher('dash')))return;
+  await taRefresh();renderDash();showT('s-tdash');
+}
+function needWrite(){
+  if(TA.me&&TA.me.teacher.expired){modal({title:'Your free trial has ended',text:'You can still look at your classes and scores. To start class games or make new classes, contact Turn-Table to keep going.',cancel:false});return false;}
+  return true;
+}
+function copyText(t){
+  try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(()=>true,()=>false);}catch(e){}
+  return Promise.resolve(false);
+}
+function renderDash(){
+  const M=TA.me;if(!M)return;const T=M.teacher,K=M.classes,C=curClass();if(C)TA.cls=C.id;
+  const left=Math.max(0,Math.ceil((new Date(T.trial_ends)-Date.now())/864e5));
+  const planTxt=T.role==='founder'?'Founder account':T.plan==='trial'?(T.expired?'Free trial ended':`Free trial: ${left} day${left===1?'':'s'} left`):T.plan==='school'?'School license':'Subscribed';
+  const act=(txt,fn,cls)=>h('button',{class:'btn sm '+(cls||'ghost'),type:'button',onclick:fn},txt);
+  const body=$('tdBody');
+  const els=[];
+  els.push(h('div',{class:'card'},
+    h('div',{class:'td-top'},
+      h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt)),
+      h('div',{class:'tbar'},act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
+    T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table to keep going.'):null,
+    h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
+    h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),
+      h('button',{class:'td-chip add',type:'button',onclick:newClass},'+ New class')),
+    C?h('div',{class:'td-class'},
+      h('div',{class:'td-code'},h('div',{class:'lbl'},'Class code for '+C.name),h('div',{class:'big',id:'tdCode'},C.code),
+        h('div',{class:'how'},'Students open ',h('b',null,location.host||'Turn-Table'),', tap ',h('b',null,"I'm new here"),', and type this code.')),
+      h('div',{class:'td-acts'},
+        act('Copy code',async function(){const ok=await copyText(C.code);this.textContent=ok?'Copied!':'Select the code to copy';setTimeout(()=>{this.textContent='Copy code';},1800);}),
+        act('Rename class',()=>renameClass(C)),act('New code',()=>newCode(C)),act(C.archived?'Restore class':'Archive class',()=>archiveClass(C)))):h('p',{class:'sub'},'Make your first class to get a code for your students.')));
+  if(C){
+    const off=new Set(C.games_off||[]);
+    const onN=SW_GAMES.filter(g=>!off.has(g[0])).length;
+    els.push(h('div',{class:'card',style:'margin-top:14px'},
+      h('h3',{class:'td-sec',style:'margin-top:0'},`Games for ${C.name}`),
+      h('p',{class:'sub',style:'margin:0 0 6px'},`Flip a switch to open or lock a game for this class. Students see the change the next time they open their menu. ${onN} of ${SW_GAMES.length} are open. You can switch games on and off, but you can't change what is inside a game.`),
+      h('div',{class:'tbar'},act('Open all',()=>setAllGames(C,true)),act('Lock all',()=>setAllGames(C,false))),
+      h('div',{class:'td-games'},...SW_GAMES.map(([id,name])=>{
+        const on=!off.has(id),art=h('div',{class:'art'});art.innerHTML=ART.thumb(id);
+        const sw=h('button',{class:'sw',type:'button',role:'switch','aria-checked':on?'true':'false','aria-label':`${name}: ${on?'open':'locked'} for ${C.name}`,onclick:()=>toggleGame(C,id,!on)});
+        return h('div',{class:'swt '+(on?'on':'off')},art,h('div',{class:'row'},h('div',null,h('div',{class:'nm'},name),h('div',{class:'st'},on?'Open':'Locked')),sw));
+      }))));
+  }
+  const q=new URLSearchParams(location.search);
+  if(T.role!=='founder'&&q.has('founder'))els.push(h('p',{style:'margin-top:14px'},act('Claim founder access',claimFounder)));
+  body.replaceChildren(...els.filter(Boolean));
+}
+async function saveGames(C,list){
+  const prev=C.games_off;C.games_off=list;renderDash();
+  try{const r=await rpc('tt_a_set_games',{p_class:C.id,p_off:list},10000);if(!r||!r.ok)throw 0;C.games_off=r.games_off;}
+  catch(e){C.games_off=prev;await modal({title:"That didn't save",text:'Check the Wi-Fi and try again.',cancel:false});}
+  renderDash();
+}
+function toggleGame(C,id,on){const off=new Set(C.games_off||[]);on?off.delete(id):off.add(id);return saveGames(C,[...off]);}
+function setAllGames(C,on){return saveGames(C,on?[]:SW_GAMES.map(g=>g[0]));}
+async function newClass(){
+  if(!needWrite())return;
+  const n=await modal({title:'New class',text:'Name it like your schedule, for example "Period 3".',input:'text',ok:'Make class'});
+  if(n===null||!n.trim())return;
+  const r=await tcall('tt_a_class_create',{p_name:n});if(!r)return;
+  await taRefresh();TA.cls=r.id;store.set('tt_tcls',r.id);renderDash();
+}
+async function renameClass(C){
+  const n=await modal({title:'Rename class',text:`New name for ${C.name}:`,input:'text',ok:'Save'});
+  if(n===null||!n.trim())return;
+  if(await tcall('tt_a_class_update',{p_id:C.id,p_name:n,p_archived:C.archived})){await taRefresh();renderDash();}
+}
+async function archiveClass(C){
+  const ar=!C.archived;
+  if(ar&&!(await modal({title:'Archive this class?',text:`${C.name} will be hidden and its code will stop working for new students. Nothing is deleted. You can restore it any time.`,ok:'Archive'})))return;
+  if(await tcall('tt_a_class_update',{p_id:C.id,p_name:C.name,p_archived:ar})){await taRefresh();renderDash();}
+}
+async function newCode(C){
+  if(!(await modal({title:'Make a new class code?',text:`The old code stops working for new students. Students already in ${C.name} are not affected.`,ok:'New code'})))return;
+  if(await tcall('tt_a_class_newcode',{p_id:C.id})){await taRefresh();renderDash();}
+}
+async function claimFounder(){
+  const pw=await modal({title:'Founder access',text:'Enter the old teacher passcode once to make this account the founder account.',input:'password',ok:'Claim'});
+  if(pw===null)return;
+  let r=null;try{r=await rpc('tt_a_claim_founder',{p_passcode:pw},12000);}catch(e){}
+  if(!r||!r.ok){await modal({title:'Not this time',text:r&&r.error==='exists'?'There is already a founder account.':'That passcode is not right.',cancel:false});return;}
+  TA.me=r;renderDash();
+}
+async function openFounder(){
+  const r=await tcall('tt_a_f_list',{});if(!r)return;
+  const fa=(t,txt,args,cls)=>h('button',{class:'btn sm '+(cls||'ghost'),type:'button',onclick:async()=>{if(await tcall('tt_a_f_set',Object.assign({p_teacher:t.id},args)))openFounder();}},txt);
+  $('tfoTable').replaceChildren(h('tr',null,['Teacher','School','Plan','Trial ends','Classes','Students','Last student active','Actions'].map(x=>h('th',null,x))),
+    ...(r.teachers||[]).map(t=>h('tr',null,
+      h('td',null,h('b',null,t.name||'—'),t.disabled?h('span',{class:'locktag'},'OFF'):null,h('br'),h('small',{class:'sub'},t.email)),
+      h('td',null,t.school||'—'),h('td',null,t.role==='founder'?'Founder':t.plan),h('td',null,t.plan==='trial'?when(t.trial_ends):'—'),
+      h('td',null,t.classes),h('td',null,t.students),h('td',null,when(t.active)),
+      h('td',{class:'acts'},t.role==='founder'?'—':h('span',null,fa(t,'Trial +30 days',{p_plan:'trial',p_trial_days:30}),' ',fa(t,'Paid',{p_plan:'paid'}),' ',fa(t,'School',{p_plan:'school'}),' ',fa(t,t.disabled?'Turn on':'Turn off',{p_disabled:!t.disabled},t.disabled?'good':'warn2'))))));
+  showT('s-tfound');
+}
+$('tfoRefresh').onclick=openFounder;$('tfoBack').onclick=openDash;
+
 var scGame='speed';
 var SC_SCREEN={'s-speed-setup':'speed','s-speed':'speed','s-trivia':'trivia','s-explore':'explore','s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
 const GAME_SCREENS={'s-speed-setup':'speed','s-speed':'speed','s-lab':'lab','s-atom-setup':'atom','s-atom':'atom','s-balance':'balance','s-diner-setup':'diner','s-diner':'diner','s-sep-setup':'sep','s-sep':'sep','s-laser-setup':'laser','s-laser':'laser','s-blackout-setup':'blackout','s-blackout':'blackout','s-evidence-setup':'evidence','s-evidence':'evidence','s-coaster-setup':'coaster','s-coaster':'coaster'};
@@ -2532,7 +2873,18 @@ function show(id){
   $('userChip').hidden=!me; if(me)$('userName').replaceChildren(I('user'),prof().name);
   window.scrollTo(0,0);
 }
-function goMenu(){renderMenu();show('s-menu');}
+function goMenu(){renderMenu();show('s-menu');refreshClassInfo();}
+async function refreshClassInfo(){
+  const P=prof();if(!P||!P.cloud)return;
+  try{
+    const r=await rpc('tt_class_info',{p_id:P.cloud.id,p_token:P.cloud.token},8000);
+    if(r&&r.ok&&JSON.stringify(P.cinfo===undefined?0:P.cinfo)!==JSON.stringify(r.class||null)){
+      P.cinfo=r.class||null;saveAll();
+      if(me&&prof()===P&&!$('s-menu').hidden)renderMenu();
+    }
+  }catch(e){}
+}
+setInterval(()=>{if(me&&!document.hidden&&!$('s-menu').hidden)refreshClassInfo();},30000);
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b&&b.dataset.go==='menu')goMenu();});
 $('brand').onclick=()=>{me?goMenu():show('s-login');};
 $('btnHome').onclick=goMenu;
@@ -2614,9 +2966,10 @@ function startSession(key,offline){
 async function doLogin(){
   if(loginBusy)return;
   const raw=$('uName').value.trim().replace(/\s+/g,' '),pin=$('uPin').value.trim(),key=raw.toLowerCase();
-  const cls=$('uClass').value.trim().toUpperCase().slice(0,12);
+  const cls=$('uClass').value.trim().toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
   if(!/^[A-Za-z0-9 _.\-]{2,16}$/.test(raw))return loginMsg('Pick a nickname with 2–16 letters or numbers.');
   if(!/^\d{4}$/.test(pin))return loginMsg('Your PIN is exactly 4 numbers.');
+  if(loginMode==='new'&&cls.length!==6)return loginMsg('Type the 6-letter class code from your teacher.');
   const ph=hash(key+':'+pin);
   loginBusy=true;$('btnLogin').disabled=true;loginMsg('Connecting…',true);
   try{
@@ -2633,6 +2986,7 @@ async function doLogin(){
       const e=res.error;
       if(e==='taken')return loginMsg('That nickname is already taken. Try adding a number!');
       if(e==='badname')return loginMsg('Pick a nickname with 2–16 letters or numbers.');
+      if(e==='badcode'||e==='noclass')return loginMsg("That class code isn't right. Check it with your teacher.");
       if(e==='notfound')return loginMsg("I can't find that nickname. Are you new? Tap “I'm new here”.");
       if(e==='banned')return loginMsg('This account is locked. See your teacher.');
       if(e==='locked')return loginMsg('Too many wrong tries. Wait 5 minutes, or ask your teacher to reset your PIN.');
@@ -2642,7 +2996,7 @@ async function doLogin(){
     let P=profiles[key];
     if(!P)P=profiles[key]=newProfile(res.name,res.class_code,ph);
     else{P.name=res.name;P.pin=ph;if(res.class_code)P.cls=res.class_code;}
-    fixProfile(P);P.cloud={id:res.student_id,token:res.token};
+    fixProfile(P);P.cloud={id:res.student_id,token:res.token};P.cinfo=res.class||null;
     mergeCloud(P,res.stats);saveAll();
     startSession(key,false);
   }finally{loginBusy=false;$('btnLogin').disabled=false;}
@@ -2724,7 +3078,8 @@ function teacherSay(msgs,opts){
   return root;
 }
 function renderMenu(){
-  const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;try{bdStrip();bdCheck();}catch(e){}
+  const P=prof();$('menuHello').textContent=`Hi, ${P.name}! Pick a game`;
+  $('menuSub').textContent=P.cinfo&&P.cinfo.name?`${P.cinfo.teacher}'s class: ${P.cinfo.name}. Pick a game and show what you know!`:'Pick a game and show what you know!';try{bdStrip();bdCheck();}catch(e){}
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null);
   const ab=Object.values(P.atom).map(r=>r.best).filter(x=>x>0);
   const mc=(cls,ic,title,desc,best,fn)=>{const art=h('div',{class:'art'});art.innerHTML=ART.thumb(ic);
@@ -2742,7 +3097,7 @@ function renderMenu(){
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
     h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
       teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
-      h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'))),
+      h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. Sign in with your teacher account to run it. ',h('a',{class:'tlink',role:'button',tabindex:'0',onclick:openDash,onkeydown:e=>{if(e.key==='Enter')openDash();}},'Teacher dashboard')))),
     h('div',{class:'secthead stud'},'For students'),
     mc('m8','class','Join a Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
@@ -2762,7 +3117,7 @@ function renderMenu(){
     mc('m5','stats','My Profile','See your badges, rank, best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
     mc('m15','feedback','Feedback','Have an idea to make a game better? Send your teacher a serious recommendation.','',()=>{renderFeedback();show('s-feedback');}),
     h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
-    ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Element Trivia, Explore the Table, Atom Builder, Compound Lab and Atom Diner. Everything else shows as locked.')]:[])
+    ...(isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[])
   );
 }
 
@@ -5903,7 +6258,9 @@ async function tlCreate(){
   const title=$('tlTitle').value.trim()||'Class game',n=+$('tlN').value,lim=+$('tlLim').value,mix=$('tlMix').value;
   $('tlMake').disabled=true;
   try{
-    const r=await rpc('tt_t_live_create',{p_teacher:TPASS,p_title:title,p_questions:genLiveQs(n,mix),p_limit:lim});
+    const C=curClass();if(!C||C.archived)return modal({title:'Pick a class',text:'Make or restore a class on your dashboard first.',cancel:false});
+    const r=await rpc('tt_a_live_create',{p_class:C.id,p_title:title,p_questions:genLiveQs(n,mix),p_limit:lim});
+    if(r&&r.error==='expired')return needWrite();
     if(!r||!r.ok)return modal({title:"Couldn't start",text:'Something went wrong. Try again.',cancel:false});
     tlOpen(r.code);
   }catch(e){modal({title:'No connection',text:"Can't reach the server.",cancel:false});}
@@ -5918,12 +6275,12 @@ function tlOpen(code){
 }
 async function tlPoll(){
   const L=TL;if(!L||L.polling)return;L.polling=true;
-  try{const v=await rpc('tt_t_live_board',{p_teacher:TPASS,p_code:L.code},6000);if(TL===L&&v&&v.ok)tlRender(v);}
+  try{const v=await rpc('tt_a_live_board',{p_code:L.code},6000);if(TL===L&&v&&v.ok)tlRender(v);}
   catch(e){}finally{L.polling=false;}
 }
 async function tlCtl(action){
   const L=TL;if(!L||L.busy)return;L.busy=true;
-  try{const v=await rpc('tt_t_live_ctl',{p_teacher:TPASS,p_code:L.code,p_action:action},8000);if(TL===L&&v&&v.ok)tlRender(v);}
+  try{const v=await rpc('tt_a_live_ctl',{p_code:L.code,p_action:action},8000);if(TL===L&&v&&v.ok)tlRender(v);}
   catch(e){modal({title:'No connection',text:'That did not go through. Try again.',cancel:false});}
   finally{L.busy=false;}
 }
@@ -6028,26 +6385,19 @@ const CLASS_GAMES=[
   {id:'livequiz',title:'Live Quiz',desc:'Students answer on their own Chromebooks while you show the big screen. Fast answers and streaks earn bonus points.',pill:'Whole class · Live scores',go:()=>show('s-lset')},
   {id:'board',title:'Quiz Board Maker',desc:'Build a game-show-style board from NY science standards, or write every clue yourself. Then play in teams.',pill:'Teams · Double Downs · Final round',go:()=>jpHome()}
 ];
-async function ensureTeacher(){
-  if(TPASS)return true;
-  const pw=await modal({title:'Teacher access',text:'Enter the teacher passcode.',input:'password',ok:'Enter'});
-  if(pw===null)return false;
-  let r=null;
-  try{r=await rpc('tt_t_check',{p_teacher:pw});}
-  catch(e){await modal({title:'No connection',text:'The class games need the score server. Check the Wi-Fi and try again.',cancel:false});return false;}
-  if(!r||!r.ok){await modal({title:'Nope',text:'That passcode is not right.',cancel:false});return false;}
-  TPASS=pw;return true;
-}
-async function cgEnter(){if(await ensureTeacher()){renderCG();show('s-cg');}}
+async function cgEnter(){if(await ensureTeacher('cg')){renderCG();showT('s-cg');}}
 function renderCG(){
+  const K=((TA.me&&TA.me.classes)||[]).filter(c=>!c.archived);
+  $('cgClassBar').replaceChildren(K.length?h('label',{for:'cgClassSel',style:'font-weight:700'},'Running games for:'):h('span',{class:'sub'},'Make a class on your dashboard first.'),
+    ...(K.length?[(()=>{const sel=h('select',{id:'cgClassSel','aria-label':'Class'},...K.map(c=>h('option',{value:c.id},c.name)));const C=curClass();if(C&&!C.archived)sel.value=C.id;sel.onchange=()=>{TA.cls=sel.value;store.set('tt_tcls',sel.value);};return sel;})()]:[]));
   $('cgGrid').replaceChildren(...CLASS_GAMES.map(g=>{
     const art=h('div',{class:'art'});art.innerHTML=ART.thumb(g.id);
     return h('button',{class:'mcard',type:'button',onclick:g.go,'aria-label':g.title+'. '+g.desc},art,
       h('div',{class:'body'},h('b',null,g.title),h('span',null,g.desc),h('div',{class:'best'},g.pill)));
   }));
 }
-$('cgBack').onclick=()=>{TPASS=null;TDATA=[];if(me)goMenu();else{renderLogin();show('s-login');}};
-$('cgPanel').onclick=openTeacher;
+$('cgBack').onclick=openDash;
+$('cgPanel').onclick=openRoster;
 $('lsBack').onclick=()=>{renderCG();show('s-cg');};
 
 /* ================= QUIZ BOARD MAKER ================= */
@@ -6080,8 +6430,9 @@ function jpBuild(stds,n){
   return jpClean({title:'',sub:'',cols:out.map(c=>({n:c.n,s:c.s,k:c.k.map(([q,a])=>({q,a}))})),final:{n:fin[1],q:fin[2],a:fin[3]},std:stds});
 }
 let JP={list:[],id:null,b:null,dirty:false,auto:false,sel:new Set(),cell:null};
-const jpCacheGet=()=>{try{return JSON.parse(localStorage.getItem(JPCACHE)||'[]');}catch(e){return [];}};
-const jpCachePut=l=>{try{localStorage.setItem(JPCACHE,JSON.stringify(l));}catch(e){}};
+const jpKey=()=>JPCACHE+(TA.me?'_'+TA.me.teacher.id:'');
+const jpCacheGet=()=>{try{return JSON.parse(localStorage.getItem(jpKey())||'[]');}catch(e){return [];}};
+const jpCachePut=l=>{try{localStorage.setItem(jpKey(),JSON.stringify(l));}catch(e){}};
 const jpDate=t=>{try{return new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'});}catch(e){return '';}};
 
 /* ---------- my boards ---------- */
@@ -6089,11 +6440,11 @@ async function jpHome(){
   show('s-jp');jpRenderHome();
   $('jpStatus').textContent='Loading…';
   let rows=null;
-  try{const r=await rpc('tt_t_jb_list',{p_teacher:TPASS},12000);if(r&&r.ok)rows=r.rows||[];}catch(e){}
+  try{const r=await rpc('tt_a_jb_list',{},12000);if(r&&r.ok)rows=r.rows||[];}catch(e){}
   if(rows){
     const locals=jpCacheGet().filter(x=>x.local);
     for(const L of locals){ /* push boards that were saved while offline */
-      try{const r=await rpc('tt_t_jb_save',{p_teacher:TPASS,p_id:null,p_title:L.title,p_data:L.data},12000);
+      try{const r=await rpc('tt_a_jb_save',{p_id:null,p_title:L.title,p_data:L.data},12000);
         if(r&&r.ok){rows.unshift({id:r.id,title:L.title,data:L.data,at:new Date().toISOString()});L.done=true;}}catch(e){}
     }
     const keep=locals.filter(x=>!x.done);
@@ -6138,7 +6489,7 @@ async function jpDuplicate(it){
 }
 async function jpDelete(it){
   if(!await modal({title:'Delete this board?',text:`"${it.title}" will be deleted. This cannot be undone.`,ok:'Delete'}))return;
-  if(!it.local){try{const r=await rpc('tt_t_jb_delete',{p_teacher:TPASS,p_id:it.id},12000);if(!r||!r.ok)throw 0;}
+  if(!it.local){try{const r=await rpc('tt_a_jb_delete',{p_id:it.id},12000);if(!r||!r.ok)throw 0;}
     catch(e){await modal({title:"Couldn't delete",text:'Check the Wi-Fi and try again.',cancel:false});return;}}
   JP.list=JP.list.filter(x=>x!==it);jpCachePut(JP.list);jpRenderHome();
 }
@@ -6263,7 +6614,7 @@ async function jpSave(quiet){
   let ok=false,id=JP.id;
   if(!quiet)jpStatus('Saving…');
   if(!(typeof id==='string')){
-    try{const r=await rpc('tt_t_jb_save',{p_teacher:TPASS,p_id:id,p_title:b.title,p_data:b},12000);if(r&&r.ok){id=r.id;ok=true;}}catch(e){}
+    try{const r=await rpc('tt_a_jb_save',{p_id:id,p_title:b.title,p_data:b},12000);if(r&&r.ok){id=r.id;ok=true;}}catch(e){}
   }
   let L=jpCacheGet();
   const rec={id:ok?id:(typeof id==='string'?id:'local-'+Date.now()),title:b.title,data:b,at:new Date().toISOString(),local:!ok};
@@ -7335,10 +7686,10 @@ async function teacherLockById(id,name,lock,fromFb){
 }
 $('tFeedback').onclick=openTeacherFeedback;
 $('tfRefresh').onclick=openTeacherFeedback;$('tfFilter').onchange=renderTeacherFeedback;
-$('tfBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;loadTeacher();};
+$('tfBack').onclick=openDash;
 
 /* ================= TEACHER ================= */
-let TPASS=null,TDATA=[];
+let TDATA=[];
 const GAME_NAMES={speed:'Speed Find',trivia:'Trivia',lab:'Compound Lab',atom:'Atom Builder',balance:'Balance It',diner:'Atom Diner',sep:'Separation Station',laser:'Laser Maze',blackout:'Blackout!',evidence:'Evidence Lab',coaster:'Coaster Architect'};
 function levelLabel(game,level){
   if(game==='speed'){const l=level[0],s=level.slice(1);return `${LEVELS[l]?LEVELS[l].name:'L'+l}${s?' · '+styleName(s):''}`;}
@@ -7357,27 +7708,28 @@ const sc=(S,k)=>S&&S.stats&&S.stats.scores&&S.stats.scores[k];
 const bestOf=(S,keys,fmt)=>{const v=keys.map(k=>sc(S,k)).filter(Boolean);return v.length?fmt(v):'—';};
 const totalRounds=S=>Object.values((S.stats&&S.stats.scores)||{}).reduce((a,r)=>a+Number(r.plays||0),0);
 
-async function openTeacher(){
-  if(!(await ensureTeacher()))return;
-  show('s-teacher');$('userChip').hidden=true;
-  await loadTeacher();
+async function openRoster(){
+  if(!(await ensureTeacher('roster')))return;
+  showT('s-teacher');
+  await loadTeacher(true);
 }
-async function loadTeacher(){
+async function loadTeacher(first){
   $('tCount').textContent='Loading…';
+  const K=(TA.me&&TA.me.classes)||[];
+  const cur=first?(TA.cls||'*'):($('tClass').value||'*');
+  $('tClass').replaceChildren(h('option',{value:'*'},'All my classes'),...K.map(c=>h('option',{value:c.id},c.name+(c.archived?' (archived)':''))));
+  $('tClass').value=(cur==='*'||K.some(c=>c.id===cur))?cur:'*';
   try{
-    const r=await rpc('tt_t_overview',{p_teacher:TPASS},15000);
+    const sel=$('tClass').value;
+    const r=await rpc('tt_a_overview',{p_class:sel==='*'?null:sel},15000);
     if(!r||!r.ok)throw new Error('x');
     TDATA=r.students||[];
   }catch(e){$('tCount').textContent="Couldn't load. Try Refresh.";return;}
-  const cl=[...new Set(TDATA.map(s=>s.class||''))].sort();
-  const cur=$('tClass').value;
-  $('tClass').replaceChildren(h('option',{value:'*'},'All classes'),...cl.map(c=>h('option',{value:c},c||'(no class code)')));
-  $('tClass').value=cl.includes(cur)||cur==='*'?cur||'*':'*';
   renderTeacher();
 }
 function renderTeacher(){
-  const cls=$('tClass').value||'*',q=($('tSearch').value||'').trim().toLowerCase();
-  const list=TDATA.filter(s=>(cls==='*'||(s.class||'')===cls)&&(!q||s.name.toLowerCase().includes(q)));
+  const q=($('tSearch').value||'').trim().toLowerCase();
+  const list=TDATA.filter(s=>!q||s.name.toLowerCase().includes(q));
   $('tCount').textContent=`${list.length} of ${TDATA.length} students`;
   const tb=$('tTable');
   tb.replaceChildren(h('tr',null,['Student','Class','Speed L1','Speed L2','Speed L3','Trivia','Lab','Atom','Balance','Diner','Sep ★',...NEWG.map(g=>g.name.replace('!','')+' ★'),'Rounds','Last played','Actions'].map(x=>h('th',null,x))),
@@ -7401,9 +7753,9 @@ function renderTeacher(){
   if(!list.length)tb.append(h('tr',null,h('td',{colspan:14+NEWG.length},TDATA.length?'No students match.':'No students have made an account yet.')));
 }
 async function tcall(fn,args){
-  try{const r=await rpc(fn,Object.assign({p_teacher:TPASS},args),15000);if(r&&r.ok)return r;
-    await modal({title:'Something went wrong',text:r&&r.error==='auth'?'The passcode no longer works. Close the panel and enter it again.':'That did not work. Try again.',cancel:false});}
-  catch(e){await modal({title:'No connection',text:"Can't reach the server.",cancel:false});}
+  try{const r=await rpc(fn.replace('tt_t_','tt_a_'),args||{},15000);if(r&&r.ok)return r;
+    await modal({title:'Something went wrong',text:r&&r.error==='auth'?'That is not allowed, or your sign-in ended. Sign in again.':r&&r.error==='expired'?'Your free trial has ended.':r&&r.error==='toomany'?'You have reached the limit.':'That did not work. Try again.',cancel:false});}
+  catch(e){const na=e&&e.message==='noauth';await modal({title:na?'Please sign in again':'No connection',text:na?'Your teacher sign-in ended.':"Can't reach the server.",cancel:false});}
   return null;
 }
 async function teacherPin(S){
@@ -7413,9 +7765,13 @@ async function teacherDelete(S){
   if(await modal({title:'Delete student?',text:`Delete ${S.name} and all of their scores? This cannot be undone.`,ok:'Delete'})){if(await tcall('tt_t_delete_student',{p_student:S.id}))loadTeacher();}
 }
 async function teacherClass(S){
-  const c=await modal({title:`Class code for ${S.name}`,text:'Type a class code (up to 12 letters or numbers).',input:'text',ok:'Save'});
+  const K=((TA.me&&TA.me.classes)||[]).filter(c=>!c.archived);
+  if(K.length<2){await modal({title:'Only one class',text:'Make another class on your dashboard first, then you can move students between classes.',cancel:false});return;}
+  const c=await modal({title:`Move ${S.name}`,text:'Type the name of the class to move them to: '+K.map(x=>x.name).join(', '),input:'text',ok:'Move'});
   if(c===null)return;
-  if(await tcall('tt_t_set_class',{p_student:S.id,p_class:c}))loadTeacher();
+  const t=K.find(x=>x.name.toLowerCase()===c.trim().toLowerCase());
+  if(!t){await modal({title:'No match',text:'Type the class name exactly as it appears.',cancel:false});return;}
+  if(await tcall('tt_a_move_student',{p_student:S.id,p_class:t.id}))loadTeacher();
 }
 async function showHistory(S){
   const r=await tcall('tt_t_history',{p_student:S.id});if(!r)return;
@@ -7437,24 +7793,17 @@ $('tExport').onclick=()=>{
   downloadCSV(rows,'turn-table-summary.csv');
 };
 $('tExportAll').onclick=async()=>{
-  const r=await tcall('tt_t_all_scores',{});if(!r)return;
+  const sel=$('tClass').value;const r=await tcall('tt_t_all_scores',{p_class:sel&&sel!=='*'?sel:null});if(!r)return;
   const rows=[['Nickname','Class','Game','Level','Score','When']];
   (r.rows||[]).forEach(x=>rows.push([x.name,x.class||'',x.game,x.level,x.game==='speed'?(Number(x.value)/1000).toFixed(2)+' s avg':Number(x.value),x.at]));
   downloadCSV(rows,'turn-table-every-round.csv');
 };
-$('tRefresh').onclick=loadTeacher;
-$('tClass').onchange=renderTeacher;$('tSearch').oninput=renderTeacher;
-$('tPass').onclick=async()=>{
-  const n=await modal({title:'New teacher passcode',text:'Choose a passcode with at least 6 characters. Write it down somewhere safe!',input:'text',ok:'Save'});
-  if(n===null)return;
-  if(n.length<6){await modal({title:'Too short',text:'Use at least 6 characters.',cancel:false});return;}
-  const r=await tcall('tt_t_set_passcode',{p_new:n});
-  if(r){TPASS=n;await modal({title:'Saved',text:'Your new passcode is set. Use it next time you open the teacher panel.',cancel:false});}
-};
+$('tRefresh').onclick=()=>loadTeacher();
+$('tClass').onchange=()=>loadTeacher();$('tSearch').oninput=renderTeacher;
 $('thBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;};
-$('teacherLink').onclick=openTeacher;
-$('tClassGames').onclick=()=>{renderCG();show('s-cg');};
-$('tBack').onclick=()=>{TPASS=null;TDATA=[];if(me)goMenu();else{renderLogin();show('s-login');}};
+$('teacherLink').onclick=openDash;
+$('tClassGames').onclick=()=>{if(needWrite()){renderCG();showT('s-cg');}};
+$('tBack').onclick=openDash;
 
 /* ---- hydrate static art placeholders ---- */
 document.querySelectorAll('i[data-ic]').forEach(x=>{x.outerHTML=ART.ico(x.dataset.ic);});
@@ -7464,6 +7813,7 @@ document.querySelectorAll('i[data-logo]').forEach(x=>{x.outerHTML=ART.logo(+x.da
 /* ================= START ================= */
 if(!storageOK)$('warn').hidden=false;
 if(me)goMenu();else{renderLogin();show('s-login');}
+taHash();window.addEventListener('hashchange',taHash);
 })();
 </script>
 </body>
