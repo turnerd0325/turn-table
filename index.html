@@ -875,6 +875,17 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .secthead.stud{font-size:clamp(22px,3vw,30px);margin-top:20px;color:#3a4a6b}
 .secthead.stud::after{content:"";flex:1;height:3px;border-radius:3px;background:linear-gradient(90deg,#c9d4ea,rgba(201,212,234,0))}
 .mcard.teachcard{border:3px solid #f4b13a;box-shadow:0 0 0 5px rgba(244,177,58,.2),0 12px 30px rgba(16,21,54,.16)}
+.teachrow{grid-column:1/-1;display:grid;grid-template-columns:minmax(260px,330px) 1fr;gap:clamp(12px,2vw,28px);align-items:stretch}
+.teachrow .mcard{height:100%}
+.teachside{display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:0}
+.teachside .teachnote{grid-column:auto;font-size:clamp(14px,1.35vw,17px);line-height:1.4;padding:0 4px}
+.tsay.sm{margin:0;align-items:center}
+.tsay.sm .tch{width:clamp(84px,9.5vw,132px)}
+.tsay.sm .bub{margin-bottom:0;padding:clamp(12px,1.6vw,22px) clamp(16px,2vw,28px);border-width:4px;border-radius:26px}
+.tsay.sm .bub::before{bottom:auto;top:50%;margin-top:-12px;left:-23px;border-width:13px 21px 13px 0}
+.tsay.sm .bub::after{bottom:auto;top:50%;margin-top:-9px;left:-14px;border-width:10px 16px 10px 0}
+.tsay.sm .msg{font-size:clamp(22px,2.7vw,38px);min-height:0}
+@media (max-width:640px){.teachrow{grid-template-columns:1fr}}
 .teachnote{grid-column:2/-1;align-self:center;font-size:clamp(18px,2vw,22px);line-height:1.45;color:#3a4a6b;padding:6px 8px}
 .teachnote b{color:var(--navy)}
 @media (max-width:640px){.teachnote{grid-column:1/-1}}
@@ -2682,7 +2693,7 @@ const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated ca
 function teacherSay(msgs,opts){
   opts=opts||{};const list=msgs.slice();let i=0,tm=null;
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const root=h('div',{class:'tsay'});
+  const root=h('div',{class:'tsay'+(opts.small?' sm':'')});
   const ch=h('button',{class:'tch',type:'button','aria-label':'Teacher'});ch.innerHTML=TEACHER_SVG;
   const msg=h('p',{class:'msg',role:'status','aria-live':'polite'});
   const dots=h('div',{class:'dots','aria-hidden':'true'},...(list.length>1?list.map(()=>h('i')):[]));
@@ -2722,10 +2733,10 @@ function renderMenu(){
     return btn;};
   const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
   $('menuGrid').replaceChildren(
-    teacherSay(['This platform is used to study for science, not just play around.']),
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
-    tcard,
-    h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'),
+    h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
+      teacherSay(['This platform is used to study for science, not to just play around.'],{small:true}),
+      h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'))),
     h('div',{class:'secthead stud'},'For students'),
     mc('m8','class','Join a Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
