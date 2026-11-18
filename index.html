@@ -843,7 +843,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .tsay .bub{position:relative;flex:1;min-width:0;background:#fff;border:5px solid var(--navy);border-radius:30px;padding:clamp(16px,2.2vw,30px) clamp(18px,2.6vw,36px);box-shadow:0 10px 0 rgba(20,32,64,.14);margin-bottom:clamp(30px,5vw,70px);animation:tspop .5s cubic-bezier(.2,1.3,.4,1) both;transform-origin:0 70%}
 .tsay .bub::before{content:"";position:absolute;left:-27px;bottom:34px;border:16px solid transparent;border-right:24px solid var(--navy);border-left:0}
 .tsay .bub::after{content:"";position:absolute;left:-17px;bottom:38px;border:12px solid transparent;border-right:19px solid #fff;border-left:0}
-.tsay .msg{margin:0;font-weight:900;color:var(--navy);line-height:1.18;letter-spacing:-.4px;font-size:clamp(24px,3.4vw,44px);min-height:2.4em;overflow-wrap:break-word}
+.tsay .msg{margin:0;font-weight:900;color:var(--navy);line-height:1.15;letter-spacing:-.5px;font-size:clamp(28px,4.2vw,56px);min-height:2.3em;overflow-wrap:break-word}
 .tsay .msg .cur{display:inline-block;width:.09em;height:.95em;background:#3c78c8;margin-left:3px;vertical-align:-.1em;animation:tscur .8s steps(1) infinite}
 .tsay .bfoot{display:flex;align-items:center;gap:12px;margin-top:10px}
 .tsay .dots{display:flex;gap:7px;flex:1}
@@ -2683,9 +2683,9 @@ function teacherSay(msgs,opts){
   opts=opts||{};const list=msgs.slice();let i=0,tm=null;
   const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const root=h('div',{class:'tsay'});
-  const ch=h('button',{class:'tch',type:'button','aria-label':'Teacher. Tap for the next tip.'});ch.innerHTML=TEACHER_SVG;
+  const ch=h('button',{class:'tch',type:'button','aria-label':'Teacher'});ch.innerHTML=TEACHER_SVG;
   const msg=h('p',{class:'msg',role:'status','aria-live':'polite'});
-  const dots=h('div',{class:'dots','aria-hidden':'true'},...list.map(()=>h('i')));
+  const dots=h('div',{class:'dots','aria-hidden':'true'},...(list.length>1?list.map(()=>h('i')):[]));
   const nx=h('button',{class:'nx',type:'button'},'Next tip ›');
   const bub=h('div',{class:'bub'},msg,h('div',{class:'bfoot'},dots,list.length>1?nx:null));
   root.append(ch,bub);
@@ -2722,11 +2722,7 @@ function renderMenu(){
     return btn;};
   const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
   $('menuGrid').replaceChildren(
-    teacherSay([`Welcome to Turn-Table, ${P.name}! Pick a game, beat your best score, and show what you know.`,
-      'Every game ends with a Science Check. Write one full sentence to keep playing. You can do it!',
-      'Stuck? Tap the Hint button. Hints help you learn, not just win.',
-      'Mistakes are how scientists learn. Try again and watch your score climb!',
-      'Is your teacher running a class game? Tap Join a Class Game and type the code.']),
+    teacherSay(['This platform is used to study for science, not just play around.']),
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
     tcard,
     h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. The teacher passcode keeps this area to you.'),
