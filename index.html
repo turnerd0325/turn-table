@@ -582,6 +582,18 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .sci-model{background:#fff6dd;border-left:6px solid #f5b700;border-radius:8px;padding:8px 12px}
 .sci-ok{background:#e6f8ee;border:2px solid #1f9d55;border-radius:12px;padding:10px 14px;margin-bottom:8px}
 .sci-skip{margin-top:8px}
+.fb-rules{background:#fff4d6;border:3px solid #f5b700;border-radius:14px;padding:12px 16px;margin:10px 0 14px}
+.fb-rt{font-weight:900;font-size:18px;color:#7a4b00;margin-bottom:4px}.fb-rules ul{margin:0;padding-left:20px;line-height:1.45;font-size:15.5px}.fb-rules li{margin:4px 0}
+.fb-form{display:flex;flex-direction:column;gap:6px;max-width:720px}.fb-form label{font-weight:800;margin-top:8px}
+.fb-form select,.fb-form textarea{font:inherit;padding:9px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;width:100%}.fb-form textarea{resize:vertical;font-size:16px}
+.fb-tip{color:var(--muted);font-size:14px}.fb-count{font-size:13.5px;color:#b3261e;font-weight:700}.fb-count.ok{color:#157a42}
+.fb-form label.fb-agree{display:flex;gap:10px;align-items:flex-start;font-weight:600;background:#f1f4fb;border-radius:10px;padding:10px 12px;line-height:1.4;margin-top:10px}.fb-agree input{width:20px;height:20px;margin-top:2px;flex:none}
+.fb-actions{margin-top:6px}.fb-actions .btn[disabled]{opacity:.45;cursor:not-allowed}
+.fb-ok{background:#e6f8ee;border:2px solid #1f9d55;border-radius:10px;padding:10px 14px}.fb-bad{background:#ffe8e8;border:2px solid #d64545;border-radius:10px;padding:10px 14px;font-weight:700}
+.fb-mine{margin-top:18px;max-width:720px}.fb-mine h3{margin:0 0 6px}.fb-item{border:2px solid var(--line);border-radius:10px;padding:8px 12px;margin:6px 0;background:#fff}.fb-meta{font-size:13px;color:var(--muted)}
+.fb-st{font-size:13px;font-weight:800;margin-top:4px;color:var(--muted)}.fb-st.st-planned{color:#157a42}
+.fb-blocked{background:#ffecec}.fb-msgcell{min-width:260px;max-width:520px;white-space:normal;word-break:break-word}.fb-lockedtag{display:inline-block;background:#b3261e;color:#fff;font-size:11px;font-weight:900;border-radius:6px;padding:1px 6px;margin-top:2px}
+.locktag{display:inline-block;background:#b3261e;color:#fff;font-size:11px;font-weight:900;border-radius:6px;padding:1px 6px;margin-left:4px}
 </style>
 </head>
 <body>
@@ -1108,6 +1120,30 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
   </div>
 </section>
 
+<!-- FEEDBACK -->
+<section class="screen" id="s-feedback" hidden>
+  <div class="card">
+    <h2><i data-ic="chat"></i>Feedback &amp; Recommendations</h2>
+    <p class="sub">Help make Turn-Table better. Tell your teacher how you think the games could be improved.</p>
+    <div id="fbBody"></div>
+    <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<section class="screen" id="s-tfb" hidden>
+  <div class="card">
+    <h2><i data-ic="chat"></i>Student Feedback</h2>
+    <p class="sub">Newest first. Blocked messages were stopped by the filter before they were sent. Locking an account stops that student from logging in or saving scores. You can unlock it here or in the Teacher Panel.</p>
+    <div class="tbar">
+      <button class="btn sm" id="tfRefresh">↻ Refresh</button>
+      <select id="tfFilter" aria-label="Filter"><option value="open">New + blocked</option><option value="all">Everything</option><option value="planned">Will use</option><option value="reviewed">Reviewed</option><option value="dismissed">Not using</option><option value="inappropriate">Inappropriate</option></select>
+      <span class="sub" id="tfCount" style="margin:0"></span>
+      <button class="btn sm ghost" id="tfBack">← Back to the panel</button>
+    </div>
+    <div class="tscroll"><table class="dt" id="tfTable"></table></div>
+  </div>
+</section>
+
 <!-- TEACHER -->
 <section class="screen" id="s-teacher" hidden>
   <div class="card">
@@ -1117,6 +1153,7 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
       <button class="btn sm" id="tRefresh">↻ Refresh</button>
       <button class="btn sm ghost" id="tExport"><i data-ic="download"></i>Summary (CSV)</button>
       <button class="btn sm ghost" id="tExportAll"><i data-ic="download"></i>Every round (CSV)</button>
+      <button class="btn sm ghost" id="tFeedback"><i data-ic="chat"></i>Student feedback</button>
       <button class="btn sm ghost" id="tPass"><i data-ic="key"></i>Change passcode</button>
       <button class="btn sm ghost" id="tBack">← Back</button>
     </div>
@@ -1168,6 +1205,7 @@ const ART=(()=>{
   const INK='#101536',CREAM='#f6efe0',AMBER='#f4b13a';
   /* 24x24 line icons. stroke=currentColor, round caps. */
   const P={
+    chat:'<path d="M4 5h16v11H9.5L4 20.5z"/><path d="M8 9h8M8 12.5h5"/>',
     laser:'<path d="M2.5 15h8l5-9"/><path d="M11 21l9-9"/><circle cx="2.8" cy="15" r="1.2" fill="currentColor" stroke="none"/>',
     coaster:'<path d="M2.5 19.5c3-10 6-13 9-7s6 3 9-8"/><path d="M2.5 21.5h19"/>',
     bolt:'<path d="M13.2 2.5 5 13.6h6l-1.2 7.9L19 10.2h-6.2z"/>',
@@ -1485,7 +1523,9 @@ const ART=(()=>{
     return wrap('coaster','#7a3f9e',t);
   };
 /*TTTHUMBS>>*/
-  const thumbs={speed,trivia,lab,atom,balance,class:klass,explore,stats,diner,sep,laser,blackout,evidence,coaster};
+  const feedback=()=>`<g><rect x="60" y="32" width="200" height="104" rx="14" fill="${CREAM}"/><path d="M96 136l-18 26 44-26z" fill="${CREAM}"/><rect x="82" y="56" width="156" height="10" rx="5" fill="${INK}" opacity=".75"/><rect x="82" y="78" width="120" height="10" rx="5" fill="${INK}" opacity=".45"/><rect x="82" y="100" width="136" height="10" rx="5" fill="${INK}" opacity=".45"/><circle cx="246" cy="44" r="22" fill="${AMBER}"/><path d="M246 36v10m0 6v1" stroke="${INK}" stroke-width="5" stroke-linecap="round"/></g>`;
+  const feedbackThumb=()=>wrap('fb','#3b3f8f',feedback());
+  const thumbs={feedback:feedbackThumb,speed,trivia,lab,atom,balance,class:klass,explore,stats,diner,sep,laser,blackout,evidence,coaster};
   let uid=0;
   const thumb=n=>{const u=++uid;return thumbs[n]().replace(/id="([^"]+)"/g,(m,i)=>`id="${i}_${u}"`).replace(/url\(#([^)]+)\)/g,(m,i)=>`url(#${i}_${u})`);};
   return {INK,CREAM,AMBER,P,ico,el,logo,thumb,face,cic,cel,names:Object.keys(thumbs),SUBI,MACHI};
@@ -2014,6 +2054,7 @@ async function doLogin(){
       if(e==='taken')return loginMsg('That nickname is already taken. Try adding a number!');
       if(e==='badname')return loginMsg('Pick a nickname with 2–16 letters or numbers.');
       if(e==='notfound')return loginMsg("I can't find that nickname. Are you new? Tap “I'm new here”.");
+      if(e==='banned')return loginMsg('This account is locked. See your teacher.');
       if(e==='locked')return loginMsg('Too many wrong tries. Wait 5 minutes, or ask your teacher to reset your PIN.');
       if(e==='badpin')return loginMsg(res.tries_left!=null?`Wrong PIN. ${res.tries_left} ${res.tries_left===1?'try':'tries'} left.`:'Your PIN is exactly 4 numbers.');
       return loginMsg('Something went wrong. Try again.');
@@ -2065,6 +2106,7 @@ function renderMenu(){
     mc('m8','class','Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin),
     mc('m4','explore','Explore the Table','Click any element to learn about it. No score, just discovery.','',startExplore),
     mc('m5','stats','My Profile','See your badges, rank, best scores and the elements you find tricky.','',()=>{renderStats();show('s-stats');}),
+    mc('m15','feedback','Feedback','Have an idea to make a game better? Send your teacher a serious recommendation.','',()=>{renderFeedback();show('s-feedback');}),
     h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.'),
     ...(isOwner()&&LOCKED_GAMES.length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Students currently see Element Trivia, Explore the Table, Atom Builder, Compound Lab and Atom Diner. Everything else shows as locked.')]:[])
   );
@@ -5620,6 +5662,115 @@ function sciExplore(n){
   try{if(scExSeen.has(n))return;scExSeen.add(n);if(++scExCount>=6){scExCount=0;scExSeen.clear();setTimeout(()=>sciGateThen('explore',()=>{}),350);}}catch(e){}
 }
 
+/* ================= FEEDBACK (students) + inbox & account lock (teacher) ================= */
+const FB_GAMES=[['site','The whole site / menu'],['speed','Speed Find'],['trivia','Element Trivia'],['explore','Explore the Table'],['lab','Compound Lab'],['atom','Atom Builder'],['balance','Balance It'],['diner','Atom Diner'],['sep','Separation Station'],['laser','Laser Maze'],['blackout','Blackout!'],['evidence','Evidence Lab'],['coaster','Coaster Architect'],['class','Class Game']];
+const FB_KINDS=[['improve','Make something better'],['confusing','Something is confusing'],['broken','Something is broken'],['idea','A new idea']];
+const fbName=g=>(FB_GAMES.find(x=>x[0]===g)||[0,g])[1],fbKind=k=>(FB_KINDS.find(x=>x[0]===k)||[0,k])[1];
+const FB_ST={new:'Sent',reviewed:'Read by your teacher',planned:'Your teacher plans to use this idea',dismissed:'Read by your teacher'};
+const fbCount=t=>{const s=String(t).trim().replace(/\s+/g,' ');return {len:s.length,words:s?s.split(' ').length:0,diff:new Set(s.toLowerCase().split(' ').filter(Boolean)).size};};
+const FB_ERR={
+  inappropriate:'That was NOT sent because it has disrespectful words in it. Feedback must be polite and serious. Your teacher is told about blocked messages, and misuse gets your account locked.',
+  short:'That is too short. Write at least 8 different words (40 letters or more) that say WHAT to change and WHY it would help.',
+  dup:'You already sent that exact message. Write something new.',
+  limit:'You have already sent 3 ideas in the last 24 hours. Come back tomorrow.',
+  toomany:'Too many of your messages were blocked today. Please stop for now. Your teacher has been told.',
+  auth:"We couldn't confirm your login. Log out and log back in, then try again.",
+  long:'That is too long. Keep it under 800 letters.'
+};
+function renderFeedback(){
+  const P=prof(),box=$('fbBody');
+  if(!P||!P.cloud){box.replaceChildren(h('div',{class:'fb-bad'},'Feedback needs the online score server. Log in with the Wi-Fi on, then try again.'));return;}
+  const gsel=h('select',{id:'fbGame','aria-label':'Which game'},...FB_GAMES.map(([v,t])=>h('option',{value:v},t)));
+  const ksel=h('select',{id:'fbKind','aria-label':'What kind of feedback'},...FB_KINDS.map(([v,t])=>h('option',{value:v},t)));
+  const ta=h('textarea',{id:'fbText',rows:'6',maxlength:'800',placeholder:'Example: In Compound Lab, add an Undo button. When I click the wrong atom I have to start the whole compound over, and that wastes time I could spend learning.'});
+  const cnt=h('div',{class:'fb-count'});
+  const agree=h('input',{type:'checkbox',id:'fbAgree'});
+  const btn=h('button',{class:'btn good',type:'button',disabled:'disabled'},'Send feedback');
+  const msg=h('div',{class:'fb-msg','aria-live':'polite'});
+  const mine=h('div',{class:'fb-mine'});
+  const upd=()=>{
+    const c=fbCount(ta.value),ok=c.len>=40&&c.words>=8&&c.diff>=6;
+    cnt.textContent=`${c.words} words · ${c.len} letters · you need at least 8 words and 40 letters`;cnt.classList.toggle('ok',ok);
+    btn.disabled=!(ok&&agree.checked);
+  };
+  ta.addEventListener('input',upd);agree.addEventListener('change',upd);
+  async function loadMine(){
+    try{
+      const r=await rpc('tt_feedback_mine',{p_id:P.cloud.id,p_token:P.cloud.token},10000);
+      if(!r||!r.ok){mine.replaceChildren();return;}
+      mine.replaceChildren(...(r.rows.length?[h('h3',null,'Your recent feedback'),...r.rows.map(x=>h('div',{class:'fb-item'},
+        h('div',{class:'fb-meta'},h('b',null,fbName(x.game)),' · ',fbKind(x.kind),' · ',when(x.at)),h('div',null,x.message),
+        h('div',{class:'fb-st st-'+x.status},FB_ST[x.status]||'Sent')))]:[]),h('div',{class:'sub'},`You can send ${r.left} more ${r.left===1?'idea':'ideas'} in the next 24 hours.`));
+    }catch(e){mine.replaceChildren();}
+  }
+  btn.onclick=async()=>{
+    btn.disabled=true;msg.replaceChildren(h('div',null,'Sending…'));
+    let r=null;
+    try{r=await rpc('tt_feedback_submit',{p_id:P.cloud.id,p_token:P.cloud.token,p_game:gsel.value,p_kind:ksel.value,p_message:ta.value},12000);}catch(e){r=null;}
+    if(!r){msg.replaceChildren(h('div',{class:'fb-bad'},"Couldn't reach the server. Your text is still here. Try again."));upd();return;}
+    if(r.ok){ta.value='';agree.checked=false;msg.replaceChildren(h('div',{class:'fb-ok'},h('b',null,'Thank you! Your feedback was sent. '),'Your teacher will read it. Remember, not every idea can be used.'));upd();loadMine();return;}
+    msg.replaceChildren(h('div',{class:'fb-bad'},FB_ERR[r.error]||'That did not work. Try again.'));upd();
+  };
+  box.replaceChildren(
+    h('div',{class:'fb-rules',role:'note'},
+      h('div',{class:'fb-rt'},'⚠ Read this before you send anything'),
+      h('ul',null,
+        h('li',null,h('b',null,'Only serious feedback will be considered.'),' Say what you would change and why it would help students learn or play better.'),
+        h('li',null,h('b',null,'Not all feedback will be used.'),' Your teacher reads it and picks what fits. A "no" does not mean your idea was bad.'),
+        h('li',null,h('b',null,'Inappropriate feedback, or using this form to mess around, will get your account LOCKED.'),' That means no logging in, no scores and no games until your teacher unlocks it.'))),
+    h('div',{class:'fb-form'},
+      h('label',{for:'fbGame'},'Which game is it about?'),gsel,
+      h('label',{for:'fbKind'},'What kind of feedback is it?'),ksel,
+      h('label',{for:'fbText'},'Your recommendation'),
+      h('div',{class:'fb-tip'},'A strong recommendation says ',h('b',null,'what'),' to change and ',h('b',null,'why'),'. Be specific and polite.'),
+      ta,cnt,
+      h('label',{class:'fb-agree'},agree,' I understand that only serious feedback is considered, that not all feedback will be used, and that inappropriate feedback or messing around gets my account locked.'),
+      h('div',{class:'fb-actions'},btn),msg),
+    mine);
+  upd();loadMine();
+}
+/* ---- teacher: feedback inbox + lock/unlock ---- */
+let TFB=[];
+const FB_STATUS=[['new','New'],['reviewed','Reviewed'],['planned','Will use'],['dismissed','Not using'],['inappropriate','Inappropriate']];
+async function openTeacherFeedback(){
+  const r=await tcall('tt_t_feedback_list',{});if(!r)return;
+  TFB=r.rows||[];renderTeacherFeedback();show('s-tfb');$('userChip').hidden=true;
+}
+function renderTeacherFeedback(){
+  const f=$('tfFilter').value,list=TFB.filter(x=>f==='all'||(f==='open'?(x.status==='new'||x.status==='blocked'):x.status===f));
+  const nNew=TFB.filter(x=>x.status==='new').length,nBl=TFB.filter(x=>x.status==='blocked').length;
+  $('tfCount').textContent=`${list.length} shown · ${nNew} new · ${nBl} blocked by the filter`;
+  const tb=$('tfTable');
+  tb.replaceChildren(h('tr',null,['When','Student','Game','Type','Message','Status','Actions'].map(x=>h('th',null,x))),
+    ...list.map(x=>{
+      const sel=h('select',{'aria-label':'Status'},...(x.status==='blocked'?[h('option',{value:'blocked'},'Blocked')]:[]),...FB_STATUS.map(([v,t])=>h('option',{value:v},t)));
+      sel.value=x.status;
+      sel.onchange=async()=>{if(sel.value==='blocked')return;if(await tcall('tt_t_feedback_set',{p_id:x.id,p_status:sel.value}))x.status=sel.value;renderTeacherFeedback();};
+      return h('tr',{class:x.status==='blocked'?'fb-blocked':''},h('td',null,when(x.at)),h('td',null,h('b',null,x.name),x.class?h('small',{class:'sub'},' '+x.class):null,x.banned?h('div',{class:'fb-lockedtag'},'LOCKED'):null),
+        h('td',null,fbName(x.game)),h('td',null,fbKind(x.kind)),h('td',{class:'fb-msgcell'},x.status==='blocked'?h('b',null,'[BLOCKED] '):null,x.message),h('td',null,sel),
+        h('td',{class:'acts'},x.banned?h('button',{class:'btn sm ghost',onclick:()=>teacherLockById(x.student,x.name,false,true)},'Unlock account'):h('button',{class:'btn sm warn2',onclick:()=>teacherLockById(x.student,x.name,true,true)},'Lock account')));
+    }));
+  if(!list.length)tb.append(h('tr',null,h('td',{colspan:7},'Nothing here yet.')));
+}
+async function teacherLockById(id,name,lock,fromFb){
+  if(lock){
+    const why=await modal({title:`Lock ${name}'s account?`,text:'They will not be able to log in or save scores until you unlock them. Add a short reason for your records (optional).',input:'text',ok:'Lock account'});
+    if(why===null)return;
+    if(await tcall('tt_t_ban',{p_student:id,p_banned:true,p_reason:why||'Inappropriate use of the feedback form'})){
+      if(fromFb)TFB.forEach(x=>{if(x.student===id)x.banned=true;});
+      if(fromFb)renderTeacherFeedback();else loadTeacher();
+    }
+  }else if(await modal({title:`Unlock ${name}?`,text:'They will be able to log in and play again.',ok:'Unlock'})){
+    if(await tcall('tt_t_ban',{p_student:id,p_banned:false,p_reason:''})){
+      if(fromFb)TFB.forEach(x=>{if(x.student===id)x.banned=false;});
+      if(fromFb)renderTeacherFeedback();else loadTeacher();
+    }
+  }
+}
+$('tFeedback').onclick=openTeacherFeedback;
+$('tfRefresh').onclick=openTeacherFeedback;$('tfFilter').onchange=renderTeacherFeedback;
+$('tfBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;loadTeacher();};
+
 /* ================= TEACHER ================= */
 let TPASS=null,TDATA=[];
 const GAME_NAMES={speed:'Speed Find',trivia:'Trivia',lab:'Compound Lab',atom:'Atom Builder',balance:'Balance It',diner:'Atom Diner',sep:'Separation Station',laser:'Laser Maze',blackout:'Blackout!',evidence:'Evidence Lab',coaster:'Coaster Architect'};
@@ -5674,7 +5825,7 @@ function renderTeacher(){
       const sp=l=>bestOf(S,['speed:'+l],v=>fmtT(Number(v[0].best)));
       const num=k=>bestOf(S,[k],v=>String(Number(v[0].best)));
       const atom=['1','2','3'].map(l=>sc(S,'atom:'+l)?String(Number(sc(S,'atom:'+l).best)):'–').join(' / ');
-      return h('tr',null,h('td',null,h('b',null,S.name),S.has_pin?null:h('small',{class:'sub'},' (new PIN)')),h('td',null,S.class||'—'),
+      return h('tr',null,h('td',null,h('b',null,S.name),S.has_pin?null:h('small',{class:'sub'},' (new PIN)'),S.banned?h('span',{class:'locktag',title:S.banned_reason||''},'LOCKED'):null),h('td',null,S.class||'—'),
         h('td',null,sp(1)),h('td',null,sp(2)),h('td',null,sp(3)),h('td',null,num('trivia:')),h('td',null,num('lab:')),
         h('td',null,atom==='– / – / –'?'—':atom),h('td',null,num('balance:')),
         h('td',null,dinerOf(S)==='– / – / –'?'—':dinerOf(S)),h('td',null,sepTotalOf(S)?sepTotalOf(S)+'/'+SEP_LEVELS.length*3:'—'),
@@ -5684,6 +5835,7 @@ function renderTeacher(){
           h('button',{class:'btn sm ghost',onclick:()=>showHistory(S)},'History'),' ',
           h('button',{class:'btn sm ghost',onclick:()=>teacherClass(S)},'Class'),' ',
           h('button',{class:'btn sm ghost',onclick:()=>teacherPin(S)},'Reset PIN'),' ',
+          h('button',{class:S.banned?'btn sm good':'btn sm ghost',onclick:()=>teacherLockById(S.id,S.name,!S.banned,false)},S.banned?'Unlock':'Lock'),' ',
           h('button',{class:'btn sm warn2',onclick:()=>teacherDelete(S)},'Delete')));
     }));
   if(!list.length)tb.append(h('tr',null,h('td',{colspan:14+NEWG.length},TDATA.length?'No students match.':'No students have made an account yet.')));
