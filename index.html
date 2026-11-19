@@ -8,7 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>Turn-Table – The Periodic Table Challenge</title>
+<title>Turn-Table™ – The Periodic Table Challenge</title>
 <style>
 :root{
   --navy:#14213d; --ink:#1b2433; --bg:#eef3fb; --card:#fff; --accent:#2f6bff; --accent2:#7c4dff;
@@ -1322,11 +1322,12 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 #s-ng.testing .ppst.ok{background:#e6eaf2;color:#3a4766;border-color:#cdd5e4}
 #s-ng.testing .ppdone{color:#3a4766}
 /*NGCSS>>*/
+.tm{font-size:.5em;vertical-align:super;line-height:0;margin-left:.08em;font-weight:600;letter-spacing:0}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand" id="brand"><i data-logo="30"></i><span>Turn-Table</span></div>
+  <div class="brand" id="brand"><i data-logo="30"></i><span>Turn-Table<sup class="tm">™</sup></span></div>
   <div id="feedBar" hidden role="marquee" aria-label="Live scores from other players"></div>
   <div id="userChip" hidden>
     <span class="who" id="userName"></span>
@@ -1343,7 +1344,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 <section class="screen" id="s-login">
   <div class="card center">
     <div class="hero"><i data-logo="64"></i></div>
-    <h1 style="text-align:center">Welcome to Turn-Table!</h1>
+    <h1 style="text-align:center">Welcome to Turn-Table<sup class="tm">™</sup>!</h1>
     <p class="sub">Log in to save your scores. Use a nickname — <b>not</b> your full name.</p>
     <div class="seg">
       <button id="modeRet" class="on">I've played before</button>
@@ -2001,7 +2002,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 <section class="screen" id="s-feedback" hidden>
   <div class="card">
     <h2><i data-ic="chat"></i>Feedback &amp; Recommendations</h2>
-    <p class="sub">Help make Turn-Table better. Tell your teacher how you think the games could be improved.</p>
+    <p class="sub">Help make Turn-Table<sup class="tm">™</sup> better. Tell your teacher how you think the games could be improved.</p>
     <div id="fbBody"></div>
     <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
   </div>
@@ -2066,7 +2067,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 <section class="screen" id="s-tfound" hidden>
   <div class="card">
     <h2><i data-ic="key"></i>Founder panel</h2>
-    <p class="sub">Every teacher account on Turn-Table. Only you can see this page.</p>
+    <p class="sub">Every teacher account on Turn-Table<sup class="tm">™</sup>. Only you can see this page.</p>
     <div class="tbar"><button class="btn sm" id="tfoRefresh" type="button">↻ Refresh</button><button class="btn sm ghost" id="tfoBack" type="button">← Dashboard</button></div>
     <div class="tscroll"><table class="dt" id="tfoTable"></table></div>
   </div>
@@ -2974,7 +2975,7 @@ async function openDash(){
   await taRefresh();renderDash();showT('s-tdash');
 }
 function needWrite(){
-  if(TA.me&&TA.me.teacher.expired){modal({title:'Your free trial has ended',text:'You can still look at your classes and scores. To start class games or make new classes, contact Turn-Table to keep going.',cancel:false});return false;}
+  if(TA.me&&TA.me.teacher.expired){modal({title:'Your free trial has ended',text:'You can still look at your classes and scores. To start class games or make new classes, contact Turn-Table™ to keep going.',cancel:false});return false;}
   return true;
 }
 function copyText(t){
@@ -2992,7 +2993,7 @@ function renderDash(){
     h('div',{class:'td-top'},
       h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt)),
       h('div',{class:'tbar'},act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
-    T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table to keep going.'):null,
+    T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table™ to keep going.'):null,
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
     h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),
       h('button',{class:'td-chip add',type:'button',onclick:newClass},'+ New class')),
