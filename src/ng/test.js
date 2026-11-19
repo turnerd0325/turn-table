@@ -54,7 +54,7 @@ async function tstPush(P,g,kind){
 
 /* ---- the gate every game card goes through ---- */
 async function ttGate(g,fn){
-  if(!TEST_GAMES[g])return fn();
+  if(!TEST_GAMES[g]||freeMode())return fn();
   const P=prof(),own=isOwner();
   if(!own&&!tstWindow(g)&&!(P&&P.cloud))return fn();
   if(P&&P.cloud)await tstSync(P);

@@ -1326,6 +1326,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .ownernote.tpnote .btn{margin-left:auto}
 /*NGCSS>>*/
 .td-use{font-size:13px;color:#5b6b8c;margin-top:4px}.td-use.near{color:#b3261e;font-weight:700}
+.seplv.freelock,.lvl.freelock{opacity:.6}.freebar{grid-column:1/-1;background:#fff7e0;border:2px solid #f0c75e;border-radius:12px;padding:8px 12px;font-size:14px;color:#5a4300}
 .td-try{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:10px 0 6px;padding:14px 16px;border-radius:14px;background:#e9f7ee;border:2px solid #7cc58a}
 .td-try b{display:block;font-size:18px;color:#1f7a34}.td-try span{color:#3a4766}
 .tm{font-size:.5em;vertical-align:super;line-height:0;margin-left:.08em;font-weight:600;letter-spacing:0}
@@ -2826,7 +2827,19 @@ const classOff=()=>{const P=me&&profiles[me];if(!P)return [];return P.cinfo===un
 const OWNER_NICK='turner';
 const isPreview=()=>!!(me&&profiles[me]&&profiles[me].preview);
 const isOwner=()=>!!(me&&profiles[me]&&(profiles[me].preview||String(profiles[me].name||'').trim().toLowerCase()===OWNER_NICK));
-const gameLocked=g=>classOff().includes(g)&&!isOwner();
+/* Free version: when a teacher's membership has lapsed (and the lock is switched on server-side),
+   students get 3 games, first levels only, 3 plays per game per day (counted by the server). */
+const FREE_GAMES={speed:{lv:1},cell:{lv:3},moon:{lv:3}};
+const freeMode=()=>{const P=me&&profiles[me];return !!(P&&P.cinfo&&P.cinfo.access==='free'&&!isOwner());};
+const freeLvLocked=(g,i)=>freeMode()&&!!FREE_GAMES[g]&&i>=FREE_GAMES[g].lv;
+const gameLocked=g=>!isOwner()&&(classOff().includes(g)||(freeMode()&&!FREE_GAMES[g]));
+async function freePlay(g){
+  if(!freeMode())return true;const P=prof();if(!P||!P.cloud)return true;
+  let r=null;try{r=await rpc('tt_free_play',{p_id:P.cloud.id,p_token:P.cloud.token,p_game:g},6000);}catch(e){return true;}
+  if(r&&r.ok){if(r.left!=null)fx.pop({icon:'clock',text:r.left?`Free version: ${r.left} play${r.left===1?'':'s'} left today`:'Free version: last free play today',kind:'try'});return true;}
+  await modal({title:'No more free plays today',text:r&&r.error==='locked'?"This game is part of the full version. Ask your teacher about Turn-Table's membership.":"You've used your 3 free plays of this game today. Come back tomorrow, or ask your teacher about the full version of Turn-Table.",cancel:false});
+  return false;
+}
 /* ================= TEACHER ACCOUNTS (email + password, checked by the server) ================= */
 const TA={s:null,me:null,cls:null,next:'dash'};
 try{TA.s=JSON.parse(store.get('tt_ta')||'null');}catch(e){TA.s=null;}
@@ -3012,7 +3025,8 @@ function renderDash(){
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
       h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
-    T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table™ to keep going.'):null,
+    T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'https://app.thesciencehooklab.com/pricing?product=bundle',target:'_blank',rel:'noopener'},'Upgrade now')):
+T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table™ to keep going.'):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
     h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),
@@ -3419,13 +3433,16 @@ function renderSpeedSetup(){
   $('styleDesc').textContent=STYLES.find(s=>s[0]===spStyle)[2];
   $('levelBtns').replaceChildren(...[1,2,3].map(l=>{
     const r=P.speed[l+spStyle],b=r&&r.best;
-    return h('button',{class:'lvl',onclick:()=>startSpeed(l,spStyle)},h('b',null,`Level ${l}: ${LEVELS[l].name}`),h('small',null,LEVELS[l].desc),
+    const fl=freeLvLocked('speed',l-1);
+    return h('button',{class:'lvl'+(fl?' freelock':''),disabled:fl,onclick:()=>startSpeed(l,spStyle)},h('b',null,`Level ${l}: ${LEVELS[l].name}`+(fl?' (full version)':'')),h('small',null,LEVELS[l].desc),
       h('span',{class:'bestline'},b!=null?[I('medal'),'Best average: '+fmtT(b)]:'No score yet'));
   }));
 }
 let S=null,spCells={};
 async function startSpeed(level,style){
-  style=style||'';const test=tstOn('speed');if(test){level=2;style='';}const L=LEVELS[level];
+  style=style||'';const test=tstOn('speed');if(test){level=2;style='';}
+  if(!test){if(freeLvLocked('speed',level-1))return;if(!(await freePlay('speed')))return;}
+  const L=LEVELS[level];
   const picks=test?TEST_SET.speed.map(x=>BYSYM[x]):sample(L.pool().filter(e=>spEligible(e,style)),ROUND_LEN);
   const queue=picks.map(e=>{
     let st=style;
@@ -4819,9 +4836,9 @@ function renderLevelPicker(box,totalBox,g,levels,packs,start,mini){
   const P=prof();let prev=true;
   totalBox.textContent=`${gameStars(P,g,levels.length)} / ${levels.length*3} stars`;
   box.replaceChildren(...levels.flatMap((L,i)=>{
-    const st=lvStars(P,g,i+1),open=NEWGAMES_UNLOCK_ALL||prev;prev=st>0;
-    const b=h('button',{class:'seplv',disabled:!open,onclick:()=>start(i)},h('small',{class:'sub'},'Level '+(i+1)),
-      h('b',null,open?L.name:'Locked'),h('div',{class:'mx lvmini'},open?mini(L):h('span',{class:'lvlock'},I('lock'))),h('div',{class:'st'},starStr(st)));
+    const st=lvStars(P,g,i+1),fl=freeLvLocked(g,i),open=(NEWGAMES_UNLOCK_ALL||prev)&&!fl;prev=st>0;
+    const b=h('button',{class:'seplv'+(fl?' freelock':''),disabled:!open,onclick:()=>start(i)},h('small',{class:'sub'},'Level '+(i+1)),
+      h('b',null,open?L.name:fl?'Full version':'Locked'),h('div',{class:'mx lvmini'},open?mini(L):h('span',{class:'lvlock'},I('lock'))),h('div',{class:'st'},starStr(st)));
     return packs[i]?[h('div',{class:'seppack'},packs[i]),b]:[b];}));
 }
 /* the end-of-level panel */
@@ -8178,6 +8195,8 @@ function ngSetup(key){
 function ngStart(key,i){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
+  if(!ngT()&&freeLvLocked(key,i)){ngSetup(key);return;}
+  if(!ngT()&&freeMode()&&!(G&&G.key===key&&G.i===i)&&!ngStart.ok){freePlay(key).then(ok=>{if(!ok)return ngSetup(key);ngStart.ok=1;try{ngStart(key,i);}finally{ngStart.ok=0;}});return;}
   const keep=G&&G.key===key&&G.i===i?G.rec:0;
   G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{},t:{n:0,right:0}};
   show('s-ng');scGame=key;$('s-ng').classList.toggle('testing',ngT());
@@ -10431,7 +10450,7 @@ renderMenu=function(){
     tip.append(sd);art.append(tip);
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
-      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
+      onclick:locked?(()=>fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[ic]&&!classOff().includes(ic)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
       h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
@@ -10453,6 +10472,7 @@ renderMenu=function(){
   const tail=[mc('m5','stats','My Profile','See your badges, rank, best scores and the levels you have solved.','',()=>{renderStats();show('s-stats');}),
     mc('m15','feedback','Feedback','Have an idea to make a game better? Send your teacher a serious recommendation.','',()=>{renderFeedback();show('s-feedback');})];
   const preview=isPreview()?[h('div',{class:'ownernote tpnote'},h('b',null,'Teacher preview. '),'Every game is open for you, including Pre-Test and Post-Test practice. Nothing here is saved to a class. ',h('button',{class:'btn sm ghost',type:'button',onclick:openDash},'Back to my dashboard'))]:[];
+  if(freeMode())preview.push(h('div',{class:'freebar'},h('b',null,'Free version. '),'You can play Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day each). Ask your teacher about the full version to unlock every game.'));
   const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
   const note=h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.');
   if(S){
@@ -10550,7 +10570,7 @@ async function tstPush(P,g,kind){
 
 /* ---- the gate every game card goes through ---- */
 async function ttGate(g,fn){
-  if(!TEST_GAMES[g])return fn();
+  if(!TEST_GAMES[g]||freeMode())return fn();
   const P=prof(),own=isOwner();
   if(!own&&!tstWindow(g)&&!(P&&P.cloud))return fn();
   if(P&&P.cloud)await tstSync(P);

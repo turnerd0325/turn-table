@@ -89,6 +89,8 @@ function ngSetup(key){
 function ngStart(key,i){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
+  if(!ngT()&&freeLvLocked(key,i)){ngSetup(key);return;}
+  if(!ngT()&&freeMode()&&!(G&&G.key===key&&G.i===i)&&!ngStart.ok){freePlay(key).then(ok=>{if(!ok)return ngSetup(key);ngStart.ok=1;try{ngStart(key,i);}finally{ngStart.ok=0;}});return;}
   const keep=G&&G.key===key&&G.i===i?G.rec:0;
   G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{},t:{n:0,right:0}};
   show('s-ng');scGame=key;$('s-ng').classList.toggle('testing',ngT());

@@ -53,7 +53,7 @@ renderMenu=function(){
     tip.append(sd);art.append(tip);
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
-      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
+      onclick:locked?(()=>fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[ic]&&!classOff().includes(ic)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
       h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
@@ -75,6 +75,7 @@ renderMenu=function(){
   const tail=[mc('m5','stats','My Profile','See your badges, rank, best scores and the levels you have solved.','',()=>{renderStats();show('s-stats');}),
     mc('m15','feedback','Feedback','Have an idea to make a game better? Send your teacher a serious recommendation.','',()=>{renderFeedback();show('s-feedback');})];
   const preview=isPreview()?[h('div',{class:'ownernote tpnote'},h('b',null,'Teacher preview. '),'Every game is open for you, including Pre-Test and Post-Test practice. Nothing here is saved to a class. ',h('button',{class:'btn sm ghost',type:'button',onclick:openDash},'Back to my dashboard'))]:[];
+  if(freeMode())preview.push(h('div',{class:'freebar'},h('b',null,'Free version. '),'You can play Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day each). Ask your teacher about the full version to unlock every game.'));
   const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
   const note=h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.');
   if(S){
