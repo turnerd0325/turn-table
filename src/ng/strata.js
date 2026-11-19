@@ -123,7 +123,8 @@ ngDef({key:'strata',name:'Deep Time',ic:'layers',std:'MS-ESS1-4 · LS4-1',subj:'
   hints(G){const L=G.L,e=L.events;return [L.clue,'Three rules: (1) lower layers are older, (2) layers are laid down flat, so tilting comes later, (3) anything that cuts across rock is younger than the rock it cuts.',`Oldest: "${e[0].txt}". Youngest: "${e[e.length-1].txt}".`];}
 });
 function stCheck(){
-  const L=G.L,S=G.st,ans=L.events.map(e=>e.id);if(S.ok||G.done)return;G.tries++;
+  const L=G.L,S=G.st,ans=L.events.map(e=>e.id);if(S.ok||G.done)return;
+  if(ngT())return ngTDone(S.order.filter((id,k)=>id===ans[k]).length/ans.length);G.tries++;
   S.bad=S.order.map((id,k)=>id!==ans[k]);
   if(!S.bad.some(Boolean)){S.ok=true;S.msg=['ok','✓ That is the true history of these rocks!'];ngRender();ngSay('You read the rocks like a real geologist!','go');
     stReplay(()=>{G.detail={checks:G.tries};ngWin(ngStars(G.tries-1,0,1),['You got the order right on check ',h('b',null,G.tries),'.']);});return;}

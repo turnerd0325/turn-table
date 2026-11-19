@@ -162,11 +162,13 @@ ngDef({key:'weather',name:'Weather Desk',ic:'rain',std:'MS-ESS2-5 · ESS2-6',sub
 function wdPlay(){
   const L=G.L,S=G.st,R=L.rounds[S.r];if(S.played||G.done)return;S.played=true;S.res=[];let wrong=0;
   R.cities.forEach(([id,ans],k)=>{const a=S.ans[k]||{},ok=R.fields.every(f=>a[f]===ans[f]);S.res.push(ok);R.fields.forEach(f=>{if(a[f]!==ans[f])wrong++;});});
+  if(ngT())return ngTAns(1-wrong/(R.cities.length*R.fields.length),wdNext);
   G.miss+=wrong;G.tries++;ngRender();
   ngSay(wrong?`${wrong} part${wrong>1?'s':''} of your forecast missed. Read each ✗ city to see why.`:'Perfect forecast! Every city was right.',wrong?'alert':'go');
   if(wrong)fx.pop({icon:'rain',text:'Forecast missed',kind:'oops'});else fx.pop({icon:'rain',text:'Perfect forecast!',kind:'great'});
 }
 function wdAnswer(v){const S=G.st,R=G.L.rounds[S.r];if(S.okNow||G.done)return;
+  if(ngT())return ngTAns(v===R.ans,wdNext);
   if(v===R.ans){S.okNow=true;S.msg=['ok',R.why];fx.pop({icon:'rain',text:'Correct!',kind:'good'});ngRender();ngSay('Right! '+R.why,'go');}
   else{S.wrong.push(v);G.miss++;G.tries++;S.msg=['no','Not quite. '+R.why];fx.pop({icon:'rain',text:'Not quite',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');}}
 function wdNext(){const S=G.st;S.r++;S.ans={};S.played=false;S.res=null;S.wrong=[];S.okNow=false;S.msg=null;

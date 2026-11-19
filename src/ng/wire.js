@@ -52,7 +52,7 @@ renderMenu=function(){
     tip.append(sd);art.append(tip);
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
-      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):fn},art,
+      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
       h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={

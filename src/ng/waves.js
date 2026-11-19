@@ -93,6 +93,7 @@ function wvCheck(){
   else if(R.t==='freq'){S.tryLam=S.l;ok=S.l===R.ans;why=ok?`Yes: 40 ÷ ${R.f} = ${R.ans} cm.`:'Speed = frequency × wavelength, so wavelength = 40 ÷ frequency.';}
   else if(R.t==='pick'){ok=S.pick===R.ans;why=ok?R.why:'Compare the amplitudes: which wave is taller from its middle line?';}
   else{ok=S.pick===R.ans;why=R.why;}
+  if(ngT())return ngTAns(ok,wvNext);
   if(ok){S.okNow=true;S.msg=['ok',why];fx.pop({icon:'wave',text:'Correct!',kind:'good'});ngRender();ngSay(why,'go');}
   else{G.miss++;G.tries++;if(R.t==='pick'||R.t==='mc')S.wrong.push(S.pick);S.msg=['no',why];fx.pop({icon:'wave',text:'Not quite',kind:'oops'});ngRender();ngSay(why,'alert');}
 }

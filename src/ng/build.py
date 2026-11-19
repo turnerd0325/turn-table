@@ -14,7 +14,7 @@ INDEX = ROOT / 'index.html'
 JS_ORDER = ['shell.js', 'cell.js', 'ripple.js', 'pup.js', 'drift.js',
             'moon.js', 'strata.js', 'pangaea.js', 'weather.js',
             'courier.js', 'frozen.js', 'fields.js', 'waves.js',
-            'content.js', 'wire.js']
+            'content.js', 'wire.js', 'test.js']
 
 BLOCKS = [
     # name, start marker, end marker, anchor (marker block goes right before it), source

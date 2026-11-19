@@ -145,7 +145,7 @@ ngDef({key:'cell',name:'Cell Shop',ic:'cell',std:'MS-LS1-1 · LS1-2',subj:'life'
 });
 function csSet(k,n){if(!G||G.done)return;G.st.hv[k]=Math.max(0,n);if(!G.st.hv[k])delete G.st.hv[k];G.st.res=null;ngRender();}
 function csRun(){
-  if(!G||G.done)return;const L=G.L,r=csJudge(L,G.st.hv);G.tries++;G.st.res=r;
+  if(!G||G.done)return;const L=G.L,r=csJudge(L,G.st.hv);if(ngT())return ngTDone(r.ok?(r.waste?.75:1):0);G.tries++;G.st.res=r;
   if(r.ok){ngRender();ngSay(r.waste?'It survived! Next time leave out the extra parts.':'Perfect cell! It did every job.','go');
     const score=(G.tries-1)+r.waste;G.detail={runs:G.tries,waste:r.waste};
     ngWin(ngStars(score,0,2),['Your cell worked after ',h('b',null,G.tries),` run${G.tries>1?'s':''}`,r.waste?` with ${r.waste} extra part${r.waste>1?'s':''}.`:' with no extra parts.']);}

@@ -143,6 +143,7 @@ ngDef({key:'ripple',name:'Ripple',ic:'web',std:'MS-LS2-2 · LS2-3 · LS2-4',subj
 function rpRun(){
   if(!G||G.done)return;const L=G.L,S=G.st;S.res={};let wrong=0;
   L.qs.forEach(([id,ans])=>{const ok=S.pred[id]===ans;S.res[id]=ok;if(!ok)wrong++;});
+  if(ngT()){S.res=null;return ngTDone((L.qs.length-wrong)/L.qs.length);}
   G.tries++;G.miss=wrong;G.detail={wrong,of:L.qs.length};ngRender();
   const n=L.qs.length,right=n-wrong;
   if(wrong===0){ngSay('Every prediction was right! You followed the ripple perfectly.','go');ngWin(3,['You predicted ',h('b',null,`all ${n}`),' populations correctly.']);}

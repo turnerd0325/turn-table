@@ -146,6 +146,7 @@ function pgTapSlot(id){const S=G.st;if(S.ok||G.done)return;
 function pgCheck(){
   const L=G.L,S=G.st;if(S.ok||G.done)return;G.tries++;
   const probs=[];L.borders.forEach(([a,b,ev])=>{ev.forEach(e=>{[a,b].forEach(s=>{const t=S.place[s];if(t&&!L.tiles.find(x=>x.id===t).ev.includes(e))probs.push([s,t,e]);});});});
+  if(ngT())return ngTDone(probs.length?0:1);
   if(!probs.length){S.ok=true;S.msg=['ok','✓ Every border matches the evidence. Pangaea is back together!'];ngRender();ngSay('The evidence lines up on every border!','go');G.detail={checks:G.tries};
     ngWin(ngStars(G.tries-1,0,1),['You rebuilt the map on check ',h('b',null,G.tries),'.']);return;}
   G.miss++;S.bad=[...new Set(probs.map(p=>p[0]))];const [s,t,e]=probs[0];
@@ -153,6 +154,7 @@ function pgCheck(){
   fx.pop({icon:'puzzle',text:'Evidence does not match',kind:'oops'});ngRender();ngSay('A red spot does not match the evidence on its borders.','alert');void s;
 }
 function pgAnswer(v){const L=G.L,S=G.st,R=L.rounds[S.r];if(!R||S.okNow||G.done)return;
+  if(ngT())return ngTAns(v===R.ans,pgNextRound);
   if(v===R.ans){S.okNow=true;S.msg=['ok',R.why];fx.pop({icon:'globe',text:'Correct!',kind:'good'});ngRender();ngSay('Right! '+R.why,'go');}
   else{S.wrong.push(v);G.miss++;G.tries++;S.msg=['no',R.t==='bd'?'Not quite. Look at the arrows and the kinds of crust again.':'Not quite. '+R.why];fx.pop({icon:'globe',text:'Not quite',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');}}
 function pgNextRound(){const S=G.st;S.r++;S.okNow=false;S.wrong=[];S.msg=null;

@@ -165,3 +165,52 @@
 .kfcat .ngc{padding:4px 8px;font-size:13px}.kfcat .ngc small{font-size:10.5px}
 .kfcat .osl{font-size:12px}
 .kfsvg{max-height:34vh}
+
+/* ---- Pre-Test / Post-Test ---- */
+.tstcard{max-width:860px;margin:10px auto;padding:22px 26px}
+.tsthead{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.tsthead h2{margin:0;font-size:28px}
+.tstk{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#5b6b8c}
+.tstart{width:150px;flex:none;border-radius:12px;overflow:hidden}.tstart svg{display:block;width:100%;height:auto}
+.tstopts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0}
+.tstopt{display:flex;flex-direction:column;gap:6px;text-align:left;padding:16px;border-radius:14px;border:3px solid #d5dcea;background:#fff;cursor:pointer;font:inherit;color:inherit;min-height:150px;transition:transform .12s,border-color .12s}
+.tstopt b{font-size:22px}.tstopt span{font-size:15px;line-height:1.35;color:#3a4766}
+.tstopt em{margin-top:auto;font-style:normal;font-weight:800;font-size:14px;padding:4px 10px;border-radius:99px;align-self:flex-start;background:#eef2fa;color:#3a4766}
+.tstopt.review{border-color:#7cc58a}.tstopt.review b{color:#1f7a34}
+.tstopt.pre{border-color:#8fb0ff}.tstopt.pre b{color:#1d4fd6}
+.tstopt.post{border-color:#c79cff}.tstopt.post b{color:#6a2bc4}
+.tstopt:not(.off):hover{transform:translateY(-2px)}
+.tstopt.off{opacity:.6;cursor:not-allowed;border-style:dashed}
+.tstnote{margin:6px 0 0}
+.tstbig{font-size:20px;font-weight:700;margin:4px 0 10px}
+.tstrules{margin:0 0 12px;padding-left:22px;font-size:16px;line-height:1.5}
+.tsthow{background:#f4f7fd;border-radius:12px;padding:10px 14px;font-size:15px}.tsthow ol{margin:6px 0 0;padding-left:22px}
+.tstbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.tstscore{font-size:84px;font-weight:900;text-align:center;line-height:1;margin:10px 0;color:#1d4fd6}
+.tstgrow{text-align:center;font-size:20px}.tstgrow .up{color:#1f7a34;font-weight:800}.tstgrow .down{color:#b3261e;font-weight:800}
+.tsttoast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#22304f;color:#fff;font-weight:700;padding:8px 16px;border-radius:99px;z-index:90;display:flex;gap:6px;align-items:center;box-shadow:0 6px 18px #0003}
+.tsttoast.go{animation:tstIn .18s ease-out}
+@keyframes tstIn{from{opacity:0;transform:translate(-50%,8px)}}
+/* during a test: hide every hint, tip, score and right/wrong signal */
+#s-ng.testing #ngHint,#s-ng.testing #ngHintBox,#s-ng.testing #ngIntro{display:none!important}
+.screen.testing .pill:has(#trScore),.screen.testing .pill:has(#lbScore),.screen.testing .pill:has(#atScore),.screen.testing .pill:has(#bcScore),.screen.testing .pill:has(#spMiss),.screen.testing .pill:has(#lbWorth),.screen.testing .pill:has(#atWorth),.screen.testing .pill:has(#bcWorth){display:none!important}
+#s-speed.testing #spLast,#s-trivia.testing #trMsg.good,#s-trivia.testing #trMsg.bad:empty{display:none!important}
+#s-lab.testing #lbHint,#s-lab.testing #lbHintBox,#s-atom.testing #atHint,#s-atom.testing #atHintBox,#s-atom.testing #atRead,#s-balance.testing #bcHint,#s-balance.testing #bcHintBox,#s-balance.testing #bcTally{display:none!important}
+.screen.testing::before{content:'TEST MODE · one try each · no feedback until the end';display:block;text-align:center;font-weight:800;letter-spacing:.06em;font-size:13px;color:#fff;background:#1d4fd6;border-radius:8px;padding:3px 8px;margin:0 0 6px}
+/* teacher dashboard */
+.tstrows{display:flex;flex-direction:column;gap:6px;margin:6px 0 10px}
+.tstrow{display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,auto);gap:10px;align-items:center;padding:6px 10px;border-radius:10px;background:#f6f8fc}
+.tstrow .nm{font-weight:700}.tstrow .cnt{color:#5b6b8c;text-align:right}
+.tstseg{display:inline-flex;border:2px solid #d5dcea;border-radius:99px;overflow:hidden}
+.tstseg button{border:0;background:#fff;font:inherit;font-size:14px;font-weight:700;padding:6px 12px;cursor:pointer;color:#3a4766}
+.tstseg button+button{border-left:2px solid #d5dcea}
+.tstseg button.on.off{background:#e6eaf2}.tstseg button.on.pre{background:#1d4fd6;color:#fff}.tstseg button.on.post{background:#6a2bc4;color:#fff}
+.tstavg{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0;font-size:16px}.tstavg small{color:#5b6b8c}
+.tstwrap{max-height:420px;overflow:auto}
+.tsttab{width:100%;border-collapse:collapse;font-size:15px}.tsttab th,.tsttab td{padding:6px 10px;border-bottom:1px solid #e3e8f2;text-align:left}
+.tsttab th{position:sticky;top:0;background:#fff}.tsttab td.up{color:#1f7a34;font-weight:800}.tsttab td.down{color:#b3261e;font-weight:800}.tsttab td.dim{color:#9aa6bd}
+.tstreset{border:0;background:none;cursor:pointer;color:#5b6b8c;font-size:15px;padding:0 4px}
+@media (max-width:700px){.tstopts{grid-template-columns:1fr}.tstrow{grid-template-columns:1fr}.tstrow .cnt{text-align:left}}
+#s-ng.testing::before{display:none}
+#s-ng.testing .ppst.ok{background:#e6eaf2;color:#3a4766;border-color:#cdd5e4}
+#s-ng.testing .ppdone{color:#3a4766}

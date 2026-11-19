@@ -86,7 +86,7 @@ ngDef({key:'courier',name:'Space Courier',ic:'rocket',std:'MS-PS2-2',subj:'phys'
     b?'One plan that works: '+b.p.map((k,i)=>`${i+1}s ${SC_TOOLS.find(x=>x[0]===k)[2]}`).join(', ')+'.':''];}
 });
 function scLaunch(){
-  const L=G.L,S=G.st;if(S.running||G.done)return;G.tries++;const r=scRun(L,S.plan),key=G.key,lv=G.i;S.running=true;S.trail=[];S.pos=0;S.crash=false;S.msg=null;ngRender();
+  const L=G.L,S=G.st;if(S.running||G.done)return;if(ngT())return ngTDone(scRun(L,S.plan).ok?1:0);G.tries++;const r=scRun(L,S.plan),key=G.key,lv=G.i;S.running=true;S.trail=[];S.pos=0;S.crash=false;S.msg=null;ngRender();
   let i=0;const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;
     if(i>=r.length){S.running=false;S.burn=null;S.res=r;scDone(r);return;}
     const p=r[i];S.burn=p.k==='c'?null:p.k;S.pos=p.x;S.trail.push(p);if(r.crash===i)S.crash=true;i++;ngRender();setTimeout(step,matchMedia('(prefers-reduced-motion:reduce)').matches?80:520);};

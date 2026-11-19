@@ -1272,6 +1272,55 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .kfcat .ngc{padding:4px 8px;font-size:13px}.kfcat .ngc small{font-size:10.5px}
 .kfcat .osl{font-size:12px}
 .kfsvg{max-height:34vh}
+
+/* ---- Pre-Test / Post-Test ---- */
+.tstcard{max-width:860px;margin:10px auto;padding:22px 26px}
+.tsthead{display:flex;gap:16px;align-items:center;margin-bottom:12px}
+.tsthead h2{margin:0;font-size:28px}
+.tstk{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:13px;color:#5b6b8c}
+.tstart{width:150px;flex:none;border-radius:12px;overflow:hidden}.tstart svg{display:block;width:100%;height:auto}
+.tstopts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:8px 0}
+.tstopt{display:flex;flex-direction:column;gap:6px;text-align:left;padding:16px;border-radius:14px;border:3px solid #d5dcea;background:#fff;cursor:pointer;font:inherit;color:inherit;min-height:150px;transition:transform .12s,border-color .12s}
+.tstopt b{font-size:22px}.tstopt span{font-size:15px;line-height:1.35;color:#3a4766}
+.tstopt em{margin-top:auto;font-style:normal;font-weight:800;font-size:14px;padding:4px 10px;border-radius:99px;align-self:flex-start;background:#eef2fa;color:#3a4766}
+.tstopt.review{border-color:#7cc58a}.tstopt.review b{color:#1f7a34}
+.tstopt.pre{border-color:#8fb0ff}.tstopt.pre b{color:#1d4fd6}
+.tstopt.post{border-color:#c79cff}.tstopt.post b{color:#6a2bc4}
+.tstopt:not(.off):hover{transform:translateY(-2px)}
+.tstopt.off{opacity:.6;cursor:not-allowed;border-style:dashed}
+.tstnote{margin:6px 0 0}
+.tstbig{font-size:20px;font-weight:700;margin:4px 0 10px}
+.tstrules{margin:0 0 12px;padding-left:22px;font-size:16px;line-height:1.5}
+.tsthow{background:#f4f7fd;border-radius:12px;padding:10px 14px;font-size:15px}.tsthow ol{margin:6px 0 0;padding-left:22px}
+.tstbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.tstscore{font-size:84px;font-weight:900;text-align:center;line-height:1;margin:10px 0;color:#1d4fd6}
+.tstgrow{text-align:center;font-size:20px}.tstgrow .up{color:#1f7a34;font-weight:800}.tstgrow .down{color:#b3261e;font-weight:800}
+.tsttoast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#22304f;color:#fff;font-weight:700;padding:8px 16px;border-radius:99px;z-index:90;display:flex;gap:6px;align-items:center;box-shadow:0 6px 18px #0003}
+.tsttoast.go{animation:tstIn .18s ease-out}
+@keyframes tstIn{from{opacity:0;transform:translate(-50%,8px)}}
+/* during a test: hide every hint, tip, score and right/wrong signal */
+#s-ng.testing #ngHint,#s-ng.testing #ngHintBox,#s-ng.testing #ngIntro{display:none!important}
+.screen.testing .pill:has(#trScore),.screen.testing .pill:has(#lbScore),.screen.testing .pill:has(#atScore),.screen.testing .pill:has(#bcScore),.screen.testing .pill:has(#spMiss),.screen.testing .pill:has(#lbWorth),.screen.testing .pill:has(#atWorth),.screen.testing .pill:has(#bcWorth){display:none!important}
+#s-speed.testing #spLast,#s-trivia.testing #trMsg.good,#s-trivia.testing #trMsg.bad:empty{display:none!important}
+#s-lab.testing #lbHint,#s-lab.testing #lbHintBox,#s-atom.testing #atHint,#s-atom.testing #atHintBox,#s-atom.testing #atRead,#s-balance.testing #bcHint,#s-balance.testing #bcHintBox,#s-balance.testing #bcTally{display:none!important}
+.screen.testing::before{content:'TEST MODE · one try each · no feedback until the end';display:block;text-align:center;font-weight:800;letter-spacing:.06em;font-size:13px;color:#fff;background:#1d4fd6;border-radius:8px;padding:3px 8px;margin:0 0 6px}
+/* teacher dashboard */
+.tstrows{display:flex;flex-direction:column;gap:6px;margin:6px 0 10px}
+.tstrow{display:grid;grid-template-columns:minmax(150px,1fr) auto minmax(150px,auto);gap:10px;align-items:center;padding:6px 10px;border-radius:10px;background:#f6f8fc}
+.tstrow .nm{font-weight:700}.tstrow .cnt{color:#5b6b8c;text-align:right}
+.tstseg{display:inline-flex;border:2px solid #d5dcea;border-radius:99px;overflow:hidden}
+.tstseg button{border:0;background:#fff;font:inherit;font-size:14px;font-weight:700;padding:6px 12px;cursor:pointer;color:#3a4766}
+.tstseg button+button{border-left:2px solid #d5dcea}
+.tstseg button.on.off{background:#e6eaf2}.tstseg button.on.pre{background:#1d4fd6;color:#fff}.tstseg button.on.post{background:#6a2bc4;color:#fff}
+.tstavg{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0;font-size:16px}.tstavg small{color:#5b6b8c}
+.tstwrap{max-height:420px;overflow:auto}
+.tsttab{width:100%;border-collapse:collapse;font-size:15px}.tsttab th,.tsttab td{padding:6px 10px;border-bottom:1px solid #e3e8f2;text-align:left}
+.tsttab th{position:sticky;top:0;background:#fff}.tsttab td.up{color:#1f7a34;font-weight:800}.tsttab td.down{color:#b3261e;font-weight:800}.tsttab td.dim{color:#9aa6bd}
+.tstreset{border:0;background:none;cursor:pointer;color:#5b6b8c;font-size:15px;padding:0 4px}
+@media (max-width:700px){.tstopts{grid-template-columns:1fr}.tstrow{grid-template-columns:1fr}.tstrow .cnt{text-align:left}}
+#s-ng.testing::before{display:none}
+#s-ng.testing .ppst.ok{background:#e6eaf2;color:#3a4766;border-color:#cdd5e4}
+#s-ng.testing .ppdone{color:#3a4766}
 /*NGCSS>>*/
 </style>
 </head>
@@ -1769,6 +1818,11 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
     </div>
     <div class="spresult" id="ngResult" hidden></div>
   </div>
+</section>
+
+<!-- PRE-TEST / POST-TEST: mode choice, rules, result (source: src/ng/test.js) -->
+<section class="screen" id="s-test" hidden>
+  <div class="card tstcard" id="tstBody"></div>
 </section>
 <!--NGHTML>>-->
 <!-- ===== CLASS GAMES HUB (teacher) ===== -->
@@ -2956,6 +3010,7 @@ function renderDash(){
       h('p',{class:'sub',style:'margin:0 0 6px'},`Flip a switch to open or lock a game for this class. Students see the change the next time they open their menu. ${onN} of ${SW_GAMES.length} are open. You can switch games on and off, but you can't change what is inside a game.`),
       h('div',{class:'tbar'},act('Open all',()=>setAllGames(C,true)),act('Lock all',()=>setAllGames(C,false))),
       ...dashGameGroups(C,off)));
+    try{els.push(tstDashCard(C));}catch(e){console.error(e);}
   }
   const q=new URLSearchParams(location.search);
   if(T.role!=='founder'&&q.has('founder'))els.push(h('p',{style:'margin-top:14px'},act('Claim founder access',claimFounder)));
@@ -3347,15 +3402,17 @@ function renderSpeedSetup(){
 }
 let S=null,spCells={};
 async function startSpeed(level,style){
-  style=style||'';const L=LEVELS[level];
-  const picks=sample(L.pool().filter(e=>spEligible(e,style)),ROUND_LEN);
+  style=style||'';const test=tstOn('speed');if(test){level=2;style='';}const L=LEVELS[level];
+  const picks=test?TEST_SET.speed.map(x=>BYSYM[x]):sample(L.pool().filter(e=>spEligible(e,style)),ROUND_LEN);
   const queue=picks.map(e=>{
     let st=style;
     if(style==='m'){const c=['','n'];if(e.group)c.push('g');if(famOK(e))c.push('f');st=c[Math.floor(Math.random()*c.length)];}
     return {e,st};
   });
-  S={level,style,key:level+style,queue,i:0,times:[],mistakes:0,wrongQ:0,locked:true,t0:0,target:null,streak:0};
-  show('s-speed');const my=runId;
+  S={level,style,key:level+style,queue,i:0,times:[],mistakes:0,wrongQ:0,locked:true,t0:0,target:null,streak:0,test,res:[]};
+  show('s-speed');$('s-speed').classList.toggle('testing',test);$('spQuit').textContent=test?'Leave test':'Quit';const my=runId;
+  if(test)TST.finish=()=>{clearInterval(spTimer);S.locked=true;const right=S.res.filter(Boolean).length;
+    tstFinish(right/S.queue.length*100,{right,n:S.queue.length,avg_ms:S.times.length?Math.round(mean(S.times)):null});};
   $('spLevel').textContent=L.name+(style?' · '+styleName(style):'');
   $('spProg').textContent=`0/${queue.length}`;$('spLabel').textContent='Get ready…';$('spPrompt').textContent='';
   $('spTimer').textContent='0.0s';$('spMiss').textContent='0';$('spLast').textContent='';
@@ -3376,6 +3433,8 @@ function spNext(){
 function spPick(n){
   if(!S||S.locked)return;
   const cell=spCells[n];
+  if(S.test){const dt=performance.now()-S.t0;S.locked=true;S.times.push(dt);S.res.push(n===S.target.n);S.i++;tstSaved();
+    const my=runId;setTimeout(()=>{if(my===runId&&S&&S.test)spNext();},250);return;}
   if(n===S.target.n){
     const my=runId,dt=performance.now()-S.t0;S.locked=true;S.times.push(dt);S.i++;
     cell.classList.add('ok');$('spTimer').textContent=(dt/1000).toFixed(1)+'s';
@@ -3390,8 +3449,9 @@ function spPick(n){
     cell.classList.add('bad');setTimeout(()=>cell.classList.remove('bad'),350);
   }
 }
-$('spQuit').onclick=goMenu;
+$('spQuit').onclick=()=>S&&S.test?tstQuit():goMenu();
 function spFinish(){
+  if(S.test)return TST&&TST.finish();
   S.locked=true;clearInterval(spTimer);
   const avg=mean(S.times),P=prof(),rec=spRec(P,S.key),prev=rec.best;
   rec.plays++;const isBest=prev==null||avg<prev;if(isBest)rec.best=avg;saveAll();
@@ -3425,8 +3485,9 @@ function hintsFor(e){
 const HINT_LABELS=['Property of matter','Clue','Period & size','Big giveaway'];
 let T=null,trCells={},trGrid=null;
 function startTrivia(){
-  stopAll();T={queue:sample(POOL_EL,ROUND_LEN),i:0,score:0,results:[],done:false};
-  show('s-trivia');
+  stopAll();const test=tstOn('trivia');T={queue:test?TEST_SET.trivia.map(x=>BYSYM[x]):sample(POOL_EL,ROUND_LEN),i:0,score:0,results:[],done:false,test};
+  show('s-trivia');$('s-trivia').classList.toggle('testing',test);$('trQuit').textContent=test?'Leave test':'Quit';
+  if(test)TST.finish=()=>{const right=T.results.filter(r=>r.ok).length;tstFinish(T.score/(T.queue.length*4)*100,{right,n:T.queue.length,points:T.score});};
   const t=buildTable($('trTable'),{names:false,colors:false,onPick:trClick});trCells=t.map;trGrid=t.grid;
   $('trColor').checked=false;legend($('trLegend'),false);
   trQuestion();
@@ -3457,7 +3518,9 @@ function lookup(str){
   if(ALIAS[s])return BYSYM[ALIAS[s]].n;
   const e=EL.find(x=>x.name.toLowerCase()===s||x.sym.toLowerCase()===s);return e?e.n:null;
 }
-function trClick(n){trGuess(n);}
+function trClick(n){
+  if(T&&T.test){if(T.done)return;Object.values(trCells).forEach(c=>c.classList.remove('sel'));trCells[n].classList.add('sel');$('trGuess').value=EL[n-1].name;return;}
+  trGuess(n);}
 function trTyped(){
   if(T.done)return;const v=$('trGuess').value;if(!v.trim())return;
   const n=lookup(v);
@@ -3469,6 +3532,8 @@ $('trGuess').addEventListener('keydown',e=>{if(e.key==='Enter')trTyped();});
 function trGuess(n){
   if(!T||T.done||T.ruled.has(n))return;
   const g=EL[n-1],msg=$('trMsg');
+  if(T.test){const ok=n===T.target.n,pts=ok?5-T.shown:0;T.score+=pts;T.results.push({e:T.target,pts,hints:T.shown,ok});T.done=true;tstSaved();T.i++;
+    setTimeout(()=>{if(!T||!T.test)return;if(T.i>=T.queue.length)return TST&&TST.finish();trQuestion();},300);return;}
   if(n===T.target.n)return trFinishQ(true);
   T.ruled.add(n);const c=trCells[n];c.classList.add('out','bad');setTimeout(()=>c.classList.remove('bad'),350);
   msg.className='msg bad';fx.pop({icon:'question',text:'Not quite!',kind:'try',at:c});
@@ -3490,7 +3555,7 @@ function trFinishQ(ok){
   $('trNext').textContent=T.i+1>=T.queue.length?'See my results ▶':'Next ▶';$('trNext').hidden=false;$('trNext').focus({preventScroll:true});
 }
 $('trNext').onclick=()=>{T.i++;if(T.i>=T.queue.length)return trEnd();trQuestion();};
-$('trQuit').onclick=goMenu;
+$('trQuit').onclick=()=>T&&T.test?tstQuit():goMenu();
 function trEnd(){
   const P=prof(),rec=P.trivia,prev=rec.best;rec.plays++;const isBest=T.score>prev;if(isBest)rec.best=T.score;saveAll();bdTriviaEnd(T.results);cloudSubmit('trivia','',T.score,{n:T.queue.length});
   const right=T.results.filter(r=>r.ok).length,max=T.queue.length*4;
@@ -3505,9 +3570,10 @@ function trEnd(){
 /* ================= GAME 3: COMPOUND LAB ================= */
 let LB=null,lbCells={};
 function startLab(){
-  stopAll();const by=t=>COMPOUNDS.filter(c=>c.t===t);
-  LB={queue:[...sample(by(1),4),...sample(by(2),4),...sample(by(3),2)],i:0,score:0,results:[]};
-  show('s-lab');
+  stopAll();const by=t=>COMPOUNDS.filter(c=>c.t===t),test=tstOn('lab');
+  LB={queue:test?TEST_SET.lab():[...sample(by(1),4),...sample(by(2),4),...sample(by(3),2)],i:0,score:0,results:[],test};
+  show('s-lab');$('s-lab').classList.toggle('testing',test);$('lbQuit').textContent=test?'Leave test':'Quit';
+  if(test)TST.finish=()=>{const right=LB.results.filter(r=>r.ok).length;tstFinish(right/LB.queue.length*100,{right,n:LB.queue.length});};
   const t=buildTable($('lbTable'),{names:true,colors:true,onPick:lbAdd});lbCells=t.map;legend($('lbLegend'),true);
   lbRound();
 }
@@ -3549,6 +3615,8 @@ $('lbCombine').onclick=()=>{
   if(!lbTotal(a)){msg.className='msg bad';msg.textContent='Click elements on the table to add atoms first.';return;}
   const tk=Object.keys(t),ak=Object.keys(a);
   const missing=tk.some(k=>!a[k]),extra=ak.some(k=>!t[k]),same=!missing&&!extra&&tk.every(k=>a[k]===t[k]);
+  if(LB.test){LB.results.push({c:LB.c,ok:same});LB.done=true;tstSaved();LB.i++;
+    setTimeout(()=>{if(!LB||!LB.test)return;if(LB.i>=LB.queue.length)return TST&&TST.finish();lbRound();},300);return;}
   if(same)return lbSuccess();
   LB.wrong++;msg.className='msg bad';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});
   msg.textContent=missing?"Not yet — you're missing a type of element.":extra?"Not yet — one of your elements doesn't belong.":"Right elements! Now check how many atoms of each.";
@@ -3566,7 +3634,7 @@ function lbSuccess(){
   $('lbWorth').textContent=0;
 }
 $('lbNext').onclick=()=>{LB.i++;if(LB.i>=LB.queue.length)return lbEnd();lbRound();};
-$('lbQuit').onclick=goMenu;
+$('lbQuit').onclick=()=>LB&&LB.test?tstQuit():goMenu();
 function lbEnd(){
   const P=prof(),rec=P.lab,prev=rec.best;rec.plays++;const isBest=LB.score>prev;if(isBest)rec.best=LB.score;saveAll();cloudSubmit('lab','',LB.score,{n:LB.queue.length});
   const max=LB.queue.length*3;
@@ -3659,8 +3727,11 @@ function atomSVG(p,n,e){
 const AT_CAP={p:20,n:24,e:24};
 let AT=null;
 function startAtom(level){
-  AT={level,queue:atomQueue(level),i:0,score:0};
-  show('s-atom');atRound();
+  const test=tstOn('atom');
+  AT={level,queue:test?TEST_SET.atom():atomQueue(level),i:0,score:0,test,res:[]};
+  show('s-atom');$('s-atom').classList.toggle('testing',test);$('atQuit').textContent=test?'Leave test':'Quit';
+  if(test)TST.finish=()=>{const right=AT.res.filter(Boolean).length;tstFinish(right/AT.queue.length*100,{right,n:AT.queue.length});};
+  atRound();
 }
 function atRound(){
   const q=AT.queue[AT.i];Object.assign(AT,{q,p:0,n:0,e:0,hints:0,wrong:0,done:false});
@@ -3695,6 +3766,8 @@ $('atHint').onclick=()=>{
 };
 $('atCheck').onclick=()=>{
   if(!AT||AT.done)return;const q=AT.q,m=$('atMsg');
+  if(AT.test){AT.res.push(AT.p===q.Z&&AT.n===q.N&&AT.e===q.E);AT.done=true;tstSaved();AT.i++;
+    setTimeout(()=>{if(!AT||!AT.test)return;if(AT.i>=AT.queue.length)return TST&&TST.finish();atRound();},300);return;}
   if(AT.p===q.Z&&AT.n===q.N&&AT.e===q.E)return atSuccess();
   AT.wrong++;m.className='msg bad';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});
   m.textContent=AT.p!==q.Z?'Check the protons. What does the atomic number say?'
@@ -3711,7 +3784,7 @@ function atSuccess(){
   $('atWorth').textContent=0;
 }
 $('atNext').onclick=()=>{AT.i++;if(AT.i>=AT.queue.length)return atEnd();atRound();};
-$('atQuit').onclick=goMenu;
+$('atQuit').onclick=()=>AT&&AT.test?tstQuit():goMenu();
 function atEnd(){
   const P=prof(),rec=atRec(P,AT.level),prev=rec.best;rec.plays++;const isBest=AT.score>prev;if(isBest)rec.best=AT.score;saveAll();
   cloudSubmit('atom',AT.level,AT.score,{n:AT.queue.length});
@@ -3750,9 +3823,11 @@ const REACTIONS=[
 ].map(r=>{const [l,rr]=r.eq.split('>'),L=l.split('+'),R=rr.split('+');return Object.assign(r,{L,R,terms:L.concat(R),nL:L.length});});
 let BL=null;
 function startBalance(){
-  const by=t=>REACTIONS.filter(r=>r.t===t);
-  BL={queue:[...sample(by(1),3),...sample(by(2),4),...sample(by(3),3)],i:0,score:0,results:[]};
-  show('s-balance');bcRound();
+  const by=t=>REACTIONS.filter(r=>r.t===t),test=tstOn('balance');
+  BL={queue:test?[...by(1).slice(0,3),...by(2).slice(0,4),...by(3).slice(0,3)]:[...sample(by(1),3),...sample(by(2),4),...sample(by(3),3)],i:0,score:0,results:[],test,res:[]};
+  show('s-balance');$('s-balance').classList.toggle('testing',test);$('bcQuit').textContent=test?'Leave test':'Quit';
+  if(test)TST.finish=()=>{const pts=BL.res.reduce((a,b)=>a+b,0);tstFinish(pts/BL.queue.length*100,{right:BL.res.filter(x=>x===1).length,n:BL.queue.length});};
+  bcRound();
 }
 function bcRound(){
   const rx=BL.queue[BL.i];Object.assign(BL,{rx,coefs:rx.terms.map(()=>1),hints:0,wrong:0,done:false});
@@ -3798,6 +3873,8 @@ $('bcHint').onclick=()=>{
 };
 $('bcCheck').onclick=()=>{
   if(BL.done)return;const m=$('bcMsg');
+  if(BL.test){BL.res.push(bcBalanced()?(BL.coefs.reduce(gcd)>1?.5:1):0);BL.done=true;tstSaved();BL.i++;
+    setTimeout(()=>{if(!BL||!BL.test)return;if(BL.i>=BL.queue.length)return TST&&TST.finish();bcRound();},300);return;}
   if(!bcBalanced()){BL.wrong++;m.className='msg bad';m.textContent='Not yet. Compare the left and right atom counts below.';fx.pop({icon:'burst',text:'Almost!',kind:'oops'});bcRender();return;}
   if(BL.coefs.reduce(gcd)>1){m.className='msg bad';m.textContent='Balanced! But can you use smaller numbers? Divide them all by the same number.';fx.pop({icon:'down',text:'Smaller numbers!',kind:'try'});return;}
   BL.done=true;const pts=Math.max(1,3-BL.hints-BL.wrong);BL.score+=pts;BL.results.push(BL.rx);
@@ -3808,7 +3885,7 @@ $('bcCheck').onclick=()=>{
   $('bcWorth').textContent=0;
 };
 $('bcNext').onclick=()=>{BL.i++;if(BL.i>=BL.queue.length)return bcEnd();bcRound();};
-$('bcQuit').onclick=goMenu;
+$('bcQuit').onclick=()=>BL&&BL.test?tstQuit():goMenu();
 function bcEnd(){
   const P=prof(),rec=P.balance,prev=rec.best;rec.plays++;const isBest=BL.score>prev;if(isBest)rec.best=BL.score;saveAll();
   cloudSubmit('balance','',BL.score,{n:BL.queue.length});
@@ -8063,7 +8140,7 @@ function ngDef(d){
 /* ---- level runtime ---- */
 let G=null,NGK=null;
 const ngD=()=>NGS[G.key];
-function ngSay(t,kind){const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),...ngRich(t));}
+function ngSay(t,kind){if(kind&&ngT())return;const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),...ngRich(t));}
 function ngSetup(key){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
@@ -8079,8 +8156,8 @@ function ngStart(key,i){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
   const keep=G&&G.key===key&&G.i===i?G.rec:0;
-  G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{}};
-  show('s-ng');scGame=key;
+  G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{},t:{n:0,right:0}};
+  show('s-ng');scGame=key;$('s-ng').classList.toggle('testing',ngT());
   const r=$('ngResult');r.hidden=true;r.classList.remove('sciwait');
   const hb=$('ngHintBox');hb.hidden=true;hb.dataset.closed='';
   $('s-ng').dataset.g=key;
@@ -8095,8 +8172,10 @@ function ngRender(){
   if(!G)return;const d=ngD();
   d.render(G,$('ngMain'),$('ngSide'));
   const m=d.hud?d.hud(G):{};
-  $('ngMetricL').textContent=m.label||'Tries';$('ngMetric').textContent=m.val!=null?m.val:G.tries;
-  $('ngTarget').replaceChildren(...ngRich(m.target||'3 ★ = right on the first try'));
+  $('ngBack').textContent=ngT()?'Leave test':'← Levels';
+  if(ngT()){$('ngMetricL').textContent=NGT.kind==='pre'?'Pre-Test':'Post-Test';$('ngMetric').textContent=`${NGT.k+1} of ${NGT.lv.length}`;$('ngTarget').textContent='One try · no hints · score at the end';}
+  else{$('ngMetricL').textContent=m.label||'Tries';$('ngMetric').textContent=m.val!=null?m.val:G.tries;
+  $('ngTarget').replaceChildren(...ngRich(m.target||'3 ★ = right on the first try'));}
   ngHintUI();
 }
 function ngHintUI(){
@@ -8110,6 +8189,7 @@ function ngHintUI(){
 }
 /* finish a level. stars 1..3 */
 function ngWin(stars,line){
+  if(ngT())return ngTDone(G.t.n?G.t.right/G.t.n:1);
   const d=ngD();if(G.hint>=3&&d.cap3)stars=Math.min(stars,2);stars=Math.max(1,Math.min(3,stars));
   G.done=true;ngHintUI();
   if(!(G.rec>=stars)){G.rec=stars;recordStars(G.key,G.i+1,stars,Object.assign({tries:G.tries,miss:G.miss},G.detail||{}));}
@@ -8121,6 +8201,7 @@ function ngWin(stars,line){
 }
 /* not enough right to pass: explain and retry (no stars saved) */
 function ngRetry(line){
+  if(ngT())return ngTDone(G.t.n?G.t.right/G.t.n:0);
   const k=G.key,i=G.i;G.done=true;ngHintUI();
   fx.pop({icon:'bulb',text:'Not yet. Read the feedback!',kind:'try',size:'big'});
   const box=$('ngResult');
@@ -8130,7 +8211,22 @@ function ngRetry(line){
     box.hidden=false;},700);
 }
 $('ngHint').onclick=()=>{if(!G||G.hint>=3||G.done)return;G.hint++;const d=ngD();if(d.onHint)d.onHint(G);$('ngHintBox').dataset.closed='';ngRender();};
-$('ngBack').onclick=()=>{if(G)ngSetup(G.key);else goMenu();};
+$('ngBack').onclick=()=>{if(ngT())return tstQuit();if(G)ngSetup(G.key);else goMenu();};
+
+/* ---- Pre-Test / Post-Test mode for the subject games ----
+   One try per item, no hints, no coach feedback, no stars. Each test level scores 0..1.
+   Round games call ngTAns(ok,next) for each answer; one-check games call ngTDone(fraction). */
+let NGT=null;
+const NG_TEST_LV=[1,4,7];
+const ngT=()=>!!(NGT&&G&&G.key===NGT.key);
+function ngTRound(v){G.t.n++;G.t.right+=v===true?1:v===false?0:Math.max(0,Math.min(1,+v||0));}
+function ngTAns(v,next){ngTRound(v);tstSaved();next();}
+function ngTDone(frac){
+  if(!ngT()||G.done)return;G.done=true;if(frac==null)frac=G.t.n?G.t.right/G.t.n:0;
+  NGT.res.push({lv:G.i+1,s:Math.round(Math.max(0,Math.min(1,frac))*1000)/1000});NGT.k++;tstSaved();
+  const T=NGT;setTimeout(()=>{if(NGT!==T)return;if(T.k<T.lv.length)ngStart(T.key,T.lv[T.k]);else tstFinish(T.res.reduce((a,r)=>a+r.s,0)/T.lv.length*100,{levels:T.res});},450);
+}
+function ngTestStart(key,kind){const d=NGS[key];NGT={key,kind,lv:NG_TEST_LV.filter(i=>i<d.n),k:0,res:[]};ngStart(key,NGT.lv[0]);}
 $('ngSetBack').onclick=()=>goMenu();
 
 /* a tiny line chart. series: [{name,color,vals:[0..1]}] */
@@ -8299,7 +8395,7 @@ ngDef({key:'cell',name:'Cell Shop',ic:'cell',std:'MS-LS1-1 · LS1-2',subj:'life'
 });
 function csSet(k,n){if(!G||G.done)return;G.st.hv[k]=Math.max(0,n);if(!G.st.hv[k])delete G.st.hv[k];G.st.res=null;ngRender();}
 function csRun(){
-  if(!G||G.done)return;const L=G.L,r=csJudge(L,G.st.hv);G.tries++;G.st.res=r;
+  if(!G||G.done)return;const L=G.L,r=csJudge(L,G.st.hv);if(ngT())return ngTDone(r.ok?(r.waste?.75:1):0);G.tries++;G.st.res=r;
   if(r.ok){ngRender();ngSay(r.waste?'It survived! Next time leave out the extra parts.':'Perfect cell! It did every job.','go');
     const score=(G.tries-1)+r.waste;G.detail={runs:G.tries,waste:r.waste};
     ngWin(ngStars(score,0,2),['Your cell worked after ',h('b',null,G.tries),` run${G.tries>1?'s':''}`,r.waste?` with ${r.waste} extra part${r.waste>1?'s':''}.`:' with no extra parts.']);}
@@ -8460,6 +8556,7 @@ ngDef({key:'ripple',name:'Ripple',ic:'web',std:'MS-LS2-2 · LS2-3 · LS2-4',subj
 function rpRun(){
   if(!G||G.done)return;const L=G.L,S=G.st;S.res={};let wrong=0;
   L.qs.forEach(([id,ans])=>{const ok=S.pred[id]===ans;S.res[id]=ok;if(!ok)wrong++;});
+  if(ngT()){S.res=null;return ngTDone((L.qs.length-wrong)/L.qs.length);}
   G.tries++;G.miss=wrong;G.detail={wrong,of:L.qs.length};ngRender();
   const n=L.qs.length,right=n-wrong;
   if(wrong===0){ngSay('Every prediction was right! You followed the ripple perfectly.','go');ngWin(3,['You predicted ',h('b',null,`all ${n}`),' populations correctly.']);}
@@ -8597,17 +8694,20 @@ ngDef({key:'pup',name:'Pup Predictor',ic:'paw',std:'MS-LS3-2',subj:'life',
   onHint(G){if(G.hint===3&&G.L.choose&&G.L.choose.fixed){}}
 });
 function L0(L){return L.choose?{M:L.choose.fixed||null,F:null}:{};}
-function ppNext(msgOK){const S=G.st;S.msg=msgOK?['ok',msgOK]:null;S.step++;S.pct=null;S.mc=null;S.geno=null;S.sqBad=null;
+function ppNext(msgOK){const S=G.st;if(ngT()){if(msgOK)ngTRound(true);msgOK=null;}S.msg=msgOK?['ok',msgOK]:null;S.step++;S.pct=null;S.mc=null;S.geno=null;S.sqBad=null;
   if(S.step>=G.L.steps.length){ngRender();const m=G.miss;G.detail={mistakes:m};ngSay(m?'Done! Check the steps where you slipped.':'Perfect genetics!','go');
     ngWin(ngStars(m,0,2),['You finished with ',h('b',null,m),` mistake${m===1?'':'s'}.`]);return;}
   ngRender();}
-function ppMiss(t){G.miss++;G.tries++;G.st.msg=['no',t];fx.pop({icon:'paw',text:'Not quite',kind:'oops'});ngRender();ngSay(t,'alert');}
+function ppMiss(t){if(ngT()){const S=G.st,st=G.L.steps[S.step];ngTRound(false);tstSaved();
+    if(st.t==='parents'){G.t.n+=G.L.steps.slice(S.step+1).filter(x=>x.t!=='breed').length;return ngTDone();}return ppNext(null);}
+  G.miss++;G.tries++;G.st.msg=['no',t];fx.pop({icon:'paw',text:'Not quite',kind:'oops'});ngRender();ngSay(t,'alert');}
 function ppCheckParents(){
   const L=G.L,S=G.st,C=L.choose,ok=C.best.some(([m,f])=>S.pick.M===m&&S.pick.F===f);
   if(ok){ppNext(C.why||'Great choice! Those parents give the best chance.');return;}
   const M=C.dogs.find(d=>d.n===S.pick.M),F=C.dogs.find(d=>d.n===S.pick.F);
+  if(C.why)return ppMiss(C.why);
   const p=ppPctOf(M.g,F.g,C.test);
-  ppMiss(C.why?C.why:`${M.n} (${M.g}) × ${F.n} (${F.g}) gives a ${p}% chance. Another pair does better. Think about which alleles each parent can pass on.`);
+  ppMiss(`${M.n} (${M.g}) × ${F.n} (${F.g}) gives a ${p}% chance. Another pair does better. Think about which alleles each parent can pass on.`);
 }
 function ppCheckSquare(){
   const S=G.st,P=ppParents(G),c=ppCells(P[0].g,P[1].g);
@@ -8735,9 +8835,9 @@ ngDef({key:'drift',name:'Island Drift',ic:'beetle',std:'MS-LS4-4 · LS4-6',subj:
     const shapes=drOrder(L,drShapes(L)).map(([k,v])=>[k,[ngChart([{color:'#2f6bff',vals:v,w:3}],{w:120,h:64,left:4,bottom:4,label:'Graph choice'})]]);
     const truthQ1=Math.abs(drSim(L)[L.gens]-L.p0)<.03?'N':drSim(L)[L.gens]>L.p0?'B':'A';
     const kids=[h('div',{class:'osl'},h('span',{class:'stepchip'},'1'),'Which kind will become more common?'),
-      ngChoices(q1o,S.q1,v=>{if(lockP)return;S.q1=v;ngRender();},{cls:'col',locked:lockP,mark:S.ran?{[truthQ1]:'ok',...(S.q1!==truthQ1?{[S.q1]:'no'}:{})}:null}),
+      ngChoices(q1o,S.q1,v=>{if(lockP)return;S.q1=v;ngRender();},{cls:'col',locked:lockP,mark:S.ran&&!ngT()?{[truthQ1]:'ok',...(S.q1!==truthQ1?{[S.q1]:'no'}:{})}:null}),
       h('div',{class:'osl'},h('span',{class:'stepchip'},'2'),`Which graph shows the ${fname.toLowerCase()}?`),
-      ngChoices(shapes,S.q2,v=>{if(lockP)return;S.q2=v;ngRender();},{cls:'shapes',locked:lockP,mark:S.ran?{true:'ok',...(S.q2!=='true'?{[S.q2]:'no'}:{})}:null})];
+      ngChoices(shapes,S.q2,v=>{if(lockP)return;S.q2=v;ngRender();},{cls:'shapes',locked:lockP,mark:S.ran&&!ngT()?{true:'ok',...(S.q2!=='true'?{[S.q2]:'no'}:{})}:null})];
     if(!S.ran)kids.push(ngBtn([I('play'),' Run the generations'],drRun,'good',{style:'width:100%;font-size:18px',disabled:!S.q1||!S.q2||G.done||S.running}));
     if(S.ran&&!S.running){kids.push(h('div',{class:'osl'},h('span',{class:'stepchip'},'3'),'Why did this happen?'),
       h('div',{class:'ppmc'},...drOrder(L,L.why).map(([v,t])=>h('button',{type:'button',class:'ngc wide'+(S.q3===v?' on':'')+(S.tried3.includes(v)&&v!==L.why[0][0]?' no':'')+(S.q3ok&&v===L.why[0][0]?' ok':''),disabled:G.done||S.q3ok||S.tried3.includes(v),onclick:()=>drWhy(v)},t))));}
@@ -8750,6 +8850,7 @@ ngDef({key:'drift',name:'Island Drift',ic:'beetle',std:'MS-LS4-4 · LS4-6',subj:
 function drRun(){
   const L=G.L,S=G.st,v=drSim(L),key=G.key,lv=G.i;S.running=true;S.ran=true;
   const truthQ1=Math.abs(v[L.gens]-L.p0)<.03?'N':v[L.gens]>L.p0?'B':'A';
+  if(ngT()){ngTRound(S.q1===truthQ1);ngTRound(S.q2==='true');tstSaved();}
   if(S.q1!==truthQ1)G.miss++;if(S.q2!=='true')G.miss++;G.tries++;
   let g=0;const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;g++;S.gen=g;S.shown.push(v[g]);
     if(g>=L.gens){S.running=false;ngRender();
@@ -8760,6 +8861,7 @@ function drRun(){
 }
 function drWhy(v){
   const L=G.L,S=G.st;if(S.q3ok||G.done)return;S.q3=v;
+  if(ngT()){ngTRound(v===L.why[0][0]);return ngTDone();}
   if(v===L.why[0][0]){S.q3ok=true;ngRender();ngSay('Exactly! '+L.why[0][1],'go');G.detail={mistakes:G.miss};
     ngWin(ngStars(G.miss,0,1),['You finished with ',h('b',null,G.miss),` mistake${G.miss===1?'':'s'}.`]);}
   else{S.tried3.push(v);G.miss++;ngRender();fx.pop({icon:'beetle',text:'That’s a trap!',kind:'oops'});
@@ -8898,6 +9000,7 @@ function mwWhy(R,ok){
 function mwCheck(){
   const L=G.L,S=G.st,R=L.rounds[S.r];if(!R||G.done||S.okNow||S.pick==null)return;
   const ans=mwAnswer(R),ok=ans.includes(S.pick);
+  if(ngT())return ngTAns(ok,mwNext);
   if(ok){S.okNow=true;S.okSpot=ans.includes(S.pick)?[S.pick]:ans;if(R.t==='season')S.showMonths=true;S.msg=['ok',mwWhy(R,true)];fx.pop({icon:'moon',text:'Correct!',kind:'good'});ngRender();ngSay(mwWhy(R,true),'go');}
   else{S.bad.push(S.pick);G.miss++;G.tries++;S.msg=['no',mwWhy(R,false)];fx.pop({icon:'moon',text:'Not quite',kind:'oops'});S.pick=null;ngRender();ngSay(mwWhy(R,false),'alert');}
 }
@@ -9060,7 +9163,8 @@ ngDef({key:'strata',name:'Deep Time',ic:'layers',std:'MS-ESS1-4 · LS4-1',subj:'
   hints(G){const L=G.L,e=L.events;return [L.clue,'Three rules: (1) lower layers are older, (2) layers are laid down flat, so tilting comes later, (3) anything that cuts across rock is younger than the rock it cuts.',`Oldest: "${e[0].txt}". Youngest: "${e[e.length-1].txt}".`];}
 });
 function stCheck(){
-  const L=G.L,S=G.st,ans=L.events.map(e=>e.id);if(S.ok||G.done)return;G.tries++;
+  const L=G.L,S=G.st,ans=L.events.map(e=>e.id);if(S.ok||G.done)return;
+  if(ngT())return ngTDone(S.order.filter((id,k)=>id===ans[k]).length/ans.length);G.tries++;
   S.bad=S.order.map((id,k)=>id!==ans[k]);
   if(!S.bad.some(Boolean)){S.ok=true;S.msg=['ok','✓ That is the true history of these rocks!'];ngRender();ngSay('You read the rocks like a real geologist!','go');
     stReplay(()=>{G.detail={checks:G.tries};ngWin(ngStars(G.tries-1,0,1),['You got the order right on check ',h('b',null,G.tries),'.']);});return;}
@@ -9232,6 +9336,7 @@ function pgTapSlot(id){const S=G.st;if(S.ok||G.done)return;
 function pgCheck(){
   const L=G.L,S=G.st;if(S.ok||G.done)return;G.tries++;
   const probs=[];L.borders.forEach(([a,b,ev])=>{ev.forEach(e=>{[a,b].forEach(s=>{const t=S.place[s];if(t&&!L.tiles.find(x=>x.id===t).ev.includes(e))probs.push([s,t,e]);});});});
+  if(ngT())return ngTDone(probs.length?0:1);
   if(!probs.length){S.ok=true;S.msg=['ok','✓ Every border matches the evidence. Pangaea is back together!'];ngRender();ngSay('The evidence lines up on every border!','go');G.detail={checks:G.tries};
     ngWin(ngStars(G.tries-1,0,1),['You rebuilt the map on check ',h('b',null,G.tries),'.']);return;}
   G.miss++;S.bad=[...new Set(probs.map(p=>p[0]))];const [s,t,e]=probs[0];
@@ -9239,6 +9344,7 @@ function pgCheck(){
   fx.pop({icon:'puzzle',text:'Evidence does not match',kind:'oops'});ngRender();ngSay('A red spot does not match the evidence on its borders.','alert');void s;
 }
 function pgAnswer(v){const L=G.L,S=G.st,R=L.rounds[S.r];if(!R||S.okNow||G.done)return;
+  if(ngT())return ngTAns(v===R.ans,pgNextRound);
   if(v===R.ans){S.okNow=true;S.msg=['ok',R.why];fx.pop({icon:'globe',text:'Correct!',kind:'good'});ngRender();ngSay('Right! '+R.why,'go');}
   else{S.wrong.push(v);G.miss++;G.tries++;S.msg=['no',R.t==='bd'?'Not quite. Look at the arrows and the kinds of crust again.':'Not quite. '+R.why];fx.pop({icon:'globe',text:'Not quite',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');}}
 function pgNextRound(){const S=G.st;S.r++;S.okNow=false;S.wrong=[];S.msg=null;
@@ -9415,11 +9521,13 @@ ngDef({key:'weather',name:'Weather Desk',ic:'rain',std:'MS-ESS2-5 · ESS2-6',sub
 function wdPlay(){
   const L=G.L,S=G.st,R=L.rounds[S.r];if(S.played||G.done)return;S.played=true;S.res=[];let wrong=0;
   R.cities.forEach(([id,ans],k)=>{const a=S.ans[k]||{},ok=R.fields.every(f=>a[f]===ans[f]);S.res.push(ok);R.fields.forEach(f=>{if(a[f]!==ans[f])wrong++;});});
+  if(ngT())return ngTAns(1-wrong/(R.cities.length*R.fields.length),wdNext);
   G.miss+=wrong;G.tries++;ngRender();
   ngSay(wrong?`${wrong} part${wrong>1?'s':''} of your forecast missed. Read each ✗ city to see why.`:'Perfect forecast! Every city was right.',wrong?'alert':'go');
   if(wrong)fx.pop({icon:'rain',text:'Forecast missed',kind:'oops'});else fx.pop({icon:'rain',text:'Perfect forecast!',kind:'great'});
 }
 function wdAnswer(v){const S=G.st,R=G.L.rounds[S.r];if(S.okNow||G.done)return;
+  if(ngT())return ngTAns(v===R.ans,wdNext);
   if(v===R.ans){S.okNow=true;S.msg=['ok',R.why];fx.pop({icon:'rain',text:'Correct!',kind:'good'});ngRender();ngSay('Right! '+R.why,'go');}
   else{S.wrong.push(v);G.miss++;G.tries++;S.msg=['no','Not quite. '+R.why];fx.pop({icon:'rain',text:'Not quite',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');}}
 function wdNext(){const S=G.st;S.r++;S.ans={};S.played=false;S.res=null;S.wrong=[];S.okNow=false;S.msg=null;
@@ -9523,7 +9631,7 @@ ngDef({key:'courier',name:'Space Courier',ic:'rocket',std:'MS-PS2-2',subj:'phys'
     b?'One plan that works: '+b.p.map((k,i)=>`${i+1}s ${SC_TOOLS.find(x=>x[0]===k)[2]}`).join(', ')+'.':''];}
 });
 function scLaunch(){
-  const L=G.L,S=G.st;if(S.running||G.done)return;G.tries++;const r=scRun(L,S.plan),key=G.key,lv=G.i;S.running=true;S.trail=[];S.pos=0;S.crash=false;S.msg=null;ngRender();
+  const L=G.L,S=G.st;if(S.running||G.done)return;if(ngT())return ngTDone(scRun(L,S.plan).ok?1:0);G.tries++;const r=scRun(L,S.plan),key=G.key,lv=G.i;S.running=true;S.trail=[];S.pos=0;S.crash=false;S.msg=null;ngRender();
   let i=0;const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;
     if(i>=r.length){S.running=false;S.burn=null;S.res=r;scDone(r);return;}
     const p=r[i];S.burn=p.k==='c'?null:p.k;S.pos=p.x;S.trail.push(p);if(r.crash===i)S.crash=true;i++;ngRender();setTimeout(step,matchMedia('(prefers-reduced-motion:reduce)').matches?80:520);};
@@ -9662,7 +9770,7 @@ ngDef({key:'frozen',name:'Keep It Frozen',ic:'snow',std:'MS-PS3-3 · PS3-4',subj
       p?'A design that works: '+L.choose.map(c=>KF_OPT[c].o[p[c]][0]).join(' + ')+'.':''];}
 });
 function kfTest(){
-  const L=G.L,S=G.st;if(G.done)return;G.tries++;const hrs=kfHours(L,S.d),ok=hrs>=L.goal;S.res={hours:hrs,ok};
+  const L=G.L,S=G.st;if(G.done)return;G.tries++;const hrs=kfHours(L,S.d),ok=hrs>=L.goal;if(ngT())return ngTDone(ok?1:0);S.res={hours:hrs,ok};
   if(ok){S.msg=['ok',`✓ It lasted ${hrs.toFixed(1)} hours. Goal: ${L.goal} hours.`];ngRender();ngSay('Your design worked!','go');G.detail={tests:G.tries};
     ngWin(ngStars(G.tries-1,0,1),['Your design passed on test ',h('b',null,G.tries),'.']);return;}
   G.miss++;const d=S.d,tips=[];
@@ -9675,6 +9783,7 @@ function kfTest(){
   fx.pop({icon:'snow',text:L.soup?'The soup got cold':'It melted!',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');
 }
 function kfAnswer(v){const S=G.st,R=G.L.rounds[S.r];if(S.okNow||G.done)return;S.ran=true;
+  if(ngT())return ngTAns(v===R.ans,kfNextRound);
   if(v===R.ans){S.okNow=true;S.msg=['ok',R.why];fx.pop({icon:'snow',text:'Correct!',kind:'good'});ngRender();ngSay('Right! '+R.why,'go');}
   else{S.wrong.push(v);G.miss++;G.tries++;S.msg=['no','Not quite. '+(R.a?'Look at the graph. ':'')+R.why];fx.pop({icon:'snow',text:'Not quite',kind:'oops'});ngRender();ngSay(S.msg[1],'alert');}}
 function kfNextRound(){const S=G.st;S.r++;S.okNow=false;S.wrong=[];S.msg=null;S.ran=false;
@@ -9790,7 +9899,8 @@ ngDef({key:'fields',name:'Field Golf',ic:'magnet',std:'MS-PS2-3 · PS2-5',subj:'
       sol?'One setup that works: '+L.slots.map((s,i)=>s[4]!=null?null:`spot ${i+1} = ${fgName(sol[i])}`).filter(Boolean).join(', ')+'.':''];}
 });
 function fgLaunch(){
-  const L=G.L,S=G.st;if(S.running||G.done)return;G.tries++;S.launched++;const r=fgSim(L,S.set.map(fgQ)),dir=fgDir(r),key=G.key,lv=G.i;
+  const L=G.L,S=G.st;if(S.running||G.done)return;
+  if(ngT()){const r=fgSim(L,S.set.map(fgQ));return ngTDone((r.end==='hole'?.5:0)+(S.pred===fgDir(r)?.5:0));}G.tries++;S.launched++;const r=fgSim(L,S.set.map(fgQ)),dir=fgDir(r),key=G.key,lv=G.i;
   const predOK=S.pred===dir;S.running=true;S.path=[];S.boom=false;let k=0;
   const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;k+=3;S.path=r.pts.slice(0,k);S.ball=r.pts[Math.min(k,r.pts.length-1)];
     if(k<r.pts.length){ngRender();requestAnimationFrame(()=>setTimeout(step,16));return;}
@@ -9908,6 +10018,7 @@ function wvCheck(){
   else if(R.t==='freq'){S.tryLam=S.l;ok=S.l===R.ans;why=ok?`Yes: 40 ÷ ${R.f} = ${R.ans} cm.`:'Speed = frequency × wavelength, so wavelength = 40 ÷ frequency.';}
   else if(R.t==='pick'){ok=S.pick===R.ans;why=ok?R.why:'Compare the amplitudes: which wave is taller from its middle line?';}
   else{ok=S.pick===R.ans;why=R.why;}
+  if(ngT())return ngTAns(ok,wvNext);
   if(ok){S.okNow=true;S.msg=['ok',why];fx.pop({icon:'wave',text:'Correct!',kind:'good'});ngRender();ngSay(why,'go');}
   else{G.miss++;G.tries++;if(R.t==='pick'||R.t==='mc')S.wrong.push(S.pick);S.msg=['no',why];fx.pop({icon:'wave',text:'Not quite',kind:'oops'});ngRender();ngSay(why,'alert');}
 }
@@ -10296,7 +10407,7 @@ renderMenu=function(){
     tip.append(sd);art.append(tip);
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
-      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):fn},art,
+      onclick:locked?(()=>fx.pop({icon:'lock',text:'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
       h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
@@ -10356,6 +10467,205 @@ function dashGameGroups(C,off){
 }
 /* test hook: only with ?ngtest in the address (used by the automated tests) */
 if(/[?&]ngtest\b/.test(location.search))window.__ng=s=>eval(s);
+
+/* ---- src/ng/test.js ---- */
+/* ===================== PRE-TEST / POST-TEST =====================
+   Every testable game gets a mode choice: Review (normal play) or the test the teacher has open.
+   Test rules: the same fixed questions every time, one try each, no hints, no tips, no right/wrong
+   feedback, score only at the end. The teacher opens a Pre-Test or Post-Test window per game per class.
+   Backend: tt_test_submit, tt_test_mine (students); tt_a_set_tests, tt_a_tests, tt_a_test_reset (teachers). */
+const TEST_SET={
+  speed:['O','Na','Fe','Cl','He','Ca','K','N','Mg','Ar'],
+  trivia:['O','Na','Fe','He','C','Ca','Cu','N','Ne','Au'],
+  lab:()=>{const by=t=>COMPOUNDS.filter(c=>c.t===t);return [...by(1).slice(0,4),...by(2).slice(0,4),...by(3).slice(0,2)];},
+  atom:()=>[...['C','N','Na','Ar'].map(s=>makeAtomQ('neutral',s)),makeAtomQ('ion','Na',1),makeAtomQ('ion','Cl',-1),makeAtomQ('ion','Mg',2),
+    makeAtomQ('isotope','H',2),makeAtomQ('isotope','C',14),makeAtomQ('isotope','Cl',37)]
+};
+const TEST_GAMES={
+  speed:{n:10,unit:'elements',what:'Find 10 elements on the table. One click each.',how:['A name appears at the top. Click that element on the table.','Your time is saved too, but the score is how many you find.']},
+  trivia:{n:10,unit:'mystery elements',what:'Name 10 mystery elements from their clues. One guess each.',how:['Read the clue. You may open more clues, but each one lowers the points.','Click an element on the table (or type its name), then press Guess. You get one guess.']},
+  lab:{n:10,unit:'compounds',what:'Build 10 compounds from atoms. One check each.',how:['Click elements on the table to add atoms. Use + and − to fix the count.','Press Combine when your molecule is ready. You get one try.']},
+  atom:{n:10,unit:'atoms',what:'Build 10 atoms, ions and isotopes. One check each.',how:['Use + and − to set protons, neutrons and electrons.','Press Check when you are ready. You get one try.']},
+  balance:{n:10,unit:'equations',what:'Balance 10 equations. One check each.',how:['Use + and − to change the big numbers in front of each formula.','Press Check when you think both sides match. You get one try.']}
+};
+NG_ORDER.forEach(k=>{TEST_GAMES[k]={n:NG_TEST_LV.length,unit:'levels',what:`Play ${NG_TEST_LV.length} levels, one from each pack. One try each.`,how:NGS[k].how};});
+const tstName=g=>NGS[g]?NGS[g].name:((SW_GAMES.find(x=>x[0]===g)||[g,g])[1]);
+let TST=null;
+const tstOn=g=>!!(TST&&TST.game===g);
+const tstWindow=g=>{const P=prof();return (P&&P.cinfo&&P.cinfo.tests||{})[g]||null;};
+const tstTook=(P,g,k)=>!!(k&&P.ttests&&P.ttests[g+'|'+k]);
+const tstPct=v=>Math.round(v)+'%';
+
+/* no pops, confetti or sounds of success/failure while a test is running */
+(()=>{const p=fx.pop,c=fx.confetti;fx.pop=o=>{if(TST)return;return p(o);};fx.confetti=n=>{if(TST)return;return c(n);};})();
+
+/* neutral "answer saved" note (never says right or wrong) */
+const tstToast=h('div',{class:'tsttoast',role:'status','aria-live':'polite',hidden:true});document.body.append(tstToast);
+let tstToastT=0;
+function tstSaved(){tstToast.replaceChildren(I('doc'),' Answer saved');tstToast.hidden=false;tstToast.classList.remove('go');void tstToast.offsetWidth;tstToast.classList.add('go');
+  clearTimeout(tstToastT);tstToastT=setTimeout(()=>{tstToast.hidden=true;},900);}
+
+/* ---- cloud sync: class windows + this student's taken tests ---- */
+async function tstSync(P){
+  if(!P||!P.cloud)return;const a={p_id:P.cloud.id,p_token:P.cloud.token};
+  const [ci,mine]=await Promise.all([rpc('tt_class_info',a,3500).catch(()=>null),rpc('tt_test_mine',a,3500).catch(()=>null)]);
+  if(ci&&ci.ok)P.cinfo=ci.class||null;
+  if(mine&&mine.ok){const m={};mine.rows.forEach(r=>{m[r.game+'|'+r.kind]={score:+r.score,at:Date.parse(r.at)||Date.now()};});
+    Object.entries(P.ttests||{}).forEach(([k,v])=>{if(v.pend&&!m[k])m[k]=v;});P.ttests=m;}
+  saveAll();
+  for(const k of Object.keys(P.ttests||{})){const v=P.ttests[k];if(v.pend){const [g,kind]=k.split('|');await tstPush(P,g,kind);}}
+}
+async function tstPush(P,g,kind){
+  const key=g+'|'+kind,v=P.ttests&&P.ttests[key];if(!v||!v.pend)return 'ok';if(!P.cloud)return 'local';
+  try{const r=await rpc('tt_test_submit',{p_id:P.cloud.id,p_token:P.cloud.token,p_game:g,p_kind:kind,p_score:v.pend.score,p_detail:v.pend.detail},8000);
+    if(r&&r.ok){delete v.pend;saveAll();return r.dup?'dup':'ok';}
+    if(r&&r.error==='closed'){delete v.pend;v.closed=true;saveAll();return 'closed';}
+    return 'retry';}catch(e){return 'retry';}
+}
+
+/* ---- the gate every game card goes through ---- */
+async function ttGate(g,fn){
+  if(!TEST_GAMES[g])return fn();
+  const P=prof(),own=isOwner();
+  if(!own&&!tstWindow(g)&&!(P&&P.cloud))return fn();
+  if(P&&P.cloud)await tstSync(P);
+  const w=tstWindow(g);
+  if(!own&&(!w||tstTook(P,g,w)))return fn();
+  tstChooser(g,fn);
+}
+function tstBox(kids){ngRC($('tstBody'),...kids);show('s-test');}
+function tstChooser(g,fn){
+  const P=prof(),own=isOwner(),w=tstWindow(g),art=h('div',{class:'tstart'});art.innerHTML=ART.thumb(g);
+  const done=k=>P.ttests&&P.ttests[g+'|'+k];
+  const card=(k,title,desc,state,onGo)=>h('button',{type:'button',class:'tstopt '+k+(onGo?'':' off'),disabled:!onGo,onclick:onGo||null},
+    h('b',null,title),h('span',null,desc),state?h('em',null,state):null);
+  const preDone=done('pre'),postDone=done('post');
+  const reviewLocked=!own&&w==='pre'&&!preDone;
+  const preOK=own||(w==='pre'&&!preDone),postOK=own||(w==='post'&&!postDone);
+  tstBox([
+    h('div',{class:'tsthead'},art,h('div',null,h('div',{class:'tstk'},'Choose a mode'),h('h2',null,tstName(g)))),
+    h('div',{class:'tstopts'},
+      card('review','Review','Play with hints, tips and feedback. Practice as much as you like.',reviewLocked?'Take the Pre-Test first':null,reviewLocked?null:fn),
+      card('pre','Pre-Test','Before the unit. Show what you already know. One try per question, no hints.',
+        preDone?`Done: ${tstPct(preDone.score)}`:preOK?(own&&w!=='pre'?'Owner practice':'Open now'):w==='post'?'Not taken':'Your teacher opens this before the unit',
+        preOK&&!(preDone&&!own)?()=>tstIntro(g,'pre',fn):null),
+      card('post','Post-Test','After the unit. The same test again, so you can see how much you grew.',
+        postDone?`Done: ${tstPct(postDone.score)}`:postOK?(own&&w!=='post'?'Owner practice':'Open now'):'Your teacher opens this after the unit',
+        postOK&&!(postDone&&!own)?()=>tstIntro(g,'post',fn):null)),
+    own?h('p',{class:'sub tstnote'},'Owner view: every mode is open for you. Practice runs only count when your class has that test open.'):null,
+    h('div',{class:'tstbtns'},ngBtn('Back to games',goMenu,'ghost'))]);
+}
+function tstIntro(g,kind,fn){
+  const m=TEST_GAMES[g],pre=kind==='pre';
+  tstBox([
+    h('div',{class:'tsthead'},h('div',null,h('div',{class:'tstk'},pre?'Pre-Test':'Post-Test'),h('h2',null,tstName(g)))),
+    h('p',{class:'tstbig'},m.what),
+    h('ul',{class:'tstrules'},
+      h('li',null,h('b',null,'One try for each question. '),'You will not see if you are right or wrong until the end.'),
+      h('li',null,h('b',null,'No hints and no tips. '),'Just show what you know right now.'),
+      h('li',null,pre?[h('b',null,'It is OK not to know everything yet! '),'This shows your teacher where to start.']:[h('b',null,'Same test as before the unit, '),'so you can see how much you grew.']),
+      h('li',null,h('b',null,'Do not leave in the middle. '),'If you leave, the test ends and the questions you did not finish count as wrong.')),
+    h('div',{class:'tsthow'},h('b',null,'How to play'),h('ol',null,...m.how.map(t=>h('li',null,...ngRich(t))))),
+    h('div',{class:'tstbtns'},ngBtn('Back',()=>tstChooser(g,fn),'ghost'),ngBtn([I('play'),pre?' Start the Pre-Test':' Start the Post-Test'],()=>tstStart(g,kind,fn),'good big'))]);
+}
+function tstStart(g,kind,fn){
+  TST={game:g,kind,t0:Date.now(),fn,finish:null};
+  if(NGS[g]){TST.finish=()=>{if(!NGT)return;while(NGT.res.length<NGT.lv.length)NGT.res.push({lv:NGT.lv[NGT.res.length]+1,s:0,left:1});
+      tstFinish(NGT.res.reduce((a,r)=>a+r.s,0)/NGT.lv.length*100,{levels:NGT.res,left:true});};ngTestStart(g,kind);}
+  else if(g==='speed')startSpeed(2,'');
+  else if(g==='trivia')startTrivia();
+  else if(g==='lab')startLab();
+  else if(g==='atom')startAtom('T');
+  else if(g==='balance')startBalance();
+}
+async function tstQuit(){
+  if(!TST)return goMenu();
+  const t=TST;
+  const ok=await modal({title:'Leave the test?',text:'If you leave now, the test ends. The questions you did not finish count as wrong, and you cannot take it again.',ok:'Leave and turn it in'});
+  if(ok&&TST===t&&t.finish)t.finish();
+}
+async function tstFinish(score,detail){
+  const t=TST;if(!t)return;TST=null;NGT=null;
+  document.querySelectorAll('.screen.testing').forEach(x=>x.classList.remove('testing'));
+  score=Math.round(Math.max(0,Math.min(100,score))*10)/10;
+  detail=Object.assign({mins:Math.round((Date.now()-t.t0)/6000)/10},detail||{});
+  const P=prof(),key=t.game+'|'+t.kind,own=isOwner(),counts=!own||tstWindow(t.game)===t.kind;
+  if(counts){P.ttests=P.ttests||{};if(!P.ttests[key])P.ttests[key]={score,at:Date.now(),pend:{score,detail}};saveAll();}
+  tstResult(t,score,counts?'saving':'practice');
+  if(counts){const r=await tstPush(P,t.game,t.kind);if(!$('s-test').hidden)tstResult(t,score,r);}
+}
+function tstResult(t,score,status){
+  const P=prof(),pre=t.kind==='pre',other=P.ttests&&P.ttests[t.game+'|pre'];
+  const msg={saving:'Saving…',ok:'Saved. Your teacher can see your score.',dup:'Saved. Your teacher can see your score.',
+    retry:'Saved on this Chromebook. It will be sent to your teacher the next time you are online.',local:'Saved on this device.',
+    closed:'Your teacher closed this test before you finished, so this score was not sent.',practice:'Owner practice run. This score is not saved to a class.'}[status]||'';
+  const grow=!pre&&other&&status!=='practice'?h('div',{class:'tstgrow'},'Pre-Test ',h('b',null,tstPct(other.score)),' → Post-Test ',h('b',null,tstPct(score)),
+    h('span',{class:score>=other.score?'up':'down'},` (${score>=other.score?'+':''}${Math.round(score-other.score)})`)):null;
+  tstBox([
+    h('div',{class:'tsthead'},h('div',null,h('div',{class:'tstk'},(pre?'Pre-Test':'Post-Test')+' complete'),h('h2',null,tstName(t.game)))),
+    h('div',{class:'tstscore'},tstPct(score)),grow,
+    h('p',{class:'sub',style:'text-align:center'},msg),
+    h('p',{style:'text-align:center'},pre?'Now you can play in Review mode, with hints and tips, to learn more.':'Great work finishing the test!'),
+    h('div',{class:'tstbtns'},ngBtn('Back to games',goMenu,'ghost'),t.fn?ngBtn([I('play'),' Play in Review mode'],t.fn,'good'):null)]);
+  if(status!=='saving'&&grow&&other&&score>other.score)setTimeout(()=>{fx.confetti(60);},200);
+}
+
+/* ---- teacher dashboard: open tests and compare scores ---- */
+const TSTD={game:null,rows:null,cls:null,busy:false};
+async function tstLoad(C){
+  TSTD.cls=C.id;TSTD.busy=true;
+  try{const r=await rpc('tt_a_tests',{p_class:C.id},10000);TSTD.rows=r&&r.ok?r.rows:[];}catch(e){TSTD.rows=null;}
+  TSTD.busy=false;if(TA&&TA.cls===C.id)renderDash();
+}
+async function tstSetWindow(C,g,v){
+  const prev=Object.assign({},C.tests||{}),next=Object.assign({},prev);if(v)next[g]=v;else delete next[g];
+  C.tests=next;renderDash();
+  try{const r=await rpc('tt_a_set_tests',{p_class:C.id,p_tests:next},10000);if(!r||!r.ok)throw 0;C.tests=r.tests;}
+  catch(e){C.tests=prev;await modal({title:"That didn't save",text:'Check the Wi-Fi and try again.',cancel:false});}
+  renderDash();
+}
+function tstByStudent(g){const m={};(TSTD.rows||[]).filter(r=>r.game===g).forEach(r=>{(m[r.sid]=m[r.sid]||{name:r.name,sid:r.sid})[r.kind]=r;});return Object.values(m).sort((a,b)=>a.name.localeCompare(b.name));}
+function tstDashCard(C){
+  if(TSTD.cls!==C.id||(TSTD.rows===null&&!TSTD.busy)){TSTD.rows=TSTD.cls===C.id?TSTD.rows:null;if(!TSTD.busy)tstLoad(C);}
+  const W=C.tests||{},rows=TSTD.rows||[],n=g=>k=>rows.filter(r=>r.game===g&&r.kind===k).length;
+  const seg=g=>{const v=W[g]||'';return h('div',{class:'tstseg',role:'group','aria-label':'Test window for '+tstName(g)},
+    ...[['','Closed'],['pre','Pre-Test open'],['post','Post-Test open']].map(([k,t])=>h('button',{type:'button',class:v===k?'on '+(k||'off'):'','aria-pressed':v===k?'true':'false',onclick:()=>{if(v!==k)tstSetWindow(C,g,k);}},t)));};
+  const groups=[...SUBJECTS.map(s=>[s,SUBJ_GAMES[s.id].filter(g=>TEST_GAMES[g])])].filter(x=>x[1].length);
+  const gamesWithData=[...new Set(rows.map(r=>r.game))];
+  if(!TSTD.game||!TEST_GAMES[TSTD.game])TSTD.game=gamesWithData[0]||Object.keys(W)[0]||null;
+  const g=TSTD.game,list=g?tstByStudent(g):[];
+  const both=list.filter(x=>x.pre&&x.post),avg=a=>a.length?Math.round(a.reduce((s,v)=>s+v,0)/a.length):null;
+  const aPre=avg(list.filter(x=>x.pre).map(x=>+x.pre.score)),aPost=avg(list.filter(x=>x.post).map(x=>+x.post.score)),aGain=avg(both.map(x=>x.post.score-x.pre.score));
+  const cell=(x,k)=>x[k]?h('td',null,tstPct(x[k].score),' ',h('button',{type:'button',class:'tstreset',title:'Let this student take it again','aria-label':`Let ${x.name} retake the ${k}-test`,onclick:()=>tstReset(C,x,g,k)},'↺')):h('td',{class:'dim'},'—');
+  return h('div',{class:'card',style:'margin-top:14px'},
+    h('h3',{class:'td-sec',style:'margin-top:0'},'Pre-Test and Post-Test'),
+    h('p',{class:'sub',style:'margin:0 0 6px'},'Open a Pre-Test before you teach a unit and a Post-Test after it. Each student takes each test once: the same questions both times, no hints, no feedback, score shown only at the end. While a Pre-Test is open, students must take it before they can play that game in Review mode.'),
+    ...groups.map(([s,ids])=>h('div',{class:'tdsubj'},h('div',{class:'tdsubjh',style:`--c1:${s.c1}`},h('span',{class:'subjsym sm'},s.sym),h('b',null,s.name)),
+      h('div',{class:'tstrows'},...ids.map(id=>h('div',{class:'tstrow'},h('span',{class:'nm'},tstName(id)),seg(id),
+        h('small',{class:'cnt'},`Pre ${n(id)('pre')} · Post ${n(id)('post')} of ${C.students}`)))))),
+    h('h3',{class:'td-sec'},'Compare scores'),
+    TSTD.busy&&!TSTD.rows?h('p',{class:'sub'},'Loading…'):!gamesWithData.length?h('p',{class:'sub'},'No test scores yet. Open a Pre-Test above and your students’ scores will show here.'):
+    h('div',null,
+      h('div',{class:'tbar'},h('label',null,'Game: ',h('select',{onchange:e=>{TSTD.game=e.target.value;renderDash();}},...gamesWithData.map(x=>h('option',{value:x,selected:x===g},tstName(x))))),
+        ngBtn('Refresh',()=>tstLoad(C),'sm ghost'),ngBtn('Download CSV (all games)',()=>tstCsv(C),'sm ghost')),
+      h('div',{class:'tstavg'},h('span',null,'Class average Pre ',h('b',null,aPre==null?'—':aPre+'%')),h('span',null,'Post ',h('b',null,aPost==null?'—':aPost+'%')),
+        h('span',null,'Average growth ',h('b',null,aGain==null?'—':(aGain>=0?'+':'')+aGain+' points'),h('small',null,` (${both.length} student${both.length===1?'':'s'} took both)`))),
+      h('div',{class:'tstwrap'},h('table',{class:'tsttab'},h('thead',null,h('tr',null,h('th',null,'Student'),h('th',null,'Pre-Test'),h('th',null,'Post-Test'),h('th',null,'Change'))),
+        h('tbody',null,...list.map(x=>{const d=x.pre&&x.post?Math.round(x.post.score-x.pre.score):null;
+          return h('tr',null,h('td',null,x.name),cell(x,'pre'),cell(x,'post'),h('td',{class:d==null?'dim':d>0?'up':d<0?'down':''},d==null?'—':(d>0?'+':'')+d));}))))));
+}
+async function tstReset(C,x,g,k){
+  if(!(await modal({title:'Let them retake it?',text:`This deletes ${x.name}'s ${k==='pre'?'Pre':'Post'}-Test score for ${tstName(g)} so they can take it again (for example, if their Chromebook died). Their next score replaces it.`,ok:'Delete and allow retake'})))return;
+  try{const r=await rpc('tt_a_test_reset',{p_student:x.sid,p_game:g,p_kind:k},10000);if(!r||!r.ok)throw 0;}catch(e){await modal({title:"That didn't work",text:'Check the Wi-Fi and try again.',cancel:false});}
+  tstLoad(C);
+}
+function tstCsv(C){
+  const q=v=>`"${String(v==null?'':v).replace(/"/g,'""')}"`,out=[['Student','Game','Pre-Test %','Post-Test %','Change','Pre date','Post date'].map(q).join(',')];
+  [...new Set((TSTD.rows||[]).map(r=>r.game))].forEach(g=>tstByStudent(g).forEach(x=>{
+    out.push([x.name,tstName(g),x.pre?x.pre.score:'',x.post?x.post.score:'',x.pre&&x.post?Math.round(x.post.score-x.pre.score):'',
+      x.pre?x.pre.at.slice(0,10):'',x.post?x.post.at.slice(0,10):''].map(q).join(','));}));
+  const a=h('a',{href:URL.createObjectURL(new Blob([out.join('\n')],{type:'text/csv'})),download:`${C.name} pre-post tests.csv`});document.body.append(a);a.click();a.remove();
+}
 /*NGJS>>*/
 /* ---- hydrate static art placeholders ---- */
 document.querySelectorAll('i[data-ic]').forEach(x=>{x.outerHTML=ART.ico(x.dataset.ic);});

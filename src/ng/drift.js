@@ -100,9 +100,9 @@ ngDef({key:'drift',name:'Island Drift',ic:'beetle',std:'MS-LS4-4 · LS4-6',subj:
     const shapes=drOrder(L,drShapes(L)).map(([k,v])=>[k,[ngChart([{color:'#2f6bff',vals:v,w:3}],{w:120,h:64,left:4,bottom:4,label:'Graph choice'})]]);
     const truthQ1=Math.abs(drSim(L)[L.gens]-L.p0)<.03?'N':drSim(L)[L.gens]>L.p0?'B':'A';
     const kids=[h('div',{class:'osl'},h('span',{class:'stepchip'},'1'),'Which kind will become more common?'),
-      ngChoices(q1o,S.q1,v=>{if(lockP)return;S.q1=v;ngRender();},{cls:'col',locked:lockP,mark:S.ran?{[truthQ1]:'ok',...(S.q1!==truthQ1?{[S.q1]:'no'}:{})}:null}),
+      ngChoices(q1o,S.q1,v=>{if(lockP)return;S.q1=v;ngRender();},{cls:'col',locked:lockP,mark:S.ran&&!ngT()?{[truthQ1]:'ok',...(S.q1!==truthQ1?{[S.q1]:'no'}:{})}:null}),
       h('div',{class:'osl'},h('span',{class:'stepchip'},'2'),`Which graph shows the ${fname.toLowerCase()}?`),
-      ngChoices(shapes,S.q2,v=>{if(lockP)return;S.q2=v;ngRender();},{cls:'shapes',locked:lockP,mark:S.ran?{true:'ok',...(S.q2!=='true'?{[S.q2]:'no'}:{})}:null})];
+      ngChoices(shapes,S.q2,v=>{if(lockP)return;S.q2=v;ngRender();},{cls:'shapes',locked:lockP,mark:S.ran&&!ngT()?{true:'ok',...(S.q2!=='true'?{[S.q2]:'no'}:{})}:null})];
     if(!S.ran)kids.push(ngBtn([I('play'),' Run the generations'],drRun,'good',{style:'width:100%;font-size:18px',disabled:!S.q1||!S.q2||G.done||S.running}));
     if(S.ran&&!S.running){kids.push(h('div',{class:'osl'},h('span',{class:'stepchip'},'3'),'Why did this happen?'),
       h('div',{class:'ppmc'},...drOrder(L,L.why).map(([v,t])=>h('button',{type:'button',class:'ngc wide'+(S.q3===v?' on':'')+(S.tried3.includes(v)&&v!==L.why[0][0]?' no':'')+(S.q3ok&&v===L.why[0][0]?' ok':''),disabled:G.done||S.q3ok||S.tried3.includes(v),onclick:()=>drWhy(v)},t))));}
@@ -115,6 +115,7 @@ ngDef({key:'drift',name:'Island Drift',ic:'beetle',std:'MS-LS4-4 · LS4-6',subj:
 function drRun(){
   const L=G.L,S=G.st,v=drSim(L),key=G.key,lv=G.i;S.running=true;S.ran=true;
   const truthQ1=Math.abs(v[L.gens]-L.p0)<.03?'N':v[L.gens]>L.p0?'B':'A';
+  if(ngT()){ngTRound(S.q1===truthQ1);ngTRound(S.q2==='true');tstSaved();}
   if(S.q1!==truthQ1)G.miss++;if(S.q2!=='true')G.miss++;G.tries++;
   let g=0;const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;g++;S.gen=g;S.shown.push(v[g]);
     if(g>=L.gens){S.running=false;ngRender();
@@ -125,6 +126,7 @@ function drRun(){
 }
 function drWhy(v){
   const L=G.L,S=G.st;if(S.q3ok||G.done)return;S.q3=v;
+  if(ngT()){ngTRound(v===L.why[0][0]);return ngTDone();}
   if(v===L.why[0][0]){S.q3ok=true;ngRender();ngSay('Exactly! '+L.why[0][1],'go');G.detail={mistakes:G.miss};
     ngWin(ngStars(G.miss,0,1),['You finished with ',h('b',null,G.miss),` mistake${G.miss===1?'':'s'}.`]);}
   else{S.tried3.push(v);G.miss++;ngRender();fx.pop({icon:'beetle',text:'That’s a trap!',kind:'oops'});

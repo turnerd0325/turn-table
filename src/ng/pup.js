@@ -119,17 +119,20 @@ ngDef({key:'pup',name:'Pup Predictor',ic:'paw',std:'MS-LS3-2',subj:'life',
   onHint(G){if(G.hint===3&&G.L.choose&&G.L.choose.fixed){}}
 });
 function L0(L){return L.choose?{M:L.choose.fixed||null,F:null}:{};}
-function ppNext(msgOK){const S=G.st;S.msg=msgOK?['ok',msgOK]:null;S.step++;S.pct=null;S.mc=null;S.geno=null;S.sqBad=null;
+function ppNext(msgOK){const S=G.st;if(ngT()){if(msgOK)ngTRound(true);msgOK=null;}S.msg=msgOK?['ok',msgOK]:null;S.step++;S.pct=null;S.mc=null;S.geno=null;S.sqBad=null;
   if(S.step>=G.L.steps.length){ngRender();const m=G.miss;G.detail={mistakes:m};ngSay(m?'Done! Check the steps where you slipped.':'Perfect genetics!','go');
     ngWin(ngStars(m,0,2),['You finished with ',h('b',null,m),` mistake${m===1?'':'s'}.`]);return;}
   ngRender();}
-function ppMiss(t){G.miss++;G.tries++;G.st.msg=['no',t];fx.pop({icon:'paw',text:'Not quite',kind:'oops'});ngRender();ngSay(t,'alert');}
+function ppMiss(t){if(ngT()){const S=G.st,st=G.L.steps[S.step];ngTRound(false);tstSaved();
+    if(st.t==='parents'){G.t.n+=G.L.steps.slice(S.step+1).filter(x=>x.t!=='breed').length;return ngTDone();}return ppNext(null);}
+  G.miss++;G.tries++;G.st.msg=['no',t];fx.pop({icon:'paw',text:'Not quite',kind:'oops'});ngRender();ngSay(t,'alert');}
 function ppCheckParents(){
   const L=G.L,S=G.st,C=L.choose,ok=C.best.some(([m,f])=>S.pick.M===m&&S.pick.F===f);
   if(ok){ppNext(C.why||'Great choice! Those parents give the best chance.');return;}
   const M=C.dogs.find(d=>d.n===S.pick.M),F=C.dogs.find(d=>d.n===S.pick.F);
+  if(C.why)return ppMiss(C.why);
   const p=ppPctOf(M.g,F.g,C.test);
-  ppMiss(C.why?C.why:`${M.n} (${M.g}) × ${F.n} (${F.g}) gives a ${p}% chance. Another pair does better. Think about which alleles each parent can pass on.`);
+  ppMiss(`${M.n} (${M.g}) × ${F.n} (${F.g}) gives a ${p}% chance. Another pair does better. Think about which alleles each parent can pass on.`);
 }
 function ppCheckSquare(){
   const S=G.st,P=ppParents(G),c=ppCells(P[0].g,P[1].g);

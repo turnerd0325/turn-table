@@ -74,7 +74,7 @@ function ngDef(d){
 /* ---- level runtime ---- */
 let G=null,NGK=null;
 const ngD=()=>NGS[G.key];
-function ngSay(t,kind){const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),...ngRich(t));}
+function ngSay(t,kind){if(kind&&ngT())return;const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),...ngRich(t));}
 function ngSetup(key){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
@@ -90,8 +90,8 @@ function ngStart(key,i){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
   const keep=G&&G.key===key&&G.i===i?G.rec:0;
-  G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{}};
-  show('s-ng');scGame=key;
+  G={key,i,L:d.levels[i],hint:0,rec:keep,tries:0,miss:0,done:false,detail:{},t:{n:0,right:0}};
+  show('s-ng');scGame=key;$('s-ng').classList.toggle('testing',ngT());
   const r=$('ngResult');r.hidden=true;r.classList.remove('sciwait');
   const hb=$('ngHintBox');hb.hidden=true;hb.dataset.closed='';
   $('s-ng').dataset.g=key;
@@ -106,8 +106,10 @@ function ngRender(){
   if(!G)return;const d=ngD();
   d.render(G,$('ngMain'),$('ngSide'));
   const m=d.hud?d.hud(G):{};
-  $('ngMetricL').textContent=m.label||'Tries';$('ngMetric').textContent=m.val!=null?m.val:G.tries;
-  $('ngTarget').replaceChildren(...ngRich(m.target||'3 ★ = right on the first try'));
+  $('ngBack').textContent=ngT()?'Leave test':'← Levels';
+  if(ngT()){$('ngMetricL').textContent=NGT.kind==='pre'?'Pre-Test':'Post-Test';$('ngMetric').textContent=`${NGT.k+1} of ${NGT.lv.length}`;$('ngTarget').textContent='One try · no hints · score at the end';}
+  else{$('ngMetricL').textContent=m.label||'Tries';$('ngMetric').textContent=m.val!=null?m.val:G.tries;
+  $('ngTarget').replaceChildren(...ngRich(m.target||'3 ★ = right on the first try'));}
   ngHintUI();
 }
 function ngHintUI(){
@@ -121,6 +123,7 @@ function ngHintUI(){
 }
 /* finish a level. stars 1..3 */
 function ngWin(stars,line){
+  if(ngT())return ngTDone(G.t.n?G.t.right/G.t.n:1);
   const d=ngD();if(G.hint>=3&&d.cap3)stars=Math.min(stars,2);stars=Math.max(1,Math.min(3,stars));
   G.done=true;ngHintUI();
   if(!(G.rec>=stars)){G.rec=stars;recordStars(G.key,G.i+1,stars,Object.assign({tries:G.tries,miss:G.miss},G.detail||{}));}
@@ -132,6 +135,7 @@ function ngWin(stars,line){
 }
 /* not enough right to pass: explain and retry (no stars saved) */
 function ngRetry(line){
+  if(ngT())return ngTDone(G.t.n?G.t.right/G.t.n:0);
   const k=G.key,i=G.i;G.done=true;ngHintUI();
   fx.pop({icon:'bulb',text:'Not yet. Read the feedback!',kind:'try',size:'big'});
   const box=$('ngResult');
@@ -141,7 +145,22 @@ function ngRetry(line){
     box.hidden=false;},700);
 }
 $('ngHint').onclick=()=>{if(!G||G.hint>=3||G.done)return;G.hint++;const d=ngD();if(d.onHint)d.onHint(G);$('ngHintBox').dataset.closed='';ngRender();};
-$('ngBack').onclick=()=>{if(G)ngSetup(G.key);else goMenu();};
+$('ngBack').onclick=()=>{if(ngT())return tstQuit();if(G)ngSetup(G.key);else goMenu();};
+
+/* ---- Pre-Test / Post-Test mode for the subject games ----
+   One try per item, no hints, no coach feedback, no stars. Each test level scores 0..1.
+   Round games call ngTAns(ok,next) for each answer; one-check games call ngTDone(fraction). */
+let NGT=null;
+const NG_TEST_LV=[1,4,7];
+const ngT=()=>!!(NGT&&G&&G.key===NGT.key);
+function ngTRound(v){G.t.n++;G.t.right+=v===true?1:v===false?0:Math.max(0,Math.min(1,+v||0));}
+function ngTAns(v,next){ngTRound(v);tstSaved();next();}
+function ngTDone(frac){
+  if(!ngT()||G.done)return;G.done=true;if(frac==null)frac=G.t.n?G.t.right/G.t.n:0;
+  NGT.res.push({lv:G.i+1,s:Math.round(Math.max(0,Math.min(1,frac))*1000)/1000});NGT.k++;tstSaved();
+  const T=NGT;setTimeout(()=>{if(NGT!==T)return;if(T.k<T.lv.length)ngStart(T.key,T.lv[T.k]);else tstFinish(T.res.reduce((a,r)=>a+r.s,0)/T.lv.length*100,{levels:T.res});},450);
+}
+function ngTestStart(key,kind){const d=NGS[key];NGT={key,kind,lv:NG_TEST_LV.filter(i=>i<d.n),k:0,res:[]};ngStart(key,NGT.lv[0]);}
 $('ngSetBack').onclick=()=>goMenu();
 
 /* a tiny line chart. series: [{name,color,vals:[0..1]}] */

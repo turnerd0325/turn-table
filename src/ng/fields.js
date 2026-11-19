@@ -101,7 +101,8 @@ ngDef({key:'fields',name:'Field Golf',ic:'magnet',std:'MS-PS2-3 · PS2-5',subj:'
       sol?'One setup that works: '+L.slots.map((s,i)=>s[4]!=null?null:`spot ${i+1} = ${fgName(sol[i])}`).filter(Boolean).join(', ')+'.':''];}
 });
 function fgLaunch(){
-  const L=G.L,S=G.st;if(S.running||G.done)return;G.tries++;S.launched++;const r=fgSim(L,S.set.map(fgQ)),dir=fgDir(r),key=G.key,lv=G.i;
+  const L=G.L,S=G.st;if(S.running||G.done)return;
+  if(ngT()){const r=fgSim(L,S.set.map(fgQ));return ngTDone((r.end==='hole'?.5:0)+(S.pred===fgDir(r)?.5:0));}G.tries++;S.launched++;const r=fgSim(L,S.set.map(fgQ)),dir=fgDir(r),key=G.key,lv=G.i;
   const predOK=S.pred===dir;S.running=true;S.path=[];S.boom=false;let k=0;
   const step=()=>{if(!G||G.key!==key||G.i!==lv||$('s-ng').hidden)return;k+=3;S.path=r.pts.slice(0,k);S.ball=r.pts[Math.min(k,r.pts.length-1)];
     if(k<r.pts.length){ngRender();requestAnimationFrame(()=>setTimeout(step,16));return;}

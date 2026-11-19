@@ -122,6 +122,7 @@ function mwWhy(R,ok){
 function mwCheck(){
   const L=G.L,S=G.st,R=L.rounds[S.r];if(!R||G.done||S.okNow||S.pick==null)return;
   const ans=mwAnswer(R),ok=ans.includes(S.pick);
+  if(ngT())return ngTAns(ok,mwNext);
   if(ok){S.okNow=true;S.okSpot=ans.includes(S.pick)?[S.pick]:ans;if(R.t==='season')S.showMonths=true;S.msg=['ok',mwWhy(R,true)];fx.pop({icon:'moon',text:'Correct!',kind:'good'});ngRender();ngSay(mwWhy(R,true),'go');}
   else{S.bad.push(S.pick);G.miss++;G.tries++;S.msg=['no',mwWhy(R,false)];fx.pop({icon:'moon',text:'Not quite',kind:'oops'});S.pick=null;ngRender();ngSay(mwWhy(R,false),'alert');}
 }
