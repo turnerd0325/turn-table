@@ -1325,6 +1325,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .ownernote.tpnote{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#e9f7ee;border:2px solid #7cc58a;color:#1f3b2a;font-size:15px}
 .ownernote.tpnote .btn{margin-left:auto}
 /*NGCSS>>*/
+.td-use{font-size:13px;color:#5b6b8c;margin-top:4px}.td-use.near{color:#b3261e;font-weight:700}
 .td-try{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:10px 0 6px;padding:14px 16px;border-radius:14px;background:#e9f7ee;border:2px solid #7cc58a}
 .td-try b{display:block;font-size:18px;color:#1f7a34}.td-try span{color:#3a4766}
 .tm{font-size:.5em;vertical-align:super;line-height:0;margin-left:.08em;font-weight:600;letter-spacing:0}
@@ -3007,7 +3008,9 @@ function renderDash(){
   const els=[];
   els.push(h('div',{class:'card'},
     h('div',{class:'td-top'},
-      h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt)),
+      h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt),
+        T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
+          `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
       h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
     T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. Contact Turn-Table™ to keep going.'):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
@@ -3282,6 +3285,8 @@ async function doLogin(){
       if(e==='taken')return loginMsg('That nickname is already taken. Try adding a number!');
       if(e==='badname')return loginMsg('Pick a nickname with 2–16 letters or numbers.');
       if(e==='badcode'||e==='noclass')return loginMsg("That class code isn't right. Check it with your teacher.");
+      if(e==='classexpired')return loginMsg("This class isn't open to new students right now. Let your teacher know their Turn-Table membership needs to be renewed.");
+      if(e==='classfull')return loginMsg('This class is full. Let your teacher know so they can add room for you.');
       if(e==='notfound')return loginMsg("I can't find that nickname. Are you new? Tap “I'm new here”.");
       if(e==='banned')return loginMsg('This account is locked. See your teacher.');
       if(e==='locked')return loginMsg('Too many wrong tries. Wait 5 minutes, or ask your teacher to reset your PIN.');
@@ -8029,7 +8034,7 @@ function renderTeacher(){
 }
 async function tcall(fn,args){
   try{const r=await rpc(fn.replace('tt_t_','tt_a_'),args||{},15000);if(r&&r.ok)return r;
-    await modal({title:'Something went wrong',text:r&&r.error==='auth'?'That is not allowed, or your sign-in ended. Sign in again.':r&&r.error==='expired'?'Your free trial has ended.':r&&r.error==='toomany'?'You have reached the limit.':'That did not work. Try again.',cancel:false});}
+    await modal({title:'Something went wrong',text:r&&r.error==='auth'?'That is not allowed, or your sign-in ended. Sign in again.':r&&r.error==='expired'?'Your free trial has ended.':r&&r.error==='toomany'?'You have reached the limit.':r&&r.error==='classlimit'?`You have ${r.limits&&r.limits.max_classes||6} active classes, the most your membership includes. Archive a class you no longer teach, or add another section to your membership.`:'That did not work. Try again.',cancel:false});}
   catch(e){const na=e&&e.message==='noauth';await modal({title:na?'Please sign in again':'No connection',text:na?'Your teacher sign-in ended.':"Can't reach the server.",cancel:false});}
   return null;
 }
