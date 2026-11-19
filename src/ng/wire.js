@@ -39,6 +39,7 @@ $('btnLogout').addEventListener('click',()=>setSubj(null));
 function subjStats(P,s){const ks=SUBJ_GAMES[s],open=ks.filter(k=>!gameLocked(k)).length;let st=0,mx=0;
   ks.forEach(k=>{const n=k==='sep'?SEP_LEVELS.length:NEWGK[k]?NEWGK[k].n:0;if(n){st+=gameStars(P,k,n);mx+=n*3;}});return {open,n:ks.length,st,mx};}
 renderMenu=function(){
+  try{$('btnLogout').textContent=isPreview()?'Exit preview':'Log out';}catch(e){}
   const P=prof(),S=menuSubj&&SUBJECTS.find(s=>s.id===menuSubj);
   $('menuHello').textContent=S?`${S.name}`:`Hi, ${P.name}! Pick a subject`;
   $('menuSub').textContent=S?S.desc+' Pick a game!':(P.cinfo&&P.cinfo.name?`${P.cinfo.teacher}'s class: ${P.cinfo.name}. Pick a subject, then a game.`:'Pick a subject, then a game. Show what you know!');
@@ -73,11 +74,12 @@ renderMenu=function(){
   const join=()=>mc('m8','class','Join a Class Game','Your teacher is running a live game? Enter the code and join!','',openLiveJoin);
   const tail=[mc('m5','stats','My Profile','See your badges, rank, best scores and the levels you have solved.','',()=>{renderStats();show('s-stats');}),
     mc('m15','feedback','Feedback','Have an idea to make a game better? Send your teacher a serious recommendation.','',()=>{renderFeedback();show('s-feedback');})];
-  const owner=isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
+  const preview=isPreview()?[h('div',{class:'ownernote tpnote'},h('b',null,'Teacher preview. '),'Every game is open for you, including Pre-Test and Post-Test practice. Nothing here is saved to a class. ',h('button',{class:'btn sm ghost',type:'button',onclick:openDash},'Back to my dashboard'))]:[];
+  const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
   const note=h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.');
   if(S){
     const st=subjStats(P,S.id);
-    ngRC($('menuGrid'),
+    ngRC($('menuGrid'),...preview,
       h('div',{class:'subjbar',style:`--c1:${S.c1};--c2:${S.c2}`},ngBtn('← All subjects',()=>{setSubj(null);renderMenu();window.scrollTo(0,0);},'ghost sm'),
         h('span',{class:'subjsym'},S.sym),h('div',null,h('b',null,S.name),h('small',null,`${st.n} games${st.mx?` · ${st.st}/${st.mx} ★`:''}`))),
       join(),...SUBJ_GAMES[S.id].map(k=>cards[k]()),
@@ -91,7 +93,7 @@ renderMenu=function(){
       h('span',{class:'stnum'},s.num),h('span',{class:'stsym'},s.sym),h('span',{class:'stname'},s.name),
       h('span',{class:'stdesc'},s.desc),h('span',{class:'stmeta'},`${st.open} of ${st.n} games open`+(st.mx?` · ${st.st} ★`:'')),
       h('span',{class:'stthumbs'},...SUBJ_GAMES[s.id].slice(0,4).map(k=>{const a=h('i');a.innerHTML=ART.thumb(k);return a;})));});
-  ngRC($('menuGrid'),
+  ngRC($('menuGrid'),...preview,
     h('div',{class:'secthead teach'},I('cap'),'For teachers'),
     h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
       teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
