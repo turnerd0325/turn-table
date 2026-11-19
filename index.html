@@ -596,6 +596,22 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .locktag{display:inline-block;background:#b3261e;color:#fff;font-size:11px;font-weight:900;border-radius:6px;padding:1px 6px;margin-left:4px}
 /* ===== premium class game (student + projector) ===== */
 body.stage header,body.stage footer{display:none}
+/* ---- in a game: the live score bar is off, the header is slimmer, no footer, and the game uses the room ---- */
+body.ingame #feedBar{display:none}
+body.ingame header{padding:4px 12px}
+body.ingame header .brand{font-size:17px}
+body.ingame #userChip .btn{padding-top:4px;padding-bottom:4px}
+body.ingame footer{display:none}
+body.ingame main{max-width:none;padding:6px 14px 6px}
+body.ingame .hud{margin-bottom:5px}
+body.ingame #lzBoard{max-height:calc(100vh - 185px)}
+body.ingame #boBoard{max-height:calc(100vh - 210px)}
+body.ingame #caBoard{max-height:calc(100vh - 245px)}
+body.ingame .ngsvg{max-height:calc(100vh - 235px)}
+body.ingame .rpsvg{max-height:54vh} body.ingame .rpsvg.ran{max-height:36vh}
+body.ingame .drsvg{max-height:32vh} body.ingame .ngmain .ngchart{max-height:34vh}
+body.ingame .ngmain .ngsvg.cssvg{max-height:54vh} body.ingame .kfsvg{max-height:42vh}
+@media (min-width:1600px){body.ingame .ngrid{grid-template-columns:minmax(0,1fr) 380px}}
 body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .lg,.lt{position:relative;min-height:100vh;min-height:100dvh;color:#fff;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   background:radial-gradient(ellipse 80% 55% at 50% -5%,#5a46d6 0%,transparent 62%),radial-gradient(ellipse 60% 45% at 100% 100%,rgba(214,52,140,.38),transparent 70%),radial-gradient(ellipse 50% 40% at 0% 100%,rgba(34,216,200,.18),transparent 70%),linear-gradient(160deg,#1a1d5c,#0c0f33 72%)}
@@ -3065,12 +3081,16 @@ function mergeCloud(P,stats){
 /* ---------- SCREENS ---------- */
 let runId=0, spTimer=null, liveTimer=null, liveTick=null;
 function stopAll(){runId++;clearInterval(spTimer);clearInterval(liveTimer);clearInterval(liveTick);$('countdown').hidden=true;}
+/* screens where a student is actually playing: no live score bar there, and the game gets that room */
+const PLAY_SCREENS=new Set(['s-speed','s-trivia','s-lab','s-explore','s-atom','s-balance','s-diner','s-sep','s-laser','s-blackout','s-evidence','s-coaster','s-ng']);
+const inGame=()=>document.body.classList.contains('ingame');
 function show(id){
   if(me&&GAME_SCREENS[id]&&gameLocked(GAME_SCREENS[id])){stopAll();renderMenu();id='s-menu';}
   stopAll();$('fx').replaceChildren();
   try{if(SC_SCREEN[id])scGame=SC_SCREEN[id];}catch(e){}
   document.querySelectorAll('.screen').forEach(s=>s.hidden=(s.id!==id));
   document.body.classList.toggle('stage',id==='s-livet'||id==='s-jpg'||id==='s-live'||id==='s-join');
+  document.body.classList.toggle('ingame',PLAY_SCREENS.has(id));
   try{if(id!=='s-jpg')jgStop();if(id!=='s-livet'&&id!=='s-jpg')lgSnd.musicStop();}catch(e){}
   $('userChip').hidden=!me; if(me)$('userName').replaceChildren(I('user'),prof().name);
   window.scrollTo(0,0);
@@ -7302,7 +7322,7 @@ function feedSpawn(it){
 }
 function feedPump(){
   try{
-    const bar=$('feedBar');if(!bar||bar.hidden)return;
+    const bar=$('feedBar');if(!bar||bar.hidden||inGame())return;
     if(matchMedia('(prefers-reduced-motion:reduce)').matches){
       if(Date.now()<feedStaticT)return;const it=feedQ.shift()||feedHist[feedRot++%Math.max(1,feedHist.length)];if(!it)return;
       bar.replaceChildren(feedChip(it));bar.classList.add('still');feedStaticT=Date.now()+4500;return;
@@ -7314,7 +7334,7 @@ function feedPump(){
 }
 function feedShowTop(){
   try{
-    if(feedTopShowing||!feedTopQ.length)return;const it=feedTopQ.shift();feedTopShowing=true;
+    if(feedTopShowing||!feedTopQ.length||inGame())return;const it=feedTopQ.shift();feedTopShowing=true;
     const box=$('feedTop'),mine=profiles[me]&&String(profiles[me].name).toLowerCase()===String(it.nick).toLowerCase();
     const medal=['','1st','2nd','3rd'][it.top];
     box.replaceChildren(h('div',{class:'ftmed r'+it.top},'#'+it.top),
