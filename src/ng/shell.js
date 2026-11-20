@@ -74,7 +74,7 @@ function ngDef(d){
 /* ---- level runtime ---- */
 let G=null,NGK=null;
 const ngD=()=>NGS[G.key];
-function ngSay(t,kind){if(kind&&ngT())return;const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),...ngRich(t));}
+function ngSay(t,kind){if(kind&&ngT())return;const c=$('ngCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),h('span',null,...ngRich(t)));}
 function ngSetup(key){
   const d=NGS[key];if(!d)return;
   if(gameLocked(key)){goMenu();return;}
