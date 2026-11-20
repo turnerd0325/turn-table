@@ -1,0 +1,83 @@
+/* ===================== SHARED ART KIT styles (source: src/ng/art.css) ===================== */
+.art-fx{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999}
+.art-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.art-sprite{display:inline-block;vertical-align:middle;overflow:visible}
+
+/* ---- depth: shadows and lift ---- */
+.art-shadow-sm{box-shadow:0 1px 2px rgba(11,20,48,.12),0 2px 6px rgba(11,20,48,.10)}
+.art-shadow{box-shadow:0 2px 4px rgba(11,20,48,.10),0 8px 20px rgba(11,20,48,.14)}
+.art-shadow-lg{box-shadow:0 4px 10px rgba(11,20,48,.12),0 18px 44px rgba(11,20,48,.22)}
+.art-raise{transition:transform .16s cubic-bezier(.34,1.56,.64,1),box-shadow .16s}
+.art-raise:hover{transform:translateY(-3px);box-shadow:0 4px 10px rgba(11,20,48,.12),0 14px 30px rgba(11,20,48,.2)}
+.art-glossy{background-image:linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,0) 48%,rgba(0,0,0,.06));}
+
+/* ---- glow, pulse, pop, shake ---- */
+.art-glow{--art-glow:#ffd23f;box-shadow:0 0 0 3px var(--art-glow),0 0 18px 2px var(--art-glow)!important;animation:art-breathe 1.8s ease-in-out infinite}
+svg .art-glow,.art-glow svg{filter:drop-shadow(0 0 6px var(--art-glow))}
+.art-pulse{--art-glow:#ffd23f;animation:art-pulse .9s ease-out}
+.art-pop{--art-pop:1.15;animation:art-pop .38s cubic-bezier(.34,1.56,.64,1)}
+.art-shake{animation:art-shake .42s ease-in-out}
+@keyframes art-breathe{50%{box-shadow:0 0 0 4px var(--art-glow),0 0 30px 6px var(--art-glow)}}
+@keyframes art-pulse{0%{box-shadow:0 0 0 0 var(--art-glow)}100%{box-shadow:0 0 0 22px transparent}}
+@keyframes art-pop{0%{transform:scale(1)}45%{transform:scale(var(--art-pop))}100%{transform:scale(1)}}
+@keyframes art-shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+@keyframes art-float{50%{transform:translateY(-6px)}}
+@keyframes art-spin{to{transform:rotate(360deg)}}
+@keyframes art-twinkle{50%{opacity:.35;transform:scale(.8)}}
+.art-float{animation:art-float 3s ease-in-out infinite}
+.art-spin{animation:art-spin 6s linear infinite;transform-origin:50% 50%;transform-box:fill-box}
+.art-twinkle{animation:art-twinkle 2.2s ease-in-out infinite;transform-origin:50% 50%;transform-box:fill-box}
+
+/* ---- drag and drop ---- */
+.art-draggable{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.art-draggable:focus-visible{outline:3px solid #2f6bff;outline-offset:3px}
+.art-picked{outline:3px solid #2f6bff;outline-offset:3px;transform:translateY(-2px)}
+.art-dragging{opacity:.35}
+.art-ghost{position:fixed;z-index:9998;pointer-events:none;margin:0;cursor:grabbing;filter:drop-shadow(0 12px 18px rgba(11,20,48,.35));will-change:transform}
+.art-drop-ok{outline:3px dashed #3fd1a0;outline-offset:2px;box-shadow:0 0 0 4px rgba(63,209,160,.18),0 0 18px rgba(63,209,160,.45);transition:box-shadow .15s}
+.art-drop-no{opacity:.55}
+.art-drop-hot{outline:3px solid #ffd23f!important;box-shadow:0 0 0 5px rgba(255,210,63,.35),0 0 26px rgba(255,210,63,.75)!important;transform:scale(1.04)}
+svg .art-drop-ok,svg .art-drop-hot,svg .art-picked{outline:none}
+svg .art-drop-ok{filter:drop-shadow(0 0 5px #3fd1a0)}
+svg .art-drop-hot{filter:drop-shadow(0 0 8px #ffd23f) drop-shadow(0 0 3px #ffd23f)}
+svg .art-picked{filter:drop-shadow(0 0 6px #2f6bff)}
+
+/* ---- scene frames (CSS backdrops for a game area) ---- */
+.art-scene{position:relative;border-radius:18px;overflow:hidden;isolation:isolate;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -40px 60px -40px rgba(11,20,48,.18),0 10px 30px rgba(11,20,48,.16)}
+.art-scene::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% 45%,transparent 60%,rgba(11,20,48,.16))}
+.art-scene>*{position:relative;z-index:1}
+.art-scene--sky{background:radial-gradient(circle at 86% 14%,rgba(255,246,190,.95) 0,rgba(255,236,150,.45) 8%,transparent 24%),linear-gradient(180deg,#5fb4ff 0%,#bfe3ff 65%,#eaf6ff 100%)}
+.art-scene--dusk{background:radial-gradient(circle at 70% 82%,rgba(255,214,140,.8),transparent 35%),linear-gradient(180deg,#2b3a7a 0%,#d9778a 58%,#ffd59e 100%)}
+.art-scene--night{background:
+  radial-gradient(1.2px 1.2px at 12% 18%,#fff 98%,transparent),radial-gradient(1px 1px at 28% 42%,#fff 98%,transparent),
+  radial-gradient(1.4px 1.4px at 46% 12%,#fff 98%,transparent),radial-gradient(1px 1px at 63% 33%,#fff 98%,transparent),
+  radial-gradient(1.3px 1.3px at 79% 15%,#fff 98%,transparent),radial-gradient(1px 1px at 88% 48%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 8% 60%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 36% 70%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 70% 62%,#fff 98%,transparent),radial-gradient(1px 1px at 54% 52%,#fff 98%,transparent),
+  linear-gradient(180deg,#070d26,#1d2a5a);color:#eef3ff}
+.art-scene--space{background:
+  radial-gradient(1.2px 1.2px at 15% 25%,#fff 98%,transparent),radial-gradient(1px 1px at 35% 65%,#fff 98%,transparent),
+  radial-gradient(1.4px 1.4px at 58% 18%,#fff 98%,transparent),radial-gradient(1px 1px at 82% 72%,#fff 98%,transparent),
+  radial-gradient(1px 1px at 92% 30%,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 6% 82%,#fff 98%,transparent),
+  radial-gradient(circle at 80% 25%,rgba(122,77,255,.45),transparent 40%),radial-gradient(circle at 12% 85%,rgba(47,192,255,.3),transparent 38%),
+  linear-gradient(180deg,#05081a,#111a3d);color:#eef3ff}
+.art-scene--lab{background:
+  linear-gradient(180deg,transparent 0 77%,#9aa9c4 77% 79%,#8494b3 79% 100%),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.0) 0 58px,rgba(255,255,255,.35) 58px 60px),
+  linear-gradient(180deg,#eef2fa,#d3dcec)}
+.art-scene--sea{background:repeating-linear-gradient(170deg,rgba(255,255,255,.07) 0 14px,transparent 14px 34px) bottom/100% 50% no-repeat,
+  linear-gradient(180deg,#7cc8ff 0%,#cdeeff 50%,#1e8ad1 50%,#0b4f8a 100%)}
+.art-scene--field{background:radial-gradient(circle at 86% 14%,rgba(255,246,190,.9) 0,transparent 20%),
+  radial-gradient(ellipse 70% 30% at 30% 66%,#7fcf74,transparent 70%),
+  linear-gradient(180deg,#7cc4ff 0%,#dff2ff 62%,#6cc36a 62%,#3f8f45 100%)}
+
+/* ---- reduced motion: everything still ---- */
+@media (prefers-reduced-motion:reduce){
+  .art-glow,.art-pulse,.art-pop,.art-shake,.art-float,.art-spin,.art-twinkle{animation:none!important}
+  .art-raise,.art-raise:hover{transition:none;transform:none}
+  .art-fx{display:none}
+}
+.art-still .art-glow,.art-still .art-pulse,.art-still .art-pop,.art-still .art-shake,.art-still .art-float,.art-still .art-spin,.art-still .art-twinkle{animation:none!important}
+.art-still .art-fx{display:none}

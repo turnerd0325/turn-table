@@ -1,0 +1,43 @@
+<!--<<LZHTML-->
+<!-- LASER MAZE: LEVEL PICKER -->
+<section class="screen" id="s-laser-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="laser"></div><h2><i data-ic="laser"></i>Laser Maze <span class="stdchip">MS-PS4-2</span></h2>
+    <p class="sub">Light up every crystal with the laser! Mirrors reflect light, glass lets it through, and black material soaks it up. Use as few pieces as you can to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag a piece</b> into the maze (or click a piece, then click a square). <b>Click a placed mirror to flip it.</b></li><li>Light <b>every crystal</b> and keep the beam off the <b>alarms</b>. The beam updates as you build.</li></ol>
+    <div class="sepstars" id="lzTotal"></div>
+    <div class="seplevels" id="lzLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- LASER MAZE: PLAY -->
+<section class="screen" id="s-laser" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="lzLvl">1</b>/<span id="lzLvlN">15</span></div>
+    <div class="pill"><i data-ic="sparkle"></i> Pieces <b id="lzUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="lzPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="lzBack">← Levels</button>
+  </div>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="lzName" style="font-size:20px"></b><span id="lzStory"></span></div>
+    <div class="coach" id="lzCoach" role="status"></div>
+    <div class="ogrid">
+      <div class="omain"><div class="lzwrap"><svg id="lzBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The laser maze"></svg></div></div>
+      <div class="oside">
+        <div class="infobox" id="lzIntro" hidden></div>
+        <div class="spgoal" id="lzGoal"></div>
+        <div class="osl"><span class="stepchip">1</span>Pieces <small>drag into the maze, or click a piece then a square</small></div>
+        <div class="toolbox" id="lzTools"></div>
+        <div class="lzlegend"><span><i class="lgm"></i>Mirror <b>reflects</b></span><span><i class="lgg"></i>Glass <b>transmits</b></span><span><i class="lgb"></i>Black <b>absorbs</b></span></div>
+        <div class="osl"><small>Click a mirror to flip it · drag a piece off the maze to take it back</small></div>
+        <div class="carow"><button class="btn ghost sm" id="lzClear"><i data-ic="x"></i>Clear</button>
+          <button class="btn ghost sm" id="lzHint"><i data-ic="bulb"></i><span id="lzHintTxt">Need a hint?</span></button></div>
+        <div class="infobox hintfloat" id="lzHintBox" hidden></div>
+        <div class="msg" id="lzMsg" style="text-align:center;font-size:15px"></div>
+      </div>
+    </div>
+    <div class="spresult" id="lzResult" hidden></div>
+  </div>
+</section>
+<!--LZHTML>>-->

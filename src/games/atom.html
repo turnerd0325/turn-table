@@ -1,0 +1,38 @@
+<!-- ATOM SETUP -->
+<section class="screen" id="s-atom-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="atom"></div><h2><i data-ic="atom"></i>Atom Builder</h2>
+    <p class="sub">You'll get an atom, ion or isotope to build. Use + and − to add protons, neutrons and electrons until it matches. 10 per round. Fewer hints and fewer misses = more points!</p>
+    <div class="levels" id="atLevels"></div>
+    <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- ATOM PLAY -->
+<section class="screen" id="s-atom" hidden>
+  <div class="hud">
+    <div class="pill">Atom <b id="atQ">1</b>/10</div>
+    <div class="pill">Score <b id="atScore">0</b></div>
+    <div class="pill">Worth <b id="atWorth">3</b> pts</div>
+    <button class="btn sm ghost" id="atQuit">Quit</button>
+  </div>
+  <div class="atgrid">
+    <div class="card" style="text-align:center">
+      <div class="clue" style="text-align:left">Build this:<b id="atPrompt"></b><span id="atSub"></span></div>
+      <div id="atTile"></div>
+      <div class="atsvg" id="atSvg"></div>
+      <div class="atread" id="atRead"></div>
+    </div>
+    <aside class="card" id="atCtrs">
+      <div class="ctr p"><label>Protons</label><button data-k="p" data-d="-1" aria-label="fewer protons">−</button><span class="v" id="atv_p">0</span><button data-k="p" data-d="1" aria-label="more protons">+</button></div>
+      <div class="ctr n"><label>Neutrons</label><button data-k="n" data-d="-1" aria-label="fewer neutrons">−</button><span class="v" id="atv_n">0</span><button data-k="n" data-d="1" aria-label="more neutrons">+</button></div>
+      <div class="ctr e"><label>Electrons</label><button data-k="e" data-d="-1" aria-label="fewer electrons">−</button><span class="v" id="atv_e">0</span><button data-k="e" data-d="1" aria-label="more electrons">+</button></div>
+      <div class="infobox" id="atHintBox" hidden></div>
+      <button class="btn" id="atCheck" style="width:100%"><i data-ic="check"></i>Check my atom</button>
+      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn ghost" id="atHint" style="flex:1"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
+      <div class="msg" id="atMsg"></div>
+      <button class="btn good" id="atNext" hidden style="width:100%">Next ▶</button>
+    </aside>
+  </div>
+</section>
+

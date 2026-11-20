@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turn-Table art kit</title>
+<link rel="stylesheet" href="../src/ng/art.css">
+<style>
+:root{--navy:#14213d;--ink:#1b2433;--bg:#eef3fb;--line:#dbe3f0;--accent:#2f6bff;--muted:#5d6b86}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+header h1{font-size:20px;margin:0;flex:1}
+header label{font-size:14px;display:flex;gap:6px;align-items:center}
+main{max-width:1180px;margin:0 auto;padding:18px 16px 40px;display:grid;gap:18px}
+section{background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 2px 4px rgba(11,20,48,.06),0 8px 20px rgba(11,20,48,.08)}
+h2{margin:0 0 4px;font-size:18px}
+p.note{margin:0 0 12px;color:var(--muted);font-size:14px}
+code{background:#f1f4fa;border-radius:6px;padding:1px 6px;font-size:13px;overflow-wrap:anywhere}
+section{min-width:0}
+.sprites{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:10px}
+.sp{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:14px;background:linear-gradient(180deg,#f7f9fd,#eaf0f9);font-size:12.5px;color:var(--muted);font-weight:600}
+.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.scenes .art-scene{height:110px;display:flex;align-items:flex-end;padding:10px;font-weight:800;font-size:14px}
+.scenes .art-scene span{background:rgba(255,255,255,.85);color:var(--ink);border-radius:999px;padding:2px 10px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+button.b{font:inherit;font-weight:700;border:0;border-radius:12px;padding:10px 16px;background:var(--accent);color:#fff;cursor:pointer}
+button.b.ghost{background:#fff;color:var(--accent);border:2px solid var(--accent)}
+.tile{width:120px;height:90px;border-radius:16px;background:linear-gradient(135deg,#4b7dff,#7c4dff);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px}
+.counter{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;min-width:150px;display:inline-block;text-align:center;color:var(--navy)}
+.eases{display:grid;gap:6px}
+.eases .lane{position:relative;height:30px;background:#f1f4fa;border-radius:999px}
+.eases .lane i{position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#2f6bff 45%,#1b3fa8)}
+.eases .lane b{position:absolute;right:12px;top:6px;font-size:12px;color:var(--muted)}
+.dnd{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:16px;align-items:start}
+.tray{display:flex;flex-wrap:wrap;gap:10px;padding:12px;border-radius:14px;background:#f4f6fb;min-height:80px}
+.part{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:20px;box-shadow:inset -6px -8px 12px rgba(0,0,0,.25),inset 6px 6px 10px rgba(255,255,255,.35),0 4px 8px rgba(11,20,48,.2)}
+.part.p{background:radial-gradient(circle at 35% 30%,#ff9b9b,#e23b3b 55%,#a11b1b)}
+.part.n{background:radial-gradient(circle at 35% 30%,#d6dbe6,#8a93a8 55%,#596178)}
+.part.e{width:38px;height:38px;font-size:15px;background:radial-gradient(circle at 35% 30%,#a9d4ff,#2f6bff 55%,#1940a8)}
+.atom{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.slot{min-height:110px;border-radius:16px;border:2px dashed #c8d3e6;padding:10px;display:flex;flex-direction:column;gap:6px;background:#fbfcff}
+.slot h3{margin:0;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.slot .got{display:flex;flex-wrap:wrap;gap:4px}
+.slot .got .part{width:30px;height:30px;font-size:12px}
+.svgdemo{width:100%;height:auto;border-radius:16px;display:block}
+@media (max-width:700px){.dnd{grid-template-columns:1fr}.atom{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Turn-Table art kit</h1>
+  <label><input type="checkbox" id="still"> Reduced motion</label>
+</header>
+<main>
+<section>
+  <h2>Sprites</h2>
+  <p class="note"><code>Art.sprite(name,{size,color,level,tone,kind})</code> for HTML, <code>Art.g(name,{x,y,size})</code> inside a game's SVG.</p>
+  <div class="sprites" id="sprites"></div>
+</section>
+
+<section>
+  <h2>Scenes</h2>
+  <p class="note"><code>Art.scene(el,'sky')</code> gives a game area its backdrop. <code>Art.backdrop(kind,w,h)</code> draws the same thing inside an SVG board (below).</p>
+  <div class="scenes" id="scenes"></div>
+  <svg class="svgdemo" viewBox="0 0 800 240" id="svgscene" style="margin-top:12px"></svg>
+</section>
+
+<section>
+  <h2>Effects</h2>
+  <p class="note">Bursts, sparkles, glow, pulse, pop and shake. <code>Art.good(el)</code> and <code>Art.bad(el)</code> are the usual right and wrong reactions.</p>
+  <div class="row">
+    <div class="tile" id="tile">Fe</div>
+    <button class="b" id="bGood">Right answer</button>
+    <button class="b ghost" id="bBad">Wrong answer</button>
+    <button class="b ghost" id="bBurst">Burst</button>
+    <button class="b ghost" id="bSparkle">Sparkle</button>
+    <button class="b ghost" id="bGlow">Glow on/off</button>
+    <button class="b ghost" id="bPop">Pop</button>
+  </div>
+</section>
+
+<section>
+  <h2>Counter and tweens</h2>
+  <p class="note"><code>Art.count(el,to)</code> rolls a number. <code>Art.tween({from,to,dur,ease,step})</code> drives anything; easings below.</p>
+  <div class="row" style="margin-bottom:12px"><span class="counter" id="count">0</span>
+    <button class="b" id="bCount">+ 250 points</button><button class="b ghost" id="bEase">Run easings</button></div>
+  <div class="eases" id="eases"></div>
+</section>
+
+<section>
+  <h2>Drag and drop</h2>
+  <p class="note"><code>Art.drag({root,items,targets,accept,onDrop})</code>. Drag a particle into the atom, or tap a particle then tap a spot. Keyboard: Tab to a particle, Enter, arrow keys, Enter. Valid spots glow green; wrong drops bounce back.</p>
+  <div class="dnd" id="dnd">
+    <div class="tray" id="tray"></div>
+    <div class="atom">
+      <div class="slot" data-k="nuc" aria-label="Nucleus (protons and neutrons)"><h3>Nucleus</h3><div class="got"></div></div>
+      <div class="slot" data-k="shell" aria-label="Electron shell"><h3>Electron shell</h3><div class="got"></div></div>
+    </div>
+  </div>
+</section>
+</main>
+<script src="../src/ng/art.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+/* sprites, with a few option variants */
+const SP=[['testtube',{}],['testtube',{color:'#ff5a7a',level:.8}],['beaker',{}],['beaker',{color:'#b07cff',level:.3}],['flame',{}],['magnifier',{}],
+ ['thermometer',{}],['thermometer',{level:.2,color:'#2f9bff'}],['sun',{}],['cloud',{}],['rain',{}],['snow',{}],['bird',{}],['bird',{color:'#e2483a'}],
+ ['moth',{tone:'light'}],['moth',{tone:'dark'}],['fish',{}],['fish',{color:'#2fb7c8'}],['plant',{}],['rock',{}],
+ ['planet',{kind:'earth'}],['planet',{kind:'moon'}],['planet',{kind:'mars'}],['planet',{kind:'jupiter'}],['planet',{kind:'saturn'}]];
+$('sprites').innerHTML=SP.map(([n,o])=>`<div class="sp">${Art.sprite(n,Object.assign({size:80},o))}<span>${n}${o.kind?' · '+o.kind:o.tone?' · '+o.tone:o.color?' · colour':''}</span></div>`).join('');
+/* scenes */
+$('scenes').innerHTML=Art.SCENES.map(k=>`<div data-s="${k}"><span>${k}</span></div>`).join('');
+$('scenes').querySelectorAll('[data-s]').forEach(d=>Art.scene(d,d.dataset.s));
+$('svgscene').innerHTML=Art.backdrop('field',800,240)+Art.g('sun',{x:40,y:20,size:80})+Art.g('cloud',{x:150,y:24,size:90})+
+  Art.g('plant',{x:300,y:120,size:110})+Art.g('bird',{x:480,y:40,size:70})+Art.g('rock',{x:600,y:110,size:120})+Art.g('beaker',{x:420,y:140,size:90,color:'#ff9f1c'});
+/* effects */
+const tile=$('tile');
+$('bGood').onclick=()=>Art.good(tile);
+$('bBad').onclick=()=>Art.bad(tile);
+$('bBurst').onclick=()=>Art.burstAt(tile,{n:40,shape:['confetti','star','dot']});
+$('bSparkle').onclick=()=>Art.sparkle(tile,{n:14});
+$('bGlow').onclick=()=>Art.glow(tile,!tile.classList.contains('art-glow'),'#ffd23f');
+$('bPop').onclick=()=>Art.pop(tile,1.2);
+/* counter + easings */
+let pts=0;$('bCount').onclick=()=>{pts+=250;Art.count($('count'),pts);};
+const EZ=['linear','outQuad','outCubic','inOutCubic','outBack','outElastic','outBounce'];
+$('eases').innerHTML=EZ.map(e=>`<div class="lane"><i></i><b>${e}</b></div>`).join('');
+$('bEase').onclick=()=>$('eases').querySelectorAll('.lane').forEach((l,i)=>{const b=l.querySelector('i'),w=l.clientWidth-30;
+  Art.tween({from:0,to:w*.7,dur:1100,ease:EZ[i],step:v=>b.style.transform=`translateX(${v}px)`});});
+/* drag and drop */
+const tray=$('tray');
+function fill(){tray.innerHTML='';[['p','p+','proton'],['p','p+','proton'],['n','n','neutron'],['n','n','neutron'],['e','e−','electron'],['e','e−','electron']]
+  .forEach(([c,t,l])=>{const d=document.createElement('div');d.className='part '+c;d.textContent=t;d.dataset.k=c;d.setAttribute('aria-label',l);tray.append(d);});}
+fill();
+Art.drag({root:$('dnd'),items:'#tray .part',targets:'.slot',
+  accept:(it,t)=>t.dataset.k==='nuc'?it.dataset.k!=='e':it.dataset.k==='e',
+  onDrop:(it,t)=>{t.querySelector('.got').append(it);Art.burstAt(t,{n:14,speed:160,shape:'star'});if(!tray.children.length)setTimeout(()=>{Art.good($('dnd'));setTimeout(()=>{document.querySelectorAll('.slot .got').forEach(g=>g.innerHTML='');fill();},1600);},200);}});
+/* reduced motion toggle */
+$('still').checked=Art.reduced();
+$('still').onchange=e=>Art.setReduced(e.target.checked||null);
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!--<<EVHTML-->
+<!-- EVIDENCE LAB: LEVEL PICKER -->
+<section class="screen" id="s-evidence-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="evidence"></div><h2><i data-ic="flask"></i>Evidence Lab <span class="stdchip">MS-PS1-2 · PS1-7</span></h2>
+    <p class="sub">Mystery samples need a detective! Run tests, read the evidence and name each sample. Then decide whether a change was a chemical reaction. Fewer tests earns a higher rank.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Run tests</b>. Compare the results with the field guide.</li><li><b>Name the sample</b>. A wrong guess costs 2 tests!</li></ol>
+    <div class="sepstars" id="evTotal"></div>
+    <div class="seplevels" id="evLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- EVIDENCE LAB: PLAY -->
+<section class="screen" id="s-evidence" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="evLvl">1</b>/<span id="evLvlN">15</span></div>
+    <div class="pill"><i data-ic="flask"></i> Tests <b id="evUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="evPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="evBack">← Levels</button>
+  </div>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="evName" style="font-size:20px"></b><span id="evStory"></span></div>
+    <div class="evtop">
+      <div class="coach" id="evCoach" role="status"></div>
+      <div class="evbtns"><div class="evcasebar" id="evCaseBar"></div>
+        <button class="btn good sm" id="evNextCase" hidden>Next sample ▶</button>
+        <button class="btn ghost sm" id="evHint"><i data-ic="bulb"></i><span id="evHintTxt">Need a hint?</span></button></div>
+    </div>
+    <div class="infobox" id="evIntro" hidden></div>
+    <div class="infobox hintfloat" id="evHintBox" hidden></div>
+    <div id="evBench"></div>
+    <div class="spresult" id="evResult" hidden></div>
+  </div>
+</section>
+<!--EVHTML>>-->

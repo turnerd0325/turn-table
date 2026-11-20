@@ -1,0 +1,24 @@
+<!-- TRIVIA -->
+<section class="screen" id="s-trivia" hidden>
+  <div class="hud">
+    <div class="pill">Question <b id="trQ">1</b>/10</div>
+    <div class="pill">Score <b id="trScore">0</b></div>
+    <div class="pill">Worth <b id="trWorth">4</b> pts</div>
+    <label class="chk"><input type="checkbox" id="trColor"> Show color key</label>
+    <button class="btn sm ghost" id="trQuit">Quit</button>
+  </div>
+  <div class="play has-side">
+    <div id="trTable"></div>
+    <aside class="side">
+      <h2><i data-ic="question"></i>Mystery Element</h2>
+      <ol class="hints" id="trHints"></ol>
+      <div class="guessrow"><input type="text" id="trGuess" placeholder="Type a name or symbol" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
+      <p class="sub" style="margin:2px 0 0;font-size:13px">…or click the element on the table!</p>
+      <button class="btn ghost" id="trHintBtn">Reveal next hint (−1 pt)</button>
+      <div class="msg" id="trMsg"></div>
+      <button class="btn good" id="trNext" hidden>Next ▶</button>
+    </aside>
+  </div>
+  <div id="trLegend"></div>
+</section>
+

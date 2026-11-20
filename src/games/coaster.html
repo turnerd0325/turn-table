@@ -1,0 +1,47 @@
+<!--<<CAHTML-->
+<!-- COASTER ARCHITECT: LEVEL PICKER -->
+<section class="screen" id="s-coaster-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="coaster"></div><h2><i data-ic="coaster"></i>Coaster Architect <span class="stdchip">MS-PS3-1 · PS3-2</span></h2>
+    <p class="sub">Design a roller coaster that really works! Set the heights, then launch the cart and watch potential energy turn into kinetic energy and heat. Use the lowest lift hill that works to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag the blue handles</b> up or down (or use the Raise and Lower buttons) to set the heights.</li><li>Press <b>Launch</b>. The dashed line shows the energy the cart has left.</li></ol>
+    <div class="sepstars" id="caTotal"></div>
+    <div class="seplevels" id="caLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- COASTER ARCHITECT: PLAY -->
+<section class="screen" id="s-coaster" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="caLvl">1</b>/<span id="caLvlN">10</span></div>
+    <div class="pill"><i data-ic="coaster"></i> Start hill <b id="caUsed">0</b> m</div>
+    <div class="pill">3 <i data-ic="star"></i> at <b id="caPar">0</b> m or lower</div>
+    <button class="btn sm ghost" id="caBack">← Levels</button>
+  </div>
+  <div class="card cacard onescr">
+    <div class="clue cacl"><b id="caName" style="font-size:20px"></b><span id="caStory"></span></div>
+    <div class="coach" id="caCoach" role="status"></div>
+    <div class="cagrid ogrid">
+      <div class="camain">
+        <div class="lzwrap"><svg id="caBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The roller coaster track"></svg></div>
+        <div class="caenergy cah"><div class="caer"><span>Potential</span><div class="cabar"><i id="caPE" class="pe"></i></div></div>
+          <div class="caer"><span>Kinetic</span><div class="cabar"><i id="caKE" class="ke"></i></div></div>
+          <div class="caer"><span>Heat</span><div class="cabar"><i id="caHE" class="he"></i></div></div>
+          <div class="caspeed">Speed <b id="caSpeed">0.0</b> m/s</div></div>
+        <div class="caslide"><span>Scrub the cart</span><input type="range" id="caScrub" min="0" max="100" value="0" aria-label="Cart position"></div>
+      </div>
+      <div class="caside">
+        <div class="infobox" id="caIntro" hidden></div>
+        <div class="osl"><span class="stepchip">1</span>Design <small>drag a blue handle · selected: <b id="caSel">the start hill</b></small></div>
+        <div class="carow"><button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button><button class="btn ghost sm" id="caHint" title="Need a hint?"><i data-ic="bulb"></i><span id="caHintTxt">Hint</span></button></div>
+        <div class="carow"><button class="btn" id="caLaunch" style="font-size:19px;flex:2"><i data-ic="bolt"></i>Launch!</button>
+          <button class="btn ghost" id="caReset" title="Reset cart"><i data-ic="x"></i>Reset</button></div>
+        <div class="osl"><span class="stepchip">2</span>Goals</div><ul class="tests cagoals" id="caGoalList"></ul>
+        <div class="infobox hintfloat" id="caHintBox" hidden></div>
+      </div>
+    </div>
+    <div class="spresult" id="caResult" hidden></div>
+  </div>
+</section>
+<!--CAHTML>>-->

@@ -1,0 +1,51 @@
+<!-- ATOM DINER: SHIFT PICKER -->
+<section class="screen" id="s-diner-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="diner"></div><h2><i data-ic="plate"></i>Atom Diner</h2>
+    <p class="sub">Customers order molecules. Smash the ingredients into atoms, then rebuild them into the dishes. Every atom has to end up on a plate. Atoms are never lost and never made, only rearranged!</p>
+    <div class="levels" id="dnLevels"></div>
+    <p class="sub" style="margin-top:12px">⌨️ Shortcuts: number keys add atoms, <b>Space</b> smashes the next ingredient, <b>Backspace</b> clears the plate.</p>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- ATOM DINER: PLAY -->
+<section class="screen" id="s-diner" hidden>
+  <div class="hud">
+    <div class="pill"><i data-ic="flag"></i> <b id="dnShift">Breakfast</b></div>
+    <div class="pill"><i data-ic="clock"></i> <span class="bigtimer" id="dnTime">2:00</span></div>
+    <div class="pill"><i data-ic="coin"></i> <b id="dnCoins">0</b></div>
+    <div class="pill"><i data-ic="flame"></i> Streak <b id="dnStreak">0</b></div>
+    <div class="pill"><i data-ic="plate"></i> Served <b id="dnServed">0</b></div>
+    <button class="btn sm ghost" id="dnQuit">Quit</button>
+  </div>
+  <div class="dngrid">
+    <div class="card">
+      <div class="cust"><div class="face" id="dnFace"></div><div class="bubble" id="dnSay"></div></div>
+      <div class="patience" id="dnPat"><i id="dnPatBar"></i></div>
+      <div class="ticket">
+        <h4>Ingredients · click to smash</h4>
+        <div class="ingr" id="dnIngr"></div>
+        <button class="btn sm ghost" id="dnSmashAll" style="margin-top:6px"><i data-ic="burst"></i>Smash all</button>
+        <h4 style="margin-top:10px">Dishes to make</h4>
+        <div class="dishes" id="dnDishes"></div>
+        <div class="ctxline" id="dnCtx"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h4 class="kh">Atom tray · click an atom to put it on the plate</h4>
+      <div class="trayrow" id="dnTray"></div>
+      <h4 class="kh">Plate</h4>
+      <div class="plate" id="dnPlate"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:6px">
+        <button class="btn sm ghost" id="dnClear"><i data-ic="x"></i>Clear plate</button>
+        <span id="dnServeBtns"></span>
+      </div>
+      <h4 class="kh">Ready to serve · click a dish to break it back into atoms</h4>
+      <div class="counter" id="dnCounter"></div>
+      <div class="scale" id="dnScale"></div>
+      <div class="msg" id="dnMsg" style="text-align:center"></div>
+    </div>
+  </div>
+</section>
+

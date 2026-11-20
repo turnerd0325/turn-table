@@ -1,0 +1,45 @@
+<!--<<BOHTML-->
+<!-- BLACKOUT: LEVEL PICKER -->
+<section class="screen" id="s-blackout-setup" hidden>
+  <div class="card">
+    <div class="setupart" data-thumb="blackout"></div><h2><i data-ic="bolt"></i>Blackout! <span class="stdchip">MS-PS3-6</span></h2>
+    <p class="sub">The city has gone dark! Wire batteries, bulbs and switches so electric current carries energy to every lamp. Use as few pieces as you can to earn 3 stars.</p>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag along the dashed lines</b> with the Wire tool to build the circuit. Click a switch to open or close it. Click a battery to flip it.</li><li>Press <b>Test the city</b>. Every test must pass: lights on, and lights still on when a bulb burns out!</li></ol>
+    <div class="sepstars" id="boTotal"></div>
+    <div class="seplevels" id="boLevels"></div>
+    <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
+  </div>
+</section>
+
+<!-- BLACKOUT: PLAY -->
+<section class="screen" id="s-blackout" hidden>
+  <div class="hud">
+    <div class="pill">Level <b id="boLvl">1</b>/<span id="boLvlN">12</span></div>
+    <div class="pill"><i data-ic="bolt"></i> Pieces <b id="boUsed">0</b></div>
+    <div class="pill">3 <i data-ic="star"></i> uses <b id="boPar">0</b> or fewer</div>
+    <button class="btn sm ghost" id="boBack">← Levels</button>
+  </div>
+  <div class="card onescr">
+    <div class="clue cacl"><b id="boName" style="font-size:20px"></b><span id="boStory"></span></div>
+    <div class="coach" id="boCoach" role="status"></div>
+    <div class="ogrid">
+      <div class="omain">
+        <div class="lzwrap"><svg id="boBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The circuit board"></svg></div>
+        <div class="lamps" id="boLamps"></div>
+      </div>
+      <div class="oside">
+        <div class="infobox" id="boIntro" hidden></div>
+        <div class="osl"><span class="stepchip">1</span>Parts <small>pick one, drag along the board · drag a piece off to take it back</small></div>
+        <div class="toolbox" id="boTools"></div>
+        <div class="carow"><button class="btn" id="boTest" style="font-size:17px"><i data-ic="bolt"></i>Test the city!</button></div>
+        <ul class="tests" id="boTestList"></ul>
+        <div class="carow"><button class="btn ghost sm" id="boClear"><i data-ic="x"></i>Clear</button>
+          <button class="btn ghost sm" id="boHint"><i data-ic="bulb"></i><span id="boHintTxt">Need a hint?</span></button></div>
+        <div class="infobox hintfloat" id="boHintBox" hidden></div>
+        <div class="msg" id="boMsg" style="text-align:center;font-size:15px"></div>
+      </div>
+    </div>
+    <div class="spresult" id="boResult" hidden></div>
+  </div>
+</section>
+<!--BOHTML>>-->
