@@ -453,7 +453,7 @@ footer a{color:#b3c0de}
       </div>
     </div>
     <div class="report" aria-label="Example growth report">
-      <header><b>Moonwatch growth</b><span>Example class</span></header>
+      <header><b>Moonwatch growth</b><span>Sample data</span></header>
       <div class="key"><span><i style="background:#c3cde0"></i>Pre-Test</span><span><i style="background:var(--phys)"></i>Post-Test</span></div>
       <div id="pairs"></div>
       <div class="sum"><div><b>44%</b>Class Pre-Test</div><div><b>85%</b>Class Post-Test</div><div><b style="color:var(--good)">+41</b>Average growth</div></div>
@@ -582,7 +582,7 @@ const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Ch
   pick('strata');})();
 
 /* growth report bars */
-(()=>{const rows=[['astro.k',33,89],['maya.r',56,100],['jdubs',22,67],['leo.p',67,78],['sam.t',44,89]],box=document.getElementById('pairs');
+(()=>{const rows=[['Student 1',33,89],['Student 2',56,100],['Student 3',22,67],['Student 4',67,78],['Student 5',44,89]],box=document.getElementById('pairs');
   rows.forEach(([n,a,b])=>{const r=document.createElement('div');r.className='pair';
     r.innerHTML=`<span></span><span class="bars"><i class="pre" style="width:${a}%"></i><i class="post" style="width:${b}%"></i></span><b>+${b-a}</b>`;r.firstChild.textContent=n;box.append(r);});})();
 
