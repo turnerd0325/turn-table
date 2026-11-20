@@ -1327,6 +1327,26 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .ownernote.tpnote .btn{margin-left:auto}
 /*NGCSS>>*/
 .td-use{font-size:13px;color:#5b6b8c;margin-top:4px}
+.pg-card{max-width:1100px;margin:0 auto}
+.pg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.pg-ctl{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 6px}
+.pg-ctl label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
+.pg-ctl select{min-width:170px;padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;font:600 14px/1.2 inherit;background:#fff;color:var(--ink)}
+.pg-chips{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.pg-chip{background:#f2f5fb;border-radius:12px;padding:8px 14px;min-width:120px}
+.pg-chip b{display:block;font-size:22px;color:var(--ink);font-variant-numeric:tabular-nums}
+.pg-chip span{font-size:12px;color:var(--muted);font-weight:600}
+.pg-chip.up b{color:var(--good)}.pg-chip.down b{color:var(--bad)}
+.pg-chart{position:relative;background:#fbfcff;border:1px solid var(--line);border-radius:14px;padding:6px}
+.pg-chart svg{display:block;width:100%;height:auto}
+.pg-tip{position:absolute;pointer-events:none;background:#14213d;color:#fff;font-size:12.5px;line-height:1.35;padding:7px 10px;border-radius:9px;white-space:nowrap;transform:translate(-50%,-115%);box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.pg-note{font-size:13px;color:var(--muted);margin:8px 2px 0}
+.pg-h3{margin:18px 0 6px;font-size:16px}
+.pg-table td.num{font-variant-numeric:tabular-nums}
+.pg-table tr.pick{cursor:pointer}.pg-table tr.pick:hover td{background:#f4f8ff}
+.pg-up{color:var(--good);font-weight:700}.pg-down{color:var(--bad);font-weight:700}
+.pg-spark{display:block}
+.pg-table tr.sel td{background:#eef4ff}
 .td-up{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:14px 0 4px;padding:14px 16px;border-radius:14px;background:#f3eeff;border:1.5px solid #d9ccff;color:#2b1f5c;font-size:15px}
 .td-up b{color:#4b2aa8}.td-use.near{color:#b3261e;font-weight:700}
 .seplv.freelock,.lvl.freelock{opacity:.6}.freebar{grid-column:1/-1;background:#fff7e0;border:2px solid #f0c75e;border-radius:12px;padding:8px 12px;font-size:14px;color:#5a4300}
@@ -2105,11 +2125,30 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
   </div>
 </section>
 
+<section class="screen" id="s-progress" hidden>
+  <div class="card pg-card">
+    <div class="pg-head">
+      <div><h2><i data-ic="chart"></i>Progress</h2><p class="sub">Every round your students play is saved here automatically. Pick a game to see the class curve, or one student to see their own.</p></div>
+      <button class="btn sm ghost" id="pgBack">← Dashboard</button>
+    </div>
+    <div class="pg-ctl">
+      <label>Class<select id="pgClass"></select></label>
+      <label>Game<select id="pgGame"></select></label>
+      <label>Level<select id="pgLevel"></select></label>
+      <label>Show<select id="pgWho"></select></label>
+    </div>
+    <div class="pg-chips" id="pgChips"></div>
+    <div class="pg-chart"><svg id="pgSvg" viewBox="0 0 860 340" role="img" aria-label="Progress line graph"></svg><div class="pg-tip" id="pgTip" hidden></div></div>
+    <p class="pg-note" id="pgNote"></p>
+    <h3 class="pg-h3" id="pgTH">Students</h3>
+    <div class="tscroll"><table class="dt pg-table" id="pgTable"></table></div>
+  </div>
+</section>
 <section class="screen" id="s-thist" hidden>
   <div class="card">
     <h2><i data-ic="doc"></i><span id="thName"></span></h2>
     <div class="tscroll"><table class="dt" id="thTable"></table></div>
-    <p style="margin-top:12px"><button class="btn ghost sm" id="thBack">← Back to the panel</button></p>
+    <p style="margin-top:12px"><button class="btn sm good" id="thChart"><i data-ic="chart"></i>See progress chart</button> <button class="btn ghost sm" id="thBack">← Back to the panel</button></p>
   </div>
 </section>
 </main>
@@ -3015,6 +3054,7 @@ function copyText(t){
   try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(()=>true,()=>false);}catch(e){}
   return Promise.resolve(false);
 }
+const TT_CHECKOUT_LIVE=false; /* flip to true once the Science Hook Lab checkout is published */
 function renderDash(){
   const M=TA.me;if(!M)return;const T=M.teacher,K=M.classes,C=curClass();if(C)TA.cls=C.id;
   const left=Math.max(0,Math.ceil((new Date(T.trial_ends)-Date.now())/864e5));
@@ -3027,10 +3067,10 @@ function renderDash(){
       h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt),
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
-      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
+      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress charts'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'https://app.thesciencehooklab.com/pricing?product=bundle',target:'_blank',rel:'noopener'},'Upgrade now')):
-T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',h('a',{href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade to keep going'),'.'):
-    T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Check out with '+(T.email?T.email:'this same email')+' and Turn-Table unlocks by itself.')),h('a',{class:'btn sm good',href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade now')):null,
+T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
+    TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Check out with '+(T.email?T.email:'this same email')+' and Turn-Table unlocks by itself.')),h('a',{class:'btn sm good',href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade now')):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
     h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),
@@ -8081,6 +8121,7 @@ async function showHistory(S){
   $('thTable').replaceChildren(h('tr',null,['When','Game','Level','Score'].map(x=>h('th',null,x))),
     ...(r.rows||[]).map(x=>h('tr',null,h('td',null,when(x.at)),h('td',null,GAME_NAMES[x.game]||x.game),h('td',null,levelLabel(x.game,x.level)||'—'),h('td',null,scoreLabel(x.game,x.value)))));
   if(!(r.rows||[]).length)$('thTable').append(h('tr',null,h('td',{colspan:4},'No rounds played yet.')));
+  $('thChart').onclick=()=>openProgress({sid:S.id});
   show('s-thist');$('userChip').hidden=true;
 }
 function downloadCSV(rows,name){
@@ -8103,6 +8144,183 @@ $('tExportAll').onclick=async()=>{
 $('tRefresh').onclick=()=>loadTeacher();
 $('tClass').onchange=()=>loadTeacher();$('tSearch').oninput=renderTeacher;
 $('thBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;};
+/* ---------- PROGRESS CHARTS (teacher) ---------- */
+const PG={rows:null,cls:null,game:null,level:'*',who:'*'};
+const PG_STAR=g=>g==='sep'||!!NEWGK[g];
+const pgName=g=>GAME_NAMES[g]||g;
+function pgY(g,r){const v=Number(r.value);
+  if(g==='speed')return v/1000;
+  if(g==='trivia')return Math.min(100,v/((r.n||10)*4)*100);
+  if(g==='atom'||g==='lab'||g==='balance')return Math.min(100,v/((r.n||10)*3)*100);
+  return v;}
+function pgUnit(g){return g==='speed'?{lab:'Average seconds per element',short:'s',lowerBetter:true,fmt:v=>v.toFixed(1)+' s'}
+  :(g==='trivia'||g==='atom'||g==='lab'||g==='balance')?{lab:'Score (% of points possible)',short:'%',fmt:v=>Math.round(v)+'%',max:100}
+  :g==='diner'?{lab:'Coins earned in the shift',short:'',fmt:v=>Math.round(v)+''}
+  :{lab:'Stars earned so far',short:'★',fmt:v=>(Math.round(v*10)/10)+' ★',stars:true};}
+async function openProgress(opt){
+  if(!(await ensureTeacher('roster')))return;
+  opt=opt||{};
+  const K=(TA.me&&TA.me.classes)||[];
+  $('pgClass').replaceChildren(h('option',{value:'*'},'All my classes'),...K.filter(c=>!c.archived).map(c=>h('option',{value:c.id},c.name)));
+  $('pgClass').value=PG.cls&&[...$('pgClass').options].some(o=>o.value===PG.cls)?PG.cls:(TA.cls&&K.some(c=>c.id===TA.cls)?TA.cls:'*');
+  showT('s-progress');
+  await pgLoad();
+  if(opt.sid&&PG.rows){const mine=PG.rows.filter(r=>r.sid===opt.sid);
+    if(!mine.length&&$('pgClass').value!=='*'){$('pgClass').value='*';await pgLoad();}
+    const m2=PG.rows.filter(r=>r.sid===opt.sid);
+    if(m2.length){const cnt={};m2.forEach(r=>cnt[r.game]=(cnt[r.game]||0)+1);PG.game=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];PG.level='*';PG.who=opt.sid;pgFill();}}
+}
+async function pgLoad(){
+  PG.cls=$('pgClass').value;
+  $('pgChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading rounds')));
+  const r=await tcall('tt_t_all_scores',{p_class:PG.cls==='*'?null:PG.cls});
+  PG.rows=r?(r.rows||[]):[];
+  const cnt={};PG.rows.forEach(x=>cnt[x.game]=(cnt[x.game]||0)+1);
+  const games=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
+  $('pgGame').replaceChildren(...(games.length?games.map(g=>h('option',{value:g},`${pgName(g)} (${cnt[g]} rounds)`)):[h('option',{value:''},'No rounds yet')]));
+  if(!games.includes(PG.game))PG.game=games[0]||null;
+  $('pgGame').value=PG.game||'';
+  PG.level='*';PG.who='*';pgFill();
+}
+function pgFill(){
+  const g=PG.game,rows=(PG.rows||[]).filter(r=>r.game===g);
+  const lv=[...new Set(rows.map(r=>r.level||''))].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true}));
+  const star=PG_STAR(g);
+  $('pgLevel').replaceChildren(h('option',{value:'*'},star?'All levels (total stars)':'All levels'),...(star?[]:lv.filter(l=>l!=='').map(l=>h('option',{value:l},levelLabel(g,String(l))||('Level '+l)))));
+  $('pgLevel').disabled=star||lv.filter(l=>l!=='').length<2;
+  if(![...$('pgLevel').options].some(o=>o.value===PG.level))PG.level='*';
+  $('pgLevel').value=PG.level;
+  const st={};rows.forEach(r=>{st[r.sid]=st[r.sid]||{name:r.name,cls:r.class,n:0};st[r.sid].n++;});
+  const sids=Object.keys(st).sort((a,b)=>st[a].name.localeCompare(st[b].name));
+  $('pgWho').replaceChildren(h('option',{value:'*'},'Whole class (average + every round)'),h('option',{value:'#all'},'Every student (one line each)'),...sids.map(id=>h('option',{value:id},`${st[id].name}${PG.cls==='*'&&st[id].cls?' · '+st[id].cls:''} (${st[id].n})`)));
+  if(PG.who!=='*'&&PG.who!=='#all'&&!st[PG.who])PG.who='*';
+  $('pgWho').value=PG.who;
+  pgRender();
+}
+const pgDay=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const pgDayLabel=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString(undefined,{month:'short',day:'numeric'});};
+function pgStarTotals(list){ /* list sorted by time for one student: returns cumulative best-stars after each play */
+  const best={};let tot=0;return list.map(r=>{const k=r.level||'';const v=Number(r.value);if(v>(best[k]||0)){tot+=v-(best[k]||0);best[k]=v;}return tot;});}
+function pgRender(){
+  const g=PG.game;const U=pgUnit(g||'');const star=PG_STAR(g);
+  let rows=(PG.rows||[]).filter(r=>r.game===g);
+  if(!star&&PG.level!=='*')rows=rows.filter(r=>String(r.level)===String(PG.level));
+  rows.sort((a,b)=>new Date(a.at)-new Date(b.at));
+  const by={};rows.forEach(r=>{(by[r.sid]=by[r.sid]||[]).push(r);});
+  const svg=$('pgSvg');svg.replaceChildren();$('pgTip').hidden=true;
+  if(!rows.length){$('pgChips').replaceChildren();pgEmpty(svg,'No rounds yet for this choice. Once students play, every round shows up here.');$('pgTable').replaceChildren();$('pgNote').textContent='';return;}
+  let pts,note;
+  if(PG.who==='#all'){
+    const sids=Object.keys(by).sort((a,b)=>by[a][0].name.localeCompare(by[b][0].name));let maxN=0;
+    const multi=sids.map((sid,k)=>{const L=by[sid];const ys=star?pgStarTotals(L):L.map(r=>pgY(g,r));maxN=Math.max(maxN,L.length);
+      return {name:L[0].name,c:Object.keys(by).indexOf(sid),pts:L.map((r,i)=>({x:i+1,y:ys[i],tip:`${r.name} · round ${i+1} · ${when(r.at)}<br>${U.fmt(ys[i])}`}))};});
+    pts=Array.from({length:maxN},(_,i)=>({x:i+1,y:NaN}));
+    pgChips([[rows.length,'rounds played'],[sids.length,'students']]);
+    pgDraw(svg,pts,U,{xLabel:'Round played',multi});
+    $('pgNote').textContent=`One line per student, round by round on ${pgName(g)}. Hover a dot to see whose it is, or click a name below to see one student alone.`;
+    pgTable(g,by,U,star);return;
+  }
+  if(PG.who!=='*'){
+    const L=by[PG.who]||[];const nm=L[0]?L[0].name:'';
+    const ys=star?pgStarTotals(L):L.map(r=>pgY(g,r));
+    pts=L.map((r,i)=>({x:i+1,y:ys[i],tip:`Round ${i+1} · ${when(r.at)}<br>${levelLabel(g,String(r.level||''))||''}${levelLabel(g,String(r.level||''))?' · ':''}${U.fmt(star?Number(r.value):ys[i])}${star?' this level · '+U.fmt(ys[i])+' total':''}`}));
+    const first=ys[0],last=ys[ys.length-1],best=U.lowerBetter?Math.min(...ys):Math.max(...ys);
+    pgChips([[L.length,'rounds played'],[U.fmt(first),star?'stars after round 1':'first round'],[U.fmt(last),star?'stars now':'latest round'],[U.fmt(best),'best'],pgChange(first,pgTail(ys),U)]);
+    pgDraw(svg,pts,U,{xLabel:'Round played',trend:!star,title:nm});
+    note=star?`${nm}'s total stars on ${pgName(g)}, counting each level's best. The curve climbs as they clear new levels or earn more stars on old ones.`
+      :`${nm}'s score in every round of ${pgName(g)}${PG.level!=='*'?' at this level':''}, in the order played. The dashed line is the average of the last 3 rounds, which smooths out one-off good or bad rounds.`;
+  }else{
+    const days=[...new Set(rows.map(r=>pgDay(r.at)))].sort();
+    if(star){
+      const cum={};Object.entries(by).forEach(([sid,L])=>{const t=pgStarTotals(L);cum[sid]=L.map((r,i)=>[pgDay(r.at),t[i]]);});
+      pts=days.map((d,i)=>{let s=0,n=0;Object.values(cum).forEach(arr=>{let v=null;arr.forEach(([dd,t])=>{if(dd<=d)v=t;});if(v!=null){s+=v;n++;}});
+        const played=rows.filter(r=>pgDay(r.at)===d).length;return {x:i+1,lab:pgDayLabel(d),y:n?s/n:0,tip:`${pgDayLabel(d)}<br>Average ${U.fmt(n?s/n:0)} per student · ${n} students · ${played} rounds that day`};});
+    }else{
+      pts=days.map((d,i)=>{const R=rows.filter(r=>pgDay(r.at)===d);const v=R.map(r=>pgY(g,r));const a=v.reduce((x,y)=>x+y,0)/v.length;
+        return {x:i+1,lab:pgDayLabel(d),y:a,tip:`${pgDayLabel(d)}<br>Class average ${U.fmt(a)} · ${R.length} rounds · ${new Set(R.map(r=>r.sid)).size} students`};});
+    }
+    const dIdx=Object.fromEntries(days.map((d,i)=>[d,i]));const sids=Object.keys(by);
+    let scat=[];
+    if(star){Object.entries(by).forEach(([sid,L])=>{const t=pgStarTotals(L);const last={};L.forEach((r,i)=>last[pgDay(r.at)]=[t[i],r]);
+        Object.entries(last).forEach(([d,[v,r]])=>scat.push({xi:dIdx[d],y:v,c:sids.indexOf(sid),tip:`${r.name} · ${pgDayLabel(d)}<br>${U.fmt(v)} total`}));});}
+    else rows.forEach(r=>{const d=pgDay(r.at),dt=new Date(r.at);const frac=((dt.getHours()*60+dt.getMinutes())/1440-0.5)*0.5;
+        scat.push({xi:dIdx[d]+frac*(days.length>1?1:0),y:pgY(g,r),c:sids.indexOf(r.sid),tip:`${r.name} · ${when(r.at)}<br>${levelLabel(g,String(r.level||''))?levelLabel(g,String(r.level||''))+' · ':''}${U.fmt(pgY(g,r))}`});});
+    PG.scat=scat;
+    const ys=pts.map(p=>p.y);
+    pgChips([[rows.length,'rounds played'],[Object.keys(by).length,'students'],[U.fmt(ys[0]),'first day'],[U.fmt(ys[ys.length-1]),'latest day'],pgChange(ys[0],ys[ys.length-1],U)]);
+    pgDraw(svg,pts,U,{xLabel:'Day',days:true,trend:false,scatter:PG.scat});
+    note=star?`Each faint dot is one student's total stars at the end of a day they played (one color per student). The blue line is the class average. Click a student below to see their own curve.`
+      :`Each faint dot is one round by one student (one color per student). The blue line is the class average for ${pgName(g)}${PG.level!=='*'?' at this level':''} on each day. Click a student below to see their own curve.`;
+  }
+  $('pgNote').textContent=note;
+  pgTable(g,by,U,star);
+}
+function pgTail(ys){const t=ys.slice(-3);return t.reduce((a,b)=>a+b,0)/t.length;}
+function pgChange(a,b,U){const d=b-a;const good=U.lowerBetter?d<0:d>0;const txt=(d>0?'+':d<0?'−':'±')+U.fmt(Math.abs(d)).replace(/^\+/,'');
+  return [txt,U.lowerBetter?'change (lower is faster)':'change since the start',Math.abs(d)<1e-9?'':good?'up':'down'];}
+function pgChips(list){$('pgChips').replaceChildren(...list.map(([v,l,c])=>h('div',{class:'pg-chip'+(c?' '+c:'')},h('b',null,String(v)),h('span',null,l))));}
+function pgEmpty(svg,msg){const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.setAttribute('x',430);t.setAttribute('y',170);t.setAttribute('text-anchor','middle');t.setAttribute('fill','#5b6b86');t.setAttribute('font-size','15');t.textContent=msg;svg.append(t);}
+function pgDraw(svg,pts,U,o){
+  const NS='http://www.w3.org/2000/svg',W=860,H=340,L=64,Rm=o.multi?78:20,T=24,B=48;
+  const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(p||svg).append(e);return e;};
+  const ys=pts.map(p=>p.y).concat((o.scatter||[]).map(q=>q.y)).concat(...(o.multi||[]).map(m=>m.pts.map(q=>q.y))).filter(v=>isFinite(v));let lo=Math.min(...ys),hi=Math.max(...ys);
+  if(U.max){lo=0;hi=100;}else if(U.stars){lo=0;hi=Math.max(3,Math.ceil(hi*1.1));}else{const pad=(hi-lo)*0.15||Math.max(1,hi*0.1);lo=Math.max(0,lo-pad);hi=hi+pad;}
+  const nx=pts.length,X=i=>nx<2?L+(W-L-Rm)/2:L+(i)*(W-L-Rm)/(nx-1);
+  const Y=v=>{const f=(v-lo)/((hi-lo)||1);return U.lowerBetter?T+f*(H-T-B):H-B-f*(H-T-B);};
+  // grid + y ticks
+  for(let k=0;k<=4;k++){const v=lo+(hi-lo)*k/4,y=Y(v);el('line',{x1:L,x2:W-Rm,y1:y,y2:y,stroke:'#e3e9f4','stroke-width':1});
+    const t=el('text',{x:L-8,y:y+4,'text-anchor':'end','font-size':12,fill:'#5b6b86'});t.textContent=U.fmt(v);}
+  const yl=el('text',{x:14,y:T+(H-T-B)/2,'font-size':12,fill:'#5b6b86','text-anchor':'middle',transform:`rotate(-90 14 ${T+(H-T-B)/2})`});yl.textContent=U.lab+(U.lowerBetter?' (faster is higher)':'');
+  // x labels
+  const step=Math.max(1,Math.ceil(nx/10));
+  pts.forEach((p,i)=>{if(i%step&&i!==nx-1)return;const t=el('text',{x:X(i),y:H-B+18,'text-anchor':'middle','font-size':12,fill:'#5b6b86'});t.textContent=o.days?p.lab:String(p.x);});
+  const xl=el('text',{x:L+(W-L-Rm)/2,y:H-8,'text-anchor':'middle','font-size':12,fill:'#5b6b86'});xl.textContent=o.xLabel;
+  if(o.multi){const tip=$('pgTip'),box=svg.parentElement;
+    o.multi.forEach(m=>{const hue=(m.c*67)%360,col=`hsl(${hue} 68% 45%)`;
+      el('path',{d:m.pts.map((q,i)=>(i?'L':'M')+X(q.x-1).toFixed(1)+' '+Y(q.y).toFixed(1)).join(' '),fill:'none',stroke:col,'stroke-width':2.2,'stroke-opacity':.85,'stroke-linejoin':'round'});
+      m.pts.forEach(q=>{const c=el('circle',{cx:X(q.x-1),cy:Y(q.y),r:3.5,fill:col});const hit=el('circle',{cx:X(q.x-1),cy:Y(q.y),r:10,fill:'transparent'});
+        const on=()=>{const r=svg.getBoundingClientRect(),br=box.getBoundingClientRect();tip.innerHTML=q.tip;tip.hidden=false;tip.style.left=(r.left-br.left+X(q.x-1)*r.width/W)+'px';tip.style.top=(r.top-br.top+Y(q.y)*r.height/H)+'px';c.setAttribute('r',6);};
+        hit.addEventListener('mouseenter',on);hit.addEventListener('click',on);hit.addEventListener('mouseleave',()=>{tip.hidden=true;c.setAttribute('r',3.5);});});
+      const lq=m.pts[m.pts.length-1];const t=el('text',{x:Math.min(W-Rm-2,X(lq.x-1)+6),y:Y(lq.y)+4,'font-size':11,fill:col,'font-weight':700});t.textContent=m.name;});
+    return;}
+  // area + line
+  const d=pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.y).toFixed(1)).join(' ');
+  const base=H-B;
+  const XF=f=>nx<2?L+(W-L-Rm)/2:L+f*(W-L-Rm)/(nx-1);
+  (o.scatter||[]).forEach(q=>{const hue=(q.c*67)%360;const c=el('circle',{cx:XF(Math.max(0,Math.min(nx-1,q.xi))).toFixed(1),cy:Y(q.y).toFixed(1),r:4,fill:`hsl(${hue} 70% 55%)`,'fill-opacity':.45,stroke:`hsl(${hue} 70% 40%)`,'stroke-opacity':.5});c.append(Object.assign(document.createElementNS(NS,'title'),{textContent:q.tip.replace(/<br>/g,' · ')}));});
+  if(nx>1){const gid='pgGrad';const df=el('defs',{});const lg=el('linearGradient',{id:gid,x1:0,x2:0,y1:0,y2:1},df);el('stop',{offset:0,'stop-color':'#2f6bff','stop-opacity':.22},lg);el('stop',{offset:1,'stop-color':'#2f6bff','stop-opacity':0},lg);
+    el('path',{d:d+` L${X(nx-1).toFixed(1)} ${base} L${X(0).toFixed(1)} ${base} Z`,fill:`url(#${gid})`});}
+  el('path',{d,fill:'none',stroke:'#2f6bff','stroke-width':3,'stroke-linejoin':'round','stroke-linecap':'round'});
+  if(o.trend&&nx>=4){const tr=pts.map((p,i)=>{const w=pts.slice(Math.max(0,i-2),i+1);return w.reduce((a,b)=>a+b.y,0)/w.length;});
+    el('path',{d:tr.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join(' '),fill:'none',stroke:'#f5b700','stroke-width':2.5,'stroke-dasharray':'6 5'});}
+  const tip=$('pgTip'),box=svg.parentElement;
+  pts.forEach((p,i)=>{const c=el('circle',{cx:X(i),cy:Y(p.y),r:nx>60?3:5,fill:'#fff',stroke:'#2f6bff','stroke-width':2.5});
+    const hit=el('circle',{cx:X(i),cy:Y(p.y),r:14,fill:'transparent',tabindex:0,'aria-label':p.tip.replace(/<br>/g,'. ')});
+    const on=()=>{c.setAttribute('r',7);const r=svg.getBoundingClientRect(),br=box.getBoundingClientRect();tip.innerHTML=p.tip;tip.hidden=false;tip.style.left=(r.left-br.left+X(i)*r.width/W)+'px';tip.style.top=(r.top-br.top+Y(p.y)*r.height/H)+'px';};
+    const off=()=>{c.setAttribute('r',nx>60?3:5);tip.hidden=true;};
+    hit.addEventListener('mouseenter',on);hit.addEventListener('mouseleave',off);hit.addEventListener('focus',on);hit.addEventListener('blur',off);hit.addEventListener('click',on);});
+}
+function pgSpark(ys,lowerBetter){const W=110,H=28;if(ys.length<2)return h('span',{class:'sub'},'—');
+  let lo=Math.min(...ys),hi=Math.max(...ys);if(hi-lo<1e-9){hi=lo+1;}
+  const d=ys.map((v,i)=>(i?'L':'M')+(2+i*(W-4)/(ys.length-1)).toFixed(1)+' '+(lowerBetter?2+(v-lo)/(hi-lo)*(H-4):H-2-(v-lo)/(hi-lo)*(H-4)).toFixed(1)).join(' ');
+  const s=document.createElementNS('http://www.w3.org/2000/svg','svg');s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.setAttribute('width',W);s.setAttribute('height',H);s.setAttribute('class','pg-spark');
+  const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke','#2f6bff');p.setAttribute('stroke-width','2');s.append(p);return s;}
+function pgTable(g,by,U,star){
+  const tb=$('pgTable');
+  $('pgTH').textContent=PG.who==='*'?'Students (click one to see their curve)':'All students on this game';
+  const list=Object.entries(by).map(([sid,L])=>{const ys=star?pgStarTotals(L):L.map(r=>pgY(g,r));const first=ys[0],last=pgTail(ys),best=U.lowerBetter?Math.min(...ys):Math.max(...ys);return {sid,name:L[0].name,cls:L[0].class,n:L.length,first,last,best,ys,at:L[L.length-1].at,d:last-first};});
+  list.sort((a,b)=>a.name.localeCompare(b.name));
+  tb.replaceChildren(h('tr',null,...['Student',PG.cls==='*'?'Class':null,'Rounds',star?'Stars after round 1':'First round',star?'Stars now':'Recent (last 3)','Best','Change','Curve','Last played'].filter(Boolean).map(x=>h('th',null,x))),
+    ...list.map(x=>{const good=U.lowerBetter?x.d<0:x.d>0;const ch=Math.abs(x.d)<1e-9||x.n<2?h('span',{class:'sub'},'—'):h('span',{class:good?'pg-up':'pg-down'},(x.d>0?'+':'−')+U.fmt(Math.abs(x.d)));
+      const tr=h('tr',{class:'pick'+(x.sid===PG.who?' sel':''),title:'See '+x.name+"'s curve"},h('td',null,h('b',null,x.name)),PG.cls==='*'?h('td',null,x.cls||'—'):null,h('td',{class:'num'},String(x.n)),h('td',{class:'num'},U.fmt(x.first)),h('td',{class:'num'},U.fmt(star?x.ys[x.ys.length-1]:x.last)),h('td',{class:'num'},U.fmt(x.best)),h('td',{class:'num'},ch),h('td',null,pgSpark(x.ys,U.lowerBetter)),h('td',null,when(x.at)));
+      tr.onclick=()=>{PG.who=x.sid;$('pgWho').value=x.sid;pgRender();window.scrollTo({top:0,behavior:'smooth'});};return tr;}));
+}
+$('pgClass').onchange=()=>pgLoad();
+$('pgGame').onchange=()=>{PG.game=$('pgGame').value;PG.level='*';pgFill();};
+$('pgLevel').onchange=()=>{PG.level=$('pgLevel').value;pgRender();};
+$('pgWho').onchange=()=>{PG.who=$('pgWho').value;pgRender();};
+$('pgBack').onclick=openDash;
+
 $('teacherLink').onclick=openDash;
 $('tClassGames').onclick=()=>{if(needWrite()){renderCG();showT('s-cg');}};
 $('tBack').onclick=openDash;
