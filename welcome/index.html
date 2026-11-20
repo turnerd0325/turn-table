@@ -281,6 +281,12 @@ section{position:relative}
 .plan li::before{content:"";width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.5L13 6.5' fill='none' stroke='%230c1630' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
 .plan.best li::before{background-color:var(--sun)}
 .plan .btn{margin-top:auto}
+.nocharge{margin-top:16px;font-size:14.5px;line-height:1.45;font-weight:650;color:var(--muted)}
+.nocharge::before{content:"";display:inline-block;vertical-align:-3px;margin-right:7px;width:16px;height:16px;border-radius:50%;background:var(--good,#1f9d55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 8.3l2.2 2.2 4.8-4.9' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+.hero .nocharge,.close p.nocharge{color:#cfd8ec}
+.close p.nocharge{margin:18px auto 0;font-size:15px}
+.plan .nocharge{text-align:center;margin-top:12px;font-size:13.5px}
+.plan.best .nocharge{color:#cfd8ec}
 .plan .monthly{display:block;margin-top:14px;text-align:center;font-size:14px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .plan .monthly:hover{color:var(--ink)}
 .plan.best .monthly{color:#a9b5d1}.plan.best .monthly:hover{color:#fff}
@@ -435,6 +441,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <a class="btn sun" href="/?teacher=new">Start your free trial</a>
         <a class="btn ghost" href="#games">See all 24 games</a>
       </div>
+      <p class="nocharge">No charge until the end of the trial period.</p>
       <div class="proof">
         <div><b>24</b><span>education-focused games</span></div>
         <div><b>116</b><span>students in a real 7th grade</span></div>
@@ -637,6 +644,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <p class="alt">Founding price, locked in for as long as you stay. Regular price $49 a year.</p>
         <ul><li><span><a href="#games">All 24 games</a> and both class games</span></li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
         <a class="btn line" href="/?teacher=new&amp;plan=turntable">Start your free trial</a>
+        <p class="nocharge">No charge until the end of the trial period.</p>
         <a class="monthly" href="/?teacher=new&amp;plan=turntable&amp;billing=monthly">Prefer to pay monthly? $7 a month</a>
       </div>
       <div class="plan best">
@@ -645,6 +653,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <p class="alt">Founding price, locked in for as long as you stay. Regular price $99 a year.</p>
         <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open each unit with a hook, close it with proof of growth</li></ul>
         <a class="btn sun" href="/?teacher=new&amp;plan=bundle">Start your free trial</a>
+        <p class="nocharge">No charge until the end of the trial period.</p>
         <a class="monthly" href="/?teacher=new&amp;plan=bundle&amp;billing=monthly">Prefer to pay monthly? $16 a month</a>
       </div>
     </div>
@@ -674,6 +683,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
     <h2>Give them a game they can only win by learning.</h2>
     <p>Start a free trial, open every game yourself, then run a Pre-Test with one class this week.</p>
     <div class="ctas"><a class="btn sun" href="/?teacher=new">Start your free trial</a><a class="btn ghost" href="/?teacher">Teacher log in</a></div>
+    <p class="nocharge">No charge until the end of the trial period.</p>
   </div>
 </section>
 </main>
