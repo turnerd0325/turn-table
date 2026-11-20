@@ -186,10 +186,37 @@
 .drsteps li svg{flex:none;width:22px;height:22px;padding:4px;border-radius:50%;background:#e3ebfb;color:#2153d6}
 .drwhy .ngc{font-size:13.5px;padding:6px 10px}
 /* Moonwatch */
-.mwspot{cursor:pointer}.mwspot:focus-visible{outline:none}.mwspot:focus-visible circle:first-child{stroke:#ffb703;stroke-width:3}
-.mwopts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.mwopt{flex-direction:row;justify-content:flex-start;gap:8px}
-.mwtarget{display:flex;align-items:center;gap:12px;background:#0c1430;color:#fff;border-radius:12px;padding:8px 12px}
+/* Moonwatch: Drive the Moon */
+.mwboard{display:grid;grid-template-columns:47fr 32fr;gap:10px;width:min(100%,calc((100vh - 200px)*1.82));margin:0 auto;user-select:none;-webkit-user-select:none}
+#s-ng.testing .mwboard{width:min(100%,calc((100vh - 300px)*1.82))}
+.mwm,.mwv{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 8px 22px rgba(8,16,44,.28),inset 0 0 0 1px rgba(255,255,255,.06);touch-action:none}
+.mwtxt{font:800 13px Inter,system-ui,sans-serif}.mwthin{font-weight:600}
+.mwgrab{cursor:grab;outline:none}.mwdragging,.mwdragging .mwgrab{cursor:grabbing}
+.mwgrab:focus-visible .mwfoc{stroke:#ffd23f;stroke-dasharray:4 3}
+.mwbody,.mwesm{transform-box:fill-box;transform-origin:50% 50%}
+.mwclouds{transition:transform .9s cubic-bezier(.65,0,.35,1),opacity .9s ease}.mwclouds.gone{transform:translateY(-105%);opacity:0;pointer-events:none}.mwclouds.now{transition:none}
+.mwspin{animation:mwSpin 90s linear infinite}
+@keyframes mwSpin{to{transform:rotate(360deg)}}
+.mwrays line{animation:mwRay 2.4s linear infinite}
+@keyframes mwRay{to{stroke-dashoffset:-80}}
+.mwtw{animation:mwTw 4s ease-in-out infinite alternate}
+@keyframes mwTw{from{opacity:.25}to{opacity:1}}
+.mwghost circle{animation:mwGh 1s ease-in-out infinite alternate}
+@keyframes mwGh{from{stroke-opacity:.35}to{stroke-opacity:1}}
+.mwsunh{animation:mwSun 3.2s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes mwSun{from{transform:scale(.96)}to{transform:scale(1.04)}}
+.mwcorona,.mwnight,.mwred{transition:opacity .5s}
+.mweclp{animation:mwGh .6s ease-in-out infinite alternate}
+.mwtask{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#13203d,#1d3264);color:#fff;border-radius:14px;padding:10px 12px;box-shadow:0 4px 12px rgba(19,32,61,.25)}
+.mwtask svg{flex:none;filter:drop-shadow(0 0 8px rgba(255,240,190,.35))}
+.mwtask b{display:block;font-size:17px;line-height:1.2}.mwtask small{display:block;font-size:13.5px;color:#cfd8ff;margin-top:3px;line-height:1.3}.mwtask small b{display:inline;font-size:inherit;color:#ffd23f}
+.mwflag{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:900 16px Inter,system-ui,sans-serif;background:radial-gradient(circle at 40% 35%,#ffe9a8,#f4b13a);color:#13203d}
+.mwflag.lunar{background:radial-gradient(circle at 40% 35%,#ffb39a,#b8432a);color:#fff}.mwflag.seas{background:radial-gradient(circle at 40% 35%,#9fe0ff,#2f6bff);color:#fff}.mwflag.tilt{background:radial-gradient(circle at 40% 35%,#ffd2a8,#ff9f43)}
+.mwlock{margin-top:8px}
+.mwkeys{margin:2px 0 0;font-size:12px;color:#6b7a99;text-align:center}
+#s-ng.testing .mwkeys{display:none}
+@media (prefers-reduced-motion:reduce){.mwspin,.mwrays line,.mwtw,.mwghost circle,.mwsunh,.mweclp{animation:none}.mwclouds{transition:none}}
+.art-still .mwspin,.art-still .mwrays line,.art-still .mwtw,.art-still .mwghost circle,.art-still .mwsunh,.art-still .mweclp{animation:none}.art-still .mwclouds{transition:none}
 /* Deep Time */
 .stsvg .stf{transition:opacity .2s}
 .stsvg .stf.hl{filter:drop-shadow(0 0 6px #ffd34d) brightness(1.12)}
