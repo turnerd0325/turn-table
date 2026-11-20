@@ -1353,6 +1353,10 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .pg-tabs i svg{width:16px;height:16px}
 .pg-private{font-size:12.5px;color:var(--muted);margin:6px 2px 0;display:flex;gap:6px;align-items:center}
 .pg-private::before{content:"🔒";font-size:12px}
+.td-gate{max-width:620px;margin:24px auto;text-align:center;padding:34px 28px}
+.td-gate h2{margin:0 0 10px}.td-gate .lead{font-size:19px;font-weight:700;margin:0 0 8px}
+.td-gate .sub{margin:0 auto 18px;max-width:46ch}.td-gate .small{font-size:12.5px;margin:18px auto 0}
+.td-gatebtns{display:flex;flex-direction:column;align-items:center;gap:10px}
 .pg-privrow{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between}
 .pg-hide{font-size:13px;font-weight:700;display:flex;gap:7px;align-items:center;cursor:pointer;margin-top:6px}
 .pg-hide input{width:17px;height:17px;accent-color:var(--blue,#2f6bff)}
@@ -3021,6 +3025,7 @@ async function taEnter(){
     if(!(TA.s.user&&TA.s.user.user_metadata)){const u=await authCall('/user',{method:'GET',token:TA.s.access_token});if(u.ok){TA.s.user=u.j;taSave();}}
     const md=(TA.s.user&&TA.s.user.user_metadata)||{};
     r=await rpc('tt_a_start',{p_name:md.name||String((TA.s.user&&TA.s.user.email)||'Teacher').split('@')[0],p_school:md.school||''},12000);
+    if(r&&r.ok&&r.teacher&&r.teacher.needs_card)TA.toCard=true;
   }
   if(!r||!r.ok){TA.me=null;return false;}
   TA.me=r;const C=curClass();TA.cls=C?C.id:null;return true;
@@ -3082,7 +3087,13 @@ tlinkKey('loginTeacher',()=>{TA.next='dash';ensureTeacher('dash').then(ok=>{if(o
 const SW_GAMES=[['speed','Speed Find'],['trivia','Element Trivia'],['explore','Explore the Table'],['lab','Compound Lab'],['atom','Atom Builder'],['balance','Balance It'],['diner','Atom Diner'],['sep','Separation Station'],['laser','Laser Maze'],['blackout','Blackout!'],['evidence','Evidence Lab'],['coaster','Coaster Architect']];
 async function openDash(){
   if(!(await ensureTeacher('dash')))return;
-  await taRefresh();renderDash();showT('s-tdash');
+  await taRefresh();
+  const T=TA.me&&TA.me.teacher;
+  if(T&&T.needs_card&&TA.toCard&&!TA.coDone){TA.toCard=false;renderDash();showT('s-tdash');return goCheckout();}
+  if(T&&T.needs_card&&TA.coDone){TA.coDone=false;TA.coWait=true;renderDash();showT('s-tdash');
+    for(let i=0;i<20&&TA.me&&TA.me.teacher.needs_card;i++){await new Promise(r=>setTimeout(r,2000));await taRefresh();}
+    TA.coWait=false;}
+  renderDash();showT('s-tdash');
 }
 function needWrite(){
   if(TA.me&&TA.me.teacher.expired){modal({title:'Your free trial has ended',text:'You can still look at your classes and scores. To start class games or make new classes, contact Turn-Table™ to keep going.',cancel:false});return false;}
@@ -3093,8 +3104,30 @@ function copyText(t){
   return Promise.resolve(false);
 }
 const TT_CHECKOUT_LIVE=false; /* flip to true once the Science Hook Lab checkout is published */
+/* One-page checkout on the Science Hook Lab. ?checkoutbase=preview points it at the Lovable preview for testing. */
+const TT_CHECKOUT_URL=(()=>{const live='https://app.thesciencehooklab.com/tt-checkout';
+  try{const q=new URLSearchParams(location.search).get('checkoutbase');
+    if(q==='preview')sessionStorage.setItem('tt_cobase','https://id-preview--96f6a134-8175-47cd-86d2-0cb138a17ef0.lovable.app/tt-checkout');
+    if(q==='live')sessionStorage.removeItem('tt_cobase');
+    return sessionStorage.getItem('tt_cobase')||live;}catch(e){return live;}})();
+async function goCheckout(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStorage.getItem('tt_copref')||'{}')||{};}catch(e){}
+  const r=await tcall('tt_t_checkout_token');if(!r||!r.token)return;
+  const q=new URLSearchParams({t:r.token,plan:o.plan||pref.plan||'turntable',billing:o.billing||pref.billing||'annual',trial:o.trial===0?'0':'1'});
+  location.href=TT_CHECKOUT_URL+'?'+q.toString();}
+function renderCardGate(T){
+  const body=$('tdBody');
+  if(TA.coWait)return body.replaceChildren(h('div',{class:'card td-gate'},h('h2',null,'Setting up your free trial…'),h('p',{class:'sub'},'This takes a few seconds after checkout. The page will open by itself.')));
+  body.replaceChildren(h('div',{class:'card td-gate'},
+    h('h2',null,`One more step, ${T.name}`),
+    h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
+    h('p',{class:'sub'},"You won't be charged until your trial ends, and you can cancel anytime before then. You'll get the founding price of $36 a year, locked in for as long as you stay."),
+    h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
+      h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
+    h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™. Signed in as '+(T.email||'')+'.')));
+}
 function renderDash(){
   const M=TA.me;if(!M)return;const T=M.teacher,K=M.classes,C=curClass();if(C)TA.cls=C.id;
+  if(T.needs_card)return renderCardGate(T);
   const left=Math.max(0,Math.ceil((new Date(T.trial_ends)-Date.now())/864e5));
   const planTxt=T.role==='founder'?'Founder account':T.plan==='trial'?(T.expired?'Free trial ended':`Free trial: ${left} day${left===1?'':'s'} left`):T.plan==='school'?'School license':'Subscribed';
   const act=(txt,fn,cls)=>h('button',{class:'btn sm '+(cls||'ghost'),type:'button',onclick:fn},txt);
@@ -3106,9 +3139,9 @@ function renderDash(){
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
       h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
-    T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'https://app.thesciencehooklab.com/pricing?product=bundle',target:'_blank',rel:'noopener'},'Upgrade now')):
-T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
-    TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Check out with '+(T.email?T.email:'this same email')+' and Turn-Table unlocks by itself.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'https://app.thesciencehooklab.com/pricing?product=turntable&billing=annual',target:'_blank',rel:'noopener'},'Upgrade now'),h('a',{class:'td-month',href:'https://app.thesciencehooklab.com/pricing?product=turntable&billing=monthly',target:'_blank',rel:'noopener'},'or pay monthly, $7 a month'))):null,
+    T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now')):
+T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
+    TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Turn-Table unlocks as soon as you check out.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now'),h('a',{class:'td-month',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0,billing:'monthly'});}},'or pay monthly, $7 a month'))):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
     h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),
@@ -11062,7 +11095,10 @@ document.querySelectorAll('i[data-logo]').forEach(x=>{x.outerHTML=ART.logo(+x.da
 if(!storageOK)$('warn').hidden=false;
 if(me)goMenu();else{renderLogin();show('s-login');}
 /* links from the landing page: ?teacher (sign in) and ?teacher=new (create account) */
-(()=>{const tq=new URLSearchParams(location.search).get('teacher');if(tq===null)return;
+(()=>{const sp=new URLSearchParams(location.search),tq=sp.get('teacher');if(tq===null)return;
+  const pl=sp.get('plan'),bi=sp.get('billing');
+  if(pl||bi){try{sessionStorage.setItem('tt_copref',JSON.stringify({plan:pl==='bundle'?'bundle':'turntable',billing:bi==='monthly'?'monthly':'annual'}));}catch(e){}}
+  if(sp.get('checkout')==='done')TA.coDone=true;
   try{history.replaceState(null,'',location.pathname);}catch(e){}
   if(TA.s)ensureTeacher('dash').then(ok=>{if(ok)openDash();});else{openTAuth();if(tq==='new')setTaMode('up');}})();
 taHash();window.addEventListener('hashchange',taHash);
