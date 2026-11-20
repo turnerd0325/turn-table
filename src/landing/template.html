@@ -306,6 +306,16 @@ section{position:relative}
 .split .plans{max-width:none}
 #pricing .split{grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);gap:56px}
 #pricing .plan{padding:32px}
+/* ---------- class games ---------- */
+.cgs{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:stretch}
+.cgc{display:flex;flex-direction:column;gap:22px}
+.cgc .device img{aspect-ratio:1200/647}
+.cgc .kick{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#6a3fd6}
+.cgc h3{font-size:26px;margin:6px 0 8px}
+.cgc p{color:var(--muted);font-size:16.5px;max-width:52ch}
+.cgc ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px;font-size:15.5px}
+.cgc li{display:grid;grid-template-columns:18px 1fr;gap:10px}
+.cgc li::before{content:"";width:8px;height:8px;margin-top:8px;border-radius:50%;background:#6a3fd6}
 /* ---------- faq ---------- */
 .faq{max-width:none}
 .faq details{border-top:1px solid var(--line);padding:22px 0}
@@ -373,6 +383,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   .sec-head>.legend{grid-column:1}
   .split{gap:40px}.split>div:first-child{position:static}
   .research .wrap,.pp .wrap,.show{gap:32px}
+  .cgs{gap:24px}.cgc h3{font-size:22px}
   .sec-head{margin-bottom:40px}
   #pricing .split{grid-template-columns:1fr;gap:40px}
   .hero .wrap{padding-top:120px;gap:24px}
@@ -380,6 +391,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   .rules,.feats{grid-template-columns:1fr 1fr}
 }
 @media (max-width:640px){
+  .cgs{grid-template-columns:1fr;gap:48px}
   body{font-size:17px}
   .wrap{padding:0 20px}
   .pad{padding:64px 0}
@@ -516,7 +528,36 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <div class="legend" id="legend"></div>
     </div>
     <div class="table" id="table"></div>
-    <p class="games-note">Plus two whole-class games for the projector: a live quiz students join from their Chromebooks, and a game-show review board that builds itself from the standards you pick.</p>
+    <p class="games-note">Plus two whole-class games for the projector. <a href="#class" style="color:#fff;font-weight:700">See the class games ↓</a></p>
+  </div>
+</section>
+
+<section class="pad" id="class">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Whole-class games, included.</h2>
+      <p class="lede">Two projector games come with every membership at no extra cost. Use them for a quick review, a test-day warm-up or a day without Chromebooks.</p>
+    </div>
+    <div class="cgs">
+      <div class="cgc">
+        <div class="device"><div class="bar"><i></i><i></i><i></i></div><img src="{{BASE}}img/livequiz.webp" width="1200" height="647" alt="Live Quiz on the projector: a 4-choice question about plant cells, a countdown timer and 19 of 26 students answered" loading="lazy" decoding="async"></div>
+        <div>
+          <span class="kick">Live Quiz</span>
+          <h3>4-choice trivia, played live</h3>
+          <p>The question goes up on the board. Students join with a 4-digit code and answer on their own Chromebooks.</p>
+          <ul><li>Ready-made question sets for chemistry, physics, life and Earth science</li><li>Countdown timer, answer chart and live leaderboard</li><li>Streak bonus, fastest-answer callout and a podium finish</li></ul>
+        </div>
+      </div>
+      <div class="cgc">
+        <div class="device"><div class="bar"><i></i><i></i><i></i></div><img src="{{BASE}}img/quizboard.webp" width="1200" height="647" alt="Quiz Board Maker: a game-show board with five science categories, point values from 100 to 500 and four team scores" loading="lazy" decoding="async"></div>
+        <div>
+          <span class="kick">Quiz Board Maker</span>
+          <h3>A game-show board that builds itself</h3>
+          <p>Pick the NY standards you're reviewing and the board fills with categories and clues, easy to hard. Edit any clue or write your own.</p>
+          <ul><li>Clue sets for 36 NY science standards</li><li>2 to 6 teams on one projector, no devices needed</li><li>Double Down squares and a Final Round with wagers</li></ul>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -648,7 +689,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <div class="price">$36<small>/ year</small></div>
         <div class="was">After founding spots fill: <span><s>$49</s> a year</span><span class="off">You save $13 every year</span></div>
         <p class="alt">Founding price, locked in for as long as you stay.</p>
-        <ul><li><span><a href="#games">All 24 games</a> and both class games</span></li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
+        <ul><li><span><a href="#games">All 24 games</a>, plus <a href="#class">Live Quiz and Quiz Board Maker</a></span></li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
         <a class="btn line" href="/?teacher=new&amp;plan=turntable">Start your free trial</a>
         <p class="nocharge">No charge until the end of the trial period.</p>
         <a class="monthly" href="/?teacher=new&amp;plan=turntable&amp;billing=monthly">Prefer to pay monthly? $7 a month</a>
@@ -772,6 +813,7 @@ const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Ch
   add('.cyc','l',(n)=>[...n.parentNode.children].indexOf(n)+1);add('.report','r');
   add('.el','z',(n,k)=>{const cols=getComputedStyle(n.parentNode).gridTemplateColumns.split(' ').length;return (k%cols)+Math.floor(k/cols);});
   add('.games-note','');
+  add('.cgc','',(n)=>[...n.parentNode.children].indexOf(n)*2);
   add('.feat','',(n)=>[...n.parentNode.children].indexOf(n));
   add('.mono','z');add('.founder blockquote','b');add('.founder .who','');
   add('.plan','',(n)=>[...n.parentNode.children].indexOf(n)*2);add('.fine','');
