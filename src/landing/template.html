@@ -4,222 +4,295 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Turn-Table™ | Science practice where the diagram is the game</title>
-<meta name="description" content="Turn-Table is middle school science practice where the diagram is the game. Students build the cell, line up the Moon and balance the equation. Pre-Test and Post-Test show what stuck.">
+<meta name="description" content="Turn-Table is middle school science practice where the diagram is the game. Students build the cell, line up the Moon and order the rock layers, and Pre-Test and Post-Test show what stuck.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<link rel="preload" href="{{BASE}}fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{BASE}}fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+@font-face{font-family:"Bricolage";src:url({{BASE}}fonts/bricolage.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Figtree";src:url({{BASE}}fonts/figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
 :root{
-  --ink:#14213d; --text:#26324a; --muted:#56637d; --paper:#f5f8fd; --grid:#e1e8f3; --line:#cfd9e8;
-  --blue:#2f6bff; --blue-dk:#1f4fd1; --white:#fff;
+  --night:#071330; --night2:#0e2250; --night3:#16306a;
+  --sun:#ffc857; --sun2:#ffdf9a; --moon:#f6efd8;
+  --ink:#0c1630; --text:#3a4560; --muted:#69748f; --mist:#f2f5fb; --line:#e1e7f1; --white:#fff;
   --life:#14824a; --phys:#2153d6; --chem:#6a3fd6; --earth:#c46a12;
-  --sun:#ffb21a; --good:#127a3e; --bad:#b3261e;
-  --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --good:#0f7a3c; --bad:#b3261e;
+  --display:"Bricolage",ui-sans-serif,system-ui,sans-serif; --body:"Figtree",ui-sans-serif,system-ui,sans-serif;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
-body{margin:0;color:var(--text);font:18px/1.6 var(--body);background:var(--paper);
-  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;background-attachment:fixed}
-a{color:var(--blue-dk)}
-:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
-h1,h2,h3{font-family:var(--display);color:var(--ink);line-height:1.08;margin:0;letter-spacing:-.01em}
-h2{font-size:clamp(32px,4.2vw,50px);font-weight:800;max-width:20ch}
-h3{font-size:22px;font-weight:700}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--white);color:var(--text);font:400 18px/1.62 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;line-height:1.04;letter-spacing:-.022em;font-stretch:94%}
+h2{font-size:clamp(36px,4.6vw,60px);font-weight:750;max-width:18ch}
+h3{font-size:21px;font-weight:700;line-height:1.2;letter-spacing:-.01em;font-stretch:95%}
 p{margin:0}
-.lede{font-size:21px;color:var(--muted);max-width:60ch}
-.btn{display:inline-flex;align-items:center;gap:8px;font:700 18px/1 var(--body);padding:16px 24px;border-radius:12px;text-decoration:none;border:2px solid transparent;cursor:pointer}
-.btn.primary{background:var(--blue);color:#fff}
-.btn.primary:hover{background:var(--blue-dk)}
-.btn.quiet{background:#fff;color:var(--ink);border-color:var(--line)}
-.btn.quiet:hover{border-color:var(--ink)}
+.lede{font-size:20px;line-height:1.6;color:var(--muted);max-width:58ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 26px;border-radius:999px;font:600 17px/1 var(--body);text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn.sun{background:var(--sun);color:var(--night)}
+.btn.sun:hover{background:var(--sun2)}
+.btn.ghost{color:#fff;border-color:rgba(255,255,255,.28)}
+.btn.ghost:hover{border-color:#fff}
+.btn.ink{background:var(--ink);color:#fff}
+.btn.line{color:var(--ink);border-color:var(--line);background:#fff}
+.btn.line:hover{border-color:var(--ink)}
+section{position:relative}
+.pad{padding:120px 0}
+.mist{background:var(--mist)}
+.dark{background:var(--night);color:#c9d3ea}
+.dark h2,.dark h3{color:#fff}
+.dark .lede{color:#a9b5d1}
+.sec-head{display:grid;gap:20px;margin-bottom:56px}
 
-/* nav */
-.nav{position:sticky;top:0;z-index:20;background:rgba(245,248,253,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;gap:20px;height:68px}
-.brand{white-space:nowrap;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font:800 24px/1 var(--display)}
-.brand sup{font-size:.45em;margin-left:1px}
-.tile{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:8px;background:var(--ink);color:#fff;font:800 17px/1 var(--display)}
-.nav nav{display:flex;gap:22px;margin-left:12px}
-.nav nav a{color:var(--text);text-decoration:none;font-size:16px}
-.nav nav a:hover{color:var(--blue-dk)}
-.nav .right{margin-left:auto;display:flex;align-items:center;gap:14px}
-.nav .student{white-space:nowrap;font-size:15px;color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line)}
-.nav .student b{color:var(--ink)}
-.nav .login{font-size:16px;color:var(--ink);text-decoration:none}
-.nav .btn{padding:11px 16px;font-size:16px}
+/* ---------- nav ---------- */
+.nav{position:absolute;top:0;left:0;right:0;z-index:30}
+.nav .wrap{display:flex;align-items:center;height:84px;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font:750 23px/1 var(--display);font-stretch:90%;white-space:nowrap;letter-spacing:-.01em}
+.brand .tile{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(145deg,#1b3a80,#0d2050);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);font:800 16px/1 var(--display);color:var(--sun)}
+.brand sup{font-size:.42em;font-weight:600;margin-left:2px;opacity:.8}
+.nav nav{display:flex;gap:28px;margin-left:16px}
+.nav nav a{color:#c3cde6;text-decoration:none;font-size:16px;font-weight:500}
+.nav nav a:hover{color:#fff}
+.nav .end{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav .student{color:#c3cde6;font-size:15px;text-decoration:none;white-space:nowrap}
+.nav .student:hover{color:#fff}
+.nav .login{color:#fff;font-size:16px;font-weight:600;text-decoration:none;white-space:nowrap}
+.nav .btn{height:46px;padding:0 20px;font-size:16px}
 
-/* hero */
-.hero{padding:64px 0 72px}
-.hero .wrap{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
-.hero h1{font-size:clamp(46px,6.4vw,84px);font-weight:800;letter-spacing:-.02em}
-.hero .lede{margin:24px 0 32px}
-.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
-.hero .fine{margin-top:16px;font-size:15px;color:var(--muted)}
+/* ---------- hero ---------- */
+.hero{background:radial-gradient(1200px 700px at -10% 30%,rgba(255,200,87,.22),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(60,110,255,.20),transparent 60%),linear-gradient(180deg,var(--night) 0%,#0a1a42 100%);color:#c9d3ea;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20px 30px,rgba(255,255,255,.55),transparent 60%),radial-gradient(1px 1px at 120px 80px,rgba(255,255,255,.35),transparent 60%),radial-gradient(1.5px 1.5px at 200px 160px,rgba(255,255,255,.45),transparent 60%),radial-gradient(1px 1px at 300px 40px,rgba(255,255,255,.3),transparent 60%);background-size:340px 220px;opacity:.6;pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;padding-top:128px;padding-bottom:88px}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--sun2);margin-bottom:26px}
+.kicker i{width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px var(--sun)}
+.hero h1{color:#fff;font-size:clamp(42px,4.7vw,68px);font-weight:760;letter-spacing:-.018em;line-height:1.02;font-stretch:94%}
+.hero h1 span{display:block;color:#8ea0cc;font-weight:560;margin-top:.12em}
+.hero .lede{color:#b3c0de;margin:26px 0 34px;font-size:20px;max-width:52ch}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap}
+.proof{display:flex;gap:40px;margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.proof b{display:block;font:750 34px/1 var(--display);color:#fff;font-stretch:94%}
+.proof span{font-size:14px;line-height:1.45;color:#94a3c7;display:block;margin-top:6px}
 
-/* the live diagram */
-.lab{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:20px 20px 18px;box-shadow:8px 8px 0 var(--ink)}
-.lab-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.lab-ask{font-size:16px;color:var(--muted)}
-.lab-ask b{display:block;font:700 22px/1.2 var(--display);color:var(--ink);margin-top:2px}
-.lab-target{text-align:center;font-size:13px;color:var(--muted);flex:none}
-.lab #labSvg{display:block;width:100%;height:auto;touch-action:none}
-.lab-view svg{width:46px;height:46px;flex:none}.lab-target svg{width:70px;height:70px;display:block}
-.lab .moon{cursor:grab}
-.lab .moon:active{cursor:grabbing}
-.lab-bottom{flex-wrap:wrap;display:flex;align-items:center;gap:14px;margin-top:6px}
-.lab-view{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);flex:1}
-.lab-view b{color:var(--ink)}
-.lab button.check{font:700 16px/1 var(--body);background:var(--ink);color:#fff;border:0;border-radius:10px;padding:13px 18px;cursor:pointer}
-.lab-say{margin-top:12px;padding:12px 14px;border-radius:12px;background:#f1f5fc;font-size:16px;min-height:52px}
-.lab-say.good{background:#e7f6ec;color:#0f4d29}
-.lab-say.bad{background:#fdeceb;color:#6f1712}
-.lab-cap{margin-top:12px;font-size:14px;color:var(--muted);text-align:center}
+/* the live model */
+.model{position:relative}
+.model svg#orbit{display:block;width:100%;height:auto;touch-action:none;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%);mask-image:linear-gradient(90deg,transparent 0,#000 16%)}
+.model .moon{cursor:grab;outline:none}
+.model .moon:active{cursor:grabbing}
+.model .moon:focus-visible .ring{stroke:var(--sun);stroke-width:3}
+.panel{position:relative;margin:4px auto 0;max-width:500px;background:rgba(14,34,80,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:18px 20px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.panel .row{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:12px;align-items:center}
+.panel .lbl{font-size:13px;color:#94a3c7;line-height:1.3}
+.panel .lbl b{display:block;font:700 17px/1.2 var(--display);color:#fff;font-stretch:95%}
+.panel svg{width:46px;height:46px;flex:none}
+.panel .act{display:flex;gap:10px;align-items:center;margin-top:14px}
+.panel .say{flex:1;font-size:15px;line-height:1.45;color:#c9d3ea;min-height:44px}
+.panel .say.good{color:#8ff0b5}
+.panel .say.bad{color:#ffb4ae}
+.panel button{flex:none;height:44px;padding:0 18px;border-radius:999px;border:0;background:var(--sun);color:var(--night);font:700 15px/1 var(--body);cursor:pointer}
+.panel button:hover{background:var(--sun2)}
+.model .tip{position:absolute;left:4%;top:4%;font-size:14px;color:#94a3c7;max-width:200px;line-height:1.4}
+.model .tip b{color:var(--sun2);font-weight:600}
 
-/* sections */
-section.band{padding:88px 0}
-section.band.white{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.head{display:grid;gap:18px;margin-bottom:44px}
+@media (prefers-reduced-motion:no-preference){
+  .hero .wrap>div:first-child>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+  .hero .wrap>div:first-child>*:nth-child(2){animation-delay:.06s}
+  .hero .wrap>div:first-child>*:nth-child(3){animation-delay:.12s}
+  .hero .wrap>div:first-child>*:nth-child(4){animation-delay:.18s}
+  .hero .wrap>div:first-child>*:nth-child(5){animation-delay:.24s}
+  .model{animation:fade 1.2s .2s ease both}
+}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 
-/* two kinds of practice */
-.versus{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.side{border-radius:18px;padding:24px;border:2px solid var(--line);background:var(--paper)}
-.side.tt{border-color:var(--ink);background:#fff}
-.side h3{margin-bottom:6px}
-.side .who{font-size:15px;color:var(--muted);margin-bottom:18px}
-.quiz{background:#232b3d;border-radius:14px;padding:16px;color:#fff}
-.quiz .q{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:12px}
-.quiz .timer{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;border:3px solid #ffcd4d;font:800 18px/1 var(--display)}
-.quiz .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.quiz .opts span{padding:14px 12px;border-radius:10px;font-weight:700;font-size:16px}
-.quiz .pts{margin-top:10px;font-size:14px;color:#c9d2e6}
-.ttmock{border:2px solid var(--line);border-radius:14px;overflow:hidden;background:#f7f9fd}
-.ttmock svg{display:block;width:100%;height:auto}
-.ttmock .bar{padding:10px 14px;font-size:15px;border-top:1px solid var(--line);background:#fff}
-.practices{margin-top:18px;display:grid;gap:10px;font-size:16px}
-.practices div{display:grid;grid-template-columns:140px 1fr;gap:12px;padding-top:10px;border-top:1px dashed var(--line)}
-.practices dt,.practices .k{color:var(--muted)}
-.practices .v{color:var(--ink)}
+/* ---------- problem ---------- */
+.problem .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:72px;align-items:start}
+.problem .wrap>div:first-child{position:sticky;top:80px}
+.problem p.lede{margin-top:24px}
+.vs{position:relative;display:grid;gap:22px}
+.screen{border-radius:var(--r-md);overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--line),0 24px 50px -24px rgba(12,22,48,.35);border:1px solid var(--line)}
+.screen .cap{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px;font-size:15px;border-top:1px solid var(--line)}
+.screen .cap b{color:var(--ink);font-weight:700}
+.screen .cap span{color:var(--muted)}
+.screen.dull{filter:saturate(.35);opacity:.86;transform:scale(.94);transform-origin:left center}
+.quiz{background:#272f42;padding:22px;color:#fff}
+.quiz .q{display:flex;justify-content:space-between;align-items:center;font:700 18px/1.2 var(--body)}
+.quiz .t{width:44px;height:44px;border-radius:50%;border:3px solid #ffd35c;display:grid;place-items:center;font-weight:800}
+.quiz .o{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.quiz .o span{padding:15px 14px;border-radius:10px;font-weight:700;font-size:15px}
+.quiz .pts{margin-top:12px;font-size:13px;color:#c5cde0}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px}
+.tag.no{background:#fdeceb;color:#8a1f18}
+.tag.yes{background:#e3f5ea;color:#0d5c2f}
 
-/* rules */
-.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 32px}
-.rule{padding-top:18px;border-top:3px solid var(--ink)}
-.rule h3{margin-bottom:8px}
+/* ---------- showcase ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tabs button{height:46px;padding:0 20px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font:600 16px/1 var(--body);cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+.tabs button i{width:10px;height:10px;border-radius:3px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.show{display:grid;grid-template-columns:1.45fr .55fr;gap:44px;align-items:center}
+.device{border-radius:22px;background:linear-gradient(160deg,#1c2744,#0b1530);padding:14px;box-shadow:0 40px 80px -30px rgba(12,22,48,.55)}
+.device .bar{display:flex;gap:7px;padding:2px 4px 12px}
+.device .bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.2)}
+.device img{border-radius:10px;width:100%;height:auto;aspect-ratio:1600/833;object-fit:cover;object-position:top;background:#eef2fa}
+.show-copy .subj{font-size:15px;font-weight:600}
+.show-copy h3{font-size:clamp(28px,2.6vw,36px);margin:10px 0 14px;font-stretch:88%;letter-spacing:-.02em}
+.show-copy p{color:var(--muted)}
+.show-copy dl{margin:24px 0 0;display:grid;gap:14px}
+.show-copy dt{font-size:14px;color:var(--muted)}
+.show-copy dd{margin:2px 0 0;color:var(--ink);font-weight:600}
+
+/* ---------- rules ---------- */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rule{background:#fff;border-radius:var(--r-md);padding:28px;border:1px solid var(--line)}
+.rule svg{width:44px;height:44px;margin-bottom:22px}
+.rule h3{margin-bottom:10px}
 .rule p{color:var(--muted);font-size:17px}
 
-/* research */
-.research{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.finding{background:#fff;border:2px solid var(--line);border-radius:18px;padding:26px}
-.finding .num{font:800 64px/1 var(--display);color:var(--ink)}
-.finding .num small{font-size:24px;font-weight:700;color:var(--muted);margin-left:6px}
-.finding p{margin-top:10px}
-.finding cite{display:block;margin-top:14px;font-size:14px;font-style:normal;color:var(--muted)}
-.bars{margin-top:16px;display:grid;gap:8px;font-size:15px}
-.bars .row{display:grid;grid-template-columns:150px 1fr 48px;align-items:center;gap:10px}
-.bars .track{height:18px;border-radius:6px;background:#eef2f9;overflow:hidden}
-.bars .fill{height:100%;border-radius:6px}
-.tie{margin-top:28px;font-size:19px;max-width:66ch}
+/* ---------- research ---------- */
+.research .wrap{display:grid;grid-template-columns:.85fr 1.15fr;gap:72px;align-items:start}
+.research p.lede{margin-top:24px}
+.find{display:grid;gap:22px}
+.stat-card{border-radius:var(--r-lg);padding:34px;background:var(--mist)}
+.stat-card .big{font:780 clamp(60px,6.4vw,86px)/.92 var(--display);color:var(--ink);letter-spacing:-.025em;font-stretch:92%}
+.stat-card .big small{font-size:.32em;font-weight:600;color:var(--muted);letter-spacing:0;margin-left:10px}
+.stat-card p{margin-top:16px;max-width:52ch}
+.stat-card cite{display:block;margin-top:16px;font-size:14px;font-style:normal;color:var(--muted)}
+.cmp{margin-top:22px;display:grid;gap:12px}
+.cmp .r{display:grid;grid-template-columns:160px 1fr 52px;gap:14px;align-items:center;font-size:15px}
+.cmp .tr{height:14px;border-radius:999px;background:#e2e8f3;overflow:hidden}
+.cmp .f{height:100%;border-radius:999px;display:block}
+.cmp b{color:var(--ink);text-align:right}
+.tie{margin-top:8px;font-size:19px;color:var(--ink);max-width:56ch;font-weight:500}
 
-/* pre / post */
-.prepost{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
-.steps{display:grid;gap:18px;margin-top:28px}
-.step{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start}
-.step .n{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;font:800 18px/1 var(--display);color:#fff}
-.step b{display:block;color:var(--ink);font-size:18px}
-.step span{color:var(--muted);font-size:16px}
-.report{background:#fff;border:2px solid var(--ink);border-radius:18px;padding:22px;box-shadow:8px 8px 0 var(--ink)}
-.report .rh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
-.report .rh b{font:700 20px/1.2 var(--display);color:var(--ink)}
-.report .rh span{font-size:14px;color:var(--muted)}
-.report table{width:100%;border-collapse:collapse;font-size:16px}
-.report th{font-size:13px;color:var(--muted);font-weight:700;text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)}
-.report td{padding:9px 8px;border-bottom:1px solid #edf1f7}
-.report td.up{color:var(--good);font-weight:700}
-.report .avg{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;font-size:16px}
-.report .avg b{color:var(--ink)}
-.spark{display:inline-block;height:10px;border-radius:4px;vertical-align:middle;margin-right:6px}
+/* ---------- pre / post ---------- */
+.pp .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:center}
+.cycle{margin-top:36px;display:grid;gap:4px}
+.cyc{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+.cyc .n{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font:800 19px/1 var(--display);color:#fff}
+.cyc b{display:block;color:var(--ink);font-size:18px}
+.cyc span{color:var(--muted);font-size:16px}
+.report{background:#fff;border-radius:var(--r-lg);padding:30px;box-shadow:0 40px 80px -36px rgba(12,22,48,.4);border:1px solid var(--line)}
+.report header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:22px}
+.report header b{font:700 22px/1.2 var(--display);color:var(--ink);font-stretch:92%}
+.report header span{font-size:14px;color:var(--muted)}
+.pair{display:grid;grid-template-columns:90px 1fr 54px;gap:14px;align-items:center;padding:10px 0;border-top:1px solid #eef2f8;font-size:15px}
+.pair .bars{display:grid;gap:5px}
+.pair .bars i{display:block;height:9px;border-radius:999px}
+.pair .bars i.pre{background:#c3cde0}
+.pair .bars i.post{background:var(--phys)}
+.pair b{color:var(--good);text-align:right;font-size:16px}
+.report .sum{display:flex;gap:28px;flex-wrap:wrap;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--muted)}
+.report .sum b{display:block;font:750 28px/1 var(--display);color:var(--ink);font-stretch:88%}
+.key{display:flex;gap:18px;font-size:13px;color:var(--muted);margin-bottom:6px}
+.key i{display:inline-block;width:18px;height:8px;border-radius:999px;margin-right:6px;vertical-align:middle}
 
-/* game table */
-.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:16px}
-.legend span{display:inline-flex;align-items:center;gap:8px}
-.legend i{width:16px;height:16px;border-radius:4px;display:inline-block}
-.games{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.game{position:relative;background:#fff;border-radius:12px;border:2px solid var(--c);overflow:hidden;display:flex;flex-direction:column}
-.game .art{aspect-ratio:16/10;overflow:hidden;background:var(--c)}
-.game .art svg{display:block;width:100%;height:100%}
-.game .num{position:absolute;top:6px;left:8px;font:800 13px/1 var(--display);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
-.game .info{padding:8px 10px 10px}
-.game b{display:block;font:700 16px/1.15 var(--display);color:var(--ink)}
-.game small{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
-.game .free{position:absolute;top:6px;right:6px;background:#fff;color:var(--ink);font-size:11px;font-weight:700;padding:3px 7px;border-radius:999px}
-.games-note{margin-top:18px;font-size:16px;color:var(--muted)}
+/* ---------- games ---------- */
+.games-band{background:radial-gradient(900px 500px at 85% 0%,rgba(106,63,214,.25),transparent 60%),radial-gradient(800px 500px at 0% 100%,rgba(20,130,74,.18),transparent 60%),var(--night)}
+.legend{display:flex;gap:22px;flex-wrap:wrap;font-size:15px;color:#a9b5d1}
+.legend span{display:inline-flex;align-items:center;gap:9px}
+.legend i{width:12px;height:12px;border-radius:4px}
+.table{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.el{position:relative;border-radius:16px;overflow:hidden;background:#0f1d42;border:1px solid rgba(255,255,255,.08);transition:transform .2s ease,border-color .2s ease}
+.el:hover{transform:translateY(-3px);border-color:var(--c)}
+.el .art{aspect-ratio:16/10;overflow:hidden}
+.el .art svg{display:block;width:100%;height:100%}
+.el .z{position:absolute;top:8px;left:10px;font:750 13px/1 var(--display);color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.el .free{position:absolute;top:8px;right:8px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:var(--sun);color:var(--night)}
+.el .tx{padding:10px 12px 12px;border-top:3px solid var(--c)}
+.el b{display:block;color:#fff;font:700 15px/1.15 var(--display);font-stretch:95%}
+.el small{display:block;margin-top:4px;color:#8e9bbd;font-size:12px}
+.games-note{margin-top:28px;color:#a9b5d1;max-width:70ch}
 
-/* classroom */
-.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 36px}
-.feat h3{font-size:20px;margin-bottom:6px}
-.feat p{color:var(--muted);font-size:17px}
+/* ---------- classroom ---------- */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:44px 48px}
+.feat{display:grid;grid-template-columns:44px 1fr;gap:16px}
+.feat svg{width:44px;height:44px}
+.feat h3{font-size:19px;margin-bottom:6px}
+.feat p{color:var(--muted);font-size:16px}
 
-/* founder */
-.founder{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
-.founder blockquote{margin:0;font:500 clamp(24px,2.6vw,32px)/1.35 var(--display);color:var(--ink)}
-.founder .sig{margin-top:18px;font-size:17px;color:var(--muted)}
-.founder .sig b{color:var(--ink)}
-.stats{display:grid;gap:14px}
-.stat{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 20px}
-.stat b{display:block;font:800 40px/1 var(--display);color:var(--ink)}
-.stat span{font-size:15px;color:var(--muted)}
+/* ---------- founder ---------- */
+.founder .wrap{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center}
+.mono{width:160px;height:160px;border-radius:40px;background:linear-gradient(150deg,var(--night3),var(--night));display:grid;place-items:center;color:var(--sun);font:800 54px/1 var(--display);font-stretch:85%;box-shadow:0 30px 60px -24px rgba(7,19,48,.6)}
+.founder blockquote{margin:0;font:500 clamp(26px,3vw,40px)/1.25 var(--display);color:var(--ink);letter-spacing:-.02em;font-stretch:92%;max-width:30ch}
+.founder .who{margin-top:22px;color:var(--muted)}
+.founder .who b{color:var(--ink)}
 
-/* pricing */
-.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:900px}
-.plan{background:#fff;border:2px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px}
-.plan.best{border-color:var(--ink);box-shadow:8px 8px 0 var(--ink)}
-.plan .price{font:800 48px/1 var(--display);color:var(--ink)}
-.plan .price small{font-size:18px;font-weight:700;color:var(--muted)}
-.plan ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:17px}
+/* ---------- pricing ---------- */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:960px}
+.plan{border-radius:var(--r-lg);padding:36px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
+.plan.best{background:linear-gradient(160deg,var(--night2),var(--night));border-color:transparent;color:#c9d3ea;box-shadow:0 40px 80px -30px rgba(7,19,48,.6)}
+.plan.best h3{color:#fff}
+.plan .price{font:780 62px/1 var(--display);color:var(--ink);letter-spacing:-.025em;font-stretch:92%;margin:20px 0 6px}
+.plan.best .price{color:#fff}
+.plan .price small{font-size:18px;font-weight:600;letter-spacing:0;color:var(--muted);margin-left:6px}
+.plan.best .price small,.plan.best .alt{color:#a9b5d1}
 .plan .alt{font-size:15px;color:var(--muted)}
-.plan .btn{justify-content:center;margin-top:auto}
-.trialnote{margin-top:24px;font-size:17px;color:var(--muted);max-width:70ch}
+.plan ul{list-style:none;margin:26px 0 30px;padding:0;display:grid;gap:12px;font-size:16px}
+.plan li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+.plan li::before{content:"";width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.5L13 6.5' fill='none' stroke='%230c1630' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
+.plan.best li::before{background-color:var(--sun)}
+.plan .btn{margin-top:auto}
+.plan .save{display:inline-block;margin-left:10px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sun);color:var(--night);vertical-align:middle}
+.fine{margin-top:28px;color:var(--muted);max-width:68ch}
 
-/* faq */
-.faq{max-width:820px}
-.faq details{border-bottom:1px solid var(--line);padding:18px 0}
-.faq summary{cursor:pointer;font:700 20px/1.3 var(--display);color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:16px}
+/* ---------- faq ---------- */
+.faq{max-width:840px}
+.faq details{border-top:1px solid var(--line);padding:22px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;font:650 21px/1.3 var(--display);color:var(--ink);font-stretch:95%}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:26px;line-height:1;color:var(--muted)}
-.faq details[open] summary::after{content:"−"}
-.faq details p{margin-top:10px;color:var(--muted);max-width:68ch}
+.faq summary::after{content:"";width:28px;height:28px;flex:none;border-radius:50%;border:1.5px solid var(--line);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M9 14h10M14 9v10' stroke='%230c1630' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/28px no-repeat}
+.faq details[open] summary::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M9 14h10' stroke='%230c1630' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E")}
+.faq details p{margin-top:12px;color:var(--muted);max-width:66ch}
 
-/* end */
-.end{padding:96px 0;background:var(--ink);color:#d9e1f2}
-.end h2{color:#fff;max-width:22ch}
-.end p{margin:18px 0 30px;font-size:20px;max-width:56ch}
-.end .btn.quiet{background:transparent;color:#fff;border-color:#55648a}
-footer{padding:28px 0;font-size:15px;color:var(--muted)}
-footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
-footer a{color:var(--muted)}
-.sources{font-size:14px;color:var(--muted);margin-top:22px}
+/* ---------- close ---------- */
+.close{background:radial-gradient(900px 500px at 50% 120%,rgba(255,200,87,.25),transparent 60%),var(--night);text-align:center}
+.close h2{color:#fff;margin:0 auto;max-width:16ch;font-size:clamp(40px,5.4vw,72px)}
+.close p{margin:24px auto 40px;color:#b3c0de;font-size:20px;max-width:52ch}
+.close .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+footer{background:var(--night);color:#8492b6;font-size:15px;border-top:1px solid rgba(255,255,255,.08)}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:28px;padding-bottom:28px}
+footer a{color:#b3c0de}
 
-@media (max-width:1000px){
-  .hero .wrap,.versus,.research,.prepost,.founder{grid-template-columns:1fr}
-  .games{grid-template-columns:repeat(3,1fr)}
-  .rules,.feats{grid-template-columns:1fr 1fr}
+/* ---------- responsive ---------- */
+@media (max-width:1040px){
   .nav nav{display:none}
+  .hero .wrap,.problem .wrap,.show,.research .wrap,.pp .wrap{grid-template-columns:1fr}
+  .hero .wrap{padding-top:120px;gap:24px}
+  .table{grid-template-columns:repeat(4,1fr)}
+  .rules,.feats{grid-template-columns:1fr 1fr}
+  .screen.dull{transform:none}
 }
 @media (max-width:640px){
   body{font-size:17px}
-  .wrap{padding:0 16px}
-  .hero{padding:36px 0 48px}
-  section.band{padding:60px 0}
-  .games{grid-template-columns:repeat(2,1fr)}
-  .rules,.feats,.plans{grid-template-columns:1fr}
+  .wrap{padding:0 20px}
+  .pad{padding:80px 0}
   .nav .login,.nav .btn{display:none}
-  .brand{font-size:20px}.tile{width:30px;height:30px;font-size:14px}
-  .nav .student{font-size:14px;padding:7px 10px}
-  .lab-view{flex-basis:100%}.lab button.check{width:100%}
-  .lab{box-shadow:5px 5px 0 var(--ink)}
-  .practices div{grid-template-columns:1fr;gap:2px}
-  .bars .row{grid-template-columns:110px 1fr 40px}
+  .nav .wrap{height:72px}
+  .hero .wrap{padding-top:104px;padding-bottom:72px}
+  .hero .lede{font-size:19px}
+  .proof{gap:26px}
+  .panel .row{grid-template-columns:auto 1fr;row-gap:12px}
+  .panel .act{flex-wrap:wrap}.panel button{width:100%}
+  .model .tip{display:none}
+  .table{grid-template-columns:repeat(2,1fr)}
+  .rules,.feats,.plans{grid-template-columns:1fr}
+  .rules{gap:12px}
+  .rule{display:grid;grid-template-columns:40px 1fr;column-gap:16px;padding:20px}
+  .rule svg{width:36px;height:36px;margin:0;grid-row:span 2}
+  .rule h3{margin-bottom:6px}
+  .rule p{font-size:16px}
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .founder .wrap{grid-template-columns:1fr;gap:28px}
+  .mono{width:96px;height:96px;border-radius:26px;font-size:34px}
+  .cmp .r{grid-template-columns:110px 1fr 44px}
+  .plan{padding:28px}
 }
 </style>
 </head>
@@ -229,15 +302,15 @@ footer a{color:var(--muted)}
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Turn-Table home"><span class="tile">Tt</span>Turn-Table<sup>™</sup></a>
     <nav aria-label="Page sections">
-      <a href="#difference">The difference</a>
+      <a href="#how">How it works</a>
       <a href="#prepost">Pre and Post</a>
       <a href="#games">Games</a>
       <a href="#pricing">Pricing</a>
     </nav>
-    <div class="right">
-      <a class="student" href="/"><b>Student?</b> Play here</a>
-      <a class="login" href="/?teacher">Teacher log in</a>
-      <a class="btn primary" href="/?teacher=new">Start free</a>
+    <div class="end">
+      <a class="student" href="/">Student? Play here</a>
+      <a class="login" href="/?teacher">Log in</a>
+      <a class="btn sun" href="/?teacher=new">Start free trial</a>
     </div>
   </div>
 </header>
@@ -246,225 +319,228 @@ footer a{color:var(--muted)}
 <section class="hero">
   <div class="wrap">
     <div>
-      <h1>Games were never the problem.</h1>
-      <p class="lede">Most review games are a quiz with a game bolted on. Students learn to tap fast and guess well. In Turn-Table, the diagram is the game. Students build the cell, line up the Moon and balance the equation, so the only way to win is to do the science.</p>
+      <p class="kicker"><i></i>Middle school science, grades 6 to 8</p>
+      <h1>Games were never the problem.<span>Games that skip the science are.</span></h1>
+      <p class="lede">Most review games are a quiz with a game bolted on, so students get good at tapping fast. In Turn-Table, the diagram is the game. The only way to win is to use the science.</p>
       <div class="ctas">
-        <a class="btn primary" href="/?teacher=new">Start your free trial</a>
-        <a class="btn quiet" href="#difference">See the difference</a>
+        <a class="btn sun" href="/?teacher=new">Start your free trial</a>
+        <a class="btn ghost" href="#how">See how it works</a>
       </div>
-      <p class="fine">For middle school science. 24 games across life, physical, earth and space science, built to run on school Chromebooks.</p>
+      <div class="proof">
+        <div><b>24</b><span>games across 4 subjects</span></div>
+        <div><b>{{STUDENTS}}</b><span>students in a real 7th grade</span></div>
+        <div><b>{{PLAYS}}</b><span>rounds played since {{SINCE}}</span></div>
+      </div>
     </div>
 
-    <div class="lab" id="lab" aria-labelledby="labAsk">
-      <div class="lab-top">
-        <p class="lab-ask" id="labAsk">Try one. Drag the Moon to where it will look like this from Earth:<b id="labGoal">First quarter</b></p>
-        <div class="lab-target"><svg id="labTarget" width="76" height="76" viewBox="0 0 76 76" aria-hidden="true"></svg></div>
+    <div class="model" id="model">
+      <svg id="orbit" viewBox="0 0 560 400" role="group" aria-label="Model of the Sun, Earth and Moon"></svg>
+      <div class="panel">
+        <div class="row">
+          <svg id="goalPh" viewBox="0 0 76 76" aria-hidden="true"></svg>
+          <p class="lbl">Make it look like<b id="goalTx">First quarter</b></p>
+          <svg id="nowPh" viewBox="0 0 76 76" aria-hidden="true"></svg>
+          <p class="lbl">From Earth now<b id="nowTx">New moon</b></p>
+        </div>
+        <div class="act">
+          <p class="say" id="say" role="status" aria-live="polite">Try it: drag the Moon around Earth (or tap it and use the arrow keys), then check your model.</p>
+          <button type="button" id="check">Check my model</button>
+        </div>
       </div>
-      <svg id="labSvg" viewBox="0 0 520 340" role="group" aria-label="Model of the Sun, Earth and Moon. Use the left and right arrow keys to move the Moon around its orbit."></svg>
-      <div class="lab-bottom">
-        <div class="lab-view"><svg id="labView" width="46" height="46" viewBox="0 0 76 76" aria-hidden="true"></svg><span>From Earth it looks like <b id="labNow">a new moon</b></span></div>
-        <button class="check" id="labCheck" type="button">Check my model</button>
-      </div>
-      <p class="lab-say" id="labSay" role="status" aria-live="polite">The Sun shines from the left. Drag the Moon around Earth, or use the arrow keys.</p>
-      <p class="lab-cap">A simplified piece of Moonwatch, one of the 24 games.</p>
     </div>
   </div>
 </section>
 
-<section class="band white" id="difference">
+<section class="pad problem" id="how">
   <div class="wrap">
-    <div class="head">
-      <h2>Same topic. Two very different kinds of practice.</h2>
-      <p class="lede">Here's moon phases in a typical review game, next to the same idea in Turn-Table. Look at what each one asks a student to do.</p>
+    <div>
+      <h2>Most review games teach kids to play the game.</h2>
+      <p class="lede">The question is a side quest. Students learn to spot the right word, tap fast and collect points. Turn-Table flips it: the moves students make are the science itself, so practicing the game means practicing the idea.</p>
     </div>
-    <div class="versus">
-      <div class="side">
-        <h3>A typical review game</h3>
-        <p class="who">Multiple choice on a timer, with points for speed.</p>
+    <div class="vs">
+      <div class="screen dull" aria-label="A typical review game">
         <div class="quiz" aria-hidden="true">
-          <div class="q"><span>Which phase is this?</span><span class="timer">4</span></div>
-          <div class="opts">
-            <span style="background:#d64545">Waxing crescent</span><span style="background:#2d6fd6">First quarter</span>
-            <span style="background:#d9a21b">Full moon</span><span style="background:#2c9a55">New moon</span>
-          </div>
+          <div class="q"><span>Which phase is this?</span><span class="t">4</span></div>
+          <div class="o"><span style="background:#d64545">Waxing crescent</span><span style="background:#2d6fd6">First quarter</span><span style="background:#d9a21b">Full moon</span><span style="background:#2c9a55">New moon</span></div>
           <p class="pts">+950 for answering fast</p>
         </div>
-        <div class="practices">
-          <div><span class="k">What wins</span><span class="v">Recognizing a word, fast</span></div>
-          <div><span class="k">A wrong answer</span><span class="v">Red X, next question</span></div>
-          <div><span class="k">What sticks</span><span class="v">The name, maybe</span></div>
-        </div>
+        <div class="cap"><b>A typical review game</b><span class="tag no">Practices: tapping fast</span></div>
       </div>
-      <div class="side tt">
-        <h3>Turn-Table</h3>
-        <p class="who">Students work the model itself, with limited tries.</p>
-        <div class="ttmock" aria-hidden="true"><svg id="mockMoon" viewBox="0 0 520 250"></svg>
-          <div class="bar">Put the Moon where it will look like a <b>waning crescent</b>. Predict first, then check.</div></div>
-        <div class="practices">
-          <div><span class="k">What wins</span><span class="v">Using the model to predict</span></div>
-          <div><span class="k">A wrong answer</span><span class="v">An explanation of why, then another try</span></div>
-          <div><span class="k">What sticks</span><span class="v">Why the Moon has phases at all</span></div>
-        </div>
+      <div class="screen" aria-label="Moonwatch in Turn-Table">
+        <img src="{{BASE}}img/moon.webp" width="1600" height="833" alt="Moonwatch: a student reads the Moon's position in its orbit and predicts its phase as seen from Earth.">
+        <div class="cap"><b>Moonwatch in Turn-Table</b><span class="tag yes">Practices: the model</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band">
+<section class="pad mist">
   <div class="wrap">
-    <div class="head">
-      <h2>Six rules that keep the focus on learning.</h2>
-      <p class="lede">Every new Turn-Table game is built on all six. They're the difference between studying with a game and just playing one.</p>
+    <div class="sec-head">
+      <h2>The diagram is the game.</h2>
+      <p class="lede">Every game is an interactive diagram built on a specific standard. Students build it, order it, plan it or predict it, and the diagram shows whether their thinking holds up.</p>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Example games">
+      <button role="tab" aria-selected="true" data-k="strata"><i style="background:var(--earth)"></i>Deep Time</button>
+      <button role="tab" aria-selected="false" data-k="cell"><i style="background:var(--life)"></i>Cell Shop</button>
+      <button role="tab" aria-selected="false" data-k="courier"><i style="background:var(--phys)"></i>Space Courier</button>
+      <button role="tab" aria-selected="false" data-k="moon"><i style="background:var(--earth)"></i>Moonwatch</button>
+    </div>
+    <div class="show" role="tabpanel">
+      <div class="device"><div class="bar"><i></i><i></i><i></i></div><img id="showImg" src="{{BASE}}img/strata.webp" width="1600" height="833" alt=""></div>
+      <div class="show-copy">
+        <span class="subj" id="showSubj" style="color:var(--earth)">Earth & Space · MS-ESS1-4</span>
+        <h3 id="showName">Deep Time</h3>
+        <p id="showDesc"></p>
+        <dl><div><dt>Students practice</dt><dd id="showDo"></dd></div><div><dt>When they're wrong</dt><dd id="showWrong"></dd></div></dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Six rules behind every new game.</h2>
+      <p class="lede">They're the difference between studying with a game and just playing one.</p>
     </div>
     <div class="rules">
-      <div class="rule"><h3>The science is the move</h3><p>No points for clicking fast. Students win by placing, building, balancing or predicting with the actual idea.</p></div>
-      <div class="rule"><h3>Predict before you run</h3><p>Students commit to a prediction first. Then the simulation shows whether the idea in their head matches what really happens.</p></div>
-      <div class="rule"><h3>Every miss is explained</h3><p>A wrong answer gets a short, specific explanation of what went wrong, not just a red X.</p></div>
-      <div class="rule"><h3>Limited tries</h3><p>Stars come from getting it right early. Guessing until something works doesn't pay.</p></div>
-      <div class="rule"><h3>Say it in your own words</h3><p>Science Check questions make students type a full-sentence explanation before they move on. Hints walk them to the key idea.</p></div>
-      <div class="rule"><h3>Tied to a standard</h3><p>Every game is built on a specific middle school standard, and the tag sits right on the game card.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="22" r="7"/><circle cx="22" cy="22" r="16" stroke-dasharray="3 4"/><circle cx="36" cy="16" r="3" fill="#ffc857" stroke="#0c1630"/></svg><h3>The science is the move</h3><p>No points for speed. Students win by placing, building, ordering or predicting with the actual idea.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 34c6-10 10-14 14-14s8 6 14-12"/><path d="M30 8h6v6"/><circle cx="14" cy="27" r="2.4" fill="#ffc857"/></svg><h3>Predict before you run</h3><p>Students commit to a prediction first. Then the simulation shows whether the idea in their head matches what really happens.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11h26v17H20l-7 6v-6H9z"/><path d="M16 19h12M16 23h7"/></svg><h3>Every miss is explained</h3><p>A wrong answer gets a short, specific reason it didn't work, then another try. Never just a red X.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 7l4.3 8.7 9.7 1.4-7 6.8 1.7 9.6L22 29l-8.7 4.5 1.7-9.6-7-6.8 9.7-1.4z"/></svg><h3>Limited tries</h3><p>Stars come from getting it right early, so guessing until something works doesn't pay.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 33l3-9L28 9l6 6-15 15z"/><path d="M25 12l6 6"/><path d="M10 37h24"/></svg><h3>Say it in your own words</h3><p>Science Check questions make students type a full-sentence explanation. Hints walk them to the key idea.</p></div>
+      <div class="rule"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="8" width="26" height="28" rx="4"/><path d="M15 16h14M15 22h14M15 28h8"/></svg><h3>Tied to a standard</h3><p>Every game is built on a middle school standard, and the tag sits right on the game card.</p></div>
     </div>
   </div>
 </section>
 
-<section class="band white" id="research">
+<section class="pad research mist" id="research">
   <div class="wrap">
-    <div class="head">
-      <h2>Built on the study habit with the strongest research behind it.</h2>
-      <p class="lede">It's called retrieval practice: pulling an idea out of memory and using it, instead of rereading it. Every Turn-Table level is retrieval practice.</p>
+    <div>
+      <h2>Retrieval practice, built into every level.</h2>
+      <p class="lede">Retrieval practice means pulling an idea out of memory and using it, instead of rereading it. It's one of the best-researched study habits there is, and it's how every Turn-Table level works.</p>
     </div>
-    <div class="research">
-      <div class="finding">
-        <div class="num">61%<small>vs 40%</small></div>
-        <p>A week later, students who practiced by testing themselves remembered 61% of a passage. Students who reread it remembered 40%.</p>
-        <div class="bars" aria-hidden="true">
-          <div class="row"><span>Practiced recalling</span><span class="track"><span class="fill" style="width:61%;background:var(--ink);display:block"></span></span><b>61%</b></div>
-          <div class="row"><span>Reread it</span><span class="track"><span class="fill" style="width:40%;background:#9aa8c2;display:block"></span></span><b>40%</b></div>
+    <div class="find">
+      <div class="stat-card" style="background:#fff">
+        <div class="big">61%<small>vs 40%</small></div>
+        <p>A week later, students who practiced by recalling remembered 61% of a passage. Students who reread it remembered 40%.</p>
+        <div class="cmp" aria-hidden="true">
+          <div class="r"><span>Practiced recalling</span><span class="tr"><span class="f" style="width:61%;background:var(--ink)"></span></span><b>61%</b></div>
+          <div class="r"><span>Reread it</span><span class="tr"><span class="f" style="width:40%;background:#a7b3cc"></span></span><b>40%</b></div>
         </div>
         <cite>Roediger &amp; Karpicke (2006), Psychological Science</cite>
       </div>
-      <div class="finding">
-        <div class="num">50<small>classroom experiments</small></div>
-        <p>A 2021 review looked only at real schools and classrooms. Most of the experiments (57%) found medium or large benefits from retrieval practice, across grade levels and subjects.</p>
+      <div class="stat-card" style="background:#fff">
+        <div class="big">57%<small>of 50 classroom experiments</small></div>
+        <p>A 2021 review looked only at real schools and classrooms. Most of the experiments found medium or large benefits from retrieval practice, across grade levels and subjects.</p>
         <cite>Agarwal, Nunes &amp; Blunt (2021), Educational Psychology Review</cite>
       </div>
+      <p class="tie">Retrieval only helps when students have to think. A game that rewards tapping fast skips that part. Turn-Table makes thinking the only way through.</p>
     </div>
-    <p class="tie">The catch is that retrieval only helps when students actually have to think. A game that rewards tapping fast skips that part. Turn-Table makes the thinking the only way through.</p>
   </div>
 </section>
 
-<section class="band" id="prepost">
-  <div class="wrap prepost">
+<section class="pad pp" id="prepost">
+  <div class="wrap">
     <div>
       <h2>Know where to start. See what stuck.</h2>
-      <p class="lede" style="margin-top:18px">Pre-Test mode turns 17 of the games into a quick check. It uses the same items before and after the unit, with no hints and no feedback until the end.</p>
-      <div class="steps">
-        <div class="step"><span class="n" style="background:var(--phys)">1</span><div><b>Day 1: Pre-Test</b><span>One try per question. You see what your class already knows before you teach.</span></div></div>
-        <div class="step"><span class="n" style="background:var(--life)">2</span><div><b>During the unit: Review</b><span>The same games switch on hints, feedback and explanations.</span></div></div>
-        <div class="step"><span class="n" style="background:var(--chem)">3</span><div><b>End of unit: Post-Test</b><span>Same questions, same rules. Your dashboard shows each student's growth.</span></div></div>
+      <p class="lede" style="margin-top:24px">Pre-Test mode turns 17 of the games into a quick check, with the same items before and after the unit. There are no hints and no feedback until the end.</p>
+      <div class="cycle">
+        <div class="cyc"><span class="n" style="background:var(--phys)">1</span><div><b>Day one: Pre-Test</b><span>One try per question. You see what the class already knows before you teach.</span></div></div>
+        <div class="cyc"><span class="n" style="background:var(--life)">2</span><div><b>During the unit: Review</b><span>The same games switch on hints, feedback and explanations.</span></div></div>
+        <div class="cyc"><span class="n" style="background:var(--chem)">3</span><div><b>End of unit: Post-Test</b><span>Same questions, same rules. Your dashboard shows each student's growth.</span></div></div>
       </div>
     </div>
     <div class="report" aria-label="Example growth report">
-      <div class="rh"><b>Moonwatch growth report</b><span>Example class</span></div>
-      <table>
-        <thead><tr><th>Student</th><th>Pre-Test</th><th>Post-Test</th><th>Change</th></tr></thead>
-        <tbody>
-          <tr><td>astro.k</td><td>33%</td><td>89%</td><td class="up">+56</td></tr>
-          <tr><td>maya.r</td><td>56%</td><td>100%</td><td class="up">+44</td></tr>
-          <tr><td>jdubs</td><td>22%</td><td>67%</td><td class="up">+45</td></tr>
-          <tr><td>leo.p</td><td>67%</td><td>78%</td><td class="up">+11</td></tr>
-          <tr><td>sam.t</td><td>44%</td><td>89%</td><td class="up">+45</td></tr>
-        </tbody>
-      </table>
-      <div class="avg"><span>Class Pre <b>44%</b></span><span>Post <b>85%</b></span><span>Average growth <b>+41 points</b></span></div>
+      <header><b>Moonwatch growth</b><span>Example class</span></header>
+      <div class="key"><span><i style="background:#c3cde0"></i>Pre-Test</span><span><i style="background:var(--phys)"></i>Post-Test</span></div>
+      <div id="pairs"></div>
+      <div class="sum"><div><b>44%</b>Class Pre-Test</div><div><b>85%</b>Class Post-Test</div><div><b style="color:var(--good)">+41</b>Average growth</div></div>
     </div>
   </div>
 </section>
 
-<section class="band white" id="games">
+<section class="pad games-band dark" id="games">
   <div class="wrap">
-    <div class="head">
+    <div class="sec-head">
       <h2>24 games. One table.</h2>
-      <p class="lede">Every game is tagged with the standard it practices. You switch each one on or off for each class.</p>
+      <p class="lede">Every game is tagged with the standard it practices, and you switch each one on or off for each class.</p>
       <div class="legend" id="legend"></div>
     </div>
-    <div class="games" id="gameGrid"></div>
+    <div class="table" id="table"></div>
     <p class="games-note">Plus two whole-class games for the projector: a live quiz students join from their Chromebooks, and a game-show review board that builds itself from the standards you pick.</p>
   </div>
 </section>
 
-<section class="band" id="teachers">
+<section class="pad">
   <div class="wrap">
-    <div class="head"><h2>Made for a real classroom, not a demo.</h2></div>
+    <div class="sec-head"><h2>Made for a real classroom.</h2></div>
     <div class="feats">
-      <div class="feat"><h3>No student emails</h3><p>Students join with your class code, a nickname and a 4-digit PIN. No real names, no email addresses.</p></div>
-      <div class="feat"><h3>Runs on Chromebooks</h3><p>Everything runs in the browser. Nothing to install, and each game fits on one screen.</p></div>
-      <div class="feat"><h3>You decide what's open</h3><p>Flip any game on or off for each class, any time. Students only see what you've opened.</p></div>
-      <div class="feat"><h3>Try it yourself first</h3><p>Your teacher account opens every game, so you know it before your students do.</p></div>
-      <div class="feat"><h3>Scores you can use</h3><p>Rosters, scores and Pre/Post growth for every class, with a CSV download.</p></div>
-      <div class="feat"><h3>Works for a no-device day</h3><p>Run the live quiz or the review board on one projector with students in teams.</p></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="11" y="18" width="22" height="17" rx="3"/><path d="M16 18v-4a6 6 0 0112 0v4"/><circle cx="22" cy="26" r="2" fill="#ffc857"/></svg><div><h3>No student emails</h3><p>Students join with your class code, a nickname and a 4-digit PIN. No real names.</p></div></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="10" width="28" height="19" rx="2"/><path d="M5 33h34"/></svg><div><h3>Runs on Chromebooks</h3><p>Everything runs in the browser, and every game fits on one screen.</p></div></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="12" width="28" height="9" rx="4.5"/><circle cx="31.5" cy="16.5" r="3" fill="#ffc857"/><rect x="8" y="25" width="28" height="9" rx="4.5"/><circle cx="12.5" cy="29.5" r="3"/></svg><div><h3>You decide what's open</h3><p>Flip any game on or off for each class, any time.</p></div></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="22" cy="22" r="13"/><path d="M19 16l9 6-9 6z" fill="#ffc857"/></svg><div><h3>Try it yourself first</h3><p>Your teacher account opens every game, so you know it before your students do.</p></div></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 34V20M18 34V12M26 34V24M34 34V16"/></svg><div><h3>Scores you can use</h3><p>Rosters, scores and Pre/Post growth for every class, with a CSV download.</p></div></div>
+      <div class="feat"><svg viewBox="0 0 44 44" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="9" width="30" height="20" rx="2"/><path d="M15 35h14M22 29v6"/></svg><div><h3>Works on a no-device day</h3><p>Run the live quiz or the review board on one projector, students in teams.</p></div></div>
     </div>
   </div>
 </section>
 
-<section class="band white">
-  <div class="wrap founder">
+<section class="pad mist founder">
+  <div class="wrap">
+    <div class="mono" aria-hidden="true">DT</div>
     <div>
       <blockquote>“When the game is the focus, the concepts get lost and kids only get good at the game. I teach 7th grade science, and I built Turn-Table so the science is the game.”</blockquote>
-      <p class="sig"><b>Dennis Turner</b>, 7th grade science teacher and founder of The Science Hook Lab</p>
-    </div>
-    <div class="stats">
-      <div class="stat"><b>{{STUDENTS}}</b><span>students using it in my classes</span></div>
-      <div class="stat"><b>{{PLAYS}}</b><span>rounds played since {{SINCE}}</span></div>
+      <p class="who"><b>Dennis Turner</b>, 7th grade science teacher and founder of The Science Hook Lab</p>
     </div>
   </div>
 </section>
 
-<section class="band" id="pricing">
+<section class="pad" id="pricing">
   <div class="wrap">
-    <div class="head">
-      <h2>One teacher, every game, every class.</h2>
-      <p class="lede">Each membership covers up to 6 classes and 130 students. Need another section? Add one for $15 a year.</p>
+    <div class="sec-head">
+      <h2>One teacher. Every game. Every class.</h2>
+      <p class="lede">Each membership covers up to 6 classes and 130 students. Teach another section? Add it for $15 a year.</p>
     </div>
     <div class="plans">
       <div class="plan">
         <h3>Turn-Table</h3>
-        <div class="price">$59<small> / year</small></div>
+        <div class="price">$59<small>/ year</small></div>
         <p class="alt">or $9 a month</p>
-        <ul><li>All 24 games plus the class games</li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
-        <a class="btn quiet" href="/?teacher=new">Start your free trial</a>
+        <ul><li>All 24 games and both class games</li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
+        <a class="btn line" href="/?teacher=new">Start your free trial</a>
       </div>
       <div class="plan best">
-        <h3>Hook + Check Bundle</h3>
-        <div class="price">$99<small> / year</small></div>
-        <p class="alt">or $16 a month · saves $39 a year</p>
-        <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open the unit with a hook, close it with proof of growth</li></ul>
-        <a class="btn primary" href="/?teacher=new">Start your free trial</a>
+        <h3>Hook + Check Bundle <span class="save">Save $39</span></h3>
+        <div class="price">$99<small>/ year</small></div>
+        <p class="alt">or $16 a month</p>
+        <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open each unit with a hook, close it with proof of growth</li></ul>
+        <a class="btn sun" href="/?teacher=new">Start your free trial</a>
       </div>
     </div>
-    <p class="trialnote">Try everything free for 7 days and cancel anytime. If you don't continue, your students keep a free version with 3 games.</p>
+    <p class="fine">Try everything free for 7 days and cancel anytime. If you don't continue, your students keep a free version with 3 games.</p>
   </div>
 </section>
 
-<section class="band white">
-  <div class="wrap"><div class="faq">
-    <div class="head"><h2>Questions teachers ask</h2></div>
-    <details><summary>Is this just more screen time?</summary><p>It's practice time on a screen. Each game is short, tied to a standard and built around retrieval practice. Use it for a 10-minute review or a Pre-Test, not a whole period of gaming. On a no-device day, run the live quiz or the review board on one projector.</p></details>
-    <details><summary>What do students need?</summary><p>A Chromebook or any device with a browser, your class code, a nickname and a 4-digit PIN. No email, no real name and nothing to install.</p></details>
-    <details><summary>How is this different from the review games we already use?</summary><p>Most review games ask a multiple-choice question and add a game around it. In Turn-Table there's no separate game part: placing the Moon, building the cell or wiring the circuit is the question. You can't win by recognizing a word fast.</p></details>
-    <details><summary>What grade levels does it cover?</summary><p>Middle school science, grades 6 to 8. Every game is tagged with the middle school standard it practices.</p></details>
-    <details><summary>What happens when the trial ends?</summary><p>If you continue, nothing changes. If you don't, your classes and scores stay, and your students can keep playing a free version: Speed Find, Cell Shop and Moonwatch, first levels, a few plays a day.</p></details>
-  </div></div>
+<section class="pad mist">
+  <div class="wrap">
+    <div class="sec-head"><h2>Questions teachers ask</h2></div>
+    <div class="faq">
+      <details><summary>Is this just more screen time?</summary><p>It's practice time on a screen. Each game is short, tied to a standard and built on retrieval practice. Use it for a 10-minute review or a Pre-Test, not a whole period of gaming. On a no-device day, run the live quiz or the review board on one projector.</p></details>
+      <details><summary>How is this different from the review games we already use?</summary><p>Most review games ask a multiple-choice question and wrap a game around it. In Turn-Table there's no separate game part: placing the Moon, building the cell or ordering the rock layers is the question. Students can't win by recognizing a word fast.</p></details>
+      <details><summary>What do students need?</summary><p>A Chromebook or any device with a browser, your class code, a nickname and a 4-digit PIN. No email, no real name and nothing to install.</p></details>
+      <details><summary>What grade levels does it cover?</summary><p>Middle school science, grades 6 to 8. Every game is tagged with the middle school standard it practices.</p></details>
+      <details><summary>What happens when the trial ends?</summary><p>If you continue, nothing changes. If you don't, your classes and scores stay, and your students can keep playing a free version: Speed Find, Cell Shop and Moonwatch, first levels, a few plays a day.</p></details>
+    </div>
+  </div>
 </section>
 
-<section class="end">
+<section class="pad close">
   <div class="wrap">
-    <h2>Give your students a game they can only win by learning.</h2>
-    <p>Start a free trial, open every game yourself, then try a Pre-Test with one class this week.</p>
-    <div class="ctas" style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="btn primary" href="/?teacher=new">Start your free trial</a>
-      <a class="btn quiet" href="/?teacher">Teacher log in</a>
-    </div>
+    <h2>Give them a game they can only win by learning.</h2>
+    <p>Start a free trial, open every game yourself, then run a Pre-Test with one class this week.</p>
+    <div class="ctas"><a class="btn sun" href="/?teacher=new">Start your free trial</a><a class="btn ghost" href="/?teacher">Teacher log in</a></div>
   </div>
 </section>
 </main>
@@ -472,98 +548,112 @@ footer a{color:var(--muted)}
 <footer>
   <div class="wrap">
     <span>Turn-Table™ is part of The Science Hook Lab.</span>
-    <span><a href="/">Students: play here</a> · <a href="https://app.thesciencehooklab.com">The Science Hook Lab</a></span>
+    <span><a href="/">Students: play here</a> &nbsp; <a href="https://app.thesciencehooklab.com">The Science Hook Lab</a> &nbsp; Research: <a href="https://pubmed.ncbi.nlm.nih.gov/16507066/">Roediger &amp; Karpicke 2006</a>, <a href="https://link.springer.com/10.1007/s10648-021-09595-9">Agarwal et al. 2021</a></span>
   </div>
-  <div class="wrap sources">Research: <a href="https://pubmed.ncbi.nlm.nih.gov/16507066/">Roediger &amp; Karpicke (2006)</a> · <a href="https://link.springer.com/10.1007/s10648-021-09595-9">Agarwal, Nunes &amp; Blunt (2021)</a></div>
 </footer>
 
 <script>
 const GAMES={{GAMES}};
 const FREE=new Set(['Speed Find','Cell Shop','Moonwatch']);
-const SUBJ={life:['Life Science','var(--life)'],phys:['Physics','var(--phys)'],chem:['Chemistry','var(--chem)'],earth:['Earth & Space','var(--earth)']};
-(()=>{
-  const grid=document.getElementById('gameGrid'),lg=document.getElementById('legend');
-  Object.entries(SUBJ).forEach(([k,[n,c]])=>{const s=document.createElement('span');s.innerHTML=`<i style="background:${c}"></i>${n}`;lg.append(s);});
-  GAMES.forEach((g,i)=>{const d=document.createElement('div');d.className='game';d.style.setProperty('--c',SUBJ[g.subj][1]);
-    d.innerHTML=`<span class="num">${i+1}</span>${FREE.has(g.name)?'<span class="free">Free</span>':''}<div class="art">${g.svg}</div><div class="info"><b></b><small></small></div>`;
-    d.querySelector('b').textContent=g.name;d.querySelector('small').textContent=g.std;d.title=g.desc;grid.append(d);});
-})();
+const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Chemistry','#a77bff'],earth:['Earth & Space','#f0a64a']};
 
-/* ---- the Moonwatch demo: Sun on the left, Earth in the middle, Moon on an 8-position orbit ---- */
+/* periodic table of games */
+(()=>{const t=document.getElementById('table'),lg=document.getElementById('legend');
+  Object.values(SUBJ).forEach(([n,c])=>{const s=document.createElement('span');s.innerHTML=`<i style="background:${c}"></i>`;s.append(n);lg.append(s);});
+  GAMES.forEach((g,i)=>{const d=document.createElement('div');d.className='el';d.style.setProperty('--c',SUBJ[g.subj][1]);d.title=g.desc;
+    d.innerHTML=`<span class="z">${i+1}</span>${FREE.has(g.name)?'<span class="free">Free</span>':''}<div class="art">${g.svg}</div><div class="tx"><b></b><small></small></div>`;
+    d.querySelector('b').textContent=g.name;d.querySelector('small').textContent=g.std;t.append(d);});})();
+
+/* showcase tabs */
+(()=>{const S={
+  strata:{img:'strata',subj:'Earth & Space · MS-ESS1-4',c:'var(--earth)',name:'Deep Time',desc:'Students read a cross-section of rock and put the events in order, from the oldest layer to the fault that cut through them.',do:'Reading rock layers to order Earth\'s history',wrong:'They see which event is out of place and why'},
+  cell:{img:'cell',subj:'Life Science · MS-LS1-1, LS1-2',c:'var(--life)',name:'Cell Shop',desc:'Students build a cell for a job, like a muscle cell that needs lots of energy, on a budget. Then they run a day to see if it survives.',do:'Matching cell parts to what a cell has to do',wrong:'The day report shows which job failed and which part was missing'},
+  courier:{img:'courier',subj:'Physics · MS-PS2-2',c:'var(--phys)',name:'Space Courier',desc:'Students plan every second of a delivery with pushes and coasts, then launch. With no friction in space, the pod keeps its speed until something pushes it.',do:'Using forces and motion to plan a trip',wrong:'The replay shows exactly where the plan went off course'},
+  moon:{img:'moon',subj:'Earth & Space · MS-ESS1-1',c:'var(--earth)',name:'Moonwatch',desc:'Students read the Moon\'s place in its orbit and predict what it looks like from Earth. It goes straight at the most common wrong idea: that Earth\'s shadow makes the phases.',do:'Using the Sun-Earth-Moon model to predict phases',wrong:'An explanation of what Earth would really see from there'}};
+  const tabs=[...document.querySelectorAll('.tabs button')],img=document.getElementById('showImg');
+  function pick(k){const s=S[k];tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));
+    img.src='{{BASE}}img/'+s.img+'.webp';img.alt=s.name+': '+s.desc;
+    const sj=document.getElementById('showSubj');sj.textContent=s.subj;sj.style.color=s.c;
+    document.getElementById('showName').textContent=s.name;document.getElementById('showDesc').textContent=s.desc;
+    document.getElementById('showDo').textContent=s.do;document.getElementById('showWrong').textContent=s.wrong;}
+  tabs.forEach(b=>b.addEventListener('click',()=>pick(b.dataset.k)));
+  document.querySelector('.tabs').addEventListener('keydown',e=>{const i=tabs.findIndex(b=>b.getAttribute('aria-selected')==='true');
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length;pick(tabs[n].dataset.k);tabs[n].focus();e.preventDefault();}});
+  pick('strata');})();
+
+/* growth report bars */
+(()=>{const rows=[['astro.k',33,89],['maya.r',56,100],['jdubs',22,67],['leo.p',67,78],['sam.t',44,89]],box=document.getElementById('pairs');
+  rows.forEach(([n,a,b])=>{const r=document.createElement('div');r.className='pair';
+    r.innerHTML=`<span></span><span class="bars"><i class="pre" style="width:${a}%"></i><i class="post" style="width:${b}%"></i></span><b>+${b-a}</b>`;r.firstChild.textContent=n;box.append(r);});})();
+
+/* ---- Moonwatch model: Sun to the left, Earth in the middle, Moon on 8 positions ---- */
 const NAMES=['full moon','waning gibbous','third quarter','waning crescent','new moon','waxing crescent','first quarter','waxing gibbous'];
 const NS='http://www.w3.org/2000/svg';
-function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e;}
-/* lit fraction k and waxing for orbit angle a (radians, counterclockwise, 0 = away from Sun) */
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e;};
 const litK=a=>(1+Math.cos(a))/2, waxing=a=>Math.sin(a)<-1e-6;
-function phasePath(cx,cy,r,k,wax){
-  if(k>.995)return `M${cx} ${cy-r}A${r} ${r} 0 1 1 ${cx} ${cy+r}A${r} ${r} 0 1 1 ${cx} ${cy-r}Z`;
+function phasePath(c,r,k){
+  if(k>.995)return `M${c} ${c-r}A${r} ${r} 0 1 1 ${c} ${c+r}A${r} ${r} 0 1 1 ${c} ${c-r}Z`;
   if(k<.005)return '';
-  const rx=r*Math.abs(1-2*k),s=k<.5?0:1;
-  let d=`M${cx} ${cy-r}A${r} ${r} 0 0 1 ${cx} ${cy+r}A${rx} ${r} 0 0 ${s} ${cx} ${cy-r}Z`;
-  return wax?d:d; }
-function drawPhase(svg,a,big){
-  svg.replaceChildren();const c=38,r=big?32:30;
-  el('circle',{cx:c,cy:c,r:r,fill:'#2b3550'},svg);
-  const p=phasePath(c,c,r,litK(a),waxing(a));
-  if(p){const g=el('g',{transform:waxing(a)?'':`translate(${2*c} 0) scale(-1 1)`},svg);el('path',{d:p,fill:'#f4f1dc'},g);}
-  el('circle',{cx:c,cy:c,r:r,fill:'none',stroke:'#14213d','stroke-width':2},svg);
-}
-function buildModel(svg,opts){
-  const W=520,H=opts.h,cx=W/2+30,cy=H/2,R=opts.R;svg.replaceChildren();
-  const defs=el('defs',{},svg);const gr=el('linearGradient',{id:opts.id+'g',x1:0,x2:1},defs);
-  el('stop',{offset:0,'stop-color':'#ffd25a','stop-opacity':.55},gr);el('stop',{offset:1,'stop-color':'#ffd25a','stop-opacity':0},gr);
-  el('rect',{x:0,y:0,width:150,height:H,fill:`url(#${opts.id}g)`},svg);
-  for(let i=0;i<5;i++){const y=H*(i+1)/6;el('line',{x1:18,y1:y,x2:120,y2:y,stroke:'#e0a10f','stroke-width':2,'stroke-dasharray':'2 7'},svg);el('path',{d:`M120 ${y-5}L130 ${y}L120 ${y+5}Z`,fill:'#e0a10f'},svg);}
-  const t=el('text',{x:20,y:28,'font-family':'Atkinson Hyperlegible, sans-serif','font-size':15,'font-weight':700,fill:'#8a5a00'},svg);t.textContent='Sunlight';
-  el('circle',{cx,cy,r:R,fill:'none',stroke:'#b8c4d8','stroke-width':1.5,'stroke-dasharray':'5 6'},svg);
-  for(let i=0;i<8;i++){const a=i*Math.PI/4;el('circle',{cx:cx+R*Math.cos(a),cy:cy-R*Math.sin(a),r:4,fill:'#c9d3e3'},svg);}
-  /* Earth: day side faces the Sun */
-  el('circle',{cx,cy,r:30,fill:'#1f5fbf'},svg);el('path',{d:`M${cx} ${cy-30}A30 30 0 0 1 ${cx} ${cy+30}Z`,fill:'#0d2a5c'},svg);
-  el('path',{d:`M${cx-18} ${cy-10}q8 -12 16 -4q-2 10 -10 12z M${cx-6} ${cy+12}q10 -2 12 8q-8 4 -14 -2z`,fill:'#3da35d'},svg);
-  const et=el('text',{x:cx,y:cy+52,'text-anchor':'middle','font-family':'Atkinson Hyperlegible, sans-serif','font-size':14,fill:'#56637d'},svg);et.textContent='Earth';
-  const moon=el('g',{class:'moon',tabindex:opts.interactive?0:-1,role:opts.interactive?'slider':'img','aria-label':'Moon','aria-valuemin':0,'aria-valuemax':7},svg);
-  el('circle',{r:16,fill:'#2b3550'},moon);el('path',{d:'M0 -16A16 16 0 0 0 0 16Z',fill:'#f4f1dc'},moon);
-  el('circle',{r:16,fill:'none',stroke:'#14213d','stroke-width':2},moon);
-  if(opts.interactive)el('circle',{r:30,fill:'transparent'},moon);
-  return {cx,cy,R,moon};
-}
-function place(m,a){m.moon.setAttribute('transform',`translate(${m.cx+m.R*Math.cos(a)} ${m.cy-m.R*Math.sin(a)})`);}
-
-/* static mock in the comparison */
-(()=>{const m=buildModel(document.getElementById('mockMoon'),{h:250,R:92,id:'mk'});place(m,3*Math.PI/4);})();
-
-/* the live demo */
+  const rx=r*Math.abs(1-2*k);
+  return `M${c} ${c-r}A${r} ${r} 0 0 1 ${c} ${c+r}A${rx} ${r} 0 0 ${k<.5?0:1} ${c} ${c-r}Z`;}
+function drawPhase(svg,a){svg.replaceChildren();const c=38,r=33;
+  el('circle',{cx:c,cy:c,r,fill:'#24304f'},svg);const p=phasePath(c,r,litK(a));
+  if(p){const g=el('g',{transform:waxing(a)?'':`translate(${2*c} 0) scale(-1 1)`},svg);el('path',{d:p,fill:'#f6efd8'},g);}
+  el('circle',{cx:c,cy:c,r,fill:'none',stroke:'rgba(255,255,255,.35)','stroke-width':1.5},svg);}
 (()=>{
-  const svg=document.getElementById('labSvg'),m=buildModel(svg,{h:340,R:118,id:'lb',interactive:true});
-  const goals=[6,0,3,7,2];let gi=0,pos=4,tries=0;
-  const say=document.getElementById('labSay'),goalEl=document.getElementById('labGoal'),nowEl=document.getElementById('labNow');
-  const cap=s=>s[0].toUpperCase()+s.slice(1);
-  function upd(){const a=pos*Math.PI/4;place(m,a);drawPhase(document.getElementById('labView'),a);
-    nowEl.textContent=(/^[aeiou]/.test(NAMES[pos])?'an ':'a ')+NAMES[pos];m.moon.setAttribute('aria-valuenow',pos);m.moon.setAttribute('aria-valuetext',NAMES[pos]);}
-  function setGoal(){const g=goals[gi%goals.length];goalEl.textContent=cap(NAMES[g]);drawPhase(document.getElementById('labTarget'),g*Math.PI/4,true);tries=0;}
+  const svg=document.getElementById('orbit'),cx=330,cy=200,R=140;
+  const d=el('defs',{},svg);
+  const eg=el('radialGradient',{id:'eg',cx:'35%',cy:'35%',r:'75%'},d);el('stop',{offset:0,'stop-color':'#5aa0ff'},eg);el('stop',{offset:1,'stop-color':'#1846a8'},eg);
+  const glow=el('radialGradient',{id:'gl'},d);el('stop',{offset:0,'stop-color':'#5aa0ff','stop-opacity':.45},glow);el('stop',{offset:1,'stop-color':'#5aa0ff','stop-opacity':0},glow);
+  const sh=el('linearGradient',{id:'sh',x1:0,x2:1},d);el('stop',{offset:.48,'stop-color':'#020a20','stop-opacity':0},sh);el('stop',{offset:.52,'stop-color':'#020a20','stop-opacity':.7},sh);
+  const mg=el('radialGradient',{id:'mg',cx:'40%',cy:'40%',r:'70%'},d);el('stop',{offset:0,'stop-color':'#fffaf0'},mg);el('stop',{offset:1,'stop-color':'#e9dfbf'},mg);
+  /* the Sun, just off the left edge */
+  const sg=el('radialGradient',{id:'sg'},d);el('stop',{offset:0,'stop-color':'#ffe2a0','stop-opacity':.9},sg);el('stop',{offset:.35,'stop-color':'#ffc857','stop-opacity':.35},sg);el('stop',{offset:1,'stop-color':'#ffc857','stop-opacity':0},sg);
+  el('circle',{cx:0,cy:200,r:190,fill:'url(#sg)'},svg);
+  /* sunbeams */
+  for(let i=0;i<5;i++){const y=60+i*70;el('line',{x1:60,y1:y,x2:150,y2:y,stroke:'#ffc857','stroke-opacity':.55,'stroke-width':1.5,'stroke-dasharray':'1 9','stroke-linecap':'round'},svg);el('path',{d:`M150 ${y-5}l10 5l-10 5`,fill:'none',stroke:'#ffc857','stroke-opacity':.75,'stroke-width':1.5},svg);}
+  /* orbit */
+  el('circle',{cx,cy,r:R,fill:'none',stroke:'rgba(160,185,240,.35)','stroke-width':1.2,'stroke-dasharray':'2 7','stroke-linecap':'round'},svg);
+  for(let i=0;i<8;i++){const a=i*Math.PI/4;el('circle',{cx:cx+R*Math.cos(a),cy:cy-R*Math.sin(a),r:2.5,fill:'rgba(200,215,250,.45)'},svg);}
+  /* earth */
+  el('circle',{cx,cy,r:90,fill:'url(#gl)'},svg);el('circle',{cx,cy,r:38,fill:'url(#eg)'},svg);
+  el('path',{d:`M${cx-22} ${cy-14}q10-16 22-5q-3 13-14 15z M${cx-10} ${cy+14}q14-2 16 10q-10 6-18-3z M${cx+8} ${cy-26}q10 2 12 10q-8 2-12-10z`,fill:'#4fbf7a',opacity:.9},svg);
+  el('circle',{cx,cy,r:38,fill:'url(#sh)'},svg);
+  const lab=el('text',{x:cx,y:cy+62,'text-anchor':'middle',fill:'#94a3c7','font-family':'Figtree, sans-serif','font-size':14,'font-weight':500},svg);lab.textContent='Earth';
+  /* moon */
+  const moon=el('g',{class:'moon',tabindex:0,role:'slider','aria-label':'Moon position','aria-valuemin':0,'aria-valuemax':7},svg);
+  el('circle',{r:34,fill:'transparent'},moon);
+  el('circle',{r:19,fill:'#1c2848'},moon);el('path',{d:'M0 -19A19 19 0 0 0 0 19Z',fill:'url(#mg)'},moon);
+  el('circle',{class:'ring',r:19,fill:'none',stroke:'rgba(255,255,255,.55)','stroke-width':1.5},moon);
+  const goals=[6,0,3,7,2];let gi=0,pos=4,tries=0,shown=4;
+  const say=document.getElementById('say');const cap=s=>s[0].toUpperCase()+s.slice(1);
+  const placeAt=a=>moon.setAttribute('transform',`translate(${cx+R*Math.cos(a)} ${cy-R*Math.sin(a)})`);
+  function show(p){shown=p;drawPhase(document.getElementById('nowPh'),p*Math.PI/4);document.getElementById('nowTx').textContent=cap(NAMES[p]);moon.setAttribute('aria-valuenow',p);moon.setAttribute('aria-valuetext',NAMES[p]);}
+  function upd(){placeAt(pos*Math.PI/4);show(pos);}
+  function goal(){const g=goals[gi%goals.length];document.getElementById('goalTx').textContent=cap(NAMES[g]);drawPhase(document.getElementById('goalPh'),g*Math.PI/4);tries=0;}
   function why(p,g){
-    if(p===4)return 'From there the Moon is between Earth and the Sun. Its lit half faces away from us, so we see a new moon.';
+    if(p===4)return 'From there the Moon sits between Earth and the Sun. Its lit half faces away from us: a new moon.';
     if(p===0)return 'From there Earth is between the Sun and the Moon, so we see the whole lit half: a full moon.';
-    const lit=litK(p*Math.PI/4),goal=litK(g*Math.PI/4);
-    if(Math.abs(lit-goal)<.01)return `Right amount of light, wrong side. From there the lit part is on the ${waxing(p*Math.PI/4)?'right':'left'}, so it's a ${NAMES[p]}. Try the other side of the orbit.`;
-    return `From there we see ${lit>goal?'more':'less'} of the lit half than in a ${NAMES[g]}. You've made a ${NAMES[p]}.`;}
-  document.getElementById('labCheck').onclick=()=>{
-    const g=goals[gi%goals.length];
-    if(pos===g){say.className='lab-say good';say.textContent=`Yes! The Sun always lights the half of the Moon facing it. From that spot, Earth sees just the right part of that lit half for a ${NAMES[g]}. Next one is up.`;
-      gi++;setTimeout(setGoal,600);}
-    else{tries++;say.className='lab-say bad';say.textContent=why(pos,g)+(tries>=2?' Hint: half the Moon is always lit. What changes is how much of that lit half faces Earth.':'');}
-  };
-  const toAngle=e=>{const r=svg.getBoundingClientRect(),sx=520/r.width,x=(e.clientX-r.left)*sx-m.cx,y=(e.clientY-r.top)*sx-m.cy;return Math.atan2(-y,x);};
+    const l=litK(p*Math.PI/4),t=litK(g*Math.PI/4);
+    if(Math.abs(l-t)<.01)return `Right amount of light, wrong side. From there the lit part is on the ${waxing(p*Math.PI/4)?'right':'left'}, which makes a ${NAMES[p]}. Try the other side of the orbit.`;
+    return `From there Earth sees ${l>t?'more':'less'} of the lit half than in a ${NAMES[g]}. That spot makes a ${NAMES[p]}.`;}
+  document.getElementById('check').onclick=()=>{const g=goals[gi%goals.length];
+    if(pos===g){say.className='say good';say.textContent=`That's it. The Sun always lights the half of the Moon facing it. From there, Earth sees just enough of that half for a ${NAMES[g]}.`;gi++;setTimeout(goal,700);}
+    else{tries++;say.className='say bad';say.textContent=why(pos,g)+(tries>=2?' Hint: half the Moon is always lit. What changes is how much of that half faces Earth.':'');}};
+  const toA=e=>{const r=svg.getBoundingClientRect(),s=560/r.width;/*same scale both axes*/return Math.atan2(-((e.clientY-r.top)*s-cy),(e.clientX-r.left)*s-cx);};
+  const snap=a=>((Math.round(a/(Math.PI/4))%8)+8)%8;
   let drag=false;
-  m.moon.addEventListener('pointerdown',e=>{drag=true;m.moon.setPointerCapture(e.pointerId);});
-  m.moon.addEventListener('pointermove',e=>{if(!drag)return;const a=toAngle(e);place(m,a);const p=((Math.round(a/(Math.PI/4))%8)+8)%8;if(p!==pos){pos=p;drawPhase(document.getElementById('labView'),p*Math.PI/4);nowEl.textContent=(/^[aeiou]/.test(NAMES[p])?'an ':'a ')+NAMES[p];}});
-  const end=()=>{if(!drag)return;drag=false;upd();};
-  m.moon.addEventListener('pointerup',end);m.moon.addEventListener('pointercancel',end);
-  svg.addEventListener('click',e=>{if(e.target.closest('.moon'))return;const a=toAngle(e);pos=((Math.round(a/(Math.PI/4))%8)+8)%8;upd();});
-  m.moon.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowUp'){pos=(pos+1)%8;upd();e.preventDefault();}
-    else if(e.key==='ArrowRight'||e.key==='ArrowDown'){pos=(pos+7)%8;upd();e.preventDefault();}
-    else if(e.key==='Enter'){document.getElementById('labCheck').click();}});
-  setGoal();upd();
+  moon.addEventListener('pointerdown',e=>{drag=true;moon.setPointerCapture(e.pointerId);});
+  moon.addEventListener('pointermove',e=>{if(!drag)return;const a=toA(e);placeAt(a);pos=snap(a);if(pos!==shown)show(pos);});
+  const end=()=>{if(drag){drag=false;upd();}};moon.addEventListener('pointerup',end);moon.addEventListener('pointercancel',end);
+  svg.addEventListener('click',e=>{if(e.target.closest('.moon'))return;pos=snap(toA(e));upd();});
+  moon.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowUp'].includes(e.key)){pos=(pos+1)%8;upd();e.preventDefault();}
+    else if(['ArrowRight','ArrowDown'].includes(e.key)){pos=(pos+7)%8;upd();e.preventDefault();}else if(e.key==='Enter')document.getElementById('check').click();});
+  goal();
+  /* one entrance: the Moon glides a quarter orbit into place */
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){upd();}
+  else{const a0=Math.PI*0.5,a1=Math.PI,t0=performance.now();placeAt(a0);show(pos);
+    const step=t=>{const k=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-k,3);placeAt(a0+(a1-a0)*e);if(k<1)requestAnimationFrame(step);else upd();};requestAnimationFrame(step);}
 })();
 </script>
 </body>
