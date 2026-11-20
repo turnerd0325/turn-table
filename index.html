@@ -35,7 +35,7 @@ main{padding:12px 16px 24px;max-width:1500px;margin:0 auto}
 .btn[disabled]{opacity:.45;cursor:not-allowed}
 header .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
 button:focus-visible,input:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
-input[type=text],input[type=password],input[type=search]{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;width:100%}
+input[type=text],input[type=email],input[type=password],input[type=search]{font:inherit;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:#fff;width:100%}
 input:focus{border-color:var(--accent);outline:none}
 
 .card{background:var(--card);border-radius:18px;box-shadow:0 2px 10px rgba(20,33,61,.08);padding:20px}
@@ -47,7 +47,12 @@ h1{margin:0 0 6px;font-size:30px} h2{margin:0 0 8px;font-size:22px} h3{margin:0 
 .seg{display:flex;gap:6px;margin:10px 0}
 .seg button{flex:1;font:inherit;font-weight:700;padding:9px;border:2px solid var(--line);background:#fff;border-radius:10px;cursor:pointer}
 .seg button.on{border-color:var(--accent);background:#e8efff;color:var(--accent)}
-.field{margin:10px 0} .field label{display:block;font-weight:700;margin-bottom:4px;font-size:14px}
+.field{margin:10px 0}
+#s-tauth .field input,#s-trecover .field input{font-size:17px;padding:13px 14px;min-height:50px}
+.pw{position:relative}.pw input{padding-right:82px!important}
+.pw-eye{position:absolute;right:6px;top:50%;transform:translateY(-50%);display:inline-flex;align-items:center;gap:6px;border:0;background:#eef2fa;color:#2153d6;font:inherit;font-size:14px;font-weight:700;padding:7px 10px;border-radius:8px;cursor:pointer}
+.pw-eye:hover{background:#e1e9fb}.pw-eye:focus-visible{outline:3px solid #2153d6;outline-offset:1px}
+.pw-eye svg{width:18px;height:18px} .field label{display:block;font-weight:700;margin-bottom:4px;font-size:14px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .chip{border:2px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px;cursor:pointer;font:inherit;font-weight:600;font-size:14px}
 .chip:hover{border-color:var(--accent)}
@@ -2085,7 +2090,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
         <div class="field"><label for="taSchool">School <small>(optional)</small></label><input type="text" id="taSchool" maxlength="80" autocomplete="organization"></div>
       </div>
       <div class="field"><label for="taEmail">Email</label><input type="email" id="taEmail" autocomplete="email" autocapitalize="off" spellcheck="false"></div>
-      <div class="field"><label for="taPass">Password <small id="taPassHint" hidden>(at least 8 characters)</small></label><input type="password" id="taPass" autocomplete="current-password"></div>
+      <div class="field"><label for="taPass">Password <small id="taPassHint" hidden>(at least 8 characters)</small></label><div class="pw"><input type="password" id="taPass" autocomplete="current-password"><button type="button" class="pw-eye" data-for="taPass" aria-label="Show password" aria-pressed="false"></button></div></div>
       <label class="fb-agree" id="taAgreeRow" hidden><input type="checkbox" id="taAgree"><span>I am a teacher or school staff member. I will follow my school's student privacy rules. Students only use a nickname and a PIN.</span></label>
       <div class="msg bad" id="taMsg"></div>
       <button class="btn" id="taGo" type="button" style="width:100%">Sign in</button>
@@ -2103,7 +2108,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 <section class="screen" id="s-trecover" hidden>
   <div class="card center">
     <h1 style="text-align:center">Choose a new password</h1>
-    <div class="field"><label for="rcPass">New password <small>(at least 8 characters)</small></label><input type="password" id="rcPass" autocomplete="new-password"></div>
+    <div class="field"><label for="rcPass">New password <small>(at least 8 characters)</small></label><div class="pw"><input type="password" id="rcPass" autocomplete="new-password"><button type="button" class="pw-eye" data-for="rcPass" aria-label="Show password" aria-pressed="false"></button></div></div>
     <div class="msg bad" id="rcMsg"></div>
     <button class="btn" id="rcGo" type="button" style="width:100%">Save password</button>
   </div>
@@ -3077,6 +3082,12 @@ async function taSetPassword(){
   }catch(e){$('rcMsg').className='msg bad';$('rcMsg').textContent="Can't reach the server.";}
   finally{$('rcGo').disabled=false;}
 }
+/* show / hide password */
+(()=>{const eye='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  shut='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.9 10.9 0 0112 5c6.4 0 10 7 10 7a17.6 17.6 0 01-3.2 4.2M6.6 6.6C3.9 8.4 2 12 2 12s3.6 7 10 7a10.6 10.6 0 005.4-1.5"/><path d="M9.9 9.9a3 3 0 004.2 4.2"/></svg>';
+  document.querySelectorAll('.pw-eye').forEach(b=>{const inp=$(b.dataset.for);
+    const paint=()=>{const on=inp.type==='text';b.innerHTML=(on?shut:eye)+(on?'Hide':'Show');b.setAttribute('aria-pressed',on?'true':'false');b.setAttribute('aria-label',on?'Hide password':'Show password');};
+    b.onclick=()=>{inp.type=inp.type==='password'?'text':'password';paint();inp.focus();};paint();});})();
 $('taModeIn').onclick=()=>setTaMode('in');$('taModeUp').onclick=()=>setTaMode('up');
 $('taGo').onclick=taSubmit;$('taForgot').onclick=taForgot;$('rcGo').onclick=taSetPassword;
 $('taCheckBack').onclick=()=>openTAuth();
