@@ -1358,6 +1358,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .td-gate .sub{margin:0 auto 18px;max-width:46ch}.td-gate .small{font-size:12.5px;margin:18px auto 0}
 .td-nocharge{display:inline-flex;align-items:center;gap:8px;margin:2px auto 12px;padding:7px 14px;border-radius:999px;background:#e7f6ee;color:#14794a;font-weight:800;font-size:15px}
 .td-nocharge::before{content:"✓";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#1f9d55;color:#fff;font-size:12px}
+.td-up s{color:#8a94a8;margin-right:2px}.td-save{color:#14794a}
 .td-gatebtns{display:flex;flex-direction:column;align-items:center;gap:10px}
 .pg-privrow{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between}
 .pg-hide{font-size:13px;font-weight:700;display:flex;gap:7px;align-items:center;cursor:pointer;margin-top:6px}
@@ -3123,7 +3124,7 @@ function renderCardGate(T){
     h('h2',null,`One more step, ${T.name}`),
     h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
     h('p',{class:'td-nocharge'},'No charge until the end of the trial period.'),
-    h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year, locked in for as long as you stay."),
+    h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year (regular price $49, so you save $13 every year), locked in for as long as you stay."),
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
       h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
     h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™. Signed in as '+(T.email||'')+'.')));
@@ -3144,7 +3145,7 @@ function renderDash(){
       h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now')):
 T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
-    TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Turn-Table unlocks as soon as you check out.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now'),h('a',{class:'td-month',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0,billing:'monthly'});}},'or pay monthly, $7 a month'))):null,
+    TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year '),h('s',null,'$49'),h('b',{class:'td-save'},' You save $13 every year.'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Turn-Table unlocks as soon as you check out.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now'),h('a',{class:'td-month',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0,billing:'monthly'});}},'or pay monthly, $7 a month'))):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
     h('div',{class:'td-chips'},...K.map(c=>h('button',{class:'td-chip'+(C&&c.id===C.id?' on':'')+(c.archived?' arch':''),type:'button',onclick:()=>{TA.cls=c.id;store.set('tt_tcls',c.id);renderDash();}},c.name+(c.archived?' (archived)':''),h('small',null,` · ${c.students} student${c.students===1?'':'s'}`))),

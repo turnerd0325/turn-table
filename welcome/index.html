@@ -275,6 +275,11 @@ section{position:relative}
 .plan.best .price{color:#fff}
 .plan .price small{font-size:18px;font-weight:600;letter-spacing:0;color:var(--muted);margin-left:6px}
 .plan.best .price small,.plan.best .alt{color:#a9b5d1}
+.plan .was{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:2px 0 12px;font-size:15px;font-weight:600;color:var(--muted)}
+.plan .was s{font-weight:750;color:var(--ink);text-decoration-thickness:2px;text-decoration-color:#d64545}
+.plan .was .off{font-size:13px;font-weight:800;padding:3px 10px;border-radius:999px;background:#e7f6ee;color:#14794a}
+.plan.best .was{color:#a9b5d1}.plan.best .was s{color:#fff}
+.plan.best .was .off{background:rgba(63,192,124,.18);color:#7fe0ab}
 .plan .alt{font-size:15px;line-height:1.5;color:var(--muted);max-width:34ch}
 .plan ul{list-style:none;margin:26px 0 30px;padding:0;display:grid;gap:12px;font-size:16px}
 .plan li{display:grid;grid-template-columns:22px 1fr;gap:10px}
@@ -641,7 +646,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <div class="plan">
         <h3>Turn-Table <span class="save fnd">Founding</span></h3>
         <div class="price">$36<small>/ year</small></div>
-        <p class="alt">Founding price, locked in for as long as you stay. Regular price $49 a year.</p>
+        <div class="was">After founding spots fill: <span><s>$49</s> a year</span><span class="off">You save $13 every year</span></div>
+        <p class="alt">Founding price, locked in for as long as you stay.</p>
         <ul><li><span><a href="#games">All 24 games</a> and both class games</span></li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
         <a class="btn line" href="/?teacher=new&amp;plan=turntable">Start your free trial</a>
         <p class="nocharge">No charge until the end of the trial period.</p>
@@ -650,7 +656,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <div class="plan best">
         <h3>Hook + Check Bundle <span class="save">Founding</span></h3>
         <div class="price">$79<small>/ year</small></div>
-        <p class="alt">Founding price, locked in for as long as you stay. Regular price $99 a year.</p>
+        <div class="was">After founding spots fill: <span><s>$99</s> a year</span><span class="off">You save $20 every year</span></div>
+        <p class="alt">Founding price, locked in for as long as you stay.</p>
         <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open each unit with a hook, close it with proof of growth</li></ul>
         <a class="btn sun" href="/?teacher=new&amp;plan=bundle">Start your free trial</a>
         <p class="nocharge">No charge until the end of the trial period.</p>
