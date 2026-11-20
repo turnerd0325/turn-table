@@ -67,7 +67,7 @@ section{position:relative}
 /* ---------- hero ---------- */
 .hero{background:radial-gradient(1200px 700px at -10% 30%,rgba(255,200,87,.22),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(60,110,255,.20),transparent 60%),linear-gradient(180deg,var(--night) 0%,#0a1a42 100%);color:#c9d3ea;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20px 30px,rgba(255,255,255,.55),transparent 60%),radial-gradient(1px 1px at 120px 80px,rgba(255,255,255,.35),transparent 60%),radial-gradient(1.5px 1.5px at 200px 160px,rgba(255,255,255,.45),transparent 60%),radial-gradient(1px 1px at 300px 40px,rgba(255,255,255,.3),transparent 60%);background-size:340px 220px;opacity:.6;pointer-events:none;transform:translate3d(0,var(--py,0),0)}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;padding-top:128px;padding-bottom:88px}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;padding-top:128px;padding-bottom:64px}
 .kicker{display:inline-flex;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--sun2);margin-bottom:26px}
 .kicker i{width:8px;height:8px;border-radius:50%;background:var(--sun);box-shadow:0 0 12px var(--sun)}
 .hero h1{color:#fff;font-size:clamp(42px,4.7vw,68px);font-weight:760;letter-spacing:-.018em;line-height:1.02;font-stretch:94%}
@@ -78,28 +78,29 @@ section{position:relative}
 .proof b{display:block;font:750 34px/1 var(--display);color:#fff;font-stretch:94%}
 .proof span{font-size:14px;line-height:1.45;color:#94a3c7;display:block;margin-top:6px}
 
-/* the live Speed Find table */
-.finder{position:relative;background:rgba(14,34,80,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.14);border-radius:26px;padding:22px 22px 18px;box-shadow:0 40px 80px -30px rgba(0,0,0,.65)}
-.f-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px;min-height:62px}
-.f-lbl{display:block;font-size:14px;color:#94a3c7;margin-bottom:4px}
-.f-target{font:760 40px/1 var(--display);color:var(--sun);font-stretch:92%;letter-spacing:-.02em}
-.f-meta{display:flex;gap:8px;align-items:center;flex:none}
-.f-meta span{height:34px;padding:0 12px;border-radius:999px;display:inline-flex;align-items:center;font-size:14px;font-weight:600;color:#c9d3ea;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);font-variant-numeric:tabular-nums}
-.f-meta .f-time{color:#fff;min-width:64px;justify-content:center}
-.ptable{display:grid;grid-template-columns:repeat(18,1fr);gap:3px}
-.ptable button{aspect-ratio:1;min-width:0;padding:0;border:0;border-radius:5px;background:var(--bg);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);font:650 11px/1 var(--body);cursor:pointer;transition:transform .12s ease,background .12s ease,box-shadow .12s ease;position:relative}
-.ptable button:hover{transform:scale(1.18);z-index:2;box-shadow:0 0 0 1.5px rgba(255,255,255,.8)}
-.ptable button.gap{visibility:hidden;pointer-events:none}
-.ptable button.ok{background:#1fae5b!important;color:#fff;transform:scale(1.25);z-index:3;box-shadow:0 0 0 2px #fff,0 0 18px rgba(31,174,91,.8)}
-.ptable button.no{background:#d64545!important;animation:shake .32s ease}
-.ptable .fx{font-size:8px;color:#94a3c7;display:grid;place-items:center;background:rgba(255,255,255,.04)}
-@keyframes shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
-.f-say{margin-top:14px;font-size:15px;line-height:1.45;color:#c9d3ea;min-height:44px}
-.f-say.good{color:#8ff0b5}.f-say.bad{color:#ffb4ae}
-.f-again{height:40px;padding:0 18px;border-radius:999px;border:0;background:var(--sun);color:var(--night);font:700 15px/1 var(--body);cursor:pointer}
-.f-again:hover{background:var(--sun2)}
-.f-key{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12px;color:#8e9bbd}
-.f-key i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* hero product shots */
+.stack{position:relative;aspect-ratio:1.18;min-height:0;width:122%;margin-right:-22%}
+.shot{position:absolute;margin:0;border-radius:18px;background:linear-gradient(160deg,#22305a,#0b1530);padding:10px;box-shadow:0 40px 80px -30px rgba(0,0,0,.75),inset 0 0 0 1px rgba(255,255,255,.1)}
+.shot img{border-radius:10px;width:100%;height:auto;aspect-ratio:1600/833;object-fit:cover;object-position:top;background:#eef2fa}
+.shot figcaption{position:absolute;display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 15px;border-radius:999px;background:rgba(10,22,52,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);color:#fff;font:650 14px/1 var(--body);white-space:nowrap;box-shadow:0 12px 30px -10px rgba(0,0,0,.6)}
+.shot figcaption i{width:10px;height:10px;border-radius:3px}
+.shot.back{top:0;right:-4%;width:82%;transform:rotate(3deg);opacity:.92}
+.shot.back figcaption{top:-14px;right:22px}
+.shot.front{bottom:0;left:0;width:86%;transform:rotate(-2deg)}
+.shot.front figcaption{bottom:-16px;left:22px}
+/* all-games strip */
+.strip{position:relative;padding:8px 0 64px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.hero .wrap.strip-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-top:0;padding-bottom:0;margin-bottom:16px}
+.strip-head b{color:#fff;font:700 18px/1.2 var(--display);font-stretch:95%}
+.strip-head a{color:var(--sun2);font-size:15px;font-weight:600;text-decoration:none}
+.strip-head a:hover{text-decoration:underline}
+.belt{display:flex;gap:14px;width:max-content;animation:belt 70s linear infinite}
+.strip:hover .belt{animation-play-state:paused}
+.tile{flex:none;width:168px;border-radius:14px;overflow:hidden;background:#0f1d42;border:1px solid rgba(255,255,255,.08);text-decoration:none;transition:transform .2s ease,border-color .2s ease}
+.tile:hover{transform:translateY(-3px);border-color:var(--c)}
+.tile .art{aspect-ratio:16/10;overflow:hidden}.tile .art svg{display:block;width:100%;height:100%}
+.tile span{display:block;padding:8px 10px 9px;border-top:3px solid var(--c);color:#fff;font:650 13px/1.15 var(--display);font-stretch:95%}
+@keyframes belt{to{transform:translateX(-50%)}}
 
 @media (prefers-reduced-motion:no-preference){
   .hero .wrap>div:first-child>*{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
@@ -107,11 +108,15 @@ section{position:relative}
   .hero .wrap>div:first-child>*:nth-child(3){animation-delay:.12s}
   .hero .wrap>div:first-child>*:nth-child(4){animation-delay:.18s}
   .hero .wrap>div:first-child>*:nth-child(5){animation-delay:.24s}
-  .finder{animation:fade 1.2s .2s ease both}
+  .shot.back{animation:inB 1.2s .25s cubic-bezier(.16,.8,.24,1) both}
+  .shot.front{animation:inF 1.2s .1s cubic-bezier(.16,.8,.24,1) both}
+  .strip{animation:fade 1.4s .5s ease both}
 }
+@keyframes inF{from{opacity:0;transform:translate3d(-40px,40px,0) rotate(-6deg)}to{opacity:1;transform:rotate(-2deg)}}
+@keyframes inB{from{opacity:0;transform:translate3d(40px,-30px,0) rotate(8deg)}to{opacity:.92;transform:rotate(3deg)}}
 @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.rv{opacity:1!important;transform:none!important;filter:none!important}.orb{transform:none!important}.bigx line{stroke-dashoffset:0!important}.bubble{opacity:1!important;transform:none!important}.ball::after{opacity:1!important}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.rv{opacity:1!important;transform:none!important;filter:none!important}.orb{transform:none!important}.bigx line{stroke-dashoffset:0!important}.bubble{opacity:1!important;transform:none!important}.belt{animation:none!important}.strip{overflow-x:auto}.ball::after{opacity:1!important}}
 
 /* ---------- problem ---------- */
 .problem .sec-head{max-width:820px}
@@ -324,6 +329,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
 
 /* ---------- responsive ---------- */
 @media (max-width:1040px){
+  .stack{width:100%;margin-right:0;max-width:680px}
   .nav nav{display:none}
   .hero .wrap,.show,.research .wrap,.pp .wrap,.loop{grid-template-columns:1fr}
   .hero .wrap{padding-top:120px;gap:24px}
@@ -339,12 +345,12 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   .hero .wrap{padding-top:104px;padding-bottom:72px}
   .hero .lede{font-size:19px}
   .proof{gap:26px}
-  .finder{padding:16px 12px 14px;border-radius:20px}
-  .ptable{gap:2px}
-  .ptable button{font-size:8px;border-radius:3px}
-  .f-target{font-size:32px}
-  .f-meta span{height:30px;padding:0 10px;font-size:13px}
-  .f-key{display:none}
+  .stack{aspect-ratio:1.05;margin:8px 0 12px;width:100%}
+  .shot{padding:6px;border-radius:12px}
+  .shot img{border-radius:7px}
+  .shot figcaption{height:32px;padding:0 11px;font-size:12px}
+  .tile{width:140px}
+  .strip{padding-bottom:48px}
   .jump{left:50%;right:auto;transform:translate(-50%,16px);bottom:16px}
   .bubble{font-size:13px;padding:10px 12px 10px 44px;left:10px;right:10px;bottom:10px}
   .bubble::before{left:10px;width:24px;height:24px;margin-top:-12px;font-size:15px;line-height:24px}
@@ -403,16 +409,13 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       </div>
     </div>
 
-    <div class="finder" id="finder">
-      <div class="f-top">
-        <div><span class="f-lbl" id="fLbl">Try a Speed Find round. Find this element:</span><b class="f-target" id="fTarget" aria-live="polite">Gold</b></div>
-        <div class="f-meta"><span id="fCount">1 of 5</span><span class="f-time" id="fTime">0.0s</span></div>
-      </div>
-      <div class="ptable" id="ptable" aria-label="Periodic table"></div>
-      <p class="f-say" id="fSay" role="status" aria-live="polite">Click it on the table. The clock starts when you do.</p>
-      <div class="f-key" id="fKey" aria-hidden="true"></div>
+    <div class="stack" aria-label="Two Turn-Table games">
+      <figure class="shot back"><img src="{{BASE}}img/strata.webp" width="1600" height="833" alt="Deep Time: students read a cross-section of rock layers and put Earth's history in order."><figcaption><i style="background:#f0a64a"></i>Earth &amp; Space · Deep Time</figcaption></figure>
+      <figure class="shot front"><img src="{{BASE}}img/atom.webp" width="1600" height="833" alt="Atom Builder: students add protons, neutrons and electrons to build oxygen-17."><figcaption><i style="background:#a77bff"></i>Chemistry · Atom Builder</figcaption></figure>
     </div>
   </div>
+  <div class="wrap strip-head"><b>All 24 games</b><a href="#games">See the full list</a></div>
+  <div class="strip" aria-label="All 24 games"><div class="belt" id="belt"></div></div>
 </section>
 
 <section class="pad problem" id="how">
@@ -675,48 +678,10 @@ const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Ch
   rows.forEach(([n,a,b])=>{const r=document.createElement('div');r.className='pair';
     r.innerHTML=`<span></span><span class="bars"><i class="pre" style="width:${a}%"></i><i class="post" style="width:${b}%"></i></span><b>+${b-a}</b>`;r.firstChild.textContent=n;box.append(r);});})();
 
-/* ---- Speed Find demo ---- */
-(()=>{
-  const SYM='H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og'.split(' ');
-  const NAME='Hydrogen Helium Lithium Beryllium Boron Carbon Nitrogen Oxygen Fluorine Neon Sodium Magnesium Aluminum Silicon Phosphorus Sulfur Chlorine Argon Potassium Calcium Scandium Titanium Vanadium Chromium Manganese Iron Cobalt Nickel Copper Zinc Gallium Germanium Arsenic Selenium Bromine Krypton Rubidium Strontium Yttrium Zirconium Niobium Molybdenum Technetium Ruthenium Rhodium Palladium Silver Cadmium Indium Tin Antimony Tellurium Iodine Xenon Cesium Barium Lanthanum Cerium Praseodymium Neodymium Promethium Samarium Europium Gadolinium Terbium Dysprosium Holmium Erbium Thulium Ytterbium Lutetium Hafnium Tantalum Tungsten Rhenium Osmium Iridium Platinum Gold Mercury Thallium Lead Bismuth Polonium Astatine Radon Francium Radium Actinium Thorium Protactinium Uranium Neptunium Plutonium Americium Curium Berkelium Californium Einsteinium Fermium Mendelevium Nobelium Lawrencium Rutherfordium Dubnium Seaborgium Bohrium Hassium Meitnerium Darmstadtium Roentgenium Copernicium Nihonium Flerovium Moscovium Livermorium Tennessine Oganesson'.split(' ');
-  const CAT={a:[3,11,19,37,55,87],e:[4,12,20,38,56,88],m:[5,14,32,33,51,52],n:[1,6,7,8,15,16,34],h:[9,17,35,53,85,117],g:[2,10,18,36,54,86,118],p:[13,31,49,50,81,82,83,84,113,114,115,116]};
-  const COL={a:['#ff6b6b','Alkali metal'],e:['#ffa94d','Alkaline earth'],t:['#e8c547','Transition metal'],p:['#8bd17c','Post-transition'],m:['#4fd1b5','Metalloid'],n:['#5ea8ff','Nonmetal'],h:['#a98bff','Halogen'],g:['#f78fd1','Noble gas']};
-  const cat=z=>{for(const k in CAT)if(CAT[k].includes(z))return k;return 't';};
-  const rgba=(h,a)=>`rgba(${parseInt(h.slice(1,3),16)},${parseInt(h.slice(3,5),16)},${parseInt(h.slice(5,7),16)},${a})`;
-  const START=[1,3,11,19,37,55,87];
-  function pos(z){let p=0;while(p<6&&z>=START[p+1])p++;const s0=START[p],o=z-s0;let g;
-    if(p===0)g=z===1?1:18;else if(p<3)g=o<2?o+1:o+11;else if(p<5)g=o+1;else{if(o<2)g=o+1;else if(o<17)return null;else g=o-13;}
-    return [p+1,g];}
-  const LATIN={Au:'aurum',Ag:'argentum',Fe:'ferrum',Na:'natrium',K:'kalium',Pb:'plumbum',Hg:'hydrargyrum',Cu:'cuprum',Sn:'stannum'};
-  const POOL=['Na','Fe','Ne','Ca','Cl','Ag','K','Cu','O','Mg','He','C','Zn','Hg','I','Al','Pb','N','S','Si'];
-  const tb=document.getElementById('ptable'),T=document.getElementById('fTarget'),L=document.getElementById('fLbl'),C=document.getElementById('fCount'),TM=document.getElementById('fTime'),SAY=document.getElementById('fSay');
-  const cells={};
-  for(let r=1;r<=7;r++)for(let g=1;g<=18;g++){const b=document.createElement('button');b.type='button';b.className='gap';b.tabIndex=-1;b.style.gridRow=r;b.style.gridColumn=g;tb.append(b);cells[r+'-'+g]=b;}
-  for(let z=1;z<=118;z++){const ps=pos(z);if(!ps)continue;const b=cells[ps[0]+'-'+ps[1]];const k=cat(z);
-    b.className='';b.tabIndex=0;b.textContent=SYM[z-1];b.dataset.z=z;b.style.setProperty('--bg',`linear-gradient(180deg,${rgba(COL[k][0],.62)},${rgba(COL[k][0],.4)})`);b.setAttribute('aria-label',NAME[z-1]);}
-  ['6-3','7-3'].forEach(k=>{const b=cells[k];b.className='fx';b.textContent='';b.tabIndex=-1;b.setAttribute('aria-hidden','true');});
-  const key=document.getElementById('fKey');Object.values(COL).forEach(([c,n])=>{const s=document.createElement('span');s.innerHTML=`<i style="background:${c}"></i>`;s.append(n);key.append(s);});
-  let Q,i,t0,times,miss,missAt,done,raf;
-  const zOf=sym=>SYM.indexOf(sym)+1;
-  function newRound(){const pool=POOL.slice().sort(()=>Math.random()-.5);Q=['Au',...pool.slice(0,4)];i=0;t0=null;times=[];miss=0;missAt={};done=false;
-    L.textContent='Try a Speed Find round. Find this element:';show();TM.textContent='0.0s';SAY.className='f-say';SAY.textContent='Click it on the table. The clock starts when you reach the table.';}
-  function show(){T.textContent=NAME[zOf(Q[i])-1];C.textContent=(i+1)+' of '+Q.length;}
-  function tick(){if(t0!=null&&!done)TM.textContent=((performance.now()-t0)/1000).toFixed(1)+'s';raf=requestAnimationFrame(tick);}
-  const start=()=>{if(t0==null&&!done)t0=performance.now();};
-  tb.addEventListener('pointerenter',start);tb.addEventListener('focusin',start);tb.addEventListener('touchstart',start,{passive:true});
-  tb.addEventListener('click',e=>{const b=e.target.closest('button[data-z]');if(!b||done)return;start();
-    const z=+b.dataset.z,want=zOf(Q[i]);
-    if(z===want){const now=performance.now();times.push(now-t0);t0=now;b.classList.add('ok');SAY.className='f-say good';
-      SAY.textContent=`Found ${NAME[z-1]} (${SYM[z-1]}) in ${(times[times.length-1]/1000).toFixed(1)}s.`;
-      setTimeout(()=>b.classList.remove('ok'),500);i++;if(i>=Q.length)return finish();setTimeout(show,180);}
-    else{miss++;missAt[Q[i]]=1;b.classList.remove('no');void b.offsetWidth;b.classList.add('no');setTimeout(()=>b.classList.remove('no'),400);SAY.className='f-say bad';
-      const sym=Q[i],lat=LATIN[sym];SAY.textContent=`That's ${NAME[z-1]} (${SYM[z-1]}). Keep looking for ${NAME[want-1]}.`+(lat?` Tip: its symbol is ${sym}, from the Latin ${lat}.`:'');}});
-  function finish(){done=true;const avg=times.reduce((a,b)=>a+b,0)/times.length/1000;let si=0;times.forEach((t,k)=>{if(t>times[si])si=k;});
-    L.textContent='Your average time per element';T.textContent=avg.toFixed(1)+'s';C.textContent='Done';TM.textContent=miss+(miss===1?' miss':' misses');
-    SAY.className='f-say good';SAY.innerHTML='';SAY.append(`Slowest: ${NAME[zOf(Q[si])-1]} (${(times[si]/1000).toFixed(1)}s). In Speed Find, students race their own best average, and their slowest elements get flagged for practice. `);
-    const again=document.createElement('button');again.type='button';again.className='f-again';again.textContent='Play again';again.onclick=newRound;SAY.append(again);}
-  newRound();tick();
-})();
+/* ---- all-games strip ---- */
+(()=>{const belt=document.getElementById('belt');const mk=(g,i,dup)=>{const a=document.createElement('a');a.className='tile';a.href='#games';a.style.setProperty('--c',SUBJ[g.subj][1]);
+  if(dup){a.setAttribute('aria-hidden','true');a.tabIndex=-1;}a.innerHTML=`<div class="art">${g.svg}</div><span></span>`;a.querySelector('span').textContent=g.name;return a;};
+  GAMES.forEach((g,i)=>belt.append(mk(g,i,false)));GAMES.forEach((g,i)=>belt.append(mk(g,i,true)));})();
 
 /* ---- jump button, progress bar, scroll reveals, parallax ---- */
 (()=>{
