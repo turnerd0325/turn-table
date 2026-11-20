@@ -176,7 +176,7 @@ function tstDashCard(C){
     TSTD.busy&&!TSTD.rows?h('p',{class:'sub'},'Loading…'):!gamesWithData.length?h('p',{class:'sub'},'No test scores yet. Open a Pre-Test above and your students’ scores will show here.'):
     h('div',null,
       h('div',{class:'tbar'},h('label',null,'Game: ',h('select',{onchange:e=>{TSTD.game=e.target.value;renderDash();}},...gamesWithData.map(x=>h('option',{value:x,selected:x===g},tstName(x))))),
-        ngBtn('Refresh',()=>tstLoad(C),'sm ghost'),ngBtn('Download CSV (all games)',()=>tstCsv(C),'sm ghost')),
+        ngBtn('See the chart',()=>{PT.game=TSTD.game;TA.cls=C.id;openProgress({tab:'tests'});},'sm good'),ngBtn('Refresh',()=>tstLoad(C),'sm ghost'),ngBtn('Download CSV (all games)',()=>tstCsv(C),'sm ghost')),
       h('div',{class:'tstavg'},h('span',null,'Class average Pre ',h('b',null,aPre==null?'—':aPre+'%')),h('span',null,'Post ',h('b',null,aPost==null?'—':aPost+'%')),
         h('span',null,'Average growth ',h('b',null,aGain==null?'—':(aGain>=0?'+':'')+aGain+' points'),h('small',null,` (${both.length} student${both.length===1?'':'s'} took both)`))),
       h('div',{class:'tstwrap'},h('table',{class:'tsttab'},h('thead',null,h('tr',null,h('th',null,'Student'),h('th',null,'Pre-Test'),h('th',null,'Post-Test'),h('th',null,'Change'))),

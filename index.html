@@ -1346,6 +1346,13 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .pg-table tr.pick{cursor:pointer}.pg-table tr.pick:hover td{background:#f4f8ff}
 .pg-up{color:var(--good);font-weight:700}.pg-down{color:var(--bad);font-weight:700}
 .pg-spark{display:block}
+.pg-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 4px;border-bottom:1.5px solid var(--line);padding-bottom:8px}
+.pg-tabs button{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:#fff;color:var(--ink);font:700 14px/1 inherit;padding:9px 14px;border-radius:999px;cursor:pointer}
+.pg-tabs button[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pg-tabs .pg-tablink{margin-left:auto;color:var(--accent);border-style:dashed}
+.pg-tabs i svg{width:16px;height:16px}
+.pg-private{font-size:12.5px;color:var(--muted);margin:6px 2px 0;display:flex;gap:6px;align-items:center}
+.pg-private::before{content:"🔒";font-size:12px}
 .pg-table tr.sel td{background:#eef4ff}
 .td-up{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:14px 0 4px;padding:14px 16px;border-radius:14px;background:#f3eeff;border:1.5px solid #d9ccff;color:#2b1f5c;font-size:15px}
 .td-up b{color:#4b2aa8}.td-use.near{color:#b3261e;font-weight:700}
@@ -2113,6 +2120,7 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
       <button class="btn sm ghost" id="tExportAll"><i data-ic="download"></i>Every round (CSV)</button>
       <button class="btn sm ghost" id="tClassGames"><i data-ic="live"></i>Class Games</button>
       <button class="btn sm ghost" id="tFeedback"><i data-ic="chat"></i>Student feedback</button>
+      <button class="btn sm good" id="tProgress"><i data-ic="chart"></i>Progress &amp; data</button>
       <button class="btn sm ghost" id="tBack">← Dashboard</button>
     </div>
     <div class="tbar">
@@ -2128,11 +2136,21 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 <section class="screen" id="s-progress" hidden>
   <div class="card pg-card">
     <div class="pg-head">
-      <div><h2><i data-ic="chart"></i>Progress</h2><p class="sub">Every round your students play is saved here automatically. Pick a game to see the class curve, or one student to see their own.</p></div>
+      <div><h2><i data-ic="chart"></i>Progress</h2><p class="sub">Everything about your students' progress in one place: a curve for every game, Pre-Test and Post-Test growth, and the elements they miss most. Every round is saved automatically.</p></div>
       <button class="btn sm ghost" id="pgBack">← Dashboard</button>
     </div>
+    <div class="pg-tabs" role="tablist" aria-label="Progress views">
+      <button type="button" role="tab" data-tab="games" aria-selected="true"><i data-ic="chart"></i>Game progress</button>
+      <button type="button" role="tab" data-tab="tests" aria-selected="false"><i data-ic="check"></i>Pre-Test and Post-Test</button>
+      <button type="button" role="tab" data-tab="tricky" aria-selected="false"><i data-ic="lens"></i>Tricky elements</button>
+      <button type="button" id="pgScores" class="pg-tablink"><i data-ic="doc"></i>Full scores table</button>
+    </div>
+    <p class="pg-private">Only your own students are shown here. No other teacher can see them, and you cannot see anyone else's.</p>
     <div class="pg-ctl">
       <label>Class<select id="pgClass"></select></label>
+    </div>
+    <div id="pgP-games">
+    <div class="pg-ctl">
       <label>Game<select id="pgGame"></select></label>
       <label>Level<select id="pgLevel"></select></label>
       <label>Show<select id="pgWho"></select></label>
@@ -2142,6 +2160,20 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
     <p class="pg-note" id="pgNote"></p>
     <h3 class="pg-h3" id="pgTH">Students</h3>
     <div class="tscroll"><table class="dt pg-table" id="pgTable"></table></div>
+    </div>
+    <div id="pgP-tests" hidden>
+      <div class="pg-ctl"><label>Game<select id="ptGame"></select></label><button type="button" class="btn sm ghost" id="ptCsv"><i data-ic="download"></i>Download CSV</button></div>
+      <div class="pg-chips" id="ptChips"></div>
+      <div class="pg-chart"><svg id="ptSvg" viewBox="0 0 860 200" role="img" aria-label="Pre-Test and Post-Test score for each student"></svg></div>
+      <p class="pg-note" id="ptNote"></p>
+    </div>
+    <div id="pgP-tricky" hidden>
+      <div class="pg-chips" id="pkChips"></div>
+      <div class="pg-chart"><svg id="pkSvg" viewBox="0 0 860 200" role="img" aria-label="Elements students miss most"></svg></div>
+      <p class="pg-note">Counts come from Speed Find and Element Trivia: each time a student clicks the wrong element or misses the answer, that element gets one more miss. Use the top ones for a quick reteach or a warm-up.</p>
+      <h3 class="pg-h3">Who misses each one</h3>
+      <div class="tscroll"><table class="dt pg-table" id="pkTable"></table></div>
+    </div>
   </div>
 </section>
 <section class="screen" id="s-thist" hidden>
@@ -3067,7 +3099,7 @@ function renderDash(){
       h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt),
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
-      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress charts'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
+      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'https://app.thesciencehooklab.com/pricing?product=bundle',target:'_blank',rel:'noopener'},'Upgrade now')):
 T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
     TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Check out with '+(T.email?T.email:'this same email')+' and Turn-Table unlocks by itself.')),h('a',{class:'btn sm good',href:'https://app.thesciencehooklab.com/pricing?product=turntable',target:'_blank',rel:'noopener'},'Upgrade now')):null,
@@ -8142,6 +8174,7 @@ $('tExportAll').onclick=async()=>{
   downloadCSV(rows,'turn-table-every-round.csv');
 };
 $('tRefresh').onclick=()=>loadTeacher();
+$('tProgress').onclick=()=>openProgress();
 $('tClass').onchange=()=>loadTeacher();$('tSearch').oninput=renderTeacher;
 $('thBack').onclick=()=>{show('s-teacher');$('userChip').hidden=true;};
 /* ---------- PROGRESS CHARTS (teacher) ---------- */
@@ -8164,7 +8197,8 @@ async function openProgress(opt){
   $('pgClass').replaceChildren(h('option',{value:'*'},'All my classes'),...K.filter(c=>!c.archived).map(c=>h('option',{value:c.id},c.name)));
   $('pgClass').value=PG.cls&&[...$('pgClass').options].some(o=>o.value===PG.cls)?PG.cls:(TA.cls&&K.some(c=>c.id===TA.cls)?TA.cls:'*');
   showT('s-progress');
-  await pgLoad();
+  PG.tab=opt.tab||'games';PG.rows=null;
+  await pgLoadTab();
   if(opt.sid&&PG.rows){const mine=PG.rows.filter(r=>r.sid===opt.sid);
     if(!mine.length&&$('pgClass').value!=='*'){$('pgClass').value='*';await pgLoad();}
     const m2=PG.rows.filter(r=>r.sid===opt.sid);
@@ -8315,7 +8349,72 @@ function pgTable(g,by,U,star){
       const tr=h('tr',{class:'pick'+(x.sid===PG.who?' sel':''),title:'See '+x.name+"'s curve"},h('td',null,h('b',null,x.name)),PG.cls==='*'?h('td',null,x.cls||'—'):null,h('td',{class:'num'},String(x.n)),h('td',{class:'num'},U.fmt(x.first)),h('td',{class:'num'},U.fmt(star?x.ys[x.ys.length-1]:x.last)),h('td',{class:'num'},U.fmt(x.best)),h('td',{class:'num'},ch),h('td',null,pgSpark(x.ys,U.lowerBetter)),h('td',null,when(x.at)));
       tr.onclick=()=>{PG.who=x.sid;$('pgWho').value=x.sid;pgRender();window.scrollTo({top:0,behavior:'smooth'});};return tr;}));
 }
-$('pgClass').onchange=()=>pgLoad();
+$('pgClass').onchange=()=>pgLoadTab();
+PG.tab='games';
+document.querySelectorAll('.pg-tabs [data-tab]').forEach(b=>b.onclick=()=>{PG.tab=b.dataset.tab;pgLoadTab();});
+$('pgScores').onclick=()=>{if($('pgClass').value!=='*')TA.cls=$('pgClass').value;openRoster();};
+async function pgLoadTab(){
+  document.querySelectorAll('.pg-tabs [data-tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===PG.tab?'true':'false'));
+  ['games','tests','tricky'].forEach(t=>$('pgP-'+t).hidden=t!==PG.tab);
+  if(PG.tab==='games'){if(PG.cls!==$('pgClass').value||!PG.rows)await pgLoad();else pgFill();}
+  else if(PG.tab==='tests')await ptLoad();else await pkLoad();
+}
+/* --- Pre-Test / Post-Test --- */
+const PT={rows:null,game:null};
+async function ptLoad(){
+  const K=((TA.me&&TA.me.classes)||[]).filter(c=>!c.archived);const sel=$('pgClass').value;const list=sel==='*'?K:K.filter(c=>c.id===sel);
+  $('ptChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading tests')));
+  let rows=[];for(const c of list){const r=await tcall('tt_t_tests',{p_class:c.id});if(r)rows=rows.concat((r.rows||[]).map(x=>Object.assign({},x,{cls:c.name})));}
+  PT.rows=rows;const games=[...new Set(rows.map(r=>r.game))];
+  $('ptGame').replaceChildren(...(games.length?games.map(g=>h('option',{value:g},tstName(g))):[h('option',{value:''},'No tests taken yet')]));
+  if(!games.includes(PT.game))PT.game=games[0]||null;$('ptGame').value=PT.game||'';ptRender();
+}
+$('ptGame').onchange=()=>{PT.game=$('ptGame').value;ptRender();};
+function ptByStudent(){const m={};(PT.rows||[]).filter(r=>r.game===PT.game).forEach(r=>{(m[r.sid]=m[r.sid]||{name:r.name,cls:r.cls,sid:r.sid})[r.kind]=r;});return Object.values(m).sort((a,b)=>a.name.localeCompare(b.name));}
+function ptRender(){
+  const svg=$('ptSvg');svg.replaceChildren();
+  if(!PT.game){$('ptChips').replaceChildren();svg.setAttribute('viewBox','0 0 860 120');pgEmpty2(svg,'No Pre-Test or Post-Test scores yet. Open a test window from your dashboard.');$('ptNote').textContent='';return;}
+  const L=ptByStudent(),avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+  const pre=L.filter(x=>x.pre).map(x=>+x.pre.score),post=L.filter(x=>x.post).map(x=>+x.post.score),both=L.filter(x=>x.pre&&x.post);
+  const gain=avg(both.map(x=>x.post.score-x.pre.score));const f=v=>v==null?'—':Math.round(v)+'%';
+  pgChipsTo('ptChips',[[pre.length,'took the Pre-Test'],[post.length,'took the Post-Test'],[f(avg(pre)),'class Pre-Test average'],[f(avg(post)),'class Post-Test average'],[gain==null?'—':(gain>=0?'+':'−')+Math.abs(Math.round(gain))+' pts','average growth ('+both.length+' took both)',gain==null?'':gain>0?'up':gain<0?'down':'']]);
+  const NS='http://www.w3.org/2000/svg',W=860,Lm=170,Rm=60,T=56,rowH=26,H=T+L.length*rowH+30;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.append(e);return e;};
+  const X=v=>Lm+v/100*(W-Lm-Rm);
+  [0,25,50,75,100].forEach(v=>{el('line',{x1:X(v),x2:X(v),y1:T-8,y2:H-24,stroke:'#e3e9f4'});const t=el('text',{x:X(v),y:T-16,'text-anchor':'middle','font-size':12,fill:'#5b6b86'});t.textContent=v+'%';});
+  const lg=el('text',{x:Lm,y:18,'font-size':12.5,fill:'#5b6b86'});lg.textContent='○ Pre-Test   ● Post-Test   (line is green when the score went up)';
+  L.forEach((x,i)=>{const y=T+i*rowH+12;const n=el('text',{x:Lm-10,y:y+4,'text-anchor':'end','font-size':13,fill:'#1b2433','font-weight':600});n.textContent=x.name+(($('pgClass').value==='*'&&x.cls)?' · '+x.cls:'');
+    const a=x.pre?+x.pre.score:null,b=x.post?+x.post.score:null;
+    if(a!=null&&b!=null)el('line',{x1:X(a),x2:X(b),y1:y,y2:y,stroke:b>=a?'#1f9d55':'#d64545','stroke-width':4,'stroke-linecap':'round','stroke-opacity':.7});
+    if(a!=null){const c=el('circle',{cx:X(a),cy:y,r:7,fill:'#fff',stroke:'#7a8aa8','stroke-width':2.5});c.append(Object.assign(document.createElementNS(NS,'title'),{textContent:`${x.name} Pre-Test ${Math.round(a)}%`}));}
+    if(b!=null){const c=el('circle',{cx:X(b),cy:y,r:7,fill:'#2f6bff'});c.append(Object.assign(document.createElementNS(NS,'title'),{textContent:`${x.name} Post-Test ${Math.round(b)}%`}));}
+    if(a!=null&&b!=null){const d=Math.round(b-a);const t=el('text',{x:W-Rm+10,y:y+4,'font-size':12.5,'font-weight':700,fill:d>0?'#1f9d55':d<0?'#d64545':'#5b6b86'});t.textContent=(d>0?'+':'')+d;}});
+  $('ptNote').textContent=`Each row is one student on ${tstName(PT.game)}: the hollow dot is their Pre-Test, the blue dot their Post-Test, and the number on the right is the change in points. Open or close test windows from the Pre-Test and Post-Test card on your dashboard.`;
+}
+$('ptCsv').onclick=()=>{const rows=[['Student','Class','Game','Pre-Test %','Post-Test %','Change','Pre date','Post date']];
+  const keep=PT.game;[...new Set((PT.rows||[]).map(r=>r.game))].forEach(g=>{PT.game=g;ptByStudent().forEach(x=>rows.push([x.name,x.cls||'',tstName(g),x.pre?x.pre.score:'',x.post?x.post.score:'',x.pre&&x.post?Math.round(x.post.score-x.pre.score):'',x.pre?String(x.pre.at).slice(0,10):'',x.post?String(x.post.at).slice(0,10):'']));});PT.game=keep;
+  downloadCSV(rows,'turn-table-pre-post-tests.csv');};
+/* --- Tricky elements --- */
+async function pkLoad(){
+  $('pkChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading')));
+  const sel=$('pgClass').value;const r=await tcall('tt_t_missed',{p_class:sel==='*'?null:sel});const rows=r?(r.rows||[]):[];
+  const by={};rows.forEach(x=>{const o=by[x.symbol]=by[x.symbol]||{sym:x.symbol,total:0,st:[]};o.total+=Number(x.n);o.st.push(x);});
+  const list=Object.values(by).sort((a,b)=>b.st.length-a.st.length||b.total-a.total);
+  const svg=$('pkSvg');svg.replaceChildren();
+  pgChipsTo('pkChips',[[list.length,'elements missed at least once'],[new Set(rows.map(x=>x.sid)).size,'students with misses'],[list[0]?(BYSYM[list[0].sym]?BYSYM[list[0].sym].name:list[0].sym):'—','missed by the most students']]);
+  if(!list.length){svg.setAttribute('viewBox','0 0 860 120');pgEmpty2(svg,'No missed elements yet.');$('pkTable').replaceChildren();return;}
+  const top=list.slice(0,15),NS='http://www.w3.org/2000/svg',W=860,Lm=150,Rm=200,T=20,rowH=26,H=T+top.length*rowH+10;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.append(e);return e;};const mx=Math.max(...top.map(x=>x.st.length));
+  top.forEach((x,i)=>{const y=T+i*rowH;const nm=BYSYM[x.sym]?BYSYM[x.sym].name:x.sym;const t=el('text',{x:Lm-10,y:y+15,'text-anchor':'end','font-size':13,fill:'#1b2433','font-weight':600});t.textContent=`${nm} (${x.sym})`;
+    const w=(W-Lm-Rm)*x.st.length/mx;el('rect',{x:Lm,y:y+3,width:Math.max(3,w),height:18,rx:5,fill:'#7c4dff','fill-opacity':.8});
+    const v=el('text',{x:Lm+w+8,y:y+16,'font-size':12.5,fill:'#5b6b86'});v.textContent=`${x.st.length} student${x.st.length===1?'':'s'} · ${x.total} misses`;});
+  $('pkTable').replaceChildren(h('tr',null,...['Element','Students who missed it','Total misses','Who (most misses first)'].map(t=>h('th',null,t))),
+    ...list.slice(0,40).map(x=>h('tr',null,h('td',null,h('b',null,(BYSYM[x.sym]?BYSYM[x.sym].name:x.sym)+' ('+x.sym+')')),h('td',{class:'num'},String(x.st.length)),h('td',{class:'num'},String(x.total)),
+      h('td',null,x.st.sort((a,b)=>b.n-a.n).slice(0,8).map(y=>`${y.name} (${y.n})`).join(', ')+(x.st.length>8?` and ${x.st.length-8} more`:'')))));
+}
+function pgChipsTo(id,list){$(id).replaceChildren(...list.map(([v,l,c])=>h('div',{class:'pg-chip'+(c?' '+c:'')},h('b',null,String(v)),h('span',null,l))));}
+function pgEmpty2(svg,msg){const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.setAttribute('x',430);t.setAttribute('y',64);t.setAttribute('text-anchor','middle');t.setAttribute('fill','#5b6b86');t.setAttribute('font-size','15');t.textContent=msg;svg.append(t);}
+
 $('pgGame').onchange=()=>{PG.game=$('pgGame').value;PG.level='*';pgFill();};
 $('pgLevel').onchange=()=>{PG.level=$('pgLevel').value;pgRender();};
 $('pgWho').onchange=()=>{PG.who=$('pgWho').value;pgRender();};
@@ -10915,7 +11014,7 @@ function tstDashCard(C){
     TSTD.busy&&!TSTD.rows?h('p',{class:'sub'},'Loading…'):!gamesWithData.length?h('p',{class:'sub'},'No test scores yet. Open a Pre-Test above and your students’ scores will show here.'):
     h('div',null,
       h('div',{class:'tbar'},h('label',null,'Game: ',h('select',{onchange:e=>{TSTD.game=e.target.value;renderDash();}},...gamesWithData.map(x=>h('option',{value:x,selected:x===g},tstName(x))))),
-        ngBtn('Refresh',()=>tstLoad(C),'sm ghost'),ngBtn('Download CSV (all games)',()=>tstCsv(C),'sm ghost')),
+        ngBtn('See the chart',()=>{PT.game=TSTD.game;TA.cls=C.id;openProgress({tab:'tests'});},'sm good'),ngBtn('Refresh',()=>tstLoad(C),'sm ghost'),ngBtn('Download CSV (all games)',()=>tstCsv(C),'sm ghost')),
       h('div',{class:'tstavg'},h('span',null,'Class average Pre ',h('b',null,aPre==null?'—':aPre+'%')),h('span',null,'Post ',h('b',null,aPost==null?'—':aPost+'%')),
         h('span',null,'Average growth ',h('b',null,aGain==null?'—':(aGain>=0?'+':'')+aGain+' points'),h('small',null,` (${both.length} student${both.length===1?'':'s'} took both)`))),
       h('div',{class:'tstwrap'},h('table',{class:'tsttab'},h('thead',null,h('tr',null,h('th',null,'Student'),h('th',null,'Pre-Test'),h('th',null,'Post-Test'),h('th',null,'Change'))),
