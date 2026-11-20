@@ -1353,6 +1353,10 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
 .pg-tabs i svg{width:16px;height:16px}
 .pg-private{font-size:12.5px;color:var(--muted);margin:6px 2px 0;display:flex;gap:6px;align-items:center}
 .pg-private::before{content:"🔒";font-size:12px}
+.pg-privrow{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between}
+.pg-hide{font-size:13px;font-weight:700;display:flex;gap:7px;align-items:center;cursor:pointer;margin-top:6px}
+.pg-hide input{width:17px;height:17px;accent-color:var(--blue,#2f6bff)}
+.pg-hide span{font-weight:500;color:var(--muted)}
 .pg-table tr.sel td{background:#eef4ff}
 .td-up{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:14px 0 4px;padding:14px 16px;border-radius:14px;background:#f3eeff;border:1.5px solid #d9ccff;color:#2b1f5c;font-size:15px}
 .td-up b{color:#4b2aa8}
@@ -2146,7 +2150,8 @@ body.stage main{max-width:none;padding:0;margin:0;width:100%;flex:1 1 auto}
       <button type="button" role="tab" data-tab="tricky" aria-selected="false"><i data-ic="lens"></i>Tricky elements</button>
       <button type="button" id="pgScores" class="pg-tablink"><i data-ic="doc"></i>Full scores table</button>
     </div>
-    <p class="pg-private">Only your own students are shown here. No other teacher can see them, and you cannot see anyone else's.</p>
+    <div class="pg-privrow"><p class="pg-private">Only your own students are shown here. No other teacher can see them, and you cannot see anyone else's.</p>
+      <label class="pg-hide"><input type="checkbox" id="pgHide"> Hide student names <span>(for projecting or screenshots)</span></label></div>
     <div class="pg-ctl">
       <label>Class<select id="pgClass"></select></label>
     </div>
@@ -8209,7 +8214,7 @@ async function pgLoad(){
   PG.cls=$('pgClass').value;
   $('pgChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading rounds')));
   const r=await tcall('tt_t_all_scores',{p_class:PG.cls==='*'?null:PG.cls});
-  PG.rows=r?(r.rows||[]):[];
+  PG.rows=pgAlias(r?(r.rows||[]):[]);
   const cnt={};PG.rows.forEach(x=>cnt[x.game]=(cnt[x.game]||0)+1);
   const games=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a]);
   $('pgGame').replaceChildren(...(games.length?games.map(g=>h('option',{value:g},`${pgName(g)} (${cnt[g]} rounds)`)):[h('option',{value:''},'No rounds yet')]));
@@ -8362,13 +8367,24 @@ async function pgLoadTab(){
   if(PG.tab==='games'){if(PG.cls!==$('pgClass').value||!PG.rows)await pgLoad();else pgFill();}
   else if(PG.tab==='tests')await ptLoad();else await pkLoad();
 }
+/* Hide names: swap real nicknames for Student 1, 2, 3... (same number in every tab this session) */
+PG.amap={};PG.hide=(()=>{try{return localStorage.getItem('tt_pg_hide')==='1';}catch(e){return false;}})();
+function pgAlias(rows){
+  rows.forEach(r=>{if(r.rname==null)r.rname=r.name;});
+  if(!PG.hide){rows.forEach(r=>r.name=r.rname);return rows;}
+  const fresh=[...new Map(rows.filter(r=>!PG.amap[r.sid]).map(r=>[r.sid,r.rname])).entries()].sort((a,b)=>String(a[1]).localeCompare(String(b[1])));
+  let n=Object.keys(PG.amap).length;fresh.forEach(([sid])=>PG.amap[sid]=++n);
+  rows.forEach(r=>r.name='Student '+PG.amap[r.sid]);return rows;}
+$('pgHide').checked=PG.hide;
+$('pgHide').onchange=()=>{PG.hide=$('pgHide').checked;try{localStorage.setItem('tt_pg_hide',PG.hide?'1':'0');}catch(e){}
+  if(PG.rows){pgAlias(PG.rows);pgFill();}if(PT.rows){pgAlias(PT.rows);if(PG.tab==='tests')ptRender();}if(PG.tab==='tricky')pkLoad();};
 /* --- Pre-Test / Post-Test --- */
 const PT={rows:null,game:null};
 async function ptLoad(){
   const K=((TA.me&&TA.me.classes)||[]).filter(c=>!c.archived);const sel=$('pgClass').value;const list=sel==='*'?K:K.filter(c=>c.id===sel);
   $('ptChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading tests')));
   let rows=[];for(const c of list){const r=await tcall('tt_t_tests',{p_class:c.id});if(r)rows=rows.concat((r.rows||[]).map(x=>Object.assign({},x,{cls:c.name})));}
-  PT.rows=rows;const games=[...new Set(rows.map(r=>r.game))];
+  PT.rows=pgAlias(rows);const games=[...new Set(rows.map(r=>r.game))];
   $('ptGame').replaceChildren(...(games.length?games.map(g=>h('option',{value:g},tstName(g))):[h('option',{value:''},'No tests taken yet')]));
   if(!games.includes(PT.game))PT.game=games[0]||null;$('ptGame').value=PT.game||'';ptRender();
 }
@@ -8400,7 +8416,7 @@ $('ptCsv').onclick=()=>{const rows=[['Student','Class','Game','Pre-Test %','Post
 /* --- Tricky elements --- */
 async function pkLoad(){
   $('pkChips').replaceChildren(h('div',{class:'pg-chip'},h('b',null,'…'),h('span',null,'Loading')));
-  const sel=$('pgClass').value;const r=await tcall('tt_t_missed',{p_class:sel==='*'?null:sel});const rows=r?(r.rows||[]):[];
+  const sel=$('pgClass').value;const r=await tcall('tt_t_missed',{p_class:sel==='*'?null:sel});const rows=pgAlias(r?(r.rows||[]):[]);
   const by={};rows.forEach(x=>{const o=by[x.symbol]=by[x.symbol]||{sym:x.symbol,total:0,st:[]};o.total+=Number(x.n);o.st.push(x);});
   const list=Object.values(by).sort((a,b)=>b.st.length-a.st.length||b.total-a.total);
   const svg=$('pkSvg');svg.replaceChildren();
