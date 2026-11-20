@@ -401,6 +401,7 @@ h2 .ico,h1 .ico{color:var(--accent);margin-right:4px}
 .stdchip{display:inline-block;vertical-align:middle;margin-left:8px;font-size:12px;font-weight:800;letter-spacing:.3px;color:#2f4fb5;background:#e8eeff;border:1.5px solid #b9cbff;border-radius:999px;padding:2px 9px;white-space:nowrap}
 .mcard b .stdchip{font-size:11px;padding:1px 8px;margin-left:7px;position:relative;top:-1px}
 .stdchip.sup{background:#fff;border-style:dashed;color:#5a6c9c}
+.stdchip.hs{color:#7a4a00;background:#fff4dc;border-color:#f3cf86}
 .stdnote{grid-column:1/-1;text-align:center;color:var(--muted);font-size:12.5px;margin-top:2px}
 .lzwrap{display:flex;justify-content:center;margin:6px 0}
 #lzBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:14px;box-shadow:0 10px 30px rgba(10,16,40,.35);display:block}
@@ -3322,6 +3323,7 @@ $('btnLogin').onclick=doLogin;
 /*<<STDMAP*/
 const STD={speed:['MS-PS1-1',1],trivia:['MS-PS1-1',1],lab:['MS-PS1-1',0],atom:['MS-PS1-1',0],balance:['MS-PS1-5',0],diner:['MS-PS1-5',0],sep:['MS-PS1-8',0],explore:['MS-PS1-1',1],laser:['MS-PS4-2',0],blackout:['MS-PS3-6',0],evidence:['MS-PS1-2 · PS1-7',0],coaster:['MS-PS3-1 · PS3-2',0]};
 /*STDMAP>>*/
+const HS_STD={speed:'HS-PS1-1',trivia:'HS-PS1-1',atom:'HS-PS1-1',lab:'HS-PS1-2',balance:'HS-PS1-7'};
 const starLine=(P,g,n)=>gameStars(P,g,n)?`${gameStars(P,g,n)}/${n*3} stars`:'';
 const TEACHER_SVG=`<svg viewBox="0 0 200 296" role="img" aria-label="Animated cartoon teacher with short blond hair, blue eyes, tan glasses, a blue dress shirt and slacks, shouting with both hands cupped at his mouth">
 <ellipse cx="100" cy="288" rx="52" ry="6" fill="rgba(20,32,64,.15)"/>
@@ -10451,7 +10453,7 @@ renderMenu=function(){
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
       onclick:locked?(()=>fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[ic]&&!classOff().includes(ic)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
-      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
+      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null,typeof HS_STD!=='undefined'&&HS_STD[ic]?h('i',{class:'stdchip hs',title:'Also matches high school standard '+HS_STD[ic]+'.'},HS_STD[ic]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
     speed:()=>mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),

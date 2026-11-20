@@ -54,7 +54,7 @@ renderMenu=function(){
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
       onclick:locked?(()=>fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[ic]&&!classOff().includes(ic)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
-      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
+      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null,typeof HS_STD!=='undefined'&&HS_STD[ic]?h('i',{class:'stdchip hs',title:'Also matches high school standard '+HS_STD[ic]+'.'},HS_STD[ic]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
     speed:()=>mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
