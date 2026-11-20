@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turn-Table™ | Science practice where the diagram is the game</title>
+<meta name="description" content="Turn-Table is middle school science practice where the diagram is the game. Students build the cell, line up the Moon and balance the equation. Pre-Test and Post-Test show what stuck.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213d; --text:#26324a; --muted:#56637d; --paper:#f5f8fd; --grid:#e1e8f3; --line:#cfd9e8;
+  --blue:#2f6bff; --blue-dk:#1f4fd1; --white:#fff;
+  --life:#14824a; --phys:#2153d6; --chem:#6a3fd6; --earth:#c46a12;
+  --sun:#ffb21a; --good:#127a3e; --bad:#b3261e;
+  --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Atkinson Hyperlegible",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;color:var(--text);font:18px/1.6 var(--body);background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;background-attachment:fixed}
+a{color:var(--blue-dk)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);line-height:1.08;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(32px,4.2vw,50px);font-weight:800;max-width:20ch}
+h3{font-size:22px;font-weight:700}
+p{margin:0}
+.lede{font-size:21px;color:var(--muted);max-width:60ch}
+.btn{display:inline-flex;align-items:center;gap:8px;font:700 18px/1 var(--body);padding:16px 24px;border-radius:12px;text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-dk)}
+.btn.quiet{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn.quiet:hover{border-color:var(--ink)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(245,248,253,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:68px}
+.brand{white-space:nowrap;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font:800 24px/1 var(--display)}
+.brand sup{font-size:.45em;margin-left:1px}
+.tile{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:8px;background:var(--ink);color:#fff;font:800 17px/1 var(--display)}
+.nav nav{display:flex;gap:22px;margin-left:12px}
+.nav nav a{color:var(--text);text-decoration:none;font-size:16px}
+.nav nav a:hover{color:var(--blue-dk)}
+.nav .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.nav .student{white-space:nowrap;font-size:15px;color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.nav .student b{color:var(--ink)}
+.nav .login{font-size:16px;color:var(--ink);text-decoration:none}
+.nav .btn{padding:11px 16px;font-size:16px}
+
+/* hero */
+.hero{padding:64px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(46px,6.4vw,84px);font-weight:800;letter-spacing:-.02em}
+.hero .lede{margin:24px 0 32px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero .fine{margin-top:16px;font-size:15px;color:var(--muted)}
+
+/* the live diagram */
+.lab{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:20px 20px 18px;box-shadow:8px 8px 0 var(--ink)}
+.lab-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.lab-ask{font-size:16px;color:var(--muted)}
+.lab-ask b{display:block;font:700 22px/1.2 var(--display);color:var(--ink);margin-top:2px}
+.lab-target{text-align:center;font-size:13px;color:var(--muted);flex:none}
+.lab #labSvg{display:block;width:100%;height:auto;touch-action:none}
+.lab-view svg{width:46px;height:46px;flex:none}.lab-target svg{width:70px;height:70px;display:block}
+.lab .moon{cursor:grab}
+.lab .moon:active{cursor:grabbing}
+.lab-bottom{flex-wrap:wrap;display:flex;align-items:center;gap:14px;margin-top:6px}
+.lab-view{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--muted);flex:1}
+.lab-view b{color:var(--ink)}
+.lab button.check{font:700 16px/1 var(--body);background:var(--ink);color:#fff;border:0;border-radius:10px;padding:13px 18px;cursor:pointer}
+.lab-say{margin-top:12px;padding:12px 14px;border-radius:12px;background:#f1f5fc;font-size:16px;min-height:52px}
+.lab-say.good{background:#e7f6ec;color:#0f4d29}
+.lab-say.bad{background:#fdeceb;color:#6f1712}
+.lab-cap{margin-top:12px;font-size:14px;color:var(--muted);text-align:center}
+
+/* sections */
+section.band{padding:88px 0}
+section.band.white{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.head{display:grid;gap:18px;margin-bottom:44px}
+
+/* two kinds of practice */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.side{border-radius:18px;padding:24px;border:2px solid var(--line);background:var(--paper)}
+.side.tt{border-color:var(--ink);background:#fff}
+.side h3{margin-bottom:6px}
+.side .who{font-size:15px;color:var(--muted);margin-bottom:18px}
+.quiz{background:#232b3d;border-radius:14px;padding:16px;color:#fff}
+.quiz .q{display:flex;justify-content:space-between;align-items:center;font-weight:700;margin-bottom:12px}
+.quiz .timer{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;border:3px solid #ffcd4d;font:800 18px/1 var(--display)}
+.quiz .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quiz .opts span{padding:14px 12px;border-radius:10px;font-weight:700;font-size:16px}
+.quiz .pts{margin-top:10px;font-size:14px;color:#c9d2e6}
+.ttmock{border:2px solid var(--line);border-radius:14px;overflow:hidden;background:#f7f9fd}
+.ttmock svg{display:block;width:100%;height:auto}
+.ttmock .bar{padding:10px 14px;font-size:15px;border-top:1px solid var(--line);background:#fff}
+.practices{margin-top:18px;display:grid;gap:10px;font-size:16px}
+.practices div{display:grid;grid-template-columns:140px 1fr;gap:12px;padding-top:10px;border-top:1px dashed var(--line)}
+.practices dt,.practices .k{color:var(--muted)}
+.practices .v{color:var(--ink)}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 32px}
+.rule{padding-top:18px;border-top:3px solid var(--ink)}
+.rule h3{margin-bottom:8px}
+.rule p{color:var(--muted);font-size:17px}
+
+/* research */
+.research{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.finding{background:#fff;border:2px solid var(--line);border-radius:18px;padding:26px}
+.finding .num{font:800 64px/1 var(--display);color:var(--ink)}
+.finding .num small{font-size:24px;font-weight:700;color:var(--muted);margin-left:6px}
+.finding p{margin-top:10px}
+.finding cite{display:block;margin-top:14px;font-size:14px;font-style:normal;color:var(--muted)}
+.bars{margin-top:16px;display:grid;gap:8px;font-size:15px}
+.bars .row{display:grid;grid-template-columns:150px 1fr 48px;align-items:center;gap:10px}
+.bars .track{height:18px;border-radius:6px;background:#eef2f9;overflow:hidden}
+.bars .fill{height:100%;border-radius:6px}
+.tie{margin-top:28px;font-size:19px;max-width:66ch}
+
+/* pre / post */
+.prepost{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
+.steps{display:grid;gap:18px;margin-top:28px}
+.step{display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start}
+.step .n{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;font:800 18px/1 var(--display);color:#fff}
+.step b{display:block;color:var(--ink);font-size:18px}
+.step span{color:var(--muted);font-size:16px}
+.report{background:#fff;border:2px solid var(--ink);border-radius:18px;padding:22px;box-shadow:8px 8px 0 var(--ink)}
+.report .rh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+.report .rh b{font:700 20px/1.2 var(--display);color:var(--ink)}
+.report .rh span{font-size:14px;color:var(--muted)}
+.report table{width:100%;border-collapse:collapse;font-size:16px}
+.report th{font-size:13px;color:var(--muted);font-weight:700;text-align:left;padding:6px 8px;border-bottom:2px solid var(--line)}
+.report td{padding:9px 8px;border-bottom:1px solid #edf1f7}
+.report td.up{color:var(--good);font-weight:700}
+.report .avg{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;font-size:16px}
+.report .avg b{color:var(--ink)}
+.spark{display:inline-block;height:10px;border-radius:4px;vertical-align:middle;margin-right:6px}
+
+/* game table */
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px;font-size:16px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:16px;height:16px;border-radius:4px;display:inline-block}
+.games{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.game{position:relative;background:#fff;border-radius:12px;border:2px solid var(--c);overflow:hidden;display:flex;flex-direction:column}
+.game .art{aspect-ratio:16/10;overflow:hidden;background:var(--c)}
+.game .art svg{display:block;width:100%;height:100%}
+.game .num{position:absolute;top:6px;left:8px;font:800 13px/1 var(--display);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.game .info{padding:8px 10px 10px}
+.game b{display:block;font:700 16px/1.15 var(--display);color:var(--ink)}
+.game small{display:block;margin-top:3px;font-size:12px;color:var(--muted)}
+.game .free{position:absolute;top:6px;right:6px;background:#fff;color:var(--ink);font-size:11px;font-weight:700;padding:3px 7px;border-radius:999px}
+.games-note{margin-top:18px;font-size:16px;color:var(--muted)}
+
+/* classroom */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 36px}
+.feat h3{font-size:20px;margin-bottom:6px}
+.feat p{color:var(--muted);font-size:17px}
+
+/* founder */
+.founder{display:grid;grid-template-columns:1.25fr .75fr;gap:48px;align-items:center}
+.founder blockquote{margin:0;font:500 clamp(24px,2.6vw,32px)/1.35 var(--display);color:var(--ink)}
+.founder .sig{margin-top:18px;font-size:17px;color:var(--muted)}
+.founder .sig b{color:var(--ink)}
+.stats{display:grid;gap:14px}
+.stat{background:#fff;border:2px solid var(--line);border-radius:16px;padding:18px 20px}
+.stat b{display:block;font:800 40px/1 var(--display);color:var(--ink)}
+.stat span{font-size:15px;color:var(--muted)}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:900px}
+.plan{background:#fff;border:2px solid var(--line);border-radius:18px;padding:28px;display:flex;flex-direction:column;gap:14px}
+.plan.best{border-color:var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.plan .price{font:800 48px/1 var(--display);color:var(--ink)}
+.plan .price small{font-size:18px;font-weight:700;color:var(--muted)}
+.plan ul{margin:0;padding-left:20px;display:grid;gap:6px;font-size:17px}
+.plan .alt{font-size:15px;color:var(--muted)}
+.plan .btn{justify-content:center;margin-top:auto}
+.trialnote{margin-top:24px;font-size:17px;color:var(--muted);max-width:70ch}
+
+/* faq */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}
+.faq summary{cursor:pointer;font:700 20px/1.3 var(--display);color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-size:26px;line-height:1;color:var(--muted)}
+.faq details[open] summary::after{content:"−"}
+.faq details p{margin-top:10px;color:var(--muted);max-width:68ch}
+
+/* end */
+.end{padding:96px 0;background:var(--ink);color:#d9e1f2}
+.end h2{color:#fff;max-width:22ch}
+.end p{margin:18px 0 30px;font-size:20px;max-width:56ch}
+.end .btn.quiet{background:transparent;color:#fff;border-color:#55648a}
+footer{padding:28px 0;font-size:15px;color:var(--muted)}
+footer .wrap{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted)}
+.sources{font-size:14px;color:var(--muted);margin-top:22px}
+
+@media (max-width:1000px){
+  .hero .wrap,.versus,.research,.prepost,.founder{grid-template-columns:1fr}
+  .games{grid-template-columns:repeat(3,1fr)}
+  .rules,.feats{grid-template-columns:1fr 1fr}
+  .nav nav{display:none}
+}
+@media (max-width:640px){
+  body{font-size:17px}
+  .wrap{padding:0 16px}
+  .hero{padding:36px 0 48px}
+  section.band{padding:60px 0}
+  .games{grid-template-columns:repeat(2,1fr)}
+  .rules,.feats,.plans{grid-template-columns:1fr}
+  .nav .login,.nav .btn{display:none}
+  .brand{font-size:20px}.tile{width:30px;height:30px;font-size:14px}
+  .nav .student{font-size:14px;padding:7px 10px}
+  .lab-view{flex-basis:100%}.lab button.check{width:100%}
+  .lab{box-shadow:5px 5px 0 var(--ink)}
+  .practices div{grid-template-columns:1fr;gap:2px}
+  .bars .row{grid-template-columns:110px 1fr 40px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Turn-Table home"><span class="tile">Tt</span>Turn-Table<sup>™</sup></a>
+    <nav aria-label="Page sections">
+      <a href="#difference">The difference</a>
+      <a href="#prepost">Pre and Post</a>
+      <a href="#games">Games</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <div class="right">
+      <a class="student" href="/"><b>Student?</b> Play here</a>
+      <a class="login" href="/?teacher">Teacher log in</a>
+      <a class="btn primary" href="/?teacher=new">Start free</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>Games were never the problem.</h1>
+      <p class="lede">Most review games are a quiz with a game bolted on. Students learn to tap fast and guess well. In Turn-Table, the diagram is the game. Students build the cell, line up the Moon and balance the equation, so the only way to win is to do the science.</p>
+      <div class="ctas">
+        <a class="btn primary" href="/?teacher=new">Start your free trial</a>
+        <a class="btn quiet" href="#difference">See the difference</a>
+      </div>
+      <p class="fine">For middle school science. 24 games across life, physical, earth and space science, built to run on school Chromebooks.</p>
+    </div>
+
+    <div class="lab" id="lab" aria-labelledby="labAsk">
+      <div class="lab-top">
+        <p class="lab-ask" id="labAsk">Try one. Drag the Moon to where it will look like this from Earth:<b id="labGoal">First quarter</b></p>
+        <div class="lab-target"><svg id="labTarget" width="76" height="76" viewBox="0 0 76 76" aria-hidden="true"></svg></div>
+      </div>
+      <svg id="labSvg" viewBox="0 0 520 340" role="group" aria-label="Model of the Sun, Earth and Moon. Use the left and right arrow keys to move the Moon around its orbit."></svg>
+      <div class="lab-bottom">
+        <div class="lab-view"><svg id="labView" width="46" height="46" viewBox="0 0 76 76" aria-hidden="true"></svg><span>From Earth it looks like <b id="labNow">a new moon</b></span></div>
+        <button class="check" id="labCheck" type="button">Check my model</button>
+      </div>
+      <p class="lab-say" id="labSay" role="status" aria-live="polite">The Sun shines from the left. Drag the Moon around Earth, or use the arrow keys.</p>
+      <p class="lab-cap">A simplified piece of Moonwatch, one of the 24 games.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band white" id="difference">
+  <div class="wrap">
+    <div class="head">
+      <h2>Same topic. Two very different kinds of practice.</h2>
+      <p class="lede">Here's moon phases in a typical review game, next to the same idea in Turn-Table. Look at what each one asks a student to do.</p>
+    </div>
+    <div class="versus">
+      <div class="side">
+        <h3>A typical review game</h3>
+        <p class="who">Multiple choice on a timer, with points for speed.</p>
+        <div class="quiz" aria-hidden="true">
+          <div class="q"><span>Which phase is this?</span><span class="timer">4</span></div>
+          <div class="opts">
+            <span style="background:#d64545">Waxing crescent</span><span style="background:#2d6fd6">First quarter</span>
+            <span style="background:#d9a21b">Full moon</span><span style="background:#2c9a55">New moon</span>
+          </div>
+          <p class="pts">+950 for answering fast</p>
+        </div>
+        <div class="practices">
+          <div><span class="k">What wins</span><span class="v">Recognizing a word, fast</span></div>
+          <div><span class="k">A wrong answer</span><span class="v">Red X, next question</span></div>
+          <div><span class="k">What sticks</span><span class="v">The name, maybe</span></div>
+        </div>
+      </div>
+      <div class="side tt">
+        <h3>Turn-Table</h3>
+        <p class="who">Students work the model itself, with limited tries.</p>
+        <div class="ttmock" aria-hidden="true"><svg id="mockMoon" viewBox="0 0 520 250"></svg>
+          <div class="bar">Put the Moon where it will look like a <b>waning crescent</b>. Predict first, then check.</div></div>
+        <div class="practices">
+          <div><span class="k">What wins</span><span class="v">Using the model to predict</span></div>
+          <div><span class="k">A wrong answer</span><span class="v">An explanation of why, then another try</span></div>
+          <div><span class="k">What sticks</span><span class="v">Why the Moon has phases at all</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="head">
+      <h2>Six rules that keep the focus on learning.</h2>
+      <p class="lede">Every new Turn-Table game is built on all six. They're the difference between studying with a game and just playing one.</p>
+    </div>
+    <div class="rules">
+      <div class="rule"><h3>The science is the move</h3><p>No points for clicking fast. Students win by placing, building, balancing or predicting with the actual idea.</p></div>
+      <div class="rule"><h3>Predict before you run</h3><p>Students commit to a prediction first. Then the simulation shows whether the idea in their head matches what really happens.</p></div>
+      <div class="rule"><h3>Every miss is explained</h3><p>A wrong answer gets a short, specific explanation of what went wrong, not just a red X.</p></div>
+      <div class="rule"><h3>Limited tries</h3><p>Stars come from getting it right early. Guessing until something works doesn't pay.</p></div>
+      <div class="rule"><h3>Say it in your own words</h3><p>Science Check questions make students type a full-sentence explanation before they move on. Hints walk them to the key idea.</p></div>
+      <div class="rule"><h3>Tied to a standard</h3><p>Every game is built on a specific middle school standard, and the tag sits right on the game card.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band white" id="research">
+  <div class="wrap">
+    <div class="head">
+      <h2>Built on the study habit with the strongest research behind it.</h2>
+      <p class="lede">It's called retrieval practice: pulling an idea out of memory and using it, instead of rereading it. Every Turn-Table level is retrieval practice.</p>
+    </div>
+    <div class="research">
+      <div class="finding">
+        <div class="num">61%<small>vs 40%</small></div>
+        <p>A week later, students who practiced by testing themselves remembered 61% of a passage. Students who reread it remembered 40%.</p>
+        <div class="bars" aria-hidden="true">
+          <div class="row"><span>Practiced recalling</span><span class="track"><span class="fill" style="width:61%;background:var(--ink);display:block"></span></span><b>61%</b></div>
+          <div class="row"><span>Reread it</span><span class="track"><span class="fill" style="width:40%;background:#9aa8c2;display:block"></span></span><b>40%</b></div>
+        </div>
+        <cite>Roediger &amp; Karpicke (2006), Psychological Science</cite>
+      </div>
+      <div class="finding">
+        <div class="num">50<small>classroom experiments</small></div>
+        <p>A 2021 review looked only at real schools and classrooms. Most of the experiments (57%) found medium or large benefits from retrieval practice, across grade levels and subjects.</p>
+        <cite>Agarwal, Nunes &amp; Blunt (2021), Educational Psychology Review</cite>
+      </div>
+    </div>
+    <p class="tie">The catch is that retrieval only helps when students actually have to think. A game that rewards tapping fast skips that part. Turn-Table makes the thinking the only way through.</p>
+  </div>
+</section>
+
+<section class="band" id="prepost">
+  <div class="wrap prepost">
+    <div>
+      <h2>Know where to start. See what stuck.</h2>
+      <p class="lede" style="margin-top:18px">Pre-Test mode turns 17 of the games into a quick check. It uses the same items before and after the unit, with no hints and no feedback until the end.</p>
+      <div class="steps">
+        <div class="step"><span class="n" style="background:var(--phys)">1</span><div><b>Day 1: Pre-Test</b><span>One try per question. You see what your class already knows before you teach.</span></div></div>
+        <div class="step"><span class="n" style="background:var(--life)">2</span><div><b>During the unit: Review</b><span>The same games switch on hints, feedback and explanations.</span></div></div>
+        <div class="step"><span class="n" style="background:var(--chem)">3</span><div><b>End of unit: Post-Test</b><span>Same questions, same rules. Your dashboard shows each student's growth.</span></div></div>
+      </div>
+    </div>
+    <div class="report" aria-label="Example growth report">
+      <div class="rh"><b>Moonwatch growth report</b><span>Example class</span></div>
+      <table>
+        <thead><tr><th>Student</th><th>Pre-Test</th><th>Post-Test</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td>astro.k</td><td>33%</td><td>89%</td><td class="up">+56</td></tr>
+          <tr><td>maya.r</td><td>56%</td><td>100%</td><td class="up">+44</td></tr>
+          <tr><td>jdubs</td><td>22%</td><td>67%</td><td class="up">+45</td></tr>
+          <tr><td>leo.p</td><td>67%</td><td>78%</td><td class="up">+11</td></tr>
+          <tr><td>sam.t</td><td>44%</td><td>89%</td><td class="up">+45</td></tr>
+        </tbody>
+      </table>
+      <div class="avg"><span>Class Pre <b>44%</b></span><span>Post <b>85%</b></span><span>Average growth <b>+41 points</b></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band white" id="games">
+  <div class="wrap">
+    <div class="head">
+      <h2>24 games. One table.</h2>
+      <p class="lede">Every game is tagged with the standard it practices. You switch each one on or off for each class.</p>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="games" id="gameGrid"></div>
+    <p class="games-note">Plus two whole-class games for the projector: a live quiz students join from their Chromebooks, and a game-show review board that builds itself from the standards you pick.</p>
+  </div>
+</section>
+
+<section class="band" id="teachers">
+  <div class="wrap">
+    <div class="head"><h2>Made for a real classroom, not a demo.</h2></div>
+    <div class="feats">
+      <div class="feat"><h3>No student emails</h3><p>Students join with your class code, a nickname and a 4-digit PIN. No real names, no email addresses.</p></div>
+      <div class="feat"><h3>Runs on Chromebooks</h3><p>Everything runs in the browser. Nothing to install, and each game fits on one screen.</p></div>
+      <div class="feat"><h3>You decide what's open</h3><p>Flip any game on or off for each class, any time. Students only see what you've opened.</p></div>
+      <div class="feat"><h3>Try it yourself first</h3><p>Your teacher account opens every game, so you know it before your students do.</p></div>
+      <div class="feat"><h3>Scores you can use</h3><p>Rosters, scores and Pre/Post growth for every class, with a CSV download.</p></div>
+      <div class="feat"><h3>Works for a no-device day</h3><p>Run the live quiz or the review board on one projector with students in teams.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band white">
+  <div class="wrap founder">
+    <div>
+      <blockquote>“When the game is the focus, the concepts get lost and kids only get good at the game. I teach 7th grade science, and I built Turn-Table so the science is the game.”</blockquote>
+      <p class="sig"><b>Dennis Turner</b>, 7th grade science teacher and founder of The Science Hook Lab</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>{{STUDENTS}}</b><span>students using it in my classes</span></div>
+      <div class="stat"><b>{{PLAYS}}</b><span>rounds played since {{SINCE}}</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="pricing">
+  <div class="wrap">
+    <div class="head">
+      <h2>One teacher, every game, every class.</h2>
+      <p class="lede">Each membership covers up to 6 classes and 130 students. Need another section? Add one for $15 a year.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Turn-Table</h3>
+        <div class="price">$59<small> / year</small></div>
+        <p class="alt">or $9 a month</p>
+        <ul><li>All 24 games plus the class games</li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
+        <a class="btn quiet" href="/?teacher=new">Start your free trial</a>
+      </div>
+      <div class="plan best">
+        <h3>Hook + Check Bundle</h3>
+        <div class="price">$99<small> / year</small></div>
+        <p class="alt">or $16 a month · saves $39 a year</p>
+        <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open the unit with a hook, close it with proof of growth</li></ul>
+        <a class="btn primary" href="/?teacher=new">Start your free trial</a>
+      </div>
+    </div>
+    <p class="trialnote">Try everything free for 7 days and cancel anytime. If you don't continue, your students keep a free version with 3 games.</p>
+  </div>
+</section>
+
+<section class="band white">
+  <div class="wrap"><div class="faq">
+    <div class="head"><h2>Questions teachers ask</h2></div>
+    <details><summary>Is this just more screen time?</summary><p>It's practice time on a screen. Each game is short, tied to a standard and built around retrieval practice. Use it for a 10-minute review or a Pre-Test, not a whole period of gaming. On a no-device day, run the live quiz or the review board on one projector.</p></details>
+    <details><summary>What do students need?</summary><p>A Chromebook or any device with a browser, your class code, a nickname and a 4-digit PIN. No email, no real name and nothing to install.</p></details>
+    <details><summary>How is this different from the review games we already use?</summary><p>Most review games ask a multiple-choice question and add a game around it. In Turn-Table there's no separate game part: placing the Moon, building the cell or wiring the circuit is the question. You can't win by recognizing a word fast.</p></details>
+    <details><summary>What grade levels does it cover?</summary><p>Middle school science, grades 6 to 8. Every game is tagged with the middle school standard it practices.</p></details>
+    <details><summary>What happens when the trial ends?</summary><p>If you continue, nothing changes. If you don't, your classes and scores stay, and your students can keep playing a free version: Speed Find, Cell Shop and Moonwatch, first levels, a few plays a day.</p></details>
+  </div></div>
+</section>
+
+<section class="end">
+  <div class="wrap">
+    <h2>Give your students a game they can only win by learning.</h2>
+    <p>Start a free trial, open every game yourself, then try a Pre-Test with one class this week.</p>
+    <div class="ctas" style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="btn primary" href="/?teacher=new">Start your free trial</a>
+      <a class="btn quiet" href="/?teacher">Teacher log in</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Turn-Table™ is part of The Science Hook Lab.</span>
+    <span><a href="/">Students: play here</a> · <a href="https://app.thesciencehooklab.com">The Science Hook Lab</a></span>
+  </div>
+  <div class="wrap sources">Research: <a href="https://pubmed.ncbi.nlm.nih.gov/16507066/">Roediger &amp; Karpicke (2006)</a> · <a href="https://link.springer.com/10.1007/s10648-021-09595-9">Agarwal, Nunes &amp; Blunt (2021)</a></div>
+</footer>
+
+<script>
+const GAMES={{GAMES}};
+const FREE=new Set(['Speed Find','Cell Shop','Moonwatch']);
+const SUBJ={life:['Life Science','var(--life)'],phys:['Physics','var(--phys)'],chem:['Chemistry','var(--chem)'],earth:['Earth & Space','var(--earth)']};
+(()=>{
+  const grid=document.getElementById('gameGrid'),lg=document.getElementById('legend');
+  Object.entries(SUBJ).forEach(([k,[n,c]])=>{const s=document.createElement('span');s.innerHTML=`<i style="background:${c}"></i>${n}`;lg.append(s);});
+  GAMES.forEach((g,i)=>{const d=document.createElement('div');d.className='game';d.style.setProperty('--c',SUBJ[g.subj][1]);
+    d.innerHTML=`<span class="num">${i+1}</span>${FREE.has(g.name)?'<span class="free">Free</span>':''}<div class="art">${g.svg}</div><div class="info"><b></b><small></small></div>`;
+    d.querySelector('b').textContent=g.name;d.querySelector('small').textContent=g.std;d.title=g.desc;grid.append(d);});
+})();
+
+/* ---- the Moonwatch demo: Sun on the left, Earth in the middle, Moon on an 8-position orbit ---- */
+const NAMES=['full moon','waning gibbous','third quarter','waning crescent','new moon','waxing crescent','first quarter','waxing gibbous'];
+const NS='http://www.w3.org/2000/svg';
+function el(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.append(e);return e;}
+/* lit fraction k and waxing for orbit angle a (radians, counterclockwise, 0 = away from Sun) */
+const litK=a=>(1+Math.cos(a))/2, waxing=a=>Math.sin(a)<-1e-6;
+function phasePath(cx,cy,r,k,wax){
+  if(k>.995)return `M${cx} ${cy-r}A${r} ${r} 0 1 1 ${cx} ${cy+r}A${r} ${r} 0 1 1 ${cx} ${cy-r}Z`;
+  if(k<.005)return '';
+  const rx=r*Math.abs(1-2*k),s=k<.5?0:1;
+  let d=`M${cx} ${cy-r}A${r} ${r} 0 0 1 ${cx} ${cy+r}A${rx} ${r} 0 0 ${s} ${cx} ${cy-r}Z`;
+  return wax?d:d; }
+function drawPhase(svg,a,big){
+  svg.replaceChildren();const c=38,r=big?32:30;
+  el('circle',{cx:c,cy:c,r:r,fill:'#2b3550'},svg);
+  const p=phasePath(c,c,r,litK(a),waxing(a));
+  if(p){const g=el('g',{transform:waxing(a)?'':`translate(${2*c} 0) scale(-1 1)`},svg);el('path',{d:p,fill:'#f4f1dc'},g);}
+  el('circle',{cx:c,cy:c,r:r,fill:'none',stroke:'#14213d','stroke-width':2},svg);
+}
+function buildModel(svg,opts){
+  const W=520,H=opts.h,cx=W/2+30,cy=H/2,R=opts.R;svg.replaceChildren();
+  const defs=el('defs',{},svg);const gr=el('linearGradient',{id:opts.id+'g',x1:0,x2:1},defs);
+  el('stop',{offset:0,'stop-color':'#ffd25a','stop-opacity':.55},gr);el('stop',{offset:1,'stop-color':'#ffd25a','stop-opacity':0},gr);
+  el('rect',{x:0,y:0,width:150,height:H,fill:`url(#${opts.id}g)`},svg);
+  for(let i=0;i<5;i++){const y=H*(i+1)/6;el('line',{x1:18,y1:y,x2:120,y2:y,stroke:'#e0a10f','stroke-width':2,'stroke-dasharray':'2 7'},svg);el('path',{d:`M120 ${y-5}L130 ${y}L120 ${y+5}Z`,fill:'#e0a10f'},svg);}
+  const t=el('text',{x:20,y:28,'font-family':'Atkinson Hyperlegible, sans-serif','font-size':15,'font-weight':700,fill:'#8a5a00'},svg);t.textContent='Sunlight';
+  el('circle',{cx,cy,r:R,fill:'none',stroke:'#b8c4d8','stroke-width':1.5,'stroke-dasharray':'5 6'},svg);
+  for(let i=0;i<8;i++){const a=i*Math.PI/4;el('circle',{cx:cx+R*Math.cos(a),cy:cy-R*Math.sin(a),r:4,fill:'#c9d3e3'},svg);}
+  /* Earth: day side faces the Sun */
+  el('circle',{cx,cy,r:30,fill:'#1f5fbf'},svg);el('path',{d:`M${cx} ${cy-30}A30 30 0 0 1 ${cx} ${cy+30}Z`,fill:'#0d2a5c'},svg);
+  el('path',{d:`M${cx-18} ${cy-10}q8 -12 16 -4q-2 10 -10 12z M${cx-6} ${cy+12}q10 -2 12 8q-8 4 -14 -2z`,fill:'#3da35d'},svg);
+  const et=el('text',{x:cx,y:cy+52,'text-anchor':'middle','font-family':'Atkinson Hyperlegible, sans-serif','font-size':14,fill:'#56637d'},svg);et.textContent='Earth';
+  const moon=el('g',{class:'moon',tabindex:opts.interactive?0:-1,role:opts.interactive?'slider':'img','aria-label':'Moon','aria-valuemin':0,'aria-valuemax':7},svg);
+  el('circle',{r:16,fill:'#2b3550'},moon);el('path',{d:'M0 -16A16 16 0 0 0 0 16Z',fill:'#f4f1dc'},moon);
+  el('circle',{r:16,fill:'none',stroke:'#14213d','stroke-width':2},moon);
+  if(opts.interactive)el('circle',{r:30,fill:'transparent'},moon);
+  return {cx,cy,R,moon};
+}
+function place(m,a){m.moon.setAttribute('transform',`translate(${m.cx+m.R*Math.cos(a)} ${m.cy-m.R*Math.sin(a)})`);}
+
+/* static mock in the comparison */
+(()=>{const m=buildModel(document.getElementById('mockMoon'),{h:250,R:92,id:'mk'});place(m,3*Math.PI/4);})();
+
+/* the live demo */
+(()=>{
+  const svg=document.getElementById('labSvg'),m=buildModel(svg,{h:340,R:118,id:'lb',interactive:true});
+  const goals=[6,0,3,7,2];let gi=0,pos=4,tries=0;
+  const say=document.getElementById('labSay'),goalEl=document.getElementById('labGoal'),nowEl=document.getElementById('labNow');
+  const cap=s=>s[0].toUpperCase()+s.slice(1);
+  function upd(){const a=pos*Math.PI/4;place(m,a);drawPhase(document.getElementById('labView'),a);
+    nowEl.textContent=(/^[aeiou]/.test(NAMES[pos])?'an ':'a ')+NAMES[pos];m.moon.setAttribute('aria-valuenow',pos);m.moon.setAttribute('aria-valuetext',NAMES[pos]);}
+  function setGoal(){const g=goals[gi%goals.length];goalEl.textContent=cap(NAMES[g]);drawPhase(document.getElementById('labTarget'),g*Math.PI/4,true);tries=0;}
+  function why(p,g){
+    if(p===4)return 'From there the Moon is between Earth and the Sun. Its lit half faces away from us, so we see a new moon.';
+    if(p===0)return 'From there Earth is between the Sun and the Moon, so we see the whole lit half: a full moon.';
+    const lit=litK(p*Math.PI/4),goal=litK(g*Math.PI/4);
+    if(Math.abs(lit-goal)<.01)return `Right amount of light, wrong side. From there the lit part is on the ${waxing(p*Math.PI/4)?'right':'left'}, so it's a ${NAMES[p]}. Try the other side of the orbit.`;
+    return `From there we see ${lit>goal?'more':'less'} of the lit half than in a ${NAMES[g]}. You've made a ${NAMES[p]}.`;}
+  document.getElementById('labCheck').onclick=()=>{
+    const g=goals[gi%goals.length];
+    if(pos===g){say.className='lab-say good';say.textContent=`Yes! The Sun always lights the half of the Moon facing it. From that spot, Earth sees just the right part of that lit half for a ${NAMES[g]}. Next one is up.`;
+      gi++;setTimeout(setGoal,600);}
+    else{tries++;say.className='lab-say bad';say.textContent=why(pos,g)+(tries>=2?' Hint: half the Moon is always lit. What changes is how much of that lit half faces Earth.':'');}
+  };
+  const toAngle=e=>{const r=svg.getBoundingClientRect(),sx=520/r.width,x=(e.clientX-r.left)*sx-m.cx,y=(e.clientY-r.top)*sx-m.cy;return Math.atan2(-y,x);};
+  let drag=false;
+  m.moon.addEventListener('pointerdown',e=>{drag=true;m.moon.setPointerCapture(e.pointerId);});
+  m.moon.addEventListener('pointermove',e=>{if(!drag)return;const a=toAngle(e);place(m,a);const p=((Math.round(a/(Math.PI/4))%8)+8)%8;if(p!==pos){pos=p;drawPhase(document.getElementById('labView'),p*Math.PI/4);nowEl.textContent=(/^[aeiou]/.test(NAMES[p])?'an ':'a ')+NAMES[p];}});
+  const end=()=>{if(!drag)return;drag=false;upd();};
+  m.moon.addEventListener('pointerup',end);m.moon.addEventListener('pointercancel',end);
+  svg.addEventListener('click',e=>{if(e.target.closest('.moon'))return;const a=toAngle(e);pos=((Math.round(a/(Math.PI/4))%8)+8)%8;upd();});
+  m.moon.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowUp'){pos=(pos+1)%8;upd();e.preventDefault();}
+    else if(e.key==='ArrowRight'||e.key==='ArrowDown'){pos=(pos+7)%8;upd();e.preventDefault();}
+    else if(e.key==='Enter'){document.getElementById('labCheck').click();}});
+  setGoal();upd();
+})();
+</script>
+</body>
+</html>

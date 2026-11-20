@@ -10720,6 +10720,10 @@ document.querySelectorAll('i[data-logo]').forEach(x=>{x.outerHTML=ART.logo(+x.da
 /* ================= START ================= */
 if(!storageOK)$('warn').hidden=false;
 if(me)goMenu();else{renderLogin();show('s-login');}
+/* links from the landing page: ?teacher (sign in) and ?teacher=new (create account) */
+(()=>{const tq=new URLSearchParams(location.search).get('teacher');if(tq===null)return;
+  try{history.replaceState(null,'',location.pathname);}catch(e){}
+  if(TA.s)ensureTeacher('dash').then(ok=>{if(ok)openDash();});else{openTAuth();if(tq==='new')setTaMode('up');}})();
 taHash();window.addEventListener('hashchange',taHash);
 })();
 </script>
