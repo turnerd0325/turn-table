@@ -279,6 +279,9 @@ section{position:relative}
 .plan li::before{content:"";width:18px;height:18px;margin-top:3px;border-radius:50%;background:var(--mist) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'%3E%3Cpath d='M5 9.5l2.6 2.5L13 6.5' fill='none' stroke='%230c1630' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat}
 .plan.best li::before{background-color:var(--sun)}
 .plan .btn{margin-top:auto}
+.plan .monthly{display:block;margin-top:14px;text-align:center;font-size:14px;font-weight:600;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.plan .monthly:hover{color:var(--ink)}
+.plan.best .monthly{color:#a9b5d1}.plan.best .monthly:hover{color:#fff}
 .plan .save.fnd{background:#ece4ff;color:#4b2aa8}
 .plan .save{display:inline-block;margin-left:10px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--sun);color:var(--night);vertical-align:middle}
 .fine{margin-top:28px;color:var(--muted);max-width:68ch}
@@ -620,22 +623,24 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <h2>One teacher. Every game. Every class.</h2>
       <p class="lede">The first 100 teachers get a founding price that never goes up while they stay. Each membership covers 6 classes and 130 students, and extra sections are $15 a year.</p>
     </div>
-    <p class="fine">Try everything free for 7 days and cancel anytime. If you don't continue, your students keep a free version with 3 games.</p>
+    <p class="fine">Founding prices are on yearly plans only. Try everything free for 7 days and cancel anytime. If you don't continue, your students keep a free version with 3 games.</p>
     </div>
     <div class="plans">
       <div class="plan">
         <h3>Turn-Table <span class="save fnd">Founding</span></h3>
         <div class="price">$36<small>/ year</small></div>
-        <p class="alt">Founding price, locked in for as long as you stay. Regular price $49 a year or $7 a month.</p>
+        <p class="alt">Founding price, locked in for as long as you stay. Regular price $49 a year.</p>
         <ul><li><span><a href="#games">All 24 games</a> and both class games</span></li><li>Pre-Test and Post-Test with growth reports</li><li>6 classes and 130 students</li></ul>
         <a class="btn line" href="/?teacher=new">Start your free trial</a>
+        <a class="monthly" href="https://app.thesciencehooklab.com/pricing?product=turntable&amp;billing=monthly">Prefer to pay monthly? $7 a month</a>
       </div>
       <div class="plan best">
         <h3>Hook + Check Bundle <span class="save">Founding</span></h3>
         <div class="price">$79<small>/ year</small></div>
-        <p class="alt">Founding price, locked in for as long as you stay. Regular price $99 a year or $16 a month.</p>
+        <p class="alt">Founding price, locked in for as long as you stay. Regular price $99 a year.</p>
         <ul><li>Everything in Turn-Table</li><li>The Science Hook Lab: lesson openers, worksheets and exit tickets for any science topic</li><li>Open each unit with a hook, close it with proof of growth</li></ul>
         <a class="btn sun" href="/?teacher=new">Start your free trial</a>
+        <a class="monthly" href="https://app.thesciencehooklab.com/pricing?product=bundle&amp;billing=monthly">Prefer to pay monthly? $16 a month</a>
       </div>
     </div>
 
