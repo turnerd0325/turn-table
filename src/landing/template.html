@@ -51,7 +51,8 @@ section{position:relative}
 .sec-head>.legend{grid-column:2}
 #games .sec-head h2{max-width:none;font-size:clamp(34px,4vw,54px)}
 .sec-head>:only-child{grid-column:1/-1}
-.pad{padding:104px 0}
+.pad{padding:88px 0}
+.pad.founder{padding:64px 0}
 
 /* ---------- nav ---------- */
 .nav{position:absolute;top:0;left:0;right:0;z-index:30}
@@ -207,7 +208,7 @@ section{position:relative}
 .cmp .tr{height:14px;border-radius:999px;background:#e2e8f3;overflow:hidden}
 .cmp .f{height:100%;border-radius:999px;display:block}
 .cmp b{color:var(--ink);text-align:right}
-.tie{margin-top:8px;font-size:19px;color:var(--ink);max-width:56ch;font-weight:500}
+.tie{margin-top:28px;font-size:19px;color:var(--ink);max-width:56ch;font-weight:500}
 
 /* ---------- pre / post ---------- */
 .pp .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:72px;align-items:center}
@@ -351,7 +352,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
 .jump.on{opacity:1;transform:none;pointer-events:auto}
 .jump svg{width:22px;height:22px;flex:none}
 .jump:hover{background:#1a2a55}
-.more{margin-top:40px}
+.more{margin-top:28px}
 
 /* ---------- responsive ---------- */
 @media (max-width:1040px){
@@ -360,6 +361,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   .hero .wrap,.show,.research .wrap,.pp .wrap,.loop,.sec-head,.split{grid-template-columns:1fr}
   .sec-head>.legend{grid-column:1}
   .split{gap:40px}.split>div:first-child{position:static}
+  .research .wrap,.pp .wrap,.show{gap:32px}
+  .sec-head{margin-bottom:40px}
   #pricing .split{grid-template-columns:1fr;gap:40px}
   .hero .wrap{padding-top:120px;gap:24px}
   .table{grid-template-columns:repeat(4,1fr)}
@@ -368,7 +371,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
 @media (max-width:640px){
   body{font-size:17px}
   .wrap{padding:0 20px}
-  .pad{padding:80px 0}
+  .pad{padding:64px 0}
+  .pad.founder{padding:48px 0}
   .nav .login,.nav .btn{display:none}
   .nav .wrap{height:72px}
   .hero .wrap{padding-top:104px;padding-bottom:72px}
@@ -523,9 +527,9 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <h3 id="showName">Speed Find</h3>
         <p id="showDesc"></p>
         <dl><div><dt>Students practice</dt><dd id="showDo"></dd></div><div><dt>When they're wrong</dt><dd id="showWrong"></dd></div></dl>
+        <div class="more"><a class="btn line" href="#games">See all 24 games</a></div>
       </div>
     </div>
-    <div class="more"><a class="btn line" href="#games">See all 24 games</a></div>
   </div>
 </section>
 
@@ -551,6 +555,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
     <div>
       <h2>Retrieval practice, built into every level.</h2>
       <p class="lede">Retrieval practice means pulling an idea out of memory and using it, instead of rereading it. It's one of the best-researched study habits there is, and it's how every Turn-Table level works.</p>
+      <p class="tie">Retrieval only helps while students are actually thinking about the science. When the questions are just the ticket to a reward game, most of the round is spent somewhere else. In Turn-Table, the thinking is the whole round.</p>
     </div>
     <div class="find">
       <div class="stat-card" style="background:#fff">
@@ -567,7 +572,6 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
         <p>A 2021 review looked only at real schools and classrooms. Most of the experiments found medium or large benefits from retrieval practice, across grade levels and subjects.</p>
         <cite>Agarwal, Nunes &amp; Blunt (2021), Educational Psychology Review</cite>
       </div>
-      <p class="tie">Retrieval only helps while students are actually thinking about the science. When the questions are just the ticket to a reward game, most of the round is spent somewhere else. In Turn-Table, the thinking is the whole round.</p>
     </div>
   </div>
 </section>
