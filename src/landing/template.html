@@ -258,6 +258,8 @@ section{position:relative}
 /* ---------- founder ---------- */
 .founder .wrap{display:grid;grid-template-columns:auto 1fr;gap:56px;align-items:center}
 .mono{width:160px;height:160px;border-radius:40px;background:linear-gradient(150deg,var(--night3),var(--night));display:grid;place-items:center;color:var(--sun);font:800 54px/1 var(--display);font-stretch:85%;box-shadow:0 30px 60px -24px rgba(7,19,48,.6)}
+.mono{overflow:hidden}
+.mono img{width:100%;height:100%;object-fit:cover;display:block}
 .founder blockquote{margin:0;font:500 clamp(26px,3vw,40px)/1.25 var(--display);color:var(--ink);letter-spacing:-.02em;font-stretch:92%;max-width:40ch}
 .founder .who{margin-top:22px;color:var(--muted)}
 .founder .who b{color:var(--ink)}
@@ -603,7 +605,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
 
 <section class="pad mist founder">
   <div class="wrap">
-    <div class="mono" aria-hidden="true">DT</div>
+    <div class="mono"><img src="{{BASE}}img/dennis.webp" width="160" height="160" alt="Dennis Turner" loading="lazy" decoding="async"></div>
     <div>
       <blockquote>“Most science games have kids answer two or three questions, then reward them with a game that has nothing to do with science. Every Turn-Table level checks what a student actually knows. When they miss, it shows them why and walks them back to the key idea before they try again. That’s the review I wanted for my own 7th graders.”</blockquote>
       <p class="who"><b>Dennis Turner</b>, 7th grade science teacher and founder of The Science Hook Lab</p>
