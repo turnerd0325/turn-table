@@ -8310,13 +8310,15 @@ function pgDraw(svg,pts,U,o){
   const step=Math.max(1,Math.ceil(nx/10));
   pts.forEach((p,i)=>{if(i%step&&i!==nx-1)return;const t=el('text',{x:X(i),y:H-B+18,'text-anchor':'middle','font-size':12,fill:'#5b6b86'});t.textContent=o.days?p.lab:String(p.x);});
   const xl=el('text',{x:L+(W-L-Rm)/2,y:H-8,'text-anchor':'middle','font-size':12,fill:'#5b6b86'});xl.textContent=o.xLabel;
-  if(o.multi){const tip=$('pgTip'),box=svg.parentElement;
+  if(o.multi){const tip=$('pgTip'),box=svg.parentElement,labs=[];
     o.multi.forEach(m=>{const hue=(m.c*67)%360,col=`hsl(${hue} 68% 45%)`;
       el('path',{d:m.pts.map((q,i)=>(i?'L':'M')+X(q.x-1).toFixed(1)+' '+Y(q.y).toFixed(1)).join(' '),fill:'none',stroke:col,'stroke-width':2.2,'stroke-opacity':.85,'stroke-linejoin':'round'});
       m.pts.forEach(q=>{const c=el('circle',{cx:X(q.x-1),cy:Y(q.y),r:3.5,fill:col});const hit=el('circle',{cx:X(q.x-1),cy:Y(q.y),r:10,fill:'transparent'});
         const on=()=>{const r=svg.getBoundingClientRect(),br=box.getBoundingClientRect();tip.innerHTML=q.tip;tip.hidden=false;tip.style.left=(r.left-br.left+X(q.x-1)*r.width/W)+'px';tip.style.top=(r.top-br.top+Y(q.y)*r.height/H)+'px';c.setAttribute('r',6);};
         hit.addEventListener('mouseenter',on);hit.addEventListener('click',on);hit.addEventListener('mouseleave',()=>{tip.hidden=true;c.setAttribute('r',3.5);});});
-      const lq=m.pts[m.pts.length-1];const t=el('text',{x:Math.min(W-Rm-2,X(lq.x-1)+6),y:Y(lq.y)+4,'font-size':11,fill:col,'font-weight':700});t.textContent=m.name;});
+      const lq=m.pts[m.pts.length-1];labs.push({x:Math.min(W-Rm+4,X(lq.x-1)+8),y:Y(lq.y)+4,col,name:m.name});});
+    labs.sort((a,b)=>a.y-b.y);for(let i=1;i<labs.length;i++){for(let j=0;j<i;j++){if(Math.abs(labs[i].x-labs[j].x)<70&&labs[i].y-labs[j].y<13)labs[i].y=labs[j].y+13;}}
+    labs.forEach(q=>{const t=el('text',{x:q.x,y:q.y,'font-size':11,fill:q.col,'font-weight':700});t.textContent=q.name;});
     return;}
   // area + line
   const d=pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p.y).toFixed(1)).join(' ');
