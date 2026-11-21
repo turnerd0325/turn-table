@@ -320,7 +320,36 @@
 .fglist{display:grid;gap:3px;font-size:14px}
 .fgtog{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;cursor:pointer}
 /* Wave Tuner */
-.wvpick{cursor:pointer}.wvpick:focus-visible{outline:none}.wvpick:focus-visible rect{stroke:#ffb703;stroke-width:3}
+/* ---- Wave Tuner ---- */
+.wvwrap{width:min(100%,calc((100vh - 268px)*1.957));margin:0 auto}
+#s-ng.testing .wvwrap{width:min(100%,calc((100vh - 240px)*1.957))}
+.ngsvg.wvsvg{display:block;width:100%;height:auto;max-height:none;border-radius:16px;box-shadow:0 8px 22px rgba(8,16,44,.28),inset 0 0 0 1px rgba(255,255,255,.06);touch-action:none;user-select:none;-webkit-user-select:none}
+.wvknob{cursor:grab;outline:none}.wvdragging,.wvdragging .wvknob{cursor:grabbing}
+.wvknob:focus-visible .wvkg{opacity:.75;stroke:#fff;stroke-width:2}
+.wvknob.off{opacity:.45;pointer-events:none}
+.wvkg{transform-box:fill-box;transform-origin:center;animation:wvkg 1.8s ease-in-out infinite}
+@keyframes wvkg{0%,100%{transform:scale(1);opacity:.28}50%{transform:scale(1.25);opacity:.45}}
+.wvpm{cursor:ns-resize;outline:none}.wvpm:focus-visible rect{stroke:#fff;stroke-width:2}
+.wvlane{cursor:pointer;outline:none}.wvlane:hover .wvlhl,.wvlane:focus-visible .wvlhl{opacity:.6}
+.wvcin{transform-box:fill-box;transform-origin:50% 100%;transition:transform .9s cubic-bezier(.55,0,.8,.4),opacity .9s}
+.wvcastle.fall .wvcin{transform:translateY(6px) scaleY(.22) scaleX(1.25) skewX(-14deg);opacity:.9}
+.wvgin{transform-box:fill-box;transform-origin:50% 100%}
+.wvglass.hum .wvgin{animation:wvhum .14s linear 6}
+@keyframes wvhum{0%,100%{transform:rotate(0)}25%{transform:rotate(2.5deg)}75%{transform:rotate(-2.5deg)}}
+.wvcrack{opacity:0}.wvshard{opacity:0;transform-box:fill-box;transform-origin:center}
+.wvglass.shatter .wvgin{animation:wvgone .35s .25s forwards}.wvglass.shatter .wvcrack{opacity:1}
+.wvglass.shatter .wvshard{animation:wvshard 1s .3s cubic-bezier(.2,.6,.4,1) forwards}
+@keyframes wvgone{to{opacity:0;transform:scale(1.08)}}
+@keyframes wvshard{0%{opacity:1;transform:none}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}}
+.wvblink{animation:wvblink 1.2s steps(2,start) infinite}@keyframes wvblink{to{opacity:.2}}
+.wvlamp.art-glow{filter:drop-shadow(0 0 5px #3dff8a)}
+.wvstatic{transition:opacity .3s}
+.wvsend{box-shadow:0 6px 16px rgba(17,140,79,.3)}
+.wvflag{font-size:18px;letter-spacing:-.02em}
+.art-still .wvkg,.art-still .wvblink,.art-still .wvglass .wvgin,.art-still .wvshard{animation:none!important}
+.art-still .wvglass.shatter .wvgin{opacity:0}.art-still .wvcin{transition:none}
+@media (prefers-reduced-motion:reduce){.wvkg,.wvblink,.wvglass .wvgin,.wvshard{animation:none!important}.wvglass.shatter .wvgin{opacity:0}.wvcin{transition:none}}
+@media (max-width:900px){.wvwrap{width:100%}}
 @media (max-width:900px){.ngrid,.ngrid.wide{grid-template-columns:1fr}.cswrap{grid-template-columns:1fr}.ngsvg{max-height:46vh}.subjtile .stthumbs{display:none}}
 @media (prefers-reduced-motion:reduce){.ngdraw{animation:none;stroke-dashoffset:0}}
 /* keep each level on one screen */
