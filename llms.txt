@@ -1,0 +1,46 @@
+# Turn-Table
+
+> Standards-aligned science games for middle school (grades 6 to 8). The science is the game: every move in every game is a science decision, not a quiz question that unlocks an unrelated reward game. Built by a 7th grade science teacher in New York. A Science Hook Lab product.
+
+- Teacher site and pricing: https://turntable.thesciencehooklab.com/welcome/
+- Student login (nickname, 4-digit PIN and a class code from the teacher; no email or real name): https://turntable.thesciencehooklab.com/
+
+## What teachers get
+- 24 games across life science, physics, chemistry and Earth and space, each tagged to NGSS / NY (NYSSLS) middle school standards
+- Class codes, per-class switches for each game, and a dashboard of every student's scores
+- Pre-Test and Post-Test mode with a growth report per student and class
+- Live Quiz: 4-choice trivia on the projector that students answer on their Chromebooks
+- Quiz Board Maker: a game-show review board that builds itself from 36 NY science standards; 2 to 6 teams, no devices needed
+- Runs in any browser, built for school Chromebooks; nothing to install
+
+## Life science games
+- Cell Shop (MS-LS1-1 · LS1-2): A job order comes in. Build a cell with the right parts, then run a day to see if it survives.
+- Ripple (MS-LS2-2 · LS2-3 · LS2-4): Something changes in an ecosystem. Predict which populations rise or fall, then watch the season play out.
+- Pup Predictor (MS-LS3-2): Pick the parents, fill in the Punnett square and predict the chances before the puppies arrive.
+- Island Drift (MS-LS4-4 · LS4-6): The environment changes. Predict which variation takes over, then watch the generations go by.
+
+## Physics games
+- Laser Maze (MS-PS4-2): Bounce a laser off mirrors, through glass and around walls to light every crystal.
+- Blackout! (MS-PS3-6): The city has gone dark! Wire batteries, bulbs and switches to bring the lights back.
+- Coaster Architect (MS-PS3-1 · PS3-2): Design a roller coaster. Watch potential energy turn into kinetic energy as the cart rolls.
+- Space Courier (MS-PS2-2): Plan every thruster burn before launch. In space, the pod keeps moving until a force stops it.
+- Keep It Frozen (MS-PS3-3 · PS3-4): Design a cooler that keeps ice cream frozen, and predict how mass and materials change temperature.
+- Field Golf (MS-PS2-3 · PS2-5): No aiming allowed! Place charges and magnets so invisible pushes and pulls steer the ball into the hole.
+- Wave Tuner (MS-PS4-1): Measure amplitude and wavelength on a grid, then use them to predict a wave’s energy and frequency.
+
+## Chemistry games
+- Speed Find (MS-PS1-1 · HS-PS1-1): Find elements by name, number, group or family. Beat your best average time!
+- Element Trivia (MS-PS1-1 · HS-PS1-1): Guess the mystery element from 4 hints. Fewer hints = more points!
+- Explore the Table (MS-PS1-1): Click any element to learn about it. No score, just discovery.
+- Compound Lab (MS-PS1-1 · HS-PS1-2): Build real compounds like H₂O by combining atoms from the table.
+- Atom Builder (MS-PS1-1 · HS-PS1-1): Add protons, neutrons and electrons to build atoms, ions and isotopes.
+- Balance It (MS-PS1-5 · HS-PS1-7): Balance chemical equations to show that atoms are never lost.
+- Atom Diner (MS-PS1-5): Smash ingredients into atoms and rebuild them into dishes before customers lose patience!
+- Separation Station (MS-PS1-8): Build a factory line of magnets, sieves, filters, funnels and stills to split mixtures apart.
+- Evidence Lab (MS-PS1-2 · PS1-7): Run tests on mystery samples and name each one. Fewer tests earns a higher detective rank.
+
+## Earth and space games
+- Moonwatch (MS-ESS1-1): Use a model of the Sun, Earth and Moon to predict moon phases, make eclipses and explain the seasons.
+- Deep Time (MS-ESS1-4 · LS4-1): Read rock layers, faults and fossils like a geologist, then put Earth’s history in order.
+- Pangaea Rebuild (MS-ESS2-3): Use fossils, glacier scratches and matching rocks to rebuild Pangaea, then predict what forms where plates meet.
+- Weather Desk (MS-ESS2-5 · ESS2-6): You are the forecaster. Read fronts, air masses, highs and lows, then predict tomorrow’s weather for each city.

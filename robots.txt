@@ -1,0 +1,5 @@
+# Turn-Table: search engines and AI assistants are welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://turntable.thesciencehooklab.com/sitemap.xml

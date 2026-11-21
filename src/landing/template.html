@@ -6,6 +6,22 @@
 <title>Turn-Table™ | Standards-Aligned Middle School Science Games</title>
 <meta name="description" content="Turn-Table is middle school science practice where the science is the game. Students find elements, build atoms, run separation machines and build cells, and Pre-Test and Post-Test show what stuck.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://turntable.thesciencehooklab.com/welcome/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Turn-Table">
+<meta property="og:title" content="Turn-Table™ | Standards-Aligned Middle School Science Games">
+<meta property="og:description" content="Standards-aligned science games for middle school (grades 6 to 8). 24 games for life science, physics, chemistry and Earth and space, tagged to NGSS and NY science standards, with Pre-Test and Post-Test growth reports. Built by a 7th grade science teacher.">
+<meta property="og:url" content="https://turntable.thesciencehooklab.com/welcome/">
+<meta property="og:image" content="https://turntable.thesciencehooklab.com/welcome/img/og.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Turn-Table: middle school science games where the science is the game">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Turn-Table™ | Standards-Aligned Middle School Science Games">
+<meta name="twitter:description" content="Standards-aligned science games for middle school (grades 6 to 8). 24 games for life science, physics, chemistry and Earth and space, tagged to NGSS and NY science standards, with Pre-Test and Post-Test growth reports. Built by a 7th grade science teacher.">
+<meta name="twitter:image" content="https://turntable.thesciencehooklab.com/welcome/img/og.jpg">
+<script>document.documentElement.classList.add('js')</script>
+{{LD_JSON}}
 <link rel="preload" href="{{BASE}}fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{BASE}}fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -316,6 +332,8 @@ section{position:relative}
 .cgc ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:8px;font-size:15.5px}
 .cgc li{display:grid;grid-template-columns:18px 1fr;gap:10px}
 .cgc li::before{content:"";width:8px;height:8px;margin-top:8px;border-radius:50%;background:#6a3fd6}
+.js .seo-games{display:none}
+.seo-games{grid-column:1/-1;columns:2;gap:40px;color:#c9d3ea;font-size:15px}.seo-games li{break-inside:avoid;margin:0 0 10px}
 /* ---------- faq ---------- */
 .faq{max-width:none}
 .faq details{border-top:1px solid var(--line);padding:22px 0}
@@ -527,7 +545,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <p class="lede">Life science, physics, chemistry and Earth and space. Every game is tagged with the standard it practices, and you switch each one on or off for each class.</p>
       <div class="legend" id="legend"></div>
     </div>
-    <div class="table" id="table"></div>
+    <div class="table" id="table">{{SEO_GAMES}}</div>
     <p class="games-note">Plus two whole-class games for the projector. <a href="#class" style="color:#fff;font-weight:700">See the class games ↓</a></p>
   </div>
 </section>
@@ -750,7 +768,7 @@ const FREE=new Set(['Speed Find','Cell Shop','Moonwatch']);
 const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Chemistry','#a77bff'],earth:['Earth & Space','#f0a64a']};
 
 /* periodic table of games */
-(()=>{const t=document.getElementById('table'),lg=document.getElementById('legend');
+(()=>{const t=document.getElementById('table'),lg=document.getElementById('legend');t.textContent='';
   Object.values(SUBJ).forEach(([n,c])=>{const s=document.createElement('span');s.innerHTML=`<i style="background:${c}"></i>`;s.append(n);lg.append(s);});
   GAMES.forEach((g,i)=>{const d=document.createElement('div');d.className='el';d.style.setProperty('--c',SUBJ[g.subj][1]);d.title=g.desc;
     d.innerHTML=`<span class="z">${i+1}</span>${FREE.has(g.name)?'<span class="free">Free</span>':''}<div class="art">${g.svg}</div><div class="tx"><b></b><small></small></div>`;
