@@ -1,0 +1,135 @@
+/* ===== Atom Builder: "Hands-on atom" (Session 8) ===== */
+#s-atom .pill[hidden]{display:none}
+#s-atom .atcard{padding:10px 12px}
+.atmission{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#152049,#22327a);color:#fff;border-radius:14px;padding:7px 10px 7px 12px;box-shadow:0 6px 16px rgba(8,16,44,.22);margin-bottom:8px;min-height:62px}
+.atmode{flex:none;font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:#2f6bff;color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.atmode.m-mystery{background:#8a5fd6}.atmode.m-fix{background:#e2483f}.atmode.m-ion{background:#13a37a}.atmode.m-rush{background:#f4b13a;color:#3a2b00}
+.atmtext{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.atmtext>b{font-size:22px;color:#ffd23f;line-height:1.15}
+#atSub{font-size:14.5px;color:#d9e2ff;line-height:1.3}
+.atchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.atchip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:2px 11px;font-weight:800;font-size:14.5px;color:#fff}
+.attile .etile{width:58px;height:58px;margin:0;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.3)}
+.attile .etile .ts{font-size:22px}.attile .etile .tnm{font-size:8.5px}.attile .etile .tw{display:none}.attile .etile .tn{font-size:10px;top:2px;left:5px}
+.etile.atq{background:linear-gradient(135deg,#3b2a73,#7350dc);color:#fff;border-color:rgba(255,255,255,.35)}
+.etile.atq.atlt{background:#e3e8f1;color:#7a869c;border-color:#cdd5e4}
+.atgrid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:12px;align-items:stretch}
+
+/* board */
+.atboard{position:relative;display:grid;grid-template-columns:128px minmax(0,1fr);height:calc(100vh - 214px);min-height:390px;background:#0a0f2a;border-radius:16px;box-shadow:0 8px 22px rgba(8,16,44,.28);overflow:hidden}
+#s-atom.testing .atboard{height:calc(100vh - 240px)}
+.atbins{position:relative;display:flex;flex-direction:column;justify-content:center;gap:12px;padding:12px 8px 26px 12px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-right:1px solid rgba(255,255,255,.08);z-index:1}
+.atbinwrap{position:relative}
+.atbin{width:100%;display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 4px 7px;border-radius:14px;border:2px solid rgba(255,255,255,.14);background:linear-gradient(180deg,#26357a,#18224f);color:#fff;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;font:inherit;box-shadow:0 4px 0 rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.14);transition:transform .15s,border-color .15s,box-shadow .15s}
+.atbin:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.38)}
+.atbin:active{cursor:grabbing}
+.atbin:focus-visible,.atout:focus-visible{outline:3px solid #ffd23f;outline-offset:2px}
+.atbin.armed{border-color:#7fb2ff;box-shadow:0 0 0 3px rgba(90,160,255,.45),0 0 24px rgba(90,160,255,.6)}
+.atbin b{font-size:14px;letter-spacing:.01em}.atbin small{font-size:12px;color:#b8c6ee}.atbin small span{font-weight:900;color:#fff;font-size:14px}
+.atbinwrap.p .atbin b{color:#ffa49a}.atbinwrap.n .atbin b{color:#e3e8f1}.atbinwrap.e .atbin b{color:#a6c8ff}
+.atheap{display:block;width:72px;height:58px;pointer-events:none}.atheap svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
+.atout{position:absolute;top:-7px;right:-5px;width:28px;height:28px;padding:0;border-radius:50%;border:2px solid rgba(255,255,255,.45);background:#0e1536;color:#fff;font:900 18px/1 system-ui,sans-serif;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.atout:hover{background:#e2483f}
+.atstage{position:relative;min-width:0;min-height:0;background:radial-gradient(circle at 50% 50%,#24326e 0,#131b47 38%,#0a0f2a 75%)}
+.atstage svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;overflow:visible}
+.atkeys{position:absolute;left:140px;right:10px;bottom:6px;text-align:center;font-size:12px;color:#93a3d1;pointer-events:none}
+
+.atring{fill:none;stroke:rgba(140,175,255,.34);stroke-width:2;stroke-dasharray:3 5;transition:stroke .2s,stroke-width .2s}
+.atringhit{fill:none;stroke:transparent;stroke-width:30}
+.atarmed .atringhit{cursor:copy}
+.atdrag-e .atring,.atarmed .atring{stroke:rgba(130,185,255,.75);stroke-dasharray:none;animation:atRingPulse 1.2s ease-in-out infinite}
+.atshell.hot .atring{stroke:#7fe0ff;stroke-width:5;stroke-dasharray:none;animation:none;filter:url(#atfGlow)}
+.atshell.hotno .atring{stroke:#ff6b6b;stroke-width:4;stroke-dasharray:none;animation:none}
+.atshell.atno .atring{animation:atBadRing .6s ease}
+@keyframes atRingPulse{50%{stroke-opacity:.45}}
+@keyframes atBadRing{30%,70%{stroke:#ff5a5f;stroke-width:5;stroke-dasharray:none}}
+.atnuct{fill:rgba(255,215,106,.03);stroke:rgba(255,215,106,0);stroke-width:2.5;stroke-dasharray:5 5;pointer-events:none;transition:stroke .2s,fill .2s}
+.atdrag-pn .atnuct{stroke:rgba(255,215,106,.6)}
+.atnuct.hot{stroke:#ffd76a;fill:rgba(255,215,106,.15);stroke-dasharray:none}
+.atnuct.atno{animation:atBadNuc .6s ease}
+@keyframes atBadNuc{30%,70%{stroke:#ff5a5f;fill:rgba(255,90,95,.2)}}
+.atpart{transition:transform .42s cubic-bezier(.34,1.4,.64,1);cursor:grab}
+.atpin{transform-box:fill-box;transform-origin:center}
+.atborn{animation:atBorn .38s cubic-bezier(.34,1.56,.64,1)}
+.atbye{animation:atBye .24s ease-in forwards}
+@keyframes atBorn{from{transform:scale(.25)}}
+@keyframes atBye{to{transform:scale(0);opacity:0}}
+.atorb{transform-box:view-box;transform-origin:310px 270px;animation:atSpin var(--spin,20s) linear infinite}
+.atcr{transform-box:fill-box;transform-origin:center;animation:atSpin var(--spin,20s) linear infinite reverse}
+@keyframes atSpin{to{transform:rotate(360deg)}}
+.atnuc{transform-box:view-box;transform-origin:310px 270px;animation:atWob 2.6s ease-in-out infinite}
+@keyframes atWob{0%,100%{transform:none}25%{transform:translate(.8px,-.6px) scale(1.012)}50%{transform:translate(-.6px,.7px) scale(.995)}75%{transform:translate(.5px,.5px) scale(1.008)}}
+#atNucWrap{transform-box:view-box;transform-origin:310px 270px}
+#atNucWrap.atjig{animation:atJig .32s ease}
+@keyframes atJig{30%{transform:scale(1.06)}60%{transform:scale(.97)}}
+.atcore{opacity:.45;transition:opacity .4s}
+.atwin .atcore{opacity:1;animation:atCore 1.4s ease-in-out infinite}
+.atwin .atring{stroke:#ffd76a;stroke-dasharray:none;stroke-width:2.5;filter:url(#atfGlow)}
+.atwin #atNuc{filter:url(#atfGlow)}
+@keyframes atCore{50%{opacity:.6}}
+.atslabs,.atempty{pointer-events:none}
+.atslab rect{fill:rgba(10,15,42,.85);stroke:rgba(140,175,255,.45)}
+.atslab text{fill:#a5b4dd;font:800 12px system-ui,sans-serif}
+.atslab.some text{fill:#fff}
+.atslab.full rect{stroke:#3fd1a0;fill:rgba(15,70,58,.92)}.atslab.full text{fill:#b8f5dd}
+.atempty{fill:rgba(255,215,106,.75);font:800 15px system-ui,sans-serif}
+.atghost{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.atghost svg{width:100%;height:100%;overflow:visible}
+
+/* side panel */
+.atside{display:flex;flex-direction:column;gap:7px;min-height:0;min-width:0}
+.atread{display:flex;flex-direction:column;gap:7px}
+.atlive{display:flex;align-items:center;gap:10px;background:#f2f5fb;border-radius:12px;padding:8px}
+.atlivecard{perspective:400px}
+.atlivecard .etile{width:76px;height:76px;margin:0;border-radius:12px;box-shadow:0 4px 10px rgba(16,21,54,.18)}
+.atlivecard .etile .ts{font-size:30px}.atlivecard .etile .tnm{font-size:10.5px}.atlivecard .etile .tw{font-size:9.5px}
+.atflip{animation:atFlip .45s ease}
+@keyframes atFlip{0%{transform:rotateY(90deg) scale(.9)}100%{transform:none}}
+.atlivecap{font-size:15px;line-height:1.3;color:#24304f}.atlivecap small{color:#6b778c;font-size:12.5px}
+.atnums{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.atnum,.atstab,.atshells{background:#f2f5fb;border-radius:12px;padding:6px 10px;display:flex;flex-direction:column;gap:1px;min-width:0}
+.atnl{font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;color:#6b778c}
+.atnum b{font-size:24px;font-weight:900;color:#152049;line-height:1.1}.atnum b.pos{color:#d3362e}.atnum b.neg{color:#2f6bff}
+.atnum small{font-size:12.5px;color:#4a5677}.atnum i{font-style:normal;font-weight:800}
+.atnum .cp{color:#d3362e}.atnum .cn{color:#5f6a80}.atnum .ce{color:#2f6bff}
+.atstabtxt{font-weight:800;font-size:14px;color:#4a5677}.atstabtxt.ok{color:#13865f}.atstabtxt.bad{color:#c2410c}
+.atstabbar{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#fdba74,#fde68a 50%,#fca5a5);margin:6px 0 2px}
+.atstabbar .band{position:absolute;top:-2px;bottom:-2px;background:#34d399;border-radius:6px;box-shadow:0 0 0 2px #fff}
+.atstabbar .needle{position:absolute;top:-5px;width:4px;height:20px;margin-left:-2px;background:#152049;border-radius:2px;box-shadow:0 0 0 2px #fff;transition:left .35s cubic-bezier(.34,1.56,.64,1)}
+.atstabends{display:flex;justify-content:space-between;font-size:11px;color:#6b778c}
+.atshells{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+.atshells b{font-size:17px;color:#152049}.atshells small{font-size:12.5px;color:#4a5677}
+.atwarn{font-size:12px;font-weight:800;color:#b45309;background:#fef3c7;border-radius:999px;padding:1px 8px}
+#s-atom .atside .msg{margin:0;font-size:14.5px;line-height:1.35}
+#s-atom .atside .msg:empty{display:none}
+#s-atom .atside .infobox{margin:0;font-size:14px}
+#atCheck,#atNext{width:100%}
+.atrow{display:flex;gap:6px}.atrow .btn:first-child{flex:1}
+.atstarpill .atstar,.atendstars .atstar{color:#f4b13a}
+.atstarline{color:#a86d00;font-weight:800}.atnostar{color:#6b778c;font-size:13.5px}
+.attimepill.atlow{background:#ffe1e1;color:#b42318}
+#s-atom.atrush #atCheck,#s-atom.atrush #atHint,#s-atom.atrush .atwarn{display:none}
+#s-atom.testing #atStarPill,#s-atom.testing .atwarn{display:none!important}
+.atrushrow{margin-top:10px}
+.atrushrow .atrushbtn{width:100%;border-color:#f4b13a;background:linear-gradient(135deg,#fff7e0,#fff)}
+
+.art-still .atorb,.art-still .atcr,.art-still .atnuc,.art-still .atborn,.art-still .atbye,.art-still .atflip,.art-still #atNucWrap.atjig,.art-still .atwin .atcore,.art-still .atring{animation:none!important}
+.art-still .atpart,.art-still .atstabbar .needle{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .atorb,.atcr,.atnuc,.atborn,.atbye,.atflip,#atNucWrap.atjig,.atwin .atcore,.atring{animation:none!important}
+  .atpart,.atstabbar .needle{transition:none}
+}
+@media (max-width:980px){
+  .atgrid{grid-template-columns:1fr}
+  .atboard{grid-template-columns:1fr;height:auto;min-height:0}
+  #s-atom.testing .atboard{height:auto}
+  .atbins{flex-direction:row;justify-content:stretch;border-right:0;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 10px 8px}
+  .atbinwrap{flex:1;min-width:0}
+  .atheap{width:56px;height:44px}
+  .atstage{aspect-ratio:620/540}
+  .atkeys{position:static;padding:2px 8px 8px}
+  .atmission{flex-wrap:wrap;gap:8px}
+  .atmtext{flex-basis:calc(100% - 80px)}
+  .atmtext>b{font-size:18px}
+}
+#s-atom.testing #atReset{flex:1}

@@ -1,9 +1,11 @@
+
 <!-- ATOM SETUP -->
 <section class="screen" id="s-atom-setup" hidden>
   <div class="card">
     <div class="setupart" data-thumb="atom"></div><h2><i data-ic="atom"></i>Atom Builder</h2>
-    <p class="sub">You'll get an atom, ion or isotope to build. Use + and − to add protons, neutrons and electrons until it matches. 10 per round. Fewer hints and fewer misses = more points!</p>
+    <p class="sub">Drag protons and neutrons into the nucleus. Drag electrons onto the shells. Watch the element card: the number of protons decides the element! 10 per round. Fewer hints and fewer misses = more points. Fill the shells from the inside out to earn a bonus shell star.</p>
     <div class="levels" id="atLevels"></div>
+    <div class="atrushrow" id="atRushRow"></div>
     <p style="margin-top:14px"><button class="btn ghost sm" data-go="menu">← Back</button></p>
   </div>
 </section>
@@ -11,28 +13,50 @@
 <!-- ATOM PLAY -->
 <section class="screen" id="s-atom" hidden>
   <div class="hud">
-    <div class="pill">Atom <b id="atQ">1</b>/10</div>
+    <div class="pill" id="atQPill"><span id="atQLbl">Atom</span> <b id="atQ">1</b><span id="atQOf">/10</span></div>
     <div class="pill">Score <b id="atScore">0</b></div>
-    <div class="pill">Worth <b id="atWorth">3</b> pts</div>
+    <div class="pill" id="atWorthPill">Worth <b id="atWorth">3</b> pts</div>
+    <div class="pill atstarpill" id="atStarPill" title="Shell stars: shells filled from the inside out">Shell <span class="atstar">★</span> <b id="atStars">0</b></div>
+    <div class="pill attimepill" id="atTimePill" hidden>Time <b id="atTime">60</b>s</div>
     <button class="btn sm ghost" id="atQuit">Quit</button>
   </div>
-  <div class="atgrid">
-    <div class="card" style="text-align:center">
-      <div class="clue" style="text-align:left">Build this:<b id="atPrompt"></b><span id="atSub"></span></div>
-      <div id="atTile"></div>
-      <div class="atsvg" id="atSvg"></div>
-      <div class="atread" id="atRead"></div>
+  <div class="card atcard">
+    <div class="atmission" id="atMission">
+      <span class="atmode" id="atMode">Build it</span>
+      <div class="atmtext"><b id="atPrompt"></b><span id="atSub"></span></div>
+      <div class="attile" id="atTile"></div>
     </div>
-    <aside class="card" id="atCtrs">
-      <div class="ctr p"><label>Protons</label><button data-k="p" data-d="-1" aria-label="fewer protons">−</button><span class="v" id="atv_p">0</span><button data-k="p" data-d="1" aria-label="more protons">+</button></div>
-      <div class="ctr n"><label>Neutrons</label><button data-k="n" data-d="-1" aria-label="fewer neutrons">−</button><span class="v" id="atv_n">0</span><button data-k="n" data-d="1" aria-label="more neutrons">+</button></div>
-      <div class="ctr e"><label>Electrons</label><button data-k="e" data-d="-1" aria-label="fewer electrons">−</button><span class="v" id="atv_e">0</span><button data-k="e" data-d="1" aria-label="more electrons">+</button></div>
-      <div class="infobox" id="atHintBox" hidden></div>
-      <button class="btn" id="atCheck" style="width:100%"><i data-ic="check"></i>Check my atom</button>
-      <div style="display:flex;gap:6px;margin-top:6px"><button class="btn ghost" id="atHint" style="flex:1"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
-      <div class="msg" id="atMsg"></div>
-      <button class="btn good" id="atNext" hidden style="width:100%">Next ▶</button>
-    </aside>
+    <div class="atgrid">
+      <div class="atboard" id="atBoard">
+        <div class="atbins" id="atBins">
+          <div class="atbinwrap p"><button class="atbin" data-k="p" aria-label="Proton bin. Press Enter to add a proton to the nucleus."><span class="atheap" data-k="p"></span><b>Protons</b><small><span id="atv_p">0</span> in atom</small></button><button class="atout" data-k="p" aria-label="Take out a proton" title="Take one out">−</button></div>
+          <div class="atbinwrap n"><button class="atbin" data-k="n" aria-label="Neutron bin. Press Enter to add a neutron to the nucleus."><span class="atheap" data-k="n"></span><b>Neutrons</b><small><span id="atv_n">0</span> in atom</small></button><button class="atout" data-k="n" aria-label="Take out a neutron" title="Take one out">−</button></div>
+          <div class="atbinwrap e"><button class="atbin" data-k="e" aria-label="Electron bin. Press Enter to pick up an electron, arrow keys to choose a shell, Enter to place it."><span class="atheap" data-k="e"></span><b>Electrons</b><small><span id="atv_e">0</span> in atom</small></button><button class="atout" data-k="e" aria-label="Take out an electron" title="Take one out">−</button></div>
+        </div>
+        <div class="atstage" id="atStage"></div>
+        <div class="atkeys" id="atKeys">Drag particles in, or tap a bin. Tap a particle to take it out. Keys: P N E (Shift + key takes one out).</div>
+        <div class="art-sr" id="atLive" role="status" aria-live="polite"></div>
+      </div>
+      <aside class="atside">
+        <div class="atread" id="atRead">
+          <div class="atlive">
+            <div class="atlivecard" id="atLiveCard"></div>
+            <div class="atlivecap" id="atLiveCap"></div>
+          </div>
+          <div class="atnums">
+            <div class="atnum" id="atMass"></div>
+            <div class="atnum" id="atCharge"></div>
+          </div>
+          <div class="atstab" id="atStab"></div>
+          <div class="atshells" id="atShells"></div>
+        </div>
+        <div class="infobox" id="atHintBox" hidden></div>
+        <div class="msg" id="atMsg"></div>
+        <button class="btn" id="atCheck"><i data-ic="check"></i>Check my atom</button>
+        <div class="atrow"><button class="btn ghost" id="atHint"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="atReset">Reset</button></div>
+        <button class="btn good" id="atNext" hidden>Next ▶</button>
+      </aside>
+    </div>
   </div>
 </section>
 
