@@ -369,18 +369,35 @@ body.ingame .ngsvg.cssvg,.ngsvg.cssvg{display:block;width:100%;height:auto;max-h
 .dtopt.ok{border-color:#1f9d55;background:#eafaf1}.dtopt.no{border-color:#e5484d;background:#fff0f0}
 @media (max-width:900px){[data-g=strata] .ngrid{grid-template-columns:1fr}.dtwrap{width:100%}.dtinset{width:30%}}
 @media (prefers-reduced-motion:reduce){.dtlaw{animation:none}}
-/* Pangaea Rebuild */
-.pgslot{cursor:pointer}.pgslot:focus-visible{outline:none}.pgslot:focus-visible rect{stroke:#ffb703;stroke-width:4}
-.pglegend{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px;font-weight:700;color:#33405c}
-.pglegend i,.pgev i{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:50%;color:#fff;font-style:normal;font-weight:900;font-size:10.5px;margin-right:4px;padding:0 3px}
+/* Pangaea Rebuild: real continents, drag + turn, evidence links, plate animations */
+[data-g=pangaea] .ngrid{grid-template-columns:minmax(0,1fr) 340px}
+.pgwrap{width:min(100%,calc((100vh - 286px)*1.53));margin:0 auto}
+body.ingame .ngsvg.pgsvg,.ngsvg.pgsvg{display:block;width:100%;height:auto;max-height:none;border-radius:16px;box-shadow:0 8px 22px rgba(8,16,44,.28);touch-action:none;user-select:none;-webkit-user-select:none}
+.pgsvg .pgslot{cursor:pointer;outline:none;transform-box:fill-box;transform-origin:center}
+.pgsvg .pgslot.art-drop-ok>rect{stroke:#7dffb2;fill-opacity:.26;animation:kfdash 1.4s linear infinite}
+.pgsvg .pgslot.art-drop-hot{transform:none}.pgsvg .pgslot.art-drop-hot>rect{stroke:#ffd23f;fill-opacity:.34}
+.pgsvg .pgland{transition:transform .45s cubic-bezier(.34,1.56,.64,1);transform-box:view-box}
+.pgsvg .pgplaced:hover .pgland,.pgsvg .pgplaced:focus-visible .pgland{filter:drop-shadow(0 0 5px #ffd23f)}
+.pgsvg .pgplaced.bad .pgland{filter:drop-shadow(0 0 5px #ff3b30) drop-shadow(0 0 2px #ff3b30)}
+.pgsvg .pglink{stroke:#fff;opacity:.7}.pgsvg .pglink.ok{stroke:#7dffb2;opacity:1}
+.pgsvg .pgbadge.ok>circle:first-child{animation:pgok 1.6s ease-in-out infinite}
+.pgsvg .pgbadge.no>circle:first-child{animation:csblink .8s ease-in-out infinite}
+@keyframes pgok{50%{opacity:.35}}
+.pgsvg .pgknob{cursor:pointer}.pgsvg .pgknob:hover circle{fill:#ffd23f}
+.pgsvg .pgwaves{animation:pgwave 9s linear infinite}@keyframes pgwave{to{transform:translateX(-44px)}}
+.pbsvg .pbflow{animation:kfdash 1.2s linear infinite}.pbsvg .pbquake{animation:csblink .5s ease-in-out infinite}
+.pbsvg .pbgrip{cursor:grab;animation:pggrip 1.2s ease-in-out infinite}@keyframes pggrip{50%{transform:translateX(6px)}}
+.pglegend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;font-weight:700;color:#33405c;justify-content:center;margin-top:4px}
+.pglegend i,.pgev i{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:50%;color:#fff;font-style:normal;font-weight:900;font-size:10.5px;margin-right:4px;padding:0 3px;box-shadow:0 1px 2px rgba(0,0,0,.25)}
 .pgtray{display:grid;gap:6px}
-.pgtile{font:inherit;border:3px solid var(--line);background:#fff;border-radius:12px;padding:6px 9px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left}
-.pgtile b{display:flex;align-items:center;gap:6px;font-size:14.5px}.pgtile b i{width:14px;height:14px;border-radius:4px;box-shadow:0 0 0 1.5px #5a4632}
-.pgtile.on{border-color:var(--accent);background:#e8efff}
-.pgev{display:flex;flex-wrap:wrap;gap:2px}.pgev i{margin:0}
+.pgtile{font:inherit;color:var(--ink,#13203d);border:2px solid #d5deee;background:linear-gradient(#fff,#f3f6fc);border-radius:12px;padding:4px 8px;cursor:grab;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;box-shadow:0 2px 5px rgba(19,32,61,.08);transition:transform .12s,box-shadow .12s}
+.pgtile:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 6px 12px rgba(19,32,61,.15)}
+.pgtile b{display:flex;align-items:center;gap:6px;font-size:14px}
+.pgev{display:flex;flex-wrap:wrap;gap:2px;justify-content:flex-end}.pgev i{margin:0;min-width:20px;height:20px;font-size:9.5px}
 .pgnotes{font-size:12.5px;color:var(--muted)}
-.pgpic{display:grid;place-items:center;text-align:center;color:var(--muted);font-weight:700;min-height:200px;background:#f2f5fb;border-radius:14px;padding:12px}
-.pgbig{color:#7aa2ff}
+@media (max-width:900px){[data-g=pangaea] .ngrid{grid-template-columns:1fr}.pgwrap{width:100%}}
+.art-still .pgsvg *,.art-still .pbsvg *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.pgsvg *,.pbsvg *{animation:none!important;transition:none!important}}
 /* Weather Desk */
 /* ---- Weather Desk: you're on air ---- */
 [data-g=weather] .ngrid{grid-template-columns:minmax(0,1fr) 350px}
@@ -443,15 +460,27 @@ body.ingame .ngsvg.wdsvg,.ngsvg.wdsvg{display:block;width:100%;height:auto;max-h
 @media (max-width:900px){[data-g=weather] .ngrid{grid-template-columns:1fr}.wdwrap{width:100%}.wdres{max-height:none}}
 @media (max-width:420px){.wdicons{grid-template-columns:repeat(3,minmax(0,1fr))}.wdcards{grid-template-columns:1fr 1fr}.wdkey span:last-child{display:none}}
 .art-still .wdsvg .wddash,.art-still .wdsvg .wdflow,.art-still .wdsvg .wdhint,.art-still .wdsvg .wdspot,.art-still .wdsvg .wdrec,.art-still .wdsvg .wdair rect,.art-still .wdsvg .wdwave{animation:none}
-/* Space Courier */
+/* Space Courier: starfield, docking ring, smooth flight */
+.scwrap{width:min(100%,calc((100vh - 400px)*3));margin:0 auto}
+body.ingame .ngsvg.scsvg,.ngsvg.scsvg{display:block;width:100%;height:auto;max-height:none;border-radius:16px;box-shadow:0 8px 22px rgba(8,16,44,.3)}
+.scsvg .scl0{animation:scdrift 40s linear infinite alternate}@keyframes scdrift{to{translate:-30px 0}}
+.scsvg .scflame{animation:scflick .12s steps(2) infinite}@keyframes scflick{50%{transform:scaleX(.82)}}
+.scsvg .scflame{transform-box:fill-box;transform-origin:center}
+.scsvg .sclight{animation:sclite 1.2s ease-in-out infinite}@keyframes sclite{50%{opacity:.3}}
+.scsvg .scclamp{transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.scsvg .scclamp.shut{transform:rotate(-38deg)}.scsvg .scclamp.b.shut{transform:rotate(38deg)}
 .scplan{display:flex;flex-wrap:wrap;gap:5px}
-.scslot{font:inherit;border:2.5px solid var(--line);background:#fff;border-radius:10px;min-width:58px;padding:4px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.scslot{font:inherit;color:var(--ink,#13203d);border:2.5px solid #d5deee;background:linear-gradient(#fff,#f3f6fc);border-radius:12px;min-width:60px;padding:4px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.1;box-shadow:0 2px 5px rgba(19,32,61,.08);transition:transform .12s}
+.scslot:hover:not(:disabled){transform:translateY(-2px)}
 .scslot b{font-size:20px}.scslot small{font-size:11px;color:var(--muted);font-weight:800}
-.scslot.kf,.scslot.kF{border-color:#2f6bff;background:#e8efff}.scslot.kr,.scslot.kR{border-color:#f08a3e;background:#fff3e8}.scslot.bad{border-color:var(--bad);background:#fff0f0}
+.scslot.kf,.scslot.kF{border-color:#2f6bff;background:linear-gradient(#f2f6ff,#dfe8ff)}.scslot.kr,.scslot.kR{border-color:#f08a3e;background:linear-gradient(#fff8f0,#ffe8d4)}.scslot.bad{border-color:var(--bad);background:#fff0f0}
 .scv{font-size:10.5px;font-weight:800;color:#44506b}
 .scinfo{font-size:13.5px;color:#33405c;font-weight:600}
 .sctools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
 .sctool b{font-size:20px}
+@media (max-width:900px){.scwrap{width:100%}}
+.art-still .scsvg *{animation:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){.scsvg *{animation:none!important;transition:none!important}}
 /* Keep It Frozen */
 /* Field Golf */
 .fgslot{cursor:pointer}.fgslot.fixed{cursor:not-allowed}.fgslot:focus-visible{outline:none}.fgslot:focus-visible circle,.fgslot:focus-visible rect{stroke:#ffb703;stroke-width:4}
