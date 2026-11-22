@@ -2535,6 +2535,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .seplv.freelock,.lvl.freelock{opacity:.6}.freebar{grid-column:1/-1;background:#fff7e0;border:2px solid #f0c75e;border-radius:12px;padding:8px 12px;font-size:14px;color:#5a4300}
 .td-try{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:10px 0 6px;padding:14px 16px;border-radius:14px;background:#e9f7ee;border:2px solid #7cc58a}
 .td-try b{display:block;font-size:18px;color:#1f7a34}.td-try span{color:#3a4766}
+.nickwarn{margin:6px 0 10px;padding:10px 12px;border-radius:12px;background:#fff4d6;border:2px solid #f0c24a;color:#5a3d00;font-size:14.5px;line-height:1.4}.nickwarn b{display:block;color:#3d2900}
 .tm{font-size:.5em;vertical-align:super;line-height:0;margin-left:.08em;font-weight:600;letter-spacing:0}
 </style>
 </head>
@@ -2565,6 +2566,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
     </div>
     <div class="field"><label for="uName">Nickname</label><input type="text" id="uName" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
     <div class="field"><label for="uPin">4-digit PIN</label><input type="password" id="uPin" maxlength="4" inputmode="numeric" autocomplete="off"></div>
+    <div class="nickwarn" id="nickWarn" hidden><b>Use a nickname, not your real name.</b> Make one up, like NeonFalcon or Atom42. Never type your first and last name.</div>
     <div class="field" id="classField" hidden><label for="uClass">Class code <small>(6 letters and numbers from your teacher)</small></label><input type="text" id="uClass" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" style="text-transform:uppercase;letter-spacing:3px;font-weight:800"></div>
     <div class="msg bad" id="loginMsg"></div>
     <button class="btn" id="btnLogin" style="width:100%">Log in</button>
@@ -3342,7 +3344,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
       </div>
       <div class="field"><label for="taEmail">Email</label><input type="email" id="taEmail" autocomplete="email" autocapitalize="off" spellcheck="false"></div>
       <div class="field"><label for="taPass">Password <small id="taPassHint" hidden>(at least 8 characters)</small></label><div class="pw"><input type="password" id="taPass" autocomplete="current-password"><button type="button" class="pw-eye" data-for="taPass" aria-label="Show password" aria-pressed="false"></button></div></div>
-      <label class="fb-agree" id="taAgreeRow" hidden><input type="checkbox" id="taAgree"><span>I am a teacher or school staff member. I will follow my school's student privacy rules. Students only use a nickname and a PIN.</span></label>
+      <label class="fb-agree" id="taAgreeRow" hidden><input type="checkbox" id="taAgree"><span>I am a teacher or school staff member. I will follow my school's student privacy rules. Students only use a nickname and a PIN, never their full name. <a href="/privacy/" target="_blank" rel="noopener">Privacy and student data</a></span></label>
       <div class="msg bad" id="taMsg"></div>
       <button class="btn" id="taGo" type="button" style="width:100%">Sign in</button>
       <p style="text-align:center;margin:12px 0 0" id="taForgotRow"><a class="tlink" id="taForgot" role="button" tabindex="0">Forgot your password?</a></p>
@@ -3454,7 +3456,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 </section>
 </main>
 
-<footer>Your scores are saved online with your nickname. <a id="teacherLink">Teacher</a> · <a href="welcome/">About Turn-Table</a></footer>
+<footer>Your scores are saved online with your nickname. <a id="teacherLink">Teacher</a> · <a href="welcome/">About Turn-Table</a> · <a href="/privacy/" target="_blank" rel="noopener">Privacy</a></footer>
 
 <div id="modal" hidden><div class="card">
   <h2 id="mTitle"></h2><p id="mText" class="sub"></p>
@@ -5077,7 +5079,7 @@ T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still 
       h('button',{class:'td-chip add',type:'button',onclick:newClass},'+ New class')),
     C?h('div',{class:'td-class'},
       h('div',{class:'td-code'},h('div',{class:'lbl'},'Class code for '+C.name),h('div',{class:'big',id:'tdCode'},C.code),
-        h('div',{class:'how'},'Students open ',h('b',null,location.host||'Turn-Table'),', tap ',h('b',null,"I'm new here"),', and type this code.')),
+        h('div',{class:'how'},'Students open ',h('b',null,location.host||'Turn-Table'),', tap ',h('b',null,"I'm new here"),', and type this code. Remind them: a nickname, never their full name.')),
       h('div',{class:'td-acts'},
         act('Copy code',async function(){const ok=await copyText(C.code);this.textContent=ok?'Copied!':'Select the code to copy';setTimeout(()=>{this.textContent='Copy code';},1800);}),
         act('Rename class',()=>renameClass(C)),act('New code',()=>newCode(C)),act(C.archived?'Restore class':'Archive class',()=>archiveClass(C)))):h('p',{class:'sub'},'Make your first class to get a code for your students.')));
@@ -5304,7 +5306,7 @@ function clearCells(map){Object.values(map).forEach(b=>b.classList.remove('ok','
 let loginMode='returning',loginBusy=false;
 function setMode(m){
   loginMode=m;$('modeRet').classList.toggle('on',m==='returning');$('modeNew').classList.toggle('on',m==='new');
-  $('classField').hidden=(m!=='new');$('btnLogin').textContent=m==='new'?'Create my account':'Log in';$('loginMsg').textContent='';
+  $('classField').hidden=(m!=='new');$('nickWarn').hidden=(m!=='new');$('btnLogin').textContent=m==='new'?'Create my account':'Log in';$('loginMsg').textContent='';
 }
 $('modeRet').onclick=()=>setMode('returning');$('modeNew').onclick=()=>setMode('new');
 function renderLogin(){
@@ -5313,6 +5315,8 @@ function renderLogin(){
   $('nameList').hidden=!(SHOW_NAME_LIST&&names.length);
   $('nameChips').replaceChildren(...names.map(k=>h('button',{class:'chip',onclick:()=>{setMode('returning');$('uName').value=profiles[k].name;$('uPin').value='';$('uPin').focus();}},profiles[k].name)));
 }
+/* new accounts: refuse nicknames that look like a full name ("Jordan Smith", "jordan.smith") */
+function looksLikeFullName(s){const w=s.trim().split(/[\s._\-]+/).filter(Boolean);return w.length>=2&&w.length<=3&&w.every(x=>/^[A-Za-z]{2,}$/.test(x))&&w.slice(0,2).every(x=>x.length>=2);}
 function loginMsg(t,good){$('loginMsg').textContent=t;$('loginMsg').className='msg '+(good?'good':'bad');}
 function startSession(key,offline){
   me=key;try{sessionStorage.setItem('pte_me',me);}catch(e){}
@@ -5327,6 +5331,7 @@ async function doLogin(){
   if(!/^[A-Za-z0-9 _.\-]{2,16}$/.test(raw))return loginMsg('Pick a nickname with 2–16 letters or numbers.');
   if(!/^\d{4}$/.test(pin))return loginMsg('Your PIN is exactly 4 numbers.');
   if(loginMode==='new'&&cls.length!==6)return loginMsg('Type the 6-letter class code from your teacher.');
+  if(loginMode==='new'&&looksLikeFullName(raw))return loginMsg('That could be a real first and last name. Use a made-up nickname as one word, like NeonFalcon or Atom42.');
   const ph=hash(key+':'+pin);
   loginBusy=true;$('btnLogin').disabled=true;loginMsg('Connecting…',true);
   try{

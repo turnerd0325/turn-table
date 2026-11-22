@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy and Student Data | Turn-Table™</title>
+<meta name="description" content="How Turn-Table protects student data: nicknames only, no student emails or real names, no ads or tracking on student screens, and only the teacher can see their own students' results.">
+<link rel="canonical" href="https://turntable.thesciencehooklab.com/privacy/">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta property="og:title" content="Turn-Table™ Privacy and Student Data">
+<meta property="og:description" content="Nicknames only. No student emails, no ads, no tracking on student screens. Only you see your students' data.">
+<meta property="og:url" content="https://turntable.thesciencehooklab.com/privacy/">
+<meta property="og:image" content="https://turntable.thesciencehooklab.com/welcome/img/og.jpg">
+<link rel="preload" href="/welcome/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/welcome/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Bricolage";src:url(/welcome/fonts/bricolage.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Figtree";src:url(/welcome/fonts/figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
+:root{
+  --night:#071330;--night2:#0e2250;--night3:#16306a;--sun:#ffc857;--sun2:#ffdf9a;
+  --ink:#0c1630;--text:#3a4560;--muted:#69748f;--mist:#f2f5fb;--line:#e1e7f1;--white:#fff;
+  --good:#0f7a3c;--goodbg:#e8f6ee;--bad:#b3261e;--badbg:#fdeceb;
+  --display:"Bricolage",ui-sans-serif,system-ui,sans-serif;--body:"Figtree",ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--white);color:var(--text);font:400 17px/1.62 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.02em;font-stretch:94%}
+p{margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 22px;border-radius:999px;font:600 16px/1 var(--body);text-decoration:none;border:1.5px solid transparent;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.sun{background:var(--sun);color:var(--night)}.btn.sun:hover{background:var(--sun2)}
+.btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}.btn.ghost:hover{border-color:#fff}
+
+/* nav */
+.nav{background:var(--night)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:76px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font:750 22px/1 var(--display);font-stretch:90%;white-space:nowrap}
+.brand img{width:40px;height:40px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.brand sup{font-size:.42em;font-weight:600;margin-left:2px;opacity:.8}
+.brand small{display:block;font:500 12px/1 var(--body);color:#a9b5d1;margin-top:5px}
+.nav .end{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav .end a.txt{color:#c9d3ea;text-decoration:none;font-weight:600;font-size:15px}
+.nav .end a.txt:hover{color:#fff}
+
+/* hero */
+.hero{background:radial-gradient(900px 420px at 85% 0%,#1d3c86 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,var(--night2) 100%);color:#c9d3ea;padding:56px 0 64px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--sun);margin-bottom:18px}
+.hero h1{color:#fff;font-size:clamp(38px,5vw,62px);line-height:1.02;font-weight:760;max-width:14ch}
+.hero .lede{font-size:19px;line-height:1.6;color:#b4c0dc;margin-top:20px;max-width:52ch}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:14px;color:#93a1c4}
+.meta a{color:#fff;overflow-wrap:anywhere}
+.who{background:#fff;color:var(--text);border-radius:24px;padding:26px 26px 20px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.who h2{font-size:22px;line-height:1.2;margin-bottom:4px}
+.who>p{font-size:15px;color:var(--muted);margin-bottom:14px}
+.who ul{list-style:none;margin:0;padding:0}
+.who li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
+.who li b{color:var(--ink);font-weight:650;flex:1}
+.tag{font:700 12.5px/1 var(--body);padding:7px 10px;border-radius:999px;white-space:nowrap}
+.tag.y{background:var(--goodbg);color:var(--good)}.tag.n{background:var(--badbg);color:var(--bad)}.tag.m{background:#fff4d6;color:#8a5a00}
+
+/* promises */
+.promises{background:var(--mist);padding:48px 0}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px 22px 20px;display:flex;gap:16px;align-items:flex-start}
+.pcard svg{flex:none;width:40px;height:40px}
+.pcard h3{font-size:19px;line-height:1.2;margin-bottom:6px}
+.pcard p{font-size:15.5px;color:var(--muted);line-height:1.5}
+
+/* nickname band */
+.nick{background:var(--sun);color:var(--night);padding:34px 0}
+.nick .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:center}
+.nick h2{font-size:clamp(28px,3.4vw,40px);line-height:1.05;color:var(--night)}
+.nick p{margin-top:10px;font-size:17px;max-width:56ch}
+.ex{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ex div{background:rgba(255,255,255,.75);border-radius:16px;padding:14px 16px}
+.ex b{display:block;font:700 13px/1 var(--body);letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.ex .ok b{color:var(--good)}.ex .no b{color:var(--bad)}
+.ex span{display:inline-block;font:600 15px/1 var(--body);background:#fff;border-radius:999px;padding:8px 12px;margin:0 6px 6px 0}
+.ex .no span{text-decoration:line-through;text-decoration-color:var(--bad);color:#6b5d40}
+
+/* body */
+.body{padding:56px 0 64px}
+.body .wrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:56px;align-items:start}
+.body .wrap>*{min-width:0}
+.toc{position:sticky;top:24px;font-size:15px}
+.toc b{display:block;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.toc a{display:block;text-decoration:none;color:var(--text);padding:6px 0 6px 14px;border-left:2px solid var(--line)}
+.toc a:hover,.toc a.on{color:var(--ink);border-left-color:var(--sun);font-weight:600}
+article section{padding:30px 0;border-top:1px solid var(--line);scroll-margin-top:16px}
+article section:first-child{border-top:0;padding-top:0}
+article h2{font-size:clamp(26px,2.8vw,34px);line-height:1.1;margin-bottom:14px}
+article h3{font-size:18px;margin:18px 0 8px}
+article p{margin:0 0 12px;max-width:72ch}
+article ul{margin:0 0 12px;padding-left:22px;max-width:72ch}
+article li{margin:5px 0}
+article li b,article p b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.box{border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.box h3{margin-top:0}
+.box ul{margin-bottom:0}
+.box.no{background:#fbfcfe}
+table{width:100%;border-collapse:collapse;font-size:15.5px;margin:6px 0 4px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 13px/1.2 var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--mist)}
+td:first-child{font-weight:650;color:var(--ink);white-space:nowrap}
+.law{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:6px}
+.law .box p{font-size:15.5px;margin:0}
+.law .box h3{font-size:19px}
+.note{background:var(--mist);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--muted);max-width:none}
+.contact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;background:var(--night);color:#c9d3ea;border-radius:22px;padding:26px 28px}
+.contact h2{color:#fff;margin:0 0 6px}
+.contact p{margin:0;color:#a9b5d1}
+.contact a.mail{overflow-wrap:anywhere;max-width:100%;color:var(--night);background:var(--sun);text-decoration:none;font-weight:700;border-radius:999px;padding:13px 20px}
+footer{background:var(--night);color:#93a1c4;font-size:14px;padding:22px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+footer a{color:#c9d3ea}
+
+@media (max-width:1000px){
+  .hero .wrap,.nick .wrap{grid-template-columns:1fr;gap:32px}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .body .wrap{grid-template-columns:1fr;gap:28px}
+  .toc{position:static;display:flex;flex-wrap:wrap;gap:8px}
+  .toc b{width:100%;margin-bottom:4px}
+  .toc a{border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+  .law{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav .end a.txt{display:none}
+  .nav .wrap{height:68px}
+  .brand small{display:none}
+  .hero{padding:36px 0 44px}
+  .pgrid,.cols,.ex{grid-template-columns:1fr}
+  .who{padding:20px 18px 14px}
+  .tablewrap{overflow-x:auto}
+  td:first-child{white-space:normal}
+  th,td{padding:10px 8px}
+  .contact{padding:22px 20px}
+}
+@media print{.nav,.toc,footer,.btn{display:none}.hero{background:#fff;color:#000}.hero h1,.hero .lede{color:#000}.body .wrap{display:block}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/welcome/"><img src="/icon.svg" width="40" height="40" alt=""><span>Turn-Table<sup>™</sup><small>A Science Hook Lab product</small></span></a>
+    <div class="end">
+      <a class="txt" href="/welcome/">About</a>
+      <a class="txt" href="/">Students: play</a>
+      <a class="btn sun" href="/?teacher=new">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Privacy and student data</div>
+      <h1>Your students' data stays yours.</h1>
+      <p class="lede">Turn-Table was built by a classroom teacher for classroom teachers. Students play with a nickname and a PIN, only their own teacher sees their results, and nothing on the student side is used for ads.</p>
+      <div class="meta"><span>Last updated November 22, 2026</span><span>Questions: <a href="mailto:dennisturner@thesciencehooklab.com">dennisturner@thesciencehooklab.com</a></span></div>
+    </div>
+    <div class="who" aria-labelledby="whoT">
+      <h2 id="whoT">Who can see a student's results?</h2>
+      <p>Scores, Pre/Post-Tests, progress charts and feedback messages.</p>
+      <ul>
+        <li><b>Their own teacher</b><span class="tag y">Yes, only them</span></li>
+        <li><b>Other teachers</b><span class="tag n">Never</span></li>
+        <li><b>Other schools and districts</b><span class="tag n">Never</span></li>
+        <li><b>Advertisers, Facebook, Google</b><span class="tag n">Never</span></li>
+        <li><b>Classmates</b><span class="tag m">Nickname and score in live games</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="promises" aria-label="Our privacy promises">
+  <div class="wrap pgrid">
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="17" width="22" height="16" rx="3" fill="#ffc857" stroke="#0c1630"/><path d="M14 17v-4a6 6 0 0112 0v4"/><circle cx="20" cy="25" r="2"/></svg><div><h3>Only you see your students</h3><p>Every request is checked on our server. A teacher can only open their own classes and students.</p></div></div>
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="11" width="28" height="18" rx="4" fill="#ffc857"/><path d="M12 20h6M24 17v6M21 20h6"/></svg><div><h3>Nicknames only</h3><p>No student email, real name, birthday, photo or location. Students never type their full name.</p></div></div>
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="20" cy="20" r="13" fill="#ffc857"/><path d="M11 11l18 18"/></svg><div><h3>No ads or trackers for students</h3><p>Student screens load no ad pixels, analytics or outside scripts. Students never see an ad.</p></div></div>
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 14h24l-2 18H10z" fill="#ffc857"/><path d="M15 14V10h10v4M16 20l8 8M24 20l-8 8"/></svg><div><h3>We never sell data</h3><p>Not student data, not teacher data. Student data is never used for marketing.</p></div></div>
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6l12 5v8c0 8-5 13-12 15-7-2-12-7-12-15v-8z" fill="#ffc857"/><path d="M15 20l4 4 7-8"/></svg><div><h3>Locked down</h3><p>Encrypted connections, scrambled PINs, lockouts after wrong guesses, and no direct database access.</p></div></div>
+    <div class="pcard"><svg viewBox="0 0 40 40" fill="none" stroke="#0c1630" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13h20M16 13V9h8v4M12 13l1.5 19h13L28 13" fill="#ffc857"/><path d="M18 18v9M22 18v9"/></svg><div><h3>Delete any time</h3><p>Remove a student and all of their scores from your dashboard in one click.</p></div></div>
+  </div>
+</section>
+
+<section class="nick" id="nicknames">
+  <div class="wrap">
+    <div>
+      <h2>Students: use a nickname. Never your full name.</h2>
+      <p>Teachers, please tell your class before they make accounts. A nickname keeps students private even if a screen is projected or a classmate looks over. First names and initials are fine if your school allows it, but full names are not.</p>
+    </div>
+    <div class="ex">
+      <div class="ok"><b>Good</b><span>NeonFalcon</span><span>Atom42</span><span>Quasar_7</span><span>LabRat_9</span></div>
+      <div class="no"><b>Not allowed</b><span>Jordan Smith</span><span>jsmith2031</span><span>Jordan.Smith</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="body">
+  <div class="wrap">
+    <nav class="toc" aria-label="On this page">
+      <b>On this page</b>
+      <a href="#collect">What we collect</a>
+      <a href="#see">Who sees what</a>
+      <a href="#use">How we use it</a>
+      <a href="#pixel">Ads on teacher pages</a>
+      <a href="#share">Services we use</a>
+      <a href="#security">Security</a>
+      <a href="#delete">Keeping and deleting</a>
+      <a href="#laws">FERPA, COPPA, NY 2-d</a>
+      <a href="#parents">Parents and students</a>
+      <a href="#changes">Changes</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <article>
+      <section id="collect">
+        <h2>What we collect, and what we don't</h2>
+        <p>We collect the least we can and still run the games and show you your students' progress.</p>
+        <div class="cols">
+          <div class="box">
+            <h3>From students</h3>
+            <ul>
+              <li>A <b>nickname</b> they make up</li>
+              <li>A <b>4-digit PIN</b>, stored scrambled so nobody can read it</li>
+              <li>The <b>class</b> they joined with your class code</li>
+              <li><b>Game results</b>: scores, stars, levels, Pre/Post-Test scores, elements they missed, and when they last played</li>
+              <li><b>Feedback messages</b> they choose to send to you</li>
+            </ul>
+            <p style="margin:10px 0 0;font-size:15px;color:var(--muted)">Badges, play time and settings are saved only on the student's own device.</p>
+          </div>
+          <div class="box">
+            <h3>From teachers</h3>
+            <ul>
+              <li>Your <b>name</b> (shown to your students), <b>school</b> (optional) and <b>email</b></li>
+              <li>Your <b>password</b>, stored scrambled by our sign-in provider. We can't see it</li>
+              <li>Your <b>classes</b>, game settings and quiz boards</li>
+              <li>Your <b>plan</b> and trial dates</li>
+              <li>How you found us (for example, which ad or post), if that was in the link you used</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box no" style="margin-top:18px">
+          <h3>What we never collect from students</h3>
+          <p style="margin:0">Real names, email addresses, birthdays, photos, voice, location, contacts, or anything from their Google account. Students don't sign in with Google or any outside account.</p>
+        </div>
+        <p style="margin-top:14px"><b>Payments</b> are handled by Stripe through The Science Hook Lab, the company behind Turn-Table. We never see or store your full card number.</p>
+      </section>
+
+      <section id="see">
+        <h2>Who sees what</h2>
+        <div class="tablewrap">
+        <table>
+          <thead><tr><th>Who</th><th>What they can see</th></tr></thead>
+          <tbody>
+            <tr><td>The student</td><td>Their own scores, badges, Pre/Post results and the feedback they sent.</td></tr>
+            <tr><td>Their teacher</td><td>Everything about the students in their own classes: roster, scores, charts, Pre/Post-Tests, missed elements and feedback.</td></tr>
+            <tr><td>Classmates</td><td>A nickname and score in the live score bar and in Class Games like Live Quiz. Only students in the same class.</td></tr>
+            <tr><td>Other teachers</td><td>Nothing. Our server refuses any request for a class or student that isn't theirs.</td></tr>
+            <tr><td>Turn-Table</td><td>Dennis Turner, who runs Turn-Table, can reach the database. He looks only to keep the service running, fix a problem, keep it safe, or when you ask for help.</td></tr>
+            <tr><td>Advertisers</td><td>Nothing. No student data is ever shared with or sold to advertisers.</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="note" style="margin-top:12px">Projecting your charts? Tick "Hide student names" in Progress &amp; data. Every nickname turns into Student 1, Student 2 and so on.</p>
+      </section>
+
+      <section id="use">
+        <h2>How we use it</h2>
+        <ul>
+          <li>To run the games, save progress and let students pick up where they left off.</li>
+          <li>To show you your students' scores, growth and the elements they keep missing.</li>
+          <li>To run your account: sign-in, your trial and plan, and emails about your account.</li>
+          <li>To fix bugs and make the games better. We look at overall patterns, like how many students finish a level.</li>
+        </ul>
+        <p>We don't build profiles of students, we don't use student data for ads, and we don't use it to train AI.</p>
+      </section>
+
+      <section id="pixel">
+        <h2>Ads measurement on teacher pages only</h2>
+        <p>We advertise Turn-Table to teachers on Facebook and Instagram. To know which ads work, the <b>teacher pages</b> use the Meta Pixel: the <a href="/welcome/">About page</a>, teacher sign-in and sign-up, and the teacher dashboard.</p>
+        <ul>
+          <li>It records steps like "visited the page," "made an account," "started a trial" and "made a class." It does not send names, emails, class names or any student information.</li>
+          <li>Meta may receive your browser details and IP address and set a cookie in your browser.</li>
+          <li>We turned off Meta's automatic features, so it can't read forms or record buttons on its own.</li>
+          <li><b>It never runs on student screens.</b> The pixel file isn't even downloaded while a student is signed in.</li>
+        </ul>
+        <p>You can limit this in your <a href="https://www.facebook.com/adpreferences" rel="noopener">Facebook ad preferences</a> or with your browser's tracking or ad blocking settings. Turn-Table works the same either way.</p>
+      </section>
+
+      <section id="share">
+        <h2>Services we use</h2>
+        <p>We use a small number of trusted services to run Turn-Table. They only get what they need to do their job.</p>
+        <div class="tablewrap">
+        <table>
+          <thead><tr><th>Service</th><th>What it does</th><th>Student data?</th></tr></thead>
+          <tbody>
+            <tr><td>Supabase (through Lovable Cloud)</td><td>Our database and teacher sign-in</td><td>Yes, stored for us</td></tr>
+            <tr><td>GitHub Pages</td><td>Hosts the website files. Keeps standard web logs, like IP address</td><td>No</td></tr>
+            <tr><td>Stripe</td><td>Teacher payments</td><td>No</td></tr>
+            <tr><td>Email provider</td><td>Sends account emails to teachers</td><td>No</td></tr>
+            <tr><td>Meta</td><td>Ad measurement on teacher pages only</td><td>No</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p style="margin-top:12px">We may share information if the law requires it, for example a valid court order. If Turn-Table is ever sold or merged, this policy's promises about student data go with it, and we will tell teachers first.</p>
+      </section>
+
+      <section id="security">
+        <h2>Security</h2>
+        <ul>
+          <li><b>Encrypted connections.</b> Every page and every save uses HTTPS. Our database provider encrypts stored data.</li>
+          <li><b>Scrambled PINs and passwords.</b> Student PINs and teacher passwords are stored scrambled (hashed), not as readable text.</li>
+          <li><b>Lockouts.</b> Too many wrong PINs locks that nickname for a while, so nobody can guess their way in.</li>
+          <li><b>Checked on the server.</b> The database can't be read directly. Every request goes through a checked function that confirms who is asking and that the class or student is theirs.</li>
+          <li><b>Account controls.</b> Teachers can reset a student's PIN, lock an account, or delete a student.</li>
+        </ul>
+        <p>No system is perfect. If student data is ever exposed, we will tell the affected teachers and schools promptly and within the time New York Education Law 2-d requires, and explain what happened and what we're doing about it.</p>
+      </section>
+
+      <section id="delete">
+        <h2>Keeping and deleting data</h2>
+        <ul>
+          <li><b>Delete a student yourself.</b> In your dashboard, open the student and tap Delete. Their account and every score are removed for good, right away.</li>
+          <li><b>Delete a whole class or your account.</b> Email us from your account email. We delete it within 30 days and confirm when it's done.</li>
+          <li><b>If your trial ends or you cancel,</b> your classes and scores stay so you can come back. Ask us any time and we'll delete them.</li>
+          <li><b>End of the school year?</b> Delete the students you no longer teach, or email us and we'll clear a class for you.</li>
+        </ul>
+      </section>
+
+      <section id="laws">
+        <h2>FERPA, COPPA and New York Education Law 2-d</h2>
+        <p>Turn-Table is designed so you can use it within your school's student privacy rules.</p>
+        <div class="law">
+          <div class="box"><h3>FERPA</h3><p>Your students' records belong to you and your school. We use them only to provide Turn-Table to you, and we don't share them with anyone else.</p></div>
+          <div class="box"><h3>COPPA</h3><p>We don't ask children for personal information: no names, emails or birthdays. Teachers and schools set up the classes, for school use only.</p></div>
+          <div class="box"><h3>NY Ed Law 2-d</h3><p>We never sell student data or use it for marketing. It's encrypted in transit, used only to run the service, and you can have it deleted.</p></div>
+        </div>
+        <p style="margin-top:14px">Turn-Table isn't certified by an outside privacy program. If your district needs a data privacy agreement, a Parents' Bill of Rights supplement or a vendor form, email us and we'll work through it with you.</p>
+      </section>
+
+      <section id="parents">
+        <h2>For parents and students</h2>
+        <p>Turn-Table is a school tool. Students play under their teacher's class, with a nickname instead of a name. Parents who want to see or delete their child's data can ask their child's teacher, or email us. We'll work with the teacher to confirm the student and handle the request.</p>
+      </section>
+
+      <section id="changes">
+        <h2>Changes to this policy</h2>
+        <p>If we change this policy, we'll update the date at the top. If a change affects how student data is used, we'll tell teachers by email before it takes effect. We will never start using student data for advertising.</p>
+      </section>
+
+      <section id="contact">
+        <div class="contact">
+          <div><h2>Questions about privacy?</h2><p>Email Dennis Turner, founder of Turn-Table and The Science Hook Lab. A real teacher reads every message.</p></div>
+          <a class="mail" href="mailto:dennisturner@thesciencehooklab.com?subject=Turn-Table%20privacy">dennisturner@thesciencehooklab.com</a>
+        </div>
+      </section>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Turn-Table™ is a Science Hook Lab product.</span>
+    <span><a href="/welcome/">About Turn-Table</a> &nbsp; <a href="/">Students: play here</a> &nbsp; <a href="/privacy/">Privacy</a></span>
+  </div>
+</footer>
+
+<script>
+/* highlight the section in view */
+(()=>{const links=[...document.querySelectorAll('.toc a')],map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('on'));const a=map.get(e.target.id);if(a)a.classList.add('on');}});},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('article section[id]').forEach(s=>io.observe(s));})();
+</script>
+</body>
+</html>
