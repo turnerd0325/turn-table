@@ -707,6 +707,13 @@ body:has(#s-evidence:not([hidden])) footer{display:none}
   .evtool small{display:none}
   .evtag{font-size:13px;max-width:94%;white-space:normal}
 }
+/* six evidence tools in one row */
+@media (min-width:901px){
+  .evtray:has(.evtool:nth-child(6)){gap:5px;padding:7px 6px}
+  .evtray:has(.evtool:nth-child(6)) .evtool{padding:4px 6px 4px 4px;column-gap:4px}
+  .evtray:has(.evtool:nth-child(6)) .evtool b{font-size:11.5px}
+  .evtray:has(.evtool:nth-child(6)) .evtool .evti svg{width:24px;height:24px}
+}
 /*GC:evidence>>*/
 #caBoard{width:auto;max-width:100%;height:auto;max-height:calc(100vh - 285px);min-height:220px;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
 .cahandle{cursor:ns-resize} .cahandle:hover circle{fill:#eaf1ff}
