@@ -21,7 +21,7 @@
  *   from the Stripe webhook on the server (Meta Conversions API).
  */
 (function () {
-  var META_PIXEL_ID = '';   /* 15-16 digit number from Meta Events Manager > Data sources */
+  var META_PIXEL_ID = '2041105429813279';   /* 15-16 digit number from Meta Events Manager > Data sources */
   var TIKTOK_PIXEL_ID = ''; /* from TikTok Ads Manager > Tools > Events, if you run TikTok ads */
 
   var loaded = false;
