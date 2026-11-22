@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terms of Use | Turn-Table™</title>
+<meta name="description" content="The rules for using Turn-Table: the 7-day card-required trial, founding price of $36 a year, regular price, billing, cancel anytime, and the free version.">
+<link rel="canonical" href="https://turntable.thesciencehooklab.com/terms/">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta property="og:title" content="Turn-Table™ Terms of Use">
+<meta property="og:description" content="The rules for using Turn-Table: the 7-day card-required trial, founding price of $36 a year, regular price, billing, cancel anytime, and the free version.">
+<meta property="og:url" content="https://turntable.thesciencehooklab.com/terms/">
+<meta property="og:image" content="https://turntable.thesciencehooklab.com/welcome/img/og.jpg">
+<link rel="preload" href="/welcome/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/welcome/fonts/figtree.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+
+@font-face{font-family:"Bricolage";src:url(/welcome/fonts/bricolage.woff2) format("woff2");font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:"Figtree";src:url(/welcome/fonts/figtree.woff2) format("woff2");font-weight:300 900;font-display:swap}
+:root{
+  --night:#071330;--night2:#0e2250;--night3:#16306a;--sun:#ffc857;--sun2:#ffdf9a;
+  --ink:#0c1630;--text:#3a4560;--muted:#69748f;--mist:#f2f5fb;--line:#e1e7f1;--white:#fff;
+  --good:#0f7a3c;--goodbg:#e8f6ee;--bad:#b3261e;--badbg:#fdeceb;
+  --display:"Bricolage",ui-sans-serif,system-ui,sans-serif;--body:"Figtree",ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--white);color:var(--text);font:400 17px/1.62 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:3px;border-radius:8px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+h1,h2,h3{font-family:var(--display);color:var(--ink);margin:0;letter-spacing:-.02em;font-stretch:94%}
+p{margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 22px;border-radius:999px;font:600 16px/1 var(--body);text-decoration:none;border:1.5px solid transparent;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.sun{background:var(--sun);color:var(--night)}.btn.sun:hover{background:var(--sun2)}
+.btn.ghost{color:#fff;border-color:rgba(255,255,255,.3)}.btn.ghost:hover{border-color:#fff}
+
+/* nav */
+.nav{background:var(--night)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:76px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font:750 22px/1 var(--display);font-stretch:90%;white-space:nowrap}
+.brand img{width:40px;height:40px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+.brand sup{font-size:.42em;font-weight:600;margin-left:2px;opacity:.8}
+.brand small{display:block;font:500 12px/1 var(--body);color:#a9b5d1;margin-top:5px}
+.nav .end{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav .end a.txt{color:#c9d3ea;text-decoration:none;font-weight:600;font-size:15px}
+.nav .end a.txt:hover{color:#fff}
+
+/* hero */
+.hero{background:radial-gradient(900px 420px at 85% 0%,#1d3c86 0%,transparent 60%),linear-gradient(180deg,var(--night) 0%,var(--night2) 100%);color:#c9d3ea;padding:56px 0 64px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--sun);margin-bottom:18px}
+.hero h1{color:#fff;font-size:clamp(38px,5vw,62px);line-height:1.02;font-weight:760;max-width:14ch}
+.hero .lede{font-size:19px;line-height:1.6;color:#b4c0dc;margin-top:20px;max-width:52ch}
+.meta{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:22px;font-size:14px;color:#93a1c4}
+.meta a{color:#fff;overflow-wrap:anywhere}
+.who{background:#fff;color:var(--text);border-radius:24px;padding:26px 26px 20px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.who h2{font-size:22px;line-height:1.2;margin-bottom:4px}
+.who>p{font-size:15px;color:var(--muted);margin-bottom:14px}
+.who ul{list-style:none;margin:0;padding:0}
+.who li{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:15.5px}
+.who li b{color:var(--ink);font-weight:650;flex:1}
+.tag{font:700 12.5px/1 var(--body);padding:7px 10px;border-radius:999px;white-space:nowrap}
+.tag.y{background:var(--goodbg);color:var(--good)}.tag.n{background:var(--badbg);color:var(--bad)}.tag.m{background:#fff4d6;color:#8a5a00}
+
+/* body */
+.body{padding:56px 0 64px}
+.body .wrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:56px;align-items:start}
+.body .wrap>*{min-width:0}
+.toc{position:sticky;top:24px;font-size:15px}
+.toc b{display:block;font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.toc a{display:block;text-decoration:none;color:var(--text);padding:6px 0 6px 14px;border-left:2px solid var(--line)}
+.toc a:hover,.toc a.on{color:var(--ink);border-left-color:var(--sun);font-weight:600}
+article section{padding:30px 0;border-top:1px solid var(--line);scroll-margin-top:16px}
+article section:first-child{border-top:0;padding-top:0}
+article h2{font-size:clamp(26px,2.8vw,34px);line-height:1.1;margin-bottom:14px}
+article h3{font-size:18px;margin:18px 0 8px}
+article p{margin:0 0 12px;max-width:72ch}
+article ul{margin:0 0 12px;padding-left:22px;max-width:72ch}
+article li{margin:5px 0}
+article li b,article p b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+.box{border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.box h3{margin-top:0}
+.box ul{margin-bottom:0}
+.box.no{background:#fbfcfe}
+table{width:100%;border-collapse:collapse;font-size:15.5px;margin:6px 0 4px}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:700 13px/1.2 var(--body);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);background:var(--mist)}
+td:first-child{font-weight:650;color:var(--ink);white-space:nowrap}
+.law{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:6px}
+.law .box p{font-size:15.5px;margin:0}
+.law .box h3{font-size:19px}
+.note{background:var(--mist);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--muted);max-width:none}
+.contact{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;background:var(--night);color:#c9d3ea;border-radius:22px;padding:26px 28px}
+.contact h2{color:#fff;margin:0 0 6px}
+.contact p{margin:0;color:#a9b5d1}
+.contact a.mail{overflow-wrap:anywhere;max-width:100%;color:var(--night);background:var(--sun);text-decoration:none;font-weight:700;border-radius:999px;padding:13px 20px}
+footer{background:var(--night);color:#93a1c4;font-size:14px;padding:22px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+footer a{color:#c9d3ea}
+
+@media (max-width:1000px){
+  .hero .wrap,.nick .wrap{grid-template-columns:1fr;gap:32px}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .body .wrap{grid-template-columns:1fr;gap:28px}
+  .toc{position:static;display:flex;flex-wrap:wrap;gap:8px}
+  .toc b{width:100%;margin-bottom:4px}
+  .toc a{border:1px solid var(--line);border-radius:999px;padding:7px 12px}
+  .law{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  .wrap{padding:0 16px}
+  .nav .end a.txt{display:none}
+  .nav .wrap{height:68px}
+  .brand small{display:none}
+  .hero{padding:36px 0 44px}
+  .pgrid,.cols,.ex{grid-template-columns:1fr}
+  .who{padding:20px 18px 14px}
+  .tablewrap{overflow-x:auto}
+  td:first-child{white-space:normal}
+  th,td{padding:10px 8px}
+  .contact{padding:22px 20px}
+}
+@media print{.nav,.toc,footer,.btn{display:none}.hero{background:#fff;color:#000}.hero h1,.hero .lede{color:#000}.body .wrap{display:block}}
+
+.price td:nth-child(n+2){white-space:nowrap}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0 0 12px;max-width:72ch}
+.steps li{counter-increment:s;position:relative;padding:4px 0 4px 44px;margin:8px 0}
+.steps li:before{content:counter(s);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:var(--sun);color:var(--night);font:700 15px/30px var(--body);text-align:center}
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/welcome/"><img src="/icon.svg" width="40" height="40" alt=""><span>Turn-Table<sup>™</sup><small>A Science Hook Lab product</small></span></a>
+    <div class="end">
+      <a class="txt" href="/welcome/">About</a>
+      <a class="txt" href="/">Students: play</a>
+      <a class="btn sun" href="/?teacher=new">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Terms of use</div>
+      <h1>Plain-English terms for teachers.</h1>
+      <p class="lede">Turn-Table is simple to use, and the rules are simple too. Try everything free for 7 days, pay only if you keep going, and cancel whenever you want.</p>
+      <div class="meta"><span>Last updated November 22, 2026</span><span>Questions: <a href="mailto:dennisturner@thesciencehooklab.com">dennisturner@thesciencehooklab.com</a></span></div>
+    </div>
+    <div class="who" aria-labelledby="whoT">
+      <h2 id="whoT">The short version</h2>
+      <p>What you need to know before you start.</p>
+      <ul><li><b>7-day free trial</b><span class="tag y">Card needed, $0 today</span></li><li><b>Founding price</b><span class="tag y">$36 a year</span></li><li><b>Regular price</b><span class="tag m">$49 a year or $7 a month</span></li><li><b>Cancel anytime</b><span class="tag y">Before you are charged</span></li><li><b>Students</b><span class="tag y">Never pay, nickname only</span></li></ul>
+    </div>
+  </div>
+</section>
+
+<section class="body">
+  <div class="wrap">
+    <nav class="toc" aria-label="On this page">
+      <b>On this page</b>
+      <a href="#who">Who these terms are for</a><a href="#accounts">Your account</a><a href="#plans">Plans and prices</a><a href="#trial">The 7-day free trial</a><a href="#billing">Billing and renewals</a><a href="#cancel">Cancel anytime</a><a href="#free">The free version</a><a href="#rules">Using Turn-Table</a><a href="#yours">Your data and our work</a><a href="#limits">Limits</a><a href="#changes">Changes</a><a href="#contact">Contact</a>
+    </nav>
+    <article>
+      <section id="who">
+        <h2>Who these terms are for</h2>
+        <p>Turn-Table™ is a set of science games for middle school classrooms. It is made and run by Dennis Turner through The Science Hook Lab. These terms are the rules for using it. By making a teacher account, starting a trial, or playing as a student, you agree to them.</p>
+        <p>They are short on purpose. If something is unclear, email us and a real person will answer.</p>
+        <div class="cols">
+          <div class="box"><h3>Teachers</h3><p style="font-size:15.5px;margin:0">You make the account, pick a plan, and set up classes for your students. You need to be 18 or older and use Turn-Table for your teaching.</p></div>
+          <div class="box"><h3>Students</h3><p style="font-size:15.5px;margin:0">Students play through their teacher's class with a nickname and a PIN. A student never pays and never needs an email address.</p></div>
+        </div>
+      </section>
+
+      <section id="accounts">
+        <h2>Your account</h2>
+        <ul>
+          <li><b>Be truthful.</b> Use a real email address so we can reach you about your account.</li>
+          <li><b>Keep your password safe.</b> You are responsible for what happens in your account. Tell us right away if someone else got in.</li>
+          <li><b>One teacher, one account.</b> A membership is for one teacher. It covers up to 6 classes and 130 students. Extra sections are $15 a year.</li>
+          <li><b>Students use nicknames only.</b> Tell your class to pick a nickname, never a full name. Turn-Table refuses names that look like a first and last name.</li>
+          <li><b>School use.</b> Turn-Table is for school and classroom learning. Please do not use it to collect student information we did not ask for.</li>
+        </ul>
+        <p>How we handle student data is in the <a href="/privacy/">Privacy and Student Data</a> page. It is part of these terms.</p>
+      </section>
+
+      <section id="plans">
+        <h2>Plans and prices</h2>
+        <div class="tablewrap">
+        <table class="price">
+          <thead><tr><th>Plan</th><th>Founding price</th><th>Regular price</th></tr></thead>
+          <tbody>
+            <tr><td>Turn-Table</td><td>$36 a year</td><td>$49 a year, or $7 a month</td></tr>
+            <tr><td>Hook + Check Bundle<br><span style="font-weight:400;color:var(--muted);font-size:14px">Turn-Table plus The Science Hook Lab</span></td><td>$79 a year</td><td>$99 a year, or $16 a month</td></tr>
+            <tr><td>Extra class sections</td><td colspan="2">$15 a year each</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <h3>The founding price</h3>
+        <p>The first 100 teachers to join get the founding price. It is for <b>yearly plans only</b>. It stays the same every year for as long as your membership stays active. If you cancel and come back later, you pay the price that is current then.</p>
+        <p>Prices are in US dollars. Taxes, if any, are added at checkout. School and district licenses are priced separately. Email us for a quote.</p>
+      </section>
+
+      <section id="trial">
+        <h2>The 7-day free trial</h2>
+        <p>Every new teacher gets 7 days to try everything. A card is needed to start the trial, but <b>nothing is charged today</b>.</p>
+        <ul>
+          <li>The trial lasts 7 days from the day you start it.</li>
+          <li>If you do nothing, your card is charged automatically when the 7 days end, for the plan you picked. The price and renewal date are shown to you on the card page before you start.</li>
+          <li>If you cancel before the 7 days end, you are <b>never charged</b>.</li>
+          <li>One free trial per teacher.</li>
+        </ul>
+      </section>
+
+      <section id="billing">
+        <h2>Billing and renewals</h2>
+        <p>Plans renew automatically until you cancel. Please read this part closely.</p>
+        <ul>
+          <li><b>Yearly plans</b> are charged once a year, on the day your trial ends and every year after that. We do not send separate bills.</li>
+          <li><b>Monthly plans</b> are charged every month on the same day.</li>
+          <li>Payments are handled by Stripe through The Science Hook Lab. We never see or store your full card number.</li>
+          <li>If a payment fails, we may try your card again. If it still fails, your account turns read-only: you can still see your classes and scores, but you cannot start class games or make new classes. Fix your payment and it unlocks again.</li>
+          <li>If we ever change the price of a plan, we will email you before it takes effect. You can cancel before the new price starts.</li>
+        </ul>
+      </section>
+
+      <section id="cancel">
+        <h2>Cancel anytime</h2>
+        <p>You can cancel whenever you want. No phone call, no reason needed.</p>
+        <ol class="steps">
+          <li>Cancel in your account's billing settings, or email <a href="mailto:dennisturner@thesciencehooklab.com">dennisturner@thesciencehooklab.com</a> from your account email and we will cancel it for you.</li>
+          <li>Your plan stays active until the end of the period you already paid for. After that, it does not renew and you are not charged again.</li>
+          <li>Your classes and scores stay put so you can come back. Ask us any time and we will delete them.</li>
+        </ol>
+        <p>Money back questions are answered on the <a href="/refund/">Refund Policy</a> page.</p>
+      </section>
+
+      <section id="free">
+        <h2>The free version</h2>
+        <p>If your trial ends and you do not subscribe, or you cancel, your students keep a free version: Speed Find, Cell Shop and Moonwatch (first levels), with a limited number of plays each day. Everything else, including Pre-Tests and Post-Tests and Class Games, needs a paid plan. We may change what the free version includes.</p>
+      </section>
+
+      <section id="rules">
+        <h2>Using Turn-Table</h2>
+        <p>Please don't:</p>
+        <ul>
+          <li>Share your login or sell access to other people.</li>
+          <li>Try to break in, overload the site, or read another teacher's data.</li>
+          <li>Copy the games, art or questions to build a competing product.</li>
+          <li>Put harmful, rude or private information in nicknames or feedback messages.</li>
+        </ul>
+        <p>We can lock an account that breaks these rules. If we do, we will tell you why.</p>
+      </section>
+
+      <section id="yours">
+        <h2>Your data and our work</h2>
+        <p><b>Your class data is yours.</b> Your students' scores and your quiz boards belong to you and your school. We use them only to run Turn-Table for you.</p>
+        <p><b>The games are ours.</b> The games, art, questions and code belong to The Science Hook Lab. You can use them in your classroom, but you can't copy or resell them.</p>
+        <p>Turn-Table™ and The Science Hook Lab are names we use for our products.</p>
+      </section>
+
+      <section id="limits">
+        <h2>Limits</h2>
+        <p>We work hard to keep Turn-Table running, but we can't promise it will always be online or free of mistakes. It is provided "as is." Please keep your own copy of anything you can't afford to lose, such as a gradebook.</p>
+        <p>To the most the law allows, our responsibility to you is limited to what you paid us in the 12 months before the problem. Nothing here takes away rights you have under the law. These terms follow the laws of the State of New York.</p>
+        <p class="note">Turn-Table is a study and practice tool. Its scores are not a replacement for your own grading judgment.</p>
+      </section>
+
+      <section id="changes">
+        <h2>Changes to these terms</h2>
+        <p>If we change these terms, we will update the date at the top. If a change affects what you pay or how student data is used, we will email you before it takes effect.</p>
+      </section>
+
+      <section id="contact">
+        <div class="contact">
+          <div><h2>Questions about these terms?</h2><p>Email Dennis Turner, founder of Turn-Table and The Science Hook Lab. A real teacher reads every message.</p></div>
+          <a class="mail" href="mailto:dennisturner@thesciencehooklab.com?subject=Turn-Table%20terms">dennisturner@thesciencehooklab.com</a>
+        </div>
+      </section>
+    </article>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Turn-Table™ is a Science Hook Lab product.</span>
+    <span><a href="/welcome/">About Turn-Table</a> &nbsp; <a href="/">Students: play here</a> &nbsp; <a href="/privacy/">Privacy</a> &nbsp; <a href="/terms/">Terms</a> &nbsp; <a href="/refund/">Refunds</a></span>
+  </div>
+</footer>
+
+<script>
+(()=>{const links=[...document.querySelectorAll('.toc a')],map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  if(!('IntersectionObserver' in window))return;
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('on'));const a=map.get(e.target.id);if(a)a.classList.add('on');}});},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('article section[id]').forEach(s=>io.observe(s));})();
+</script>
+</body>
+</html>
