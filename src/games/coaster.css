@@ -32,3 +32,13 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
 #caBoard .cacloud{animation:cacloud 30s linear infinite alternate}@keyframes cacloud{to{translate:40px 0}}
 @media (prefers-reduced-motion:reduce){#caBoard *{animation:none!important}}
 .art-still #caBoard *{animation:none!important}
+
+/* loops: glow at the top while the cart is passing it */
+.caloopTop circle{stroke:transparent}
+.caloopTop text{opacity:0;transition:opacity .2s}
+.caloopTop.hot text{opacity:1}
+.caloopTop.hot circle{animation:caloopp .5s ease-in-out infinite}
+.caloopTop.hot.ok circle{stroke:#3fd07a;fill:rgba(63,208,122,.25)}
+.caloopTop.hot.bad circle{stroke:#ff3355;fill:rgba(255,51,85,.25)}
+@keyframes caloopp{50%{stroke-width:7}}
+@media (prefers-reduced-motion:reduce){.caloopTop.hot circle{animation:none}}

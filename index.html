@@ -1028,6 +1028,16 @@ ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8p
 #caBoard .cacloud{animation:cacloud 30s linear infinite alternate}@keyframes cacloud{to{translate:40px 0}}
 @media (prefers-reduced-motion:reduce){#caBoard *{animation:none!important}}
 .art-still #caBoard *{animation:none!important}
+
+/* loops: glow at the top while the cart is passing it */
+.caloopTop circle{stroke:transparent}
+.caloopTop text{opacity:0;transition:opacity .2s}
+.caloopTop.hot text{opacity:1}
+.caloopTop.hot circle{animation:caloopp .5s ease-in-out infinite}
+.caloopTop.hot.ok circle{stroke:#3fd07a;fill:rgba(63,208,122,.25)}
+.caloopTop.hot.bad circle{stroke:#ff3355;fill:rgba(255,51,85,.25)}
+@keyframes caloopp{50%{stroke-width:7}}
+@media (prefers-reduced-motion:reduce){.caloopTop.hot circle{animation:none}}
 /*GC:coaster>>*/
 /* ---- one-screen play layout ---- */
 .onescr{padding:10px 14px}
@@ -9023,10 +9033,11 @@ const CA_LEVELS=[
   intro:'New: the toolbox. Drag a track piece into the dashed slot (or tap the piece, then tap the slot).',
   fact:'Taller hills give a bigger thrill but need more starting energy. Engineers always start a coaster with its highest hill.',
   pts:[caP(3,CA_HMAX),{h:0},{build:['hill','dip','flat'],lo:0,hi:14,name:'the thrill hill'},{h:2},{h:0}],goals:[{t:'minh',at:2,h:9,name:'the thrill hill'}]},
- {pack:null,name:'Gentle Landing',fr:0,story:'Riders must arrive at the end platform at 8 m/s or slower. Raise the end platform to slow the cart.',
-  clue:'A higher end platform means the cart has dropped less by the end, so it keeps less speed.',
-  fact:'A cart that ends higher has more potential energy left and less kinetic energy. That means it is moving slower.',
-  pts:[caP(3,CA_HMAX),{h:0},{h:8},{lo:0,hi:14,name:'the end platform'}],goals:[{t:'maxv',at:3,v:8,name:'the end platform'}]},
+ {pack:null,name:'Gentle Landing',fr:0,story:'A small loop is built into the track. Riders must arrive at the end platform at 8 m/s or slower. Raise the end platform to slow the cart.',
+  clue:'A higher end platform means the cart has dropped less by the end, so it keeps less speed. The 8 m hill needs more energy than the loop, so the loop is no problem.',
+  intro:'New: a loop! At the top the cart is upside down, and it needs enough speed to stay on the track. That takes a start height of at least 2.5 × the loop radius (5 m for this 2 m loop). The 8 m hill is the harder part here.',
+  fact:'A cart that ends higher has more potential energy left and less kinetic energy. That means it is moving slower. And a loop only needs a start height of 2.5 times its radius, so a tall hill after it already covers that.',
+  pts:[caP(3,CA_HMAX),{h:0},{h:0,loop:2},{h:8},{lo:0,hi:14,name:'the end platform'}],goals:[{t:'maxv',at:4,v:8,name:'the end platform'}]},
  {pack:'Pack 2: Friction',name:'Heat Loss',fr:0.4,steel:1,story:'Friction turns some energy into heat on every stretch of wooden track. You have 1 piece of smooth steel track. Where does it help most?',
   clue:'Steel loses much less energy to heat. Energy saved early is still there for every hill after it.',
   intro:'New: friction. Wooden track turns some of the cart\'s energy into heat (watch the red bar). Drag the steel piece onto a stretch of track to make it smooth.',
@@ -9083,6 +9094,7 @@ function caCartAt(S,pos){const a=Math.max(0,Math.min(S.length-1,Math.floor(pos))
   const x=px(A)+(px(B)-px(A))*f,y=py(A)+(py(B)-py(A))*f,ang=Math.atan2(py(B)-py(A),px(B)-px(A))*180/Math.PI;
   const dh=A.dh+(B.dh-A.dh)*f,Eh=A.Eh+(B.Eh-A.Eh)*f,yy=A.y+(B.y-A.y)*f;
   return {x,y,ang:Math.abs(b-a)?ang:0,dh,Eh,yy,seg:A.seg};}
+const caPt=q=>[q.loop?caXk(q.k)+q.r*CAM*Math.sin(q.th):caXk(q.k),caY(q.y)];
 /* scenery that never changes during a level */
 function caScenery(){
   let s=`<defs><linearGradient id="caSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fb2f5"/><stop offset=".7" stop-color="#bfe4ff"/><stop offset="1" stop-color="#e8f6ff"/></linearGradient>
@@ -9105,6 +9117,11 @@ function caBoardSvg(G){
   /* supports */
   Hs.forEach((v,i)=>{if(v<=0)return;const x=caXk(i),st=ctx.steel.includes(Math.max(0,i-1))||ctx.steel.includes(i),c=st?'#e8eef8':'#8a5a2e',w=i===0?10:7;
     s+=`<path d="M${x-w} ${CAG}L${x} ${caY(v)}L${x+w} ${CAG}" stroke="${c}" stroke-width="3" fill="none"/>`;for(let y=CAG-18;y>caY(v)+8;y-=22){const f=(CAG-y)/(CAG-caY(v)),ww=w*(1-f);s+=`<path d="M${x-ww} ${y}L${x+ww} ${y-14}" stroke="${c}" stroke-width="1.6"/>`;}});
+  /* loop rings: glow, legs and a lattice behind the rails */
+  ctx.pts.forEach((p,i)=>{if(!p.loop)return;const r=p.loop,R=r*CAM,cx=caXk(i),cy=caY(Hs[i]+r),d=R*.7071;
+    s+=`<g class="caloop"><circle cx="${cx}" cy="${cy}" r="${R}" fill="rgba(255,150,100,.10)" stroke="#ff8a5c" stroke-opacity=".28" stroke-width="22"/>`+
+      `<circle cx="${cx}" cy="${cy}" r="${R-10}" fill="none" stroke="#7a5a3a" stroke-opacity=".5" stroke-width="1.6" stroke-dasharray="4 6"/>`+
+      `<path d="M${cx-d} ${cy+d}L${cx-d-8} ${CAG}M${cx+d} ${cy+d}L${cx+d+8} ${CAG}M${cx} ${cy+R}V${CAG}" stroke="#8a5a2e" stroke-width="3" fill="none" opacity="${Hs[i]>0?1:.55}"/></g>`;});
   /* track, segment by segment: wood or steel */
   const segs=[];S.forEach(p=>{(segs[p.seg]=segs[p.seg]||[]).push(p);});
   const xs=p=>(p.loop?caXk(p.k)+p.r*CAM*Math.sin(p.th):caXk(p.k)).toFixed(1);
@@ -9112,6 +9129,9 @@ function caBoardSvg(G){
     s+=st?`<path d="${d}" fill="none" stroke="#2a3550" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#5a6a8a" stroke-width="14" stroke-dasharray="2 10" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="url(#caSteel)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`
       :`<path d="${d}" fill="none" stroke="#4a2e14" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#8a5a2e" stroke-width="15" stroke-dasharray="3 9" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#e0a85a" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>`;
     if(L.steel)s+=`<path class="caseg${st?' steel':''}" data-seg="${j}" d="${d}" fill="none" stroke="transparent" stroke-width="26" stroke-linecap="round" aria-label="Track stretch ${j+1}, ${st?'steel':'wood'}"/>`;});
+  /* the top of each loop: the make-or-break spot */
+  ctx.pts.forEach((p,i)=>{if(!p.loop)return;const R=p.loop*CAM,cx=caXk(i),ty=caY(Hs[i]+2*p.loop);
+    s+=`<g class="caloopTop" data-k="${i}"><circle cx="${cx}" cy="${ty}" r="15" fill="none" stroke-width="3"/><text x="${cx+22}" y="${ty+4}" text-anchor="start" font-size="11" font-weight="800" fill="#a8431f" font-family="system-ui" stroke="#fff" stroke-width="3" paint-order="stroke">TOP: needs speed</text></g>`;});
   /* hint 3: the best design */
   if(CAS.hint>=3){L.solHs.forEach((v,i)=>{const p=ctx.pts[i];if(i===0||p.lo!==undefined)s+=`<circle cx="${caXk(i)}" cy="${caY(v)}" r="16" fill="none" stroke="#37e0c1" stroke-width="4" stroke-dasharray="6 5"/>`;});
     (L.solSteel||[]).forEach(j=>{s+=`<path d="M${caXk(j)} ${CAG-6}H${caXk(j+1)}" stroke="#37e0c1" stroke-width="5" stroke-dasharray="8 6"/>`;});}
@@ -9127,7 +9147,7 @@ function caBoardSvg(G){
   /* failure mark */
   if(CAS.fail>=0){const c=caCartAt(S,CAS.fail);s+=`<g transform="translate(${c.x} ${c.y-30})"><circle r="15" fill="#ff3355"/><path d="M-6 -6l12 12M6 -6l-12 12" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></g>`;}
   /* cart */
-  s+=`<g id="caSpark"></g><g id="caCart"><g transform="translate(0 0)"><rect x="-21" y="-25" width="42" height="19" rx="7" fill="url(#caCar)" stroke="#7a1414" stroke-width="2.2"/><path d="M21 -22q8 2 8 10v4h-8z" fill="#ffd23f" stroke="#7a1414" stroke-width="2"/><rect x="-17" y="-19" width="34" height="3" fill="#fff" opacity=".5"/>`+
+  s+=`<g id="caTrail"></g><g id="caSpark"></g><g id="caCart"><g transform="translate(0 0)"><rect x="-21" y="-25" width="42" height="19" rx="7" fill="url(#caCar)" stroke="#7a1414" stroke-width="2.2"/><path d="M21 -22q8 2 8 10v4h-8z" fill="#ffd23f" stroke="#7a1414" stroke-width="2"/><rect x="-17" y="-19" width="34" height="3" fill="#fff" opacity=".5"/>`+
     `<circle cx="-8" cy="-31" r="5.5" fill="#f2c39a"/><circle cx="7" cy="-31" r="5.5" fill="#8a5a3a"/><path class="caarms" d="M-12 -32l-5-10M-4 -32l3-10M3 -32l-3-10M11 -32l5-10" stroke="#f2c39a" stroke-width="2.6" stroke-linecap="round"/>`+
     `<circle cx="-12" cy="-4" r="5.5" fill="#2a2f45" stroke="#9aa6c6" stroke-width="1.5"/><circle cx="12" cy="-4" r="5.5" fill="#2a2f45" stroke="#9aa6c6" stroke-width="1.5"/></g></g>`;
   const sv=$('caBoard');sv.setAttribute('viewBox',`0 0 ${CAW} ${CAH}`);sv.innerHTML=s;
@@ -9137,6 +9157,11 @@ function caBoardSvg(G){
 function caCartMove(S,pos){const c=caCartAt(S,pos),g=document.getElementById('caCart');
   if(g)g.setAttribute('transform',`translate(${c.x.toFixed(1)} ${c.y.toFixed(1)}) rotate(${(CAS.fail>=0&&pos>=CAS.fail?0:c.ang).toFixed(1)})`);
   if(g)g.classList.toggle('fast',Math.sqrt(2*CA_G*Math.max(0,c.dh))>9);
+  const tl=document.getElementById('caTrail');
+  if(tl){let d='';if(CAS.run){const a=Math.max(0,Math.floor(pos)-18),b=Math.min(S.length-1,Math.floor(pos));for(let q=a;q<=b;q++){const pt=caPt(S[q]);d+=(q===a?'M':'L')+pt[0].toFixed(1)+' '+(pt[1]-6).toFixed(1);}d+='L'+c.x.toFixed(1)+' '+(c.y-6).toFixed(1);}
+    tl.innerHTML=d?`<path d="${d}" fill="none" stroke="#ffb347" stroke-opacity=".35" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="${d}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`:'';}
+  {const A=S[Math.max(0,Math.min(S.length-1,Math.floor(pos)))],near=A&&A.loop&&Math.abs(A.th-Math.PI)<0.95;
+   document.querySelectorAll('#caBoard .caloopTop').forEach(e=>{const on=near&&+e.dataset.k===A.k;e.classList.toggle('hot',!!on);e.classList.toggle('ok',!!on&&A.dh>=A.req-1e-9);e.classList.toggle('bad',!!on&&A.dh<A.req-1e-9);});}
   const sp=document.getElementById('caSpark'),L=caLvl();
   if(sp){const wood=L.fr>0&&!CAS.ctx.steel.includes(c.seg)&&CAS.run;let t='';
     if(wood)for(let i=0;i<4;i++){const a=Math.random()*Math.PI,r=6+Math.random()*10;t+=`<circle cx="${(c.x-Math.cos(a)*r).toFixed(1)}" cy="${(c.y-2+Math.sin(a)*4).toFixed(1)}" r="${(1.2+Math.random()*1.6).toFixed(1)}" fill="${i%2?'#ffb347':'#ff6a2a'}"/>`;}
@@ -9201,10 +9226,16 @@ function caLaunch(){
     CAS.pos=Math.min(end,CAS.pos+dt*(5+v*1.6));
     const c=caCartMove(S,CAS.pos);caBars(c);$('caScrub').value=Math.round(CAS.pos);
     if(CAS.pos>=end){CAS.run=false;CAS.raf=0;
-      if(G.f>=0){CAS.fail=G.f;CAS.pos=G.f;fx.pop({icon:'question',text:'Stalled!',kind:'oops'});}
-      caRender();
-      if(G.f<0&&G.ok)caWin();
-      else if(G.f<0)caSay('The cart finished, but a goal in the list is not met. Fix the red items and try again.','alert');
+      const fin=()=>{if(CAS!==my)return;
+        if(G.f>=0){CAS.fail=G.f;CAS.pos=G.f;fx.pop({icon:'question',text:'Stalled!',kind:'oops'});}
+        caRender();
+        if(G.f<0&&G.ok)caWin();
+        else if(G.f<0)caSay('The cart finished, but a goal in the list is not met. Fix the red items and try again.','alert');};
+      const cg=document.getElementById('caCart');
+      if(G.f>=0&&S[G.f].loop&&cg&&!Art.reduced()){/* ran out of speed in a loop: the cart drops off the track */
+        caSay('It ran out of speed at the top and fell off the loop!','alert');
+        Art.tween({from:0,to:1,dur:700,ease:Art.ease.inQuad,step:t=>{cg.setAttribute('transform',`translate(${c.x.toFixed(1)} ${(c.y+t*(CAG-c.y)).toFixed(1)}) rotate(${(c.ang+t*200).toFixed(1)})`);},done:fin});}
+      else fin();
       return;}
     CAS.raf=requestAnimationFrame(step);};
   CAS.raf=requestAnimationFrame(step);
