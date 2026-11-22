@@ -1,0 +1,129 @@
+/* ===== Evidence Lab: lab bench detective (source: src/games/evidence.css) ===== */
+.evtop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.evtop .coach{flex:1 1 360px;margin:3px 0}
+.evbtns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.evcasebar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:0}
+.evcase{background:#eef1f8;border-radius:999px;padding:3px 11px;font-weight:800;font-size:13px;color:#55617d}
+.evcase.on{background:#dfe9ff;color:#1b3a8a;outline:2px solid var(--accent)} .evcase.ok{background:#e5f7ec;color:#116b3a}
+.evrank{background:linear-gradient(180deg,#24304d,#18213a)!important;color:#fff!important;font-weight:800}
+.evrkst{color:#ffd23f;letter-spacing:1px}
+.evgrid{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(330px,1fr);gap:12px;margin-top:4px}
+.evbenchwrap{display:flex;flex-direction:column;min-width:0}
+.evstage{position:relative;height:calc(100vh - 318px);min-height:250px;max-height:520px;border-radius:16px 16px 0 0;overflow:hidden;background:#d4dcec;box-shadow:0 10px 26px rgba(11,20,48,.18)}
+.evstage>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.evstage.art-drop-hot{transform:none!important} .evstage.art-drop-no{opacity:1}
+.evstage .evring{opacity:0;transition:opacity .2s} .evstage.art-drop-ok .evring,.evstage.art-drop-hot .evring{opacity:1}
+.evstage.art-drop-hot .evring{stroke-width:6}
+.evtray{display:flex;gap:8px;justify-content:center;flex-wrap:nowrap;padding:8px;background:linear-gradient(180deg,#1b2238,#121828);border-radius:0 0 16px 16px}
+.evtool{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:6px;align-items:center;flex:0 1 150px;min-width:0;padding:5px 10px 5px 6px;border-radius:12px;background:linear-gradient(180deg,#fff,#e9eef7);box-shadow:0 2px 0 #9aa7c2,0 6px 14px rgba(0,0,0,.25);color:#1b2a4d;transition:transform .15s cubic-bezier(.34,1.56,.64,1)}
+.evtool:hover{transform:translateY(-3px)}
+.evtool .evti{grid-row:1/3;display:flex}
+.evtool b{font-size:13px;line-height:1.1;white-space:nowrap} .evtool small{font-size:10.5px;font-weight:700;color:#5b6886;line-height:1.1}
+.evtool.strong small{color:#116b3a} .evtool.weak small{color:#8a6100}
+.evtool.used{opacity:.45;filter:grayscale(.7);cursor:default;transform:none;box-shadow:none}
+.evtool.used small{color:#116b3a}
+.evtool.best{box-shadow:0 0 0 3px #ffd23f,0 0 16px 3px rgba(255,210,63,.8)}
+.evhow{margin:4px 0 0;font-size:11.5px;color:#6b7a99;font-weight:600;text-align:center}
+.evintro{position:absolute;left:12px;top:12px;max-width:min(380px,70%);background:rgba(255,255,255,.96);border:2px solid #7da4ff;border-radius:12px;padding:8px 12px;font-size:13.5px;font-weight:600;color:#24304d;box-shadow:0 8px 20px rgba(11,20,48,.2);cursor:pointer;z-index:3}
+.evintro b{color:#2f6bff}
+.evtag{position:absolute;left:50%;top:12px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:#24304d;color:#fff;border-radius:999px;padding:5px 16px 5px 8px;font-size:15px;font-weight:700;white-space:nowrap;box-shadow:0 8px 20px rgba(11,20,48,.3);z-index:3}
+.evtag b{color:#ffd23f} .evtagi{display:flex;background:#fff;border-radius:50%;padding:2px}
+.evstamp{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-8deg);border:5px solid #16a05a;color:#16a05a;background:rgba(255,255,255,.88);border-radius:12px;padding:8px 18px;font-size:clamp(16px,2.4vw,28px);font-weight:900;letter-spacing:2px;text-align:center;z-index:4;pointer-events:none;max-width:86%}
+.evstamp.slam{animation:evslam .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes evslam{0%{transform:translate(-50%,-50%) rotate(-8deg) scale(2.4);opacity:0}100%{transform:translate(-50%,-50%) rotate(-8deg) scale(1);opacity:1}}
+/* side panel */
+.evside{display:flex;flex-direction:column;gap:8px;min-width:0}
+.evnote{background:#fffdf5;border-radius:12px;padding:8px 10px 8px 26px;position:relative;box-shadow:0 2px 6px rgba(11,20,48,.12);background-image:linear-gradient(90deg,transparent 18px,#f3a6a6 18px,#f3a6a6 20px,transparent 20px),repeating-linear-gradient(180deg,transparent 0 23px,#d9e4f5 23px 24px)}
+.evnoteh{display:flex;align-items:center;gap:4px;font-weight:900;color:#24304d;font-size:14px;margin-bottom:4px}
+.evnoteh small{margin-left:auto;font-weight:700;color:#6b7a99;font-size:11.5px}
+.evnote ol{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.evnote li{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:13px;color:#24304d;line-height:1.25}
+.evnote li .evni{display:flex}
+.evnote li .evres{color:#1b4fd1;font-weight:800;font-family:"Comic Sans MS","Segoe Print","Bradley Hand",cursive}
+.evnote li em{flex-basis:100%;padding-left:24px;font-style:normal;font-size:11.5px;font-weight:700;color:#a11f35}
+.evnote li em.none{color:#8a6100}
+.evnote li.new{animation:evwrite .8s ease-out}
+@keyframes evwrite{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.evempty{margin:2px 0;font-size:13px;color:#6b7a99;font-weight:600}
+.evclip{position:relative;background:linear-gradient(180deg,#c99a5b,#b5844a);border-radius:12px;padding:16px 8px 8px;box-shadow:0 4px 12px rgba(11,20,48,.2)}
+.evclipt{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:84px;height:18px;border-radius:5px;background:linear-gradient(180deg,#eef1f6,#9aa5ba);box-shadow:0 2px 3px rgba(0,0,0,.25)}
+.evclip>.evnoteh{background:#fff;margin:0;padding:6px 8px 2px;border-radius:8px 8px 0 0}
+.evguide{background:#fff;border-radius:0 0 8px 8px;padding:2px 6px 6px}
+.evgrow{display:grid;grid-template-columns:var(--cols);align-items:center;gap:4px;padding:4px 4px;border-radius:8px;position:relative;font-size:12px;text-align:center;font-weight:700;color:#24304d}
+.evgrow+.evgrow{margin-top:3px}
+.evgrow:not(.evghead){background:#f2f5fb}
+.evgrow>b{text-align:left;font-size:12.5px}
+.evghead{font-size:10.5px;color:#6b7a99;padding-bottom:0} .evghead>span:first-child{text-align:left}
+.evghead>span{display:flex;flex-direction:column;align-items:center;gap:1px} .evghead i{font-style:normal}
+.evghead>span.on{color:#1b3a8a}
+.evgrow span.yes{background:#dff5e7;color:#116b3a;border-radius:6px;padding:2px 0} .evgrow span.no{background:#ffe3e7;color:#a11f35;border-radius:6px;padding:2px 0}
+.evgrow.out{opacity:.5} .evgrow.out>b{text-decoration:line-through}
+.evgrow.out::after{content:"RULED OUT";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-6deg);border:2px solid #d33;color:#d33;font-weight:900;font-size:12px;letter-spacing:1px;padding:0 6px;border-radius:5px;background:rgba(255,255,255,.7);pointer-events:none}
+.evgrow.just::after{animation:evout .4s cubic-bezier(.34,1.56,.64,1)}
+@keyframes evout{from{transform:translate(-50%,-50%) rotate(-6deg) scale(2.2);opacity:0}}
+.evgrow.only{outline:2px solid #16a05a;background:#e9f9ef}
+.evgrow.win{outline:3px solid #16a05a;background:#dff5e7;opacity:1}
+.evname{padding:4px 6px!important;font-size:12px!important}
+/* reaction levels */
+.evstks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.evstk{border-radius:10px;padding:5px 8px;display:grid;gap:1px;font-size:12px;box-shadow:0 2px 0 rgba(0,0,0,.12);transform:rotate(-1deg)}
+.evstk:nth-child(even){transform:rotate(1.2deg)}
+.evstk b{font-size:12.5px} .evstk small{font-weight:700;opacity:.9;line-height:1.2}
+.evstkl{font-size:10px;font-weight:900;letter-spacing:1px}
+.evstk.chem{background:#ffe1d6;color:#8a2a0f;border:2px solid #ff8a5c} .evstk.phys{background:#dcebff;color:#173f8a;border:2px solid #6aa7ff}
+.evstk.weak{background:#fff3c4;color:#6b4c00;border:2px dashed #f2c94c} .evstk.none{background:#eef1f6;color:#55617d;border:2px solid #cfd6e3}
+.evstk.new{animation:evstick .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes evstick{from{transform:scale(1.8) rotate(-12deg);opacity:0}}
+.evproof{text-align:center;font-weight:800;color:#8a6a1a;background:#fff4d1;border-radius:10px;padding:5px;font-size:14px} .evproof.has{background:#e5f7ec;color:#116b3a}
+.evdecide{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.evstampbtn{font:inherit;cursor:pointer;border-radius:12px;padding:10px 6px;font-weight:900;font-size:15px;letter-spacing:.5px;text-transform:uppercase;background:#fff;border:3px solid;box-shadow:0 3px 0 rgba(0,0,0,.15);transition:transform .12s}
+.evstampbtn small{display:block;text-transform:none;font-weight:700;font-size:11.5px;letter-spacing:0;opacity:.8}
+.evstampbtn.chem{color:#c2410c;border-color:#ff8a5c} .evstampbtn.phys{color:#1b4fd1;border-color:#6aa7ff}
+.evstampbtn:hover:not(:disabled){transform:translateY(-2px) rotate(-1deg)} .evstampbtn:disabled{opacity:.5;cursor:default}
+.evgoodbox{background:#e5f7ec;color:#116b3a;border-radius:10px;padding:8px 10px;font-weight:800;font-size:13.5px}
+.evlegend{margin:0;font-size:11.5px;color:#55617d;font-weight:600}
+/* SVG motion */
+#evSvg *{transform-box:fill-box}
+.evbub{animation:evrise 1.6s ease-in infinite;transform-origin:center}
+@keyframes evrise{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(var(--rise));opacity:0}}
+.evstream{stroke:#7fc3ff;opacity:.85;stroke-dasharray:8 6;animation:evflow .4s linear infinite}
+@keyframes evflow{to{stroke-dashoffset:-14}}
+.evwisp{opacity:0;animation:evwisp 2.2s ease-out infinite}
+@keyframes evwisp{0%{opacity:0;transform:translateY(10px)}30%{opacity:.7}100%{opacity:0;transform:translateY(-30px) scaleX(1.4)}}
+.evswirl{transform-origin:center;animation:evspin 1.4s linear infinite}
+@keyframes evspin{to{transform:rotate(360deg)}}
+.evsettle{animation:evsettle 1s ease-in forwards} @keyframes evsettle{to{transform:translateY(28px)}}
+.evflame{transform-origin:50% 100%;animation:evflick .18s ease-in-out infinite alternate}
+@keyframes evflick{to{transform:scale(1.06,.94) skewX(2deg)}}
+.evwire.on{stroke:#ffcb2e;stroke-dasharray:6 6;animation:evflow .5s linear infinite}
+.evglow{animation:evbreath 1.4s ease-in-out infinite;transform-origin:center} @keyframes evbreath{50%{opacity:.7}}
+.evfall{animation:evfall 1.2s ease-in infinite} @keyframes evfall{0%{transform:translateY(0);opacity:1}100%{transform:translateY(80px);opacity:0}}
+.evdissolve{animation:evdis 1.8s ease-in infinite} @keyframes evdis{0%{transform:translateY(0);opacity:1}100%{transform:translateY(60px);opacity:0}}
+.evstir{transform-origin:50% 0;animation:evstir 1.2s ease-in-out infinite alternate} @keyframes evstir{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+
+#evSvg .evpuddle{transform-origin:center;animation:evpud 4s ease-in-out infinite alternate} @keyframes evpud{from{transform:scale(.8)}to{transform:scale(1.05)}}
+.evmelt{transform-origin:50% 100%;animation:evmelt 4s ease-in-out infinite alternate} @keyframes evmelt{to{transform:scale(.94,.88)}}
+.evdrip{animation:evfall 1.4s ease-in infinite}
+.evcloud{transform-origin:50% 0;animation:evcloud 3.5s ease-in-out infinite alternate} @keyframes evcloud{from{transform:scale(.7,.6);opacity:.4}to{transform:scale(1.3,1.1);opacity:.7}}
+.evflutter{animation:evflut 2.4s ease-in-out infinite} @keyframes evflut{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(90px) rotate(160deg);opacity:.3}}
+.evshrink{transform-origin:center;animation:evshr 3s ease-in-out infinite alternate} @keyframes evshr{to{transform:scale(.7)}}
+.evfoam{animation:evfoam 1.5s ease-in-out infinite alternate} @keyframes evfoam{to{transform:translateY(-6px)}}
+.evping{animation:evbreath 1s ease-in-out infinite}
+.evwiggle{animation:evwig .25s ease-in-out 4} @keyframes evwig{0%,100%{transform:rotate(0)}50%{transform:rotate(6deg)}}
+.evwob{transform-origin:50% 0}
+.evshimmer{animation:evbreath .8s ease-in-out infinite}
+.evcook{animation:evbreath 2s ease-in-out infinite}
+.evbrown{animation:evbreath 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){#evSvg *,.evstamp.slam,.evnote li.new,.evstk.new,.evgrow.just::after{animation:none!important}}
+.art-still #evSvg *,.art-still .evstamp.slam,.art-still .evnote li.new,.art-still .evstk.new{animation:none!important}
+/* one screen */
+body:has(#s-evidence:not([hidden])) footer{display:none}
+@media (max-width:900px){
+  .evgrid{grid-template-columns:1fr}
+  .evstage{height:auto;aspect-ratio:4/3;max-height:none;min-height:0}
+  .evtray{flex-wrap:wrap}
+  .evtool{min-width:0;flex:1 1 calc(33% - 8px);padding:4px 6px}
+  .evtool b{font-size:12px;white-space:normal}
+  .evtool small{display:none}
+  .evtag{font-size:13px;max-width:94%;white-space:normal}
+}

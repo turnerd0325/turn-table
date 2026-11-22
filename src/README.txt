@@ -13,7 +13,7 @@ OLDER GAMES - src/games/ (one set of files per game, built in place)
   common.js = shared helpers for the star games (drag, recordStars, level picker, win panel)
   <key>.js   -> between /*<<G:key*/ and /*G:key>>*/      in the app script
   <key>.html -> between <!--<<G:key--> and <!--G:key>>-->  (the game's screens)
-  <key>.css  -> between /*<<GC:key*/ and /*GC:key>>*/    (only diner.css so far)
+  <key>.css  -> between /*<<GC:key*/ and /*GC:key>>*/    (diner, atom, evidence so far)
   Each block sits exactly where the code always was, so load order never changes.
   Other games' CSS still lives in index.html's main <style>; move it into <key>.css
   (add the GC markers around it) when a session upgrades that game.
