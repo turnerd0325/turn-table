@@ -54,7 +54,7 @@ renderMenu=function(){
     if(locked)art.append(h('div',{class:'lockbadge'},I('lock')));
     const btn=h('button',{class:'mcard '+cls+(locked?' locked':''),title:(locked?'Locked for now. ':'')+sd,'aria-label':title+(locked?' (locked for now). ':'. ')+sd,
       onclick:locked?(()=>fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[ic]&&!classOff().includes(ic)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:btn})):(()=>ttGate(ic,fn))},art,
-      h('div',{class:'body'},h('b',null,title,STD[ic]?h('i',{class:'stdchip'+(STD[ic][1]?' sup':''),title:STD[ic][1]?'Helps you get ready for '+STD[ic][0]+'.':'NY science standard '+STD[ic][0]},STD[ic][0]):null,typeof HS_STD!=='undefined'&&HS_STD[ic]?h('i',{class:'stdchip hs',title:'Also matches high school standard '+HS_STD[ic]+'.'},HS_STD[ic]):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
+      h('div',{class:'body'},h('b',null,title,STD[ic]?stdTag(STD[ic][0],STD[ic][1]?'sup':'',STD[ic][1]?'Helps students get ready for '+stdOrg(STD[ic][0])+' '+STD[ic][0]+'.':null):null,typeof HS_STD!=='undefined'&&HS_STD[ic]?stdTag(HS_STD[ic],'hs','Also matches high school NGSS '+HS_STD[ic]+'.'):null),h('span',null,desc),locked?h('div',{class:'best lockedpill'},'Locked for now'):(best?h('div',{class:'best'},best):null)));
     return btn;};
   const cards={
     speed:()=>mc('m1','speed','Speed Find','Find elements by name, number, group or family. Beat your best average time!',sb.length?'Best avg: '+fmtT(Math.min(...sb)):'',()=>{renderSpeedSetup();show('s-speed-setup');}),
@@ -77,13 +77,14 @@ renderMenu=function(){
   const preview=isPreview()?[h('div',{class:'ownernote tpnote'},h('b',null,'Teacher preview. '),'Every game is open for you, including Pre-Test and Post-Test practice. Nothing here is saved to a class. ',h('button',{class:'btn sm ghost',type:'button',onclick:openDash},'Back to my dashboard'))]:[];
   if(freeMode())preview.push(h('div',{class:'freebar'},h('b',null,'Free version. '),'You can play Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day each). Ask your teacher about the full version to unlock every game.'));
   const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
-  const note=h('div',{class:'stdnote'},'Tags show the NY science standard each game practices. A dashed tag means the game helps you get ready for that standard.');
+  const note=h('div',{class:'stdnote'},'Each tag is the NGSS standard the game is built on. NYSSLS marks one of New York\u2019s added standards. A dashed tag means the game helps you get ready for that standard.');
+  const ngssbar=h('div',{class:'ngssbar'},h('span',{class:'ngssbadge'},'NGSS-ALIGNED'),h('span',null,'Every game is built around a middle school NGSS standard. The tag on each card shows which one.'));
   if(S){
     const st=subjStats(P,S.id);
     ngRC($('menuGrid'),...preview,
       h('div',{class:'subjbar',style:`--c1:${S.c1};--c2:${S.c2}`},ngBtn('← All subjects',()=>{setSubj(null);renderMenu();window.scrollTo(0,0);},'ghost sm'),
         h('span',{class:'subjsym'},S.sym),h('div',null,h('b',null,S.name),h('small',null,`${st.n} games${st.mx?` · ${st.st}/${st.mx} ★`:''}`))),
-      join(),...SUBJ_GAMES[S.id].map(k=>cards[k]()),
+      ngssbar,join(),...SUBJ_GAMES[S.id].map(k=>cards[k]()),
       S.more?h('div',{class:'mcard soon',style:`--c1:${S.c1};--c2:${S.c2}`},h('div',{class:'body'},h('b',null,'More games coming soon'),h('span',null,`New ${S.name} games are on the way.`))):null,
       note,...owner);
     return;
@@ -111,7 +112,12 @@ function dashGameGroups(C,off){
         h('span',{class:'tdsubjbtn'},h('button',{class:'btn sm ghost',type:'button',onclick:()=>saveGames(C,[...off].filter(x=>!ids.includes(x)))},'Open all'),h('button',{class:'btn sm ghost',type:'button',onclick:()=>saveGames(C,[...new Set([...off,...ids])])},'Lock all'))),
       h('div',{class:'td-games'},...ids.map(id=>{const name=(SW_GAMES.find(g=>g[0]===id)||[id,id])[1],on1=!off.has(id),art=h('div',{class:'art'});art.innerHTML=ART.thumb(id);
         const sw=h('button',{class:'sw',type:'button',role:'switch','aria-checked':on1?'true':'false','aria-label':`${name}: ${on1?'open':'locked'} for ${C.name}`,onclick:()=>toggleGame(C,id,!on1)});
-        return h('div',{class:'swt '+(on1?'on':'off')},art,h('div',{class:'row'},h('div',null,h('div',{class:'nm'},name),h('div',{class:'st'},on1?'Open':'Locked')),sw));})));});
+        return h('div',{class:'swt '+(on1?'on':'off')},art,h('div',{class:'row'},h('div',null,h('div',{class:'nm'},name),STD[id]?stdTag(STD[id][0],STD[id][1]?'sup':''):null,h('div',{class:'st'},on1?'Open':'Locked')),sw));})));});
 }
 /* test hook: only with ?ngtest in the address (used by the automated tests) */
 if(/[?&]ngtest\b/.test(location.search))window.__ng=s=>eval(s);
+
+/* NGSS tag on every game's level-picker screen (built from STD, so it always matches the menu card) */
+['speed','atom','diner','sep','laser','blackout','evidence','coaster'].forEach(k=>{const sc=$('s-'+k+'-setup'),h2=sc&&sc.querySelector('h2');if(!h2||!STD[k])return;
+  h2.querySelectorAll('.stdchip').forEach(x=>x.remove());h2.append(' ',stdTag(STD[k][0],STD[k][1]?'sup':''));
+  if(typeof HS_STD!=='undefined'&&HS_STD[k])h2.append(stdTag(HS_STD[k],'hs'));});

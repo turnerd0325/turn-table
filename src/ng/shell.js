@@ -80,7 +80,7 @@ function ngSetup(key){
   if(gameLocked(key)){goMenu();return;}
   NGK=key;
   $('ngArt').innerHTML=ART.thumb(key);
-  $('ngTitle').replaceChildren(I(d.ic),d.name,' ',h('span',{class:'stdchip'},d.std));
+  $('ngTitle').replaceChildren(I(d.ic),d.name,' ',stdTag(d.std));
   $('ngSub').replaceChildren(...ngRich(d.intro));
   $('ngHow').replaceChildren(...d.how.map(t=>h('li',null,...ngRich(t))));
   renderLevelPicker($('ngLevels'),$('ngTotal'),key,d.levels,d.packs,i=>ngStart(key,i),L=>d.mini?d.mini(L):h('span',null,''));

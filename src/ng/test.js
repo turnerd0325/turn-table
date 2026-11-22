@@ -99,6 +99,7 @@ function tstIntro(g,kind,fn){
   const m=TEST_GAMES[g],pre=kind==='pre';
   tstBox([
     h('div',{class:'tsthead'},h('div',null,h('div',{class:'tstk'},pre?'Pre-Test':'Post-Test'),h('h2',null,tstName(g)))),
+    STD[g]?h('p',{class:'tststd'},stdTag(STD[g][0],STD[g][1]?'sup':''),'This test checks the standard the game is built on.'):null,
     h('p',{class:'tstbig'},m.what),
     h('ul',{class:'tstrules'},
       h('li',null,h('b',null,'One try for each question. '),'You will not see if you are right or wrong until the end.'),
