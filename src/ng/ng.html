@@ -38,3 +38,19 @@
 <section class="screen" id="s-test" hidden>
   <div class="card tstcard" id="tstBody"></div>
 </section>
+
+<!-- STAR-GAME TESTS: one still picture + one-try questions per item (source: src/ng/test.js, TEST_ITEMS) -->
+<section class="screen" id="s-gtest" hidden>
+  <div class="hud">
+    <div class="pill tstpill"><b id="gtKind">Pre-Test</b> · <span id="gtGame"></span></div>
+    <div class="pill">Item <b id="gtNum">1</b> of <span id="gtOf">3</span></div>
+    <button class="btn sm ghost" id="gtQuit">Leave test</button>
+  </div>
+  <div class="card onescr gtcard">
+    <div class="gtwrap">
+      <div class="gtmain"><h2 id="gtTitle"></h2><p id="gtText"></p><div class="gtboard" id="gtBoard"></div></div>
+      <div class="gtside"><div id="gtQs"></div>
+        <div class="gtbtns"><button class="btn good big" id="gtSave">Save answer</button><small id="gtLeft"></small></div></div>
+    </div>
+  </div>
+</section>

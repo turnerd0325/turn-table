@@ -568,6 +568,27 @@ body.ingame .ngsvg.scsvg,.ngsvg.scsvg{display:block;width:100%;height:auto;max-h
 .tsttab{width:100%;border-collapse:collapse;font-size:15px}.tsttab th,.tsttab td{padding:6px 10px;border-bottom:1px solid #e3e8f2;text-align:left}
 .tsttab th{position:sticky;top:0;background:#fff}.tsttab td.up{color:#1f7a34;font-weight:800}.tsttab td.down{color:#b3261e;font-weight:800}.tsttab td.dim{color:#9aa6bd}
 .tstreset{border:0;background:none;cursor:pointer;color:#5b6b8c;font-size:15px;padding:0 4px}
+/* star-game tests (#s-gtest) */
+.gtcard{padding:14px 18px}
+.gtwrap{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,1fr);gap:18px;align-items:start}
+.gtmain h2{margin:0 0 2px;font-size:22px}.gtmain p{margin:0 0 8px;font-size:16px}
+.gtboard{display:flex;justify-content:center}
+.gtsvg{display:block;width:100%;height:auto;max-height:calc(100vh - 250px)}
+.gtpick{cursor:pointer}
+.gtring{fill:rgba(106,167,255,.10);stroke:#6aa7ff;stroke-width:3;stroke-dasharray:7 6}
+.gtpick:hover .gtring{fill:rgba(106,167,255,.25)}
+.gtpick[data-pick=lit] .gtring{fill:rgba(255,215,106,.32);stroke:#ffd76a;stroke-dasharray:none}
+.gtpick[data-pick=dark] .gtring{fill:rgba(10,14,28,.45);stroke:#9aa6c6;stroke-dasharray:none}
+.gtlab{font:800 14px system-ui;fill:#9fc4ff;paint-order:stroke;stroke:#10182e;stroke-width:3px;pointer-events:none}
+.gtpick[data-pick=lit] .gtlab{fill:#ffd76a}.gtpick[data-pick=dark] .gtlab{fill:#cfd6ea}
+.gtq{background:#f4f7fd;border-radius:12px;padding:9px 11px;margin-bottom:8px}
+.gtqt{display:flex;gap:8px;align-items:flex-start;font-size:15.5px;font-weight:600;margin-bottom:7px}
+.gtopts{display:flex;flex-wrap:wrap;gap:6px}
+.gtopt{font:inherit;font-size:14.5px;font-weight:700;padding:7px 12px;border-radius:10px;border:2px solid #cfd8ea;background:#fff;color:#22304f;cursor:pointer;text-align:left}
+.gtopt:hover{border-color:#6aa7ff}.gtopt.on{background:#2f6bff;border-color:#2f6bff;color:#fff}
+.gtopt:focus-visible{outline:3px solid #ffb347;outline-offset:2px}
+.gtbtns{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}.gtbtns small{color:#5b6b8c}
+@media (max-width:860px){.gtwrap{grid-template-columns:1fr}.gtsvg{max-height:none}}
 @media (max-width:700px){.tstopts{grid-template-columns:1fr}.tstrow{grid-template-columns:1fr}.tstrow .cnt{text-align:left}}
 #s-ng.testing::before{display:none}
 #s-ng.testing .ppst.ok{background:#e6eaf2;color:#3a4766;border-color:#cdd5e4}
