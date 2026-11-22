@@ -501,7 +501,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <div class="proof">
         <div><b>24</b><span>education-focused games</span></div>
         <div><b>116</b><span>students in a real 7th grade</span></div>
-        <div><b>17</b><span>games with a Pre-Test and Post-Test</span></div>
+        <div><b>23</b><span>games with a Pre-Test and Post-Test</span></div>
       </div>
     </div>
 
@@ -719,7 +719,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   <div class="wrap">
     <div>
       <h2>Know where to start. See what stuck.</h2>
-      <p class="lede" style="margin-top:24px">Pre-Test mode turns 17 of the games into a quick check, with the same items before and after the unit. There are no hints and no feedback until the end.</p>
+      <p class="lede" style="margin-top:24px">Pre-Test mode turns every game into a quick check, with the same items before and after the unit. There are no hints and no feedback until the end.</p>
       <div class="cycle">
         <div class="cyc"><span class="n" style="background:var(--phys)">1</span><div><b>Day one: Pre-Test</b><span>One try per question. You see what the class already knows before you teach.</span></div></div>
         <div class="cyc"><span class="n" style="background:var(--life)">2</span><div><b>During the unit: Review</b><span>The same games switch on hints, feedback and explanations.</span></div></div>
@@ -855,10 +855,10 @@ const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Ch
 
 /* showcase tabs */
 (()=>{const S={
-  speed:{img:'speed',subj:'Chemistry · MS-PS1-1',c:'var(--chem)',name:'Speed Find',desc:'Students find elements on the periodic table against the clock, by name, number, group or family. Their score is their average time, so the only way to get faster is to really know the table.',do:'Reading the periodic table by period, group and family',wrong:'Misses are counted, and the end screen flags their slowest elements to practice'},
-  trivia:{img:'trivia',subj:'Chemistry · MS-PS1-1',c:'var(--chem)',name:'Element Trivia',desc:'A mystery element with four hints, from a property of matter to a big giveaway. Fewer hints means more points, so every hint a student skips is something they already knew.',do:'Connecting properties, period and size to an element',wrong:'A wrong guess rules that element out and opens the next hint'},
-  atom:{img:'atom',subj:'Chemistry · MS-PS1-1',c:'var(--chem)',name:'Atom Builder',desc:'Students add protons, neutrons and electrons to build atoms, ions and isotopes, and the model updates as they go.',do:'Using atomic number, mass number and charge',wrong:'It points to the particle that is off: protons first, then neutrons, then electrons'},
-  sep:{img:'sep',subj:'Chemistry · MS-PS1-8',c:'var(--chem)',name:'Separation Station',desc:'Students build a factory line of magnets, filters, evaporators and stills to split a mixture apart, then run it and watch where every substance ends up.',do:'Choosing separation methods from the properties of each substance',wrong:'The run shows which substance got stuck in a mix, with a red bin and a 3-step hint'}};
+  speed:{img:'speed',subj:'Chemistry · NGSS MS-PS1-1',c:'var(--chem)',name:'Speed Find',desc:'Students find elements on the periodic table against the clock, by name, number, group or family. Their score is their average time, so the only way to get faster is to really know the table.',do:'Reading the periodic table by period, group and family',wrong:'Misses are counted, and the end screen flags their slowest elements to practice'},
+  trivia:{img:'trivia',subj:'Chemistry · NGSS MS-PS1-1',c:'var(--chem)',name:'Element Trivia',desc:'A mystery element with four hints, from a property of matter to a big giveaway. Fewer hints means more points, so every hint a student skips is something they already knew.',do:'Connecting properties, period and size to an element',wrong:'A wrong guess rules that element out and opens the next hint'},
+  atom:{img:'atom',subj:'Chemistry · NGSS MS-PS1-1',c:'var(--chem)',name:'Atom Builder',desc:'Students add protons, neutrons and electrons to build atoms, ions and isotopes, and the model updates as they go.',do:'Using atomic number, mass number and charge',wrong:'It points to the particle that is off: protons first, then neutrons, then electrons'},
+  sep:{img:'sep',subj:'Chemistry · NYSSLS MS-PS1-8',c:'var(--chem)',name:'Separation Station',desc:'Students build a factory line of magnets, filters, evaporators and stills to split a mixture apart, then run it and watch where every substance ends up.',do:'Choosing separation methods from the properties of each substance',wrong:'The run shows which substance got stuck in a mix, with a red bin and a 3-step hint'}};
   const tabs=[...document.querySelectorAll('.tabs button')],img=document.getElementById('showImg');
   function pick(k){const s=S[k];tabs.forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k?'true':'false'));
     img.src='img/'+s.img+'.webp';img.alt=s.name+': '+s.desc;
