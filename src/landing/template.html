@@ -762,6 +762,16 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   </div>
 </footer>
 
+<script src="/tt-pixel.js"></script>
+<script>
+/* ad pixel: teacher-facing landing page (see /tt-pixel.js) */
+(()=>{const P=window.ttPixel;if(!P)return;P.captureSource();P.track('PageView');P.track('ViewContent',{content_name:'Turn-Table landing'});
+  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href*="teacher=new"]');if(!a||!P.enabled())return;
+    let plan='';try{plan=new URL(a.href,location.href).searchParams.get('plan')||'';}catch(x){}
+    P.track('ClickSignUp',{content_name:'Teacher sign-up',plan});
+    if(e.ctrlKey||e.metaKey||e.shiftKey||a.target==='_blank')return;
+    e.preventDefault();setTimeout(()=>{location.href=a.href;},300);});})();
+</script>
 <script>
 const GAMES={{GAMES}};
 const FREE=new Set(['Speed Find','Cell Shop','Moonwatch']);

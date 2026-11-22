@@ -4772,6 +4772,7 @@ if(me&&profiles[me]&&profiles[me].preview&&!TA.s){me=null;try{sessionStorage.rem
 /* Teacher preview: a teacher plays every game on this device. Nothing is saved to a class. */
 function teacherPlay(){
   const T=TA.me&&TA.me.teacher,key='#teacher';
+  ttTeacherPx('TeacherTriedGames',null,true);
   if(!profiles[key])profiles[key]=newProfile('Teacher','',null);
   const P=fixProfile(profiles[key]);P.preview=true;P.cinfo=null;P.cloud=null;P.name=(T&&T.name)||P.name||'Teacher';
   saveAll();me=key;try{sessionStorage.setItem('pte_me',me);}catch(e){}
@@ -4803,7 +4804,46 @@ async function taFresh(){
   return false;
 }
 const taRedirect=()=>location.origin+location.pathname;
-const showT=id=>{show(id);$('userChip').hidden=true;};
+const showT=id=>{show(id);$('userChip').hidden=true;tpxScreen(id);};
+/* ---- Ad pixel (Meta / TikTok): TEACHER SCREENS ONLY. Settings and IDs live in /tt-pixel.js. ----
+   The pixel file is not even downloaded until a teacher screen opens, so student Chromebooks never
+   load it or contact Facebook/TikTok. Never send student names, nicknames or scores in an event. */
+const TPX_SCREENS=new Set(['s-tauth','s-trecover','s-tdash','s-teacher','s-progress','s-thist','s-tfb','s-cg']);
+const tpxDone={};let tpxQ=null;
+function ttTeacherPx(ev,params,once){
+  try{
+    if(me&&profiles[me]&&!profiles[me].preview)return;               /* a student is signed in on this device */
+    if(TA.me&&TA.me.teacher&&TA.me.teacher.role==='founder')return;  /* keep the founder's own visits out of the ad data */
+    if(once){if(tpxDone[ev])return;tpxDone[ev]=1;}
+    const go=()=>{if(window.ttPixel)window.ttPixel.track(ev,params||{});};
+    if(window.ttPixel)return go();
+    if(!tpxQ){tpxQ=[];const s=document.createElement('script');s.src='/tt-pixel.js';s.async=true;
+      s.onload=()=>{const q=tpxQ||[];tpxQ=[];q.forEach(f=>f());};document.head.append(s);}
+    tpxQ.push(go);
+  }catch(e){}
+}
+function tpxScreen(id){
+  if(!TPX_SCREENS.has(id))return;
+  ttTeacherPx('PageView',null,true);
+  if(id==='s-tauth')ttTeacherPx('ViewContent',{content_name:'Teacher sign-in'},true);
+  if(id==='s-tdash')ttTeacherPx('TeacherDashboard',null,true);
+  if(id==='s-progress')ttTeacherPx('TeacherViewedData',null,true);
+}
+/* wait briefly so an event can leave before the page navigates away */
+const tpxFlush=()=>new Promise(r=>setTimeout(r,window.ttPixel&&window.ttPixel.enabled()?350:0));
+/* where a teacher came from (utm_source etc.), saved on this device and sent with their sign-up */
+function ttSrcCapture(){
+  try{const sp=new URLSearchParams(location.search),s={};let any=false;
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ttclid'].forEach(k=>{const v=sp.get(k);if(v){s[k]=v.slice(0,120);any=true;}});
+    if(!any)return;s.at=new Date().toISOString().slice(0,10);
+    if(!localStorage.getItem('tt_src_first'))localStorage.setItem('tt_src_first',JSON.stringify(s));
+    localStorage.setItem('tt_src_last',JSON.stringify(s));}catch(e){}
+}
+function ttSrc(){try{return {first:JSON.parse(localStorage.getItem('tt_src_first')||'null'),last:JSON.parse(localStorage.getItem('tt_src_last')||'null')};}catch(e){return {};}}
+const TT_PRICE={turntable:{annual:36,monthly:7},bundle:{annual:79,monthly:16}};
+function tpxPlan(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStorage.getItem('tt_copref')||'{}')||{};}catch(e){}
+  const plan=(o.plan||pref.plan)==='bundle'?'bundle':'turntable',billing=(o.billing||pref.billing)==='monthly'?'monthly':'annual',v=TT_PRICE[plan][billing];
+  return {content_name:plan==='bundle'?'Hook + Check Bundle':'Turn-Table',content_category:billing,currency:'USD',value:v,predicted_ltv:billing==='monthly'?v*12:v};}
 const curClass=()=>{const K=(TA.me&&TA.me.classes)||[];return K.find(c=>c.id===TA.cls)||K.find(c=>!c.archived)||K[0]||null;};
 let taMode='in',taBusy=false;
 function taMsg(t,good){$('taMsg').textContent=t;$('taMsg').className='msg '+(good?'good':'bad');}
@@ -4831,11 +4871,12 @@ async function taSubmit(){
   taBusy=true;$('taGo').disabled=true;taMsg('Working…',true);
   try{
     if(taMode==='up'){
-      const r=await authCall('/signup',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email,password:pw,data:{name,school}}});
+      const r=await authCall('/signup',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email,password:pw,data:{name,school,src:ttSrc()}}});
       if(!r.ok){
         const c=r.j.error_code||r.j.code||'';
         return taMsg(c==='weak_password'?'That password is too easy to guess. Try a longer one with letters and numbers.':(c==='over_email_send_rate_limit'||r.status===429)?'Too many emails were sent just now. Wait a few minutes and try again.':c==='user_already_exists'?'That email already has an account. Tap Sign in.':'Could not create the account. Check the email and try again.');
       }
+      ttTeacherPx('Lead',{content_name:'Teacher sign-up'});
       if(r.j.access_token){taSet(r.j);return await taAfterLogin();}
       $('taCheckTxt').textContent=`We sent a link to ${email}. Open it to confirm your email, then come back and sign in. It can take a minute, and it may land in spam.`;
       $('taForm').hidden=true;$('taCheck').hidden=false;
@@ -4867,6 +4908,7 @@ async function taEnter(){
     const md=(TA.s.user&&TA.s.user.user_metadata)||{};
     r=await rpc('tt_a_start',{p_name:md.name||String((TA.s.user&&TA.s.user.email)||'Teacher').split('@')[0],p_school:md.school||''},12000);
     if(r&&r.ok&&r.teacher&&r.teacher.needs_card)TA.toCard=true;
+    if(r&&r.ok&&!(r.teacher&&r.teacher.role==='founder'))ttTeacherPx('CompleteRegistration',{content_name:'Teacher account',status:'confirmed'},true);
   }
   if(!r||!r.ok){TA.me=null;return false;}
   TA.me=r;const C=curClass();TA.cls=C?C.id:null;return true;
@@ -4935,11 +4977,12 @@ const SW_GAMES=[['speed','Speed Find'],['trivia','Element Trivia'],['explore','E
 async function openDash(){
   if(!(await ensureTeacher('dash')))return;
   await taRefresh();
-  const T=TA.me&&TA.me.teacher;
+  const T=TA.me&&TA.me.teacher,backFromCheckout=TA.coDone;
   if(T&&T.needs_card&&TA.toCard&&!TA.coDone){TA.toCard=false;renderDash();showT('s-tdash');return goCheckout();}
   if(T&&T.needs_card&&TA.coDone){TA.coDone=false;TA.coWait=true;renderDash();showT('s-tdash');
     for(let i=0;i<20&&TA.me&&TA.me.teacher.needs_card;i++){await new Promise(r=>setTimeout(r,2000));await taRefresh();}
     TA.coWait=false;}
+  if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:0,predicted_ltv:pp.predicted_ltv},true);}
   renderDash();showT('s-tdash');
 }
 function needWrite(){
@@ -4960,6 +5003,7 @@ const TT_CHECKOUT_URL=(()=>{const live='https://app.thesciencehooklab.com/tt-che
 async function goCheckout(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStorage.getItem('tt_copref')||'{}')||{};}catch(e){}
   const r=await tcall('tt_t_checkout_token');if(!r||!r.token)return;
   const q=new URLSearchParams({t:r.token,plan:o.plan||pref.plan||'turntable',billing:o.billing||pref.billing||'annual',trial:o.trial===0?'0':'1'});
+  ttTeacherPx('InitiateCheckout',tpxPlan(o));await tpxFlush();
   location.href=TT_CHECKOUT_URL+'?'+q.toString();}
 function renderCardGate(T){
   const body=$('tdBody');
@@ -5027,6 +5071,7 @@ async function newClass(){
   const n=await modal({title:'New class',text:'Name it like your schedule, for example "Period 3".',input:'text',ok:'Make class'});
   if(n===null||!n.trim())return;
   const r=await tcall('tt_a_class_create',{p_name:n});if(!r)return;
+  ttTeacherPx('ClassCreated',null);
   await taRefresh();TA.cls=r.id;store.set('tt_tcls',r.id);renderDash();
 }
 async function renameClass(C){
@@ -18019,6 +18064,7 @@ if(!storageOK)$('warn').hidden=false;
 if(me)goMenu();else{renderLogin();show('s-login');}
 /* links from the landing page: ?teacher (sign in) and ?teacher=new (create account) */
 (()=>{const sp=new URLSearchParams(location.search),tq=sp.get('teacher');if(tq===null)return;
+  ttSrcCapture();
   const pl=sp.get('plan'),bi=sp.get('billing');
   if(pl||bi){try{sessionStorage.setItem('tt_copref',JSON.stringify({plan:pl==='bundle'?'bundle':'turntable',billing:bi==='monthly'?'monthly':'annual'}));}catch(e){}}
   if(sp.get('checkout')==='done')TA.coDone=true;
