@@ -80,7 +80,8 @@ function dnNext(){
   const d=DN.queue.shift();DN.last=d;
   const t=DN.t={d,smashed:d.inst.map(()=>false),tray:{},plate:{},made:[],hand:new Set(),t0:Date.now(),done:false,order:[]};
   d.inst.forEach(f=>Object.keys(parseF(f)).forEach(s=>{if(!t.order.includes(s))t.order.push(s);}));
-  DN.cust=pick(DN_CUST);$('dnFace').innerHTML=ART.face(DN.cust);$('dnFace').classList.remove('mad');
+  DN.cust=pick(DN_CUST);$('dnFace').innerHTML=ART.face(DN.cust);$('dnFace').classList.remove('mad');$('dnShirt').style.setProperty('--shirt',['#2f6bff','#e2487a','#1f9d55','#f08a3e','#8a4fd6','#17a2a2'][DN.cust%6]);
+  const cu=$('dnCust');cu.classList.remove('walkin');void cu.offsetWidth;cu.classList.add('walkin');$('dnCounter').classList.remove('out');
   $('dnSay').textContent=pick(DN_SAY)(d);
   $('dnCtx').textContent=d.ctx;
   $('dnMsg').textContent='';$('dnMsg').className='msg';
@@ -103,7 +104,7 @@ function dnRender(){
   $('dnServeBtns').replaceChildren(...ex.map(p=>h('button',{class:'btn sm good',onclick:()=>dnServe(p.f)},'Serve as '+fmtStr(p.f))));
   $('dnClear').disabled=!pn||t.done;
   const quick=pn||t.done?[]:d.need.filter(p=>t.hand.has(p.f)&&fitsIn(p.c,t.tray));
-  $('dnCounter').replaceChildren(...(t.made.length?t.made.map((f,i)=>h('button',{class:'mol served',title:'Click to break it back into atoms',onclick:()=>dnBreak(i)},molBalls(f),fmtStr(f)))
+  $('dnCounter').replaceChildren(...(t.made.length?t.made.map((f,i)=>h('button',{class:'mol served'+(i===t.newI?' new':''),title:'Click to break it back into atoms',onclick:()=>dnBreak(i)},molBalls(f),fmtStr(f)))
       :[h('span',{class:'sub',style:'margin:0'},'Nothing yet')]),
     ...quick.map(p=>h('button',{class:'btn sm',style:'align-self:center',title:'You built this once, so now you can make more in one click',onclick:()=>dnQuick(p.f)},'Make another '+fmtStr(p.f))));
   const inTray=sumC(t.tray),inD=t.made.reduce((a,f)=>a+sumC(parseF(f)),0),unsm=d.atoms-inTray-pn-inD;
@@ -114,9 +115,15 @@ function dnRender(){
 function dnSmash(i,el){
   const t=DN&&DN.t;if(!t||t.done||t.smashed[i])return;
   t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));
-  if(el)fx.pop({icon:'burst',text:'Smash!',kind:'try',at:el});
+  if(el){fx.pop({icon:'burst',text:'Smash!',kind:'try',at:el});dnFly(el,t.d.inst[i]);}
   dnRender();dnCheck();
 }
+/* smashing throws real atom balls from the ingredient into the bowls */
+function dnFly(el,f){if(Art.reduced())return;const r=el.getBoundingClientRect(),c=parseF(f);let k=0;
+  Object.keys(c).forEach(s=>{for(let i=0;i<c[s];i++){const b=ball(s);b.classList.add('dnfly');const x0=r.left+r.width/2-9+(Math.random()-.5)*20,y0=r.top+r.height/2-9;b.style.left=x0+'px';b.style.top=y0+'px';document.body.appendChild(b);
+    const dly=k++*45;setTimeout(()=>{const tg=document.querySelector(`#dnTray .abtn[data-sym="${s}"] .ball`);if(!tg){b.remove();return;}const q=tg.getBoundingClientRect();b.style.transform=`translate(${q.left+q.width/2-9-x0}px,${q.top+q.height/2-9-y0}px) scale(1.6)`;b.style.opacity='.2';
+      setTimeout(()=>{b.remove();const a=tg.parentElement;if(a){a.classList.remove('got');void a.offsetWidth;a.classList.add('got');}},560);},30+dly);}});
+  Art.burstAt(el,{n:10,colors:['#ffd23f','#ff8a3a','#fff'],speed:200});}
 function dnAdd(s,el){
   const t=DN&&DN.t;if(!t||t.done||!(t.tray[s]>0))return;
   const np=Object.assign({},t.plate);np[s]=(np[s]||0)+1;
@@ -132,13 +139,13 @@ function dnAdd(s,el){
 }
 function dnServe(f){
   const t=DN.t;if(t.done)return;
-  t.made.push(f);t.hand.add(f);t.plate={};
+  t.made.push(f);t.newI=t.made.length-1;t.hand.add(f);t.plate={};
   fx.pop({icon:'plate',text:fmtStr(f)+'!',kind:'good',at:$('dnPlate')});
   dnRender();dnCheck();
 }
 function dnQuick(f){
   const t=DN.t,c=parseF(f);if(t.done||!fitsIn(c,t.tray))return;
-  addC(t.tray,c,-1);t.made.push(f);dnRender();dnCheck();
+  addC(t.tray,c,-1);t.made.push(f);t.newI=t.made.length-1;dnRender();dnCheck();
 }
 function dnBreak(i){
   const t=DN.t;if(t.done)return;
@@ -156,9 +163,9 @@ function dnCheck(){
   $('dnCoins').textContent=DN.coins;$('dnStreak').textContent=DN.streak;$('dnServed').textContent=DN.served;
   fx.pop({icon:'coin',text:'+'+earned,kind:frac>.6?'great':'good',size:'big'});fx.confetti(frac>.6?60:30);
   $('dnFace').innerHTML=ART.face(DN.cust||0,'happy');$('dnSay').textContent=pick(DN_THANKS);
-  $('dnMsg').className='msg good';
+  $('dnMsg').className='msg good';t.newI=-1;
   $('dnMsg').textContent=`${t.d.atoms} atoms in, ${t.d.atoms} atoms out. None lost, none made! (${base} + ${tip} tip${sb?' + '+sb+' streak':''})`;
-  dnRender();
+  dnRender();setTimeout(()=>$('dnCounter').classList.add('out'),500);
   const my=runId;setTimeout(()=>{if(my===runId&&DN&&Date.now()<DN.tEnd)dnNext();},1400);
 }
 function dnTick(){
@@ -188,7 +195,7 @@ function dnEnd(){
       h('p',null,'Best for this shift: ',h('b',null,rec.best+' coins'))],
     again:()=>startDiner(lv),party:isBest&&DN.coins>0?'New high score!':null});
 }
-$('dnSmashAll').onclick=()=>{const t=DN&&DN.t;if(!t||t.done)return;t.smashed.forEach((v,i)=>{if(!v){t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));}});fx.pop({icon:'burst',text:'SMASH!',kind:'try'});dnRender();dnCheck();};
+$('dnSmashAll').onclick=()=>{const t=DN&&DN.t;if(!t||t.done)return;t.smashed.forEach((v,i)=>{if(!v){t.smashed[i]=true;addC(t.tray,parseF(t.d.inst[i]));const el=$('dnIngr').children[i];if(el)dnFly(el,t.d.inst[i]);}});fx.pop({icon:'burst',text:'SMASH!',kind:'try'});dnRender();dnCheck();};
 $('dnClear').onclick=dnClearPlate;
 $('dnQuit').onclick=()=>{renderDinerSetup();show('s-diner-setup');};
 document.addEventListener('keydown',e=>{

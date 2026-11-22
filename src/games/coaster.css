@@ -1,0 +1,34 @@
+#caBoard{width:auto;max-width:100%;height:auto;max-height:calc(100vh - 285px);min-height:220px;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.3);display:block}
+.cahandle{cursor:ns-resize} .cahandle:hover circle{fill:#eaf1ff}
+.caenergy{display:grid;gap:6px;margin:6px 0 4px}
+.caer{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;font-weight:700;font-size:14px;color:#44506b}
+.cabar{background:#e6ebf5;border-radius:999px;height:16px;overflow:hidden} .cabar i{display:block;height:100%;border-radius:999px;transition:width .08s linear}
+.cabar i.pe{background:#4f86ff} .cabar i.ke{background:#ff9a2e} .cabar i.he{background:#ff4d6a}
+.caspeed{text-align:center;font-weight:800;font-size:18px;color:#1b3a8a}
+
+.cacard{padding:12px 16px}
+.cacl{margin:0 0 6px;padding:8px 12px} .cacard .coach{margin:6px 0}
+.cagrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px;align-items:start}
+.caside{display:grid;gap:8px}
+.casecl{font-weight:800;font-size:13px;color:#44506b;text-transform:uppercase;letter-spacing:.03em;margin-bottom:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.casecl small{font-weight:600;text-transform:none;letter-spacing:0;color:#6b7a99}
+.carow{display:flex;gap:8px}
+.carow .btn{flex:1}
+.caslide{display:flex;align-items:center;gap:10px;margin-top:6px;font-weight:700;font-size:13px;color:#55617d} .caslide input{flex:1}
+ul.cagoals{gap:4px;margin:0} ul.cagoals li{padding:5px 9px;font-size:13px;gap:8px} ul.cagoals li .tk{font-size:15px;width:16px}
+.caenergy{margin:0;gap:4px} .caspeed{font-size:15px;text-align:left}
+@media (max-width:900px){.cagrid{grid-template-columns:1fr} #caBoard{max-height:46vh}}
+.catools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:4px}
+.catool{font:inherit;color:var(--ink,#13203d);display:flex;align-items:center;gap:6px;padding:4px 8px;border:2px solid #d5deee;border-radius:12px;background:linear-gradient(#fff,#f3f6fc);cursor:grab;text-align:left;box-shadow:0 2px 5px rgba(19,32,61,.08);transition:transform .12s}
+.catool:hover:not(:disabled){transform:translateY(-2px)}.catool:disabled{opacity:.5;cursor:default}
+.catool span{display:grid;line-height:1.1}.catool b{font-size:13px}.catool small{font-size:10.5px;color:#56627d}
+.catool.ksteel{border-color:#9fb6d8;background:linear-gradient(#f6f9ff,#e3ebf8)}
+#caBoard .caslot rect{transition:fill .15s}#caBoard .caslot:not(.full) rect{animation:kfdash 1.6s linear infinite}
+#caBoard .caslot.art-drop-ok rect{stroke:#3fd18a;stroke-width:3.5}#caBoard .caslot.art-drop-hot rect{fill:rgba(255,210,63,.35)!important;stroke:#ffd23f}
+#caBoard .caseg.art-drop-ok{stroke:rgba(63,209,160,.35)}#caBoard .caseg.art-drop-hot{stroke:rgba(255,210,63,.55)}
+#caBoard .caseg.steel{cursor:pointer}
+#caBoard .caslot,#caBoard .caseg{transform:none!important}
+#caBoard .caarms{opacity:0;transition:opacity .2s}#caBoard #caCart.fast .caarms{opacity:1}
+#caBoard .cacloud{animation:cacloud 30s linear infinite alternate}@keyframes cacloud{to{translate:40px 0}}
+@media (prefers-reduced-motion:reduce){#caBoard *{animation:none!important}}
+.art-still #caBoard *{animation:none!important}

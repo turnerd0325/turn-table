@@ -4,7 +4,7 @@
   <div class="card">
     <div class="setupart" data-thumb="coaster"></div><h2><i data-ic="coaster"></i>Coaster Architect <span class="stdchip">MS-PS3-1 · PS3-2</span></h2>
     <p class="sub">Design a roller coaster that really works! Set the heights, then launch the cart and watch potential energy turn into kinetic energy and heat. Use the lowest lift hill that works to earn 3 stars.</p>
-    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag the blue handles</b> up or down (or use the Raise and Lower buttons) to set the heights.</li><li>Press <b>Launch</b>. The dashed line shows the energy the cart has left.</li></ol>
+    <ol class="howto"><li><b>Pick a level</b> below.</li><li><b>Drag track pieces</b> from the toolbox into the dashed slots, and steel onto the track. <b>Drag the blue handles</b> to set the heights.</li><li>Press <b>Launch</b>. The dashed line shows the energy the cart has left.</li></ol>
     <div class="sepstars" id="caTotal"></div>
     <div class="seplevels" id="caLevels"></div>
     <p><button class="btn ghost sm" data-go="menu">← Back</button></p>
@@ -37,6 +37,7 @@
         <div class="carow"><button class="btn ghost sm" id="caUp">▲ Raise</button><button class="btn ghost sm" id="caDown">▼ Lower</button><button class="btn ghost sm" id="caHint" title="Need a hint?"><i data-ic="bulb"></i><span id="caHintTxt">Hint</span></button></div>
         <div class="carow"><button class="btn" id="caLaunch" style="font-size:19px;flex:2"><i data-ic="bolt"></i>Launch!</button>
           <button class="btn ghost" id="caReset" title="Reset cart"><i data-ic="x"></i>Reset</button></div>
+        <div id="caToolBox" hidden><div class="osl">Toolbox <small>drag a piece onto the track</small></div><div class="catools" id="caTools"></div></div>
         <div class="osl"><span class="stepchip">2</span>Goals</div><ul class="tests cagoals" id="caGoalList"></ul>
         <div class="infobox hintfloat" id="caHintBox" hidden></div>
       </div>
