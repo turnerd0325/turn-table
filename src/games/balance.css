@@ -1,0 +1,57 @@
+/* ===== Balance It: "Balance the scale" (Session 10) ===== */
+#s-balance .bccard{padding:10px 12px;display:flex;flex-direction:column;gap:7px}
+.bcmission{display:flex;flex-direction:column;gap:2px;background:linear-gradient(135deg,#152049,#22327a);color:#fff;border-radius:14px;padding:8px 14px;box-shadow:0 6px 16px rgba(8,16,44,.22)}
+.bcmission small{font-size:13px;color:#9fb4ff;font-weight:700}
+.bcmission b{font-size:20px;color:#ffd23f;line-height:1.2}
+.bceqrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px}
+.bcop{font-size:30px;font-weight:900;color:#7a869c}.bcop.arrow{color:#2f6bff;font-size:36px}
+.bcterm{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;align-items:center;column-gap:8px;background:#fff;border:2px solid #dde4f2;border-radius:14px;padding:5px 10px;box-shadow:0 3px 0 rgba(16,21,54,.06)}
+.bcterm.re{border-color:#c4d4ff;background:linear-gradient(180deg,#fff,#f2f6ff)}.bcterm.pr{border-color:#dccbff;background:linear-gradient(180deg,#fff,#f7f2ff)}
+.bcpack{grid-row:1/3;width:76px;height:58px;padding:2px;border:2px dashed transparent;border-radius:12px;background:rgba(16,21,54,.04);cursor:grab;touch-action:none;transition:transform .15s,border-color .15s}
+.bcpack:hover{transform:translateY(-2px) scale(1.04);border-color:#9fb4ff}
+.bcpack:active{cursor:grabbing}
+.bcpack svg{width:100%;height:100%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25))}
+.bcstep{display:flex;align-items:center;gap:5px}
+.bcstep button{width:32px;height:32px;border-radius:9px;border:2px solid var(--accent);background:#fff;color:var(--accent);font-size:20px;font-weight:900;cursor:pointer;line-height:1}
+.bcstep button:hover{background:#e8efff}
+.bccoef{min-width:24px;text-align:center;font-size:26px;font-weight:900;display:inline-block}
+.bcfs{font-size:22px;font-weight:900;letter-spacing:.5px;text-align:center;color:#14193a}
+.bcbig{color:#2f6bff;margin-right:2px}
+.bcstage{position:relative;border-radius:16px;overflow:hidden;background:#0b1130;box-shadow:0 8px 22px rgba(8,16,44,.28);height:calc(100vh - 420px);min-height:230px}
+#s-balance.testing .bcstage{height:calc(100vh - 330px)}
+.bcstage svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+.bclbl{fill:#9fb4ff;font:900 14px system-ui,sans-serif;letter-spacing:.12em}
+.bcmass{fill:#cfdaff;font:800 14px system-ui,sans-serif;letter-spacing:.06em}
+.bcstr line{stroke:#c9a75a;stroke-width:2;opacity:.75}
+.bcglow ellipse{fill:#7dffb5;opacity:0;filter:blur(8px);transition:opacity .3s}
+.bcok .bcglow ellipse,.bcwin .bcglow ellipse{opacity:.55}
+.bcwin .bcglow ellipse{animation:bcGlow 1s ease 2}
+@keyframes bcGlow{50%{opacity:.95}}
+#bcPanL.hot .bcglow ellipse,#bcPanR.hot .bcglow ellipse{opacity:.6;fill:#9fd2ff}
+#bcPanL.no .bcglow ellipse,#bcPanR.no .bcglow ellipse{opacity:.75;fill:#ff6b6b}
+.bcpile{filter:drop-shadow(0 3px 2px rgba(0,0,0,.4))}
+.bcmol{cursor:grab}
+.bcmol.bcgone{opacity:.25}
+.bcmolin{transform-box:fill-box}
+.bcdrop{animation:bcDrop .55s cubic-bezier(.34,1.4,.64,1) both;animation-delay:var(--d,0ms)}
+@keyframes bcDrop{0%{transform:translateY(-170px);opacity:0}35%{opacity:1}}
+.bctoast{position:absolute;left:50%;top:10px;transform:translate(-50%,-14px);opacity:0;max-width:92%;background:#13203d;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;transition:opacity .2s,transform .2s;pointer-events:none;text-align:center}
+.bctoast.on{opacity:1;transform:translate(-50%,0)}.bctoast.bad{background:#5a1620;border-color:#ff8a8a}
+.bctally{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center}
+.bchead{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:14.5px;padding:5px 11px;border-radius:999px}
+.bchead .ico{width:1.05em;height:1.05em}
+.bchead.okr{background:#d9f5e5;color:#116b3a}.bchead.badr{background:#fff0d6;color:#8a5a00}
+.bctal{display:inline-flex;align-items:center;gap:6px;padding:3px 11px 3px 4px;border-radius:999px;border:2px solid;font-size:17px;transition:background .25s,border-color .25s}
+.bctal.okr{background:#e3f8ec;border-color:#3ac27a;color:#0f6b3d;box-shadow:0 0 10px rgba(58,194,122,.35)}
+.bctal.badr{background:#fff;border-color:#e6c27a;color:#6b4a00}
+.bcball svg{width:26px;height:26px;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+.bcvs{font-weight:900;opacity:.6}
+.bcbtns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+#s-balance .msg{text-align:center;margin:0;min-height:20px}
+.bcghost{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;filter:drop-shadow(0 8px 8px rgba(0,0,0,.45))}
+.bcghost svg{display:block}
+@media (max-width:860px){
+  .bcpack{width:56px;height:44px}.bcfs{font-size:17px}.bccoef{font-size:20px}.bcstep button{width:28px;height:28px}
+  .bcstage{height:240px}.bcop{font-size:22px}
+}
+@media (prefers-reduced-motion:reduce){.bcdrop,.bcwin .bcglow ellipse{animation:none!important}}

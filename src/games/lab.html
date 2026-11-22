@@ -3,23 +3,33 @@
   <div class="hud">
     <div class="pill">Compound <b id="lbQ">1</b>/10</div>
     <div class="pill">Score <b id="lbScore">0</b></div>
-    <div class="pill">Worth <b id="lbWorth">3</b> pts</div>
+    <div class="pill lbworthpill">Worth <b id="lbWorth">3</b> pts</div>
+    <div class="pill lbtimepill" id="lbTimePill" hidden>Time <b id="lbTime">60</b>s</div>
     <button class="btn sm ghost" id="lbQuit">Quit</button>
   </div>
-  <div class="play has-side">
-    <div id="lbTable"></div>
-    <aside class="side">
-      <div class="clue">Build this compound:<b id="lbName"></b><span id="lbClue"></span></div>
-      <div class="beaker" id="lbBeaker"></div>
-      <div class="formula" id="lbFormula"></div>
-      <div class="tray" id="lbTray"></div>
-      <div class="infobox" id="lbHintBox" hidden></div>
-      <button class="btn" id="lbCombine"><i data-ic="flask"></i>Combine!</button>
-      <div style="display:flex;gap:6px"><button class="btn ghost" id="lbHint"><i data-ic="bulb"></i>Hint (−1 pt)</button><button class="btn warn2" id="lbClear">Clear</button></div>
-      <div class="msg" id="lbMsg"></div>
-      <button class="btn good" id="lbNext" hidden>Next ▶</button>
-    </aside>
+  <div class="card lbcard">
+    <div class="lbtable" id="lbTable"></div>
+    <div class="lbgrid">
+      <aside class="lbside">
+        <div class="lbmission"><small id="lbKicker">Build this compound</small><b id="lbName"></b><span id="lbClue"></span></div>
+        <div class="lbmol">
+          <div class="lbmolhead">Your molecule</div>
+          <div class="lbformula" id="lbFormula">—</div>
+          <div class="lbchips" id="lbTray"></div>
+          <div class="lbstatus" id="lbStatus"></div>
+        </div>
+        <div class="lbmade" id="lbMade" hidden></div>
+        <div class="infobox" id="lbHintBox" hidden></div>
+        <div class="lbbtns">
+          <button class="btn" id="lbCombine"><i data-ic="flask"></i>Combine!</button>
+          <button class="btn ghost" id="lbHint"><i data-ic="bulb"></i>Hint (−1 pt)</button>
+          <button class="btn warn2" id="lbClear">Clear</button>
+        </div>
+        <div class="msg" id="lbMsg"></div>
+        <button class="btn good" id="lbNext" hidden>Next ▶</button>
+      </aside>
+      <div class="lbchamber" id="lbChamber"></div>
+    </div>
   </div>
-  <div id="lbLegend"></div>
 </section>
 

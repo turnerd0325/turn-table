@@ -13,9 +13,9 @@ const TEST_SET={
 const TEST_GAMES={
   speed:{n:10,unit:'elements',what:'Find 10 elements on the table. One click each.',how:['A name appears at the top. Click that element on the table.','Your time is saved too, but the score is how many you find.']},
   trivia:{n:10,unit:'mystery elements',what:'Name 10 mystery elements from their clues. One guess each.',how:['Read the clue. You may open more clues, but each one lowers the points.','Click an element on the table (or type its name), then press Guess. You get one guess.']},
-  lab:{n:10,unit:'compounds',what:'Build 10 compounds from atoms. One check each.',how:['Click elements on the table to add atoms. Use + and − to fix the count.','Press Combine when your molecule is ready. You get one try.']},
+  lab:{n:10,unit:'compounds',what:'Build 10 compounds from atoms. One check each.',how:['Click an element to drop an atom into the lab. Drag atoms onto each other to bond them (drag one off the bench to remove it).','Press Combine when your compound is ready. You get one try.']},
   atom:{n:10,unit:'atoms',what:'Build 10 atoms, ions and isotopes. One check each.',how:['Drag protons and neutrons into the nucleus and electrons onto the shells. You can also tap a bin, or use the P, N and E keys.','Press Check when you are ready. You get one try.']},
-  balance:{n:10,unit:'equations',what:'Balance 10 equations. One check each.',how:['Use + and − to change the big numbers in front of each formula.','Press Check when you think both sides match. You get one try.']}
+  balance:{n:10,unit:'equations',what:'Balance 10 equations. One check each.',how:['Use + and − (or drag a molecule pack onto its pan) to change the big numbers in front of each formula.','Press Check when you think both sides match. You get one try.']}
 };
 NG_ORDER.forEach(k=>{TEST_GAMES[k]={n:NG_TEST_LV.length,unit:'levels',what:`Play ${NG_TEST_LV.length} levels, one from each pack. One try each.`,how:NGS[k].how};});
 const tstName=g=>NGS[g]?NGS[g].name:((SW_GAMES.find(x=>x[0]===g)||[g,g])[1]);

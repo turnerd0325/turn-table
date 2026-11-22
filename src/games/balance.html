@@ -6,17 +6,18 @@
     <div class="pill">Worth <b id="bcWorth">3</b> pts</div>
     <button class="btn sm ghost" id="bcQuit">Quit</button>
   </div>
-  <div class="card">
-    <div class="clue">Balance this reaction. Atoms can't be lost or made, only rearranged!<b id="bcClue" style="font-size:19px;color:#fff;font-weight:600"></b></div>
-    <div class="bceq" id="bcEq"></div>
-    <div class="tally" id="bcTally"></div>
+  <div class="card bccard">
+    <div class="bcmission"><small>Balance the scale. Atoms can't be lost or made, only rearranged!</small><b id="bcClue"></b></div>
+    <div class="bceqrow" id="bcEq"></div>
+    <div class="bcstage" id="bcStage"></div>
+    <div class="bctally" id="bcTally"></div>
     <div class="infobox" id="bcHintBox" hidden></div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+    <div class="bcbtns">
       <button class="btn" id="bcCheck"><i data-ic="check"></i>Check it!</button>
       <button class="btn ghost" id="bcHint"><i data-ic="bulb"></i>Hint (−1 pt)</button>
+      <button class="btn good" id="bcNext" hidden>Next ▶</button>
     </div>
-    <div class="msg" id="bcMsg" style="text-align:center"></div>
-    <div style="text-align:center"><button class="btn good" id="bcNext" hidden>Next ▶</button></div>
+    <div class="msg" id="bcMsg"></div>
   </div>
 </section>
 
