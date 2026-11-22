@@ -11,7 +11,7 @@ def ld_json(t,g):
         a=html.unescape(re.sub(r'<[^>]+>','',a));faq.append({"@type":"Question","name":html.unescape(q),"acceptedAnswer":{"@type":"Answer","text":a}})
     stds=sorted({s.strip() if s.strip().startswith(('MS-','HS-')) else 'MS-'+s.strip() for x in g for s in x['std'].split('·')})
     pub={"@type":"Organization","@id":"https://thesciencehooklab.com/#org","name":"The Science Hook Lab","url":"https://thesciencehooklab.com"}
-    app={"@type":"WebApplication","@id":SITE+"/#app","name":"Turn-Table","url":SITE+"/welcome/",
+    app={"@type":"WebApplication","@id":SITE+"/#app","name":"Turn-Table","url":SITE+"/",
       "applicationCategory":"EducationalApplication","operatingSystem":"Web browser, ChromeOS",
       "description":"Standards-aligned science games for middle school (grades 6 to 8). The science is the game: students find elements, build atoms, run separation machines, build cells, drive the Moon through its phases and more. Teachers get class codes, per-class game switches, Pre-Test and Post-Test growth reports, a live 4-choice quiz and a game-show quiz board builder.",
       "audience":{"@type":"EducationalAudience","educationalRole":"teacher"},"educationalLevel":"Grades 6-8 (middle school)",

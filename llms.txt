@@ -2,8 +2,8 @@
 
 > Standards-aligned science games for middle school (grades 6 to 8). The science is the game: every move in every game is a science decision, not a quiz question that unlocks an unrelated reward game. Built by a 7th grade science teacher in New York. A Science Hook Lab product.
 
-- Teacher site and pricing: https://turntable.thesciencehooklab.com/welcome/
-- Student login (nickname, 4-digit PIN and a class code from the teacher; no email or real name): https://turntable.thesciencehooklab.com/
+- Teacher site and pricing: https://turntable.thesciencehooklab.com/
+- Student login (nickname, 4-digit PIN and a class code from the teacher; no email or real name): https://turntable.thesciencehooklab.com/play/
 
 ## What teachers get
 - 24 games across life science, physics, chemistry and Earth and space, each tagged to NGSS / NY (NYSSLS) middle school standards

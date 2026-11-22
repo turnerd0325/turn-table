@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build every game source file into index.html. One command for all of it:
+"""Build every game source file into play/index.html. One command for all of it:
 
     python3 src/ng/build.py
 
@@ -18,7 +18,7 @@ import pathlib, re, sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SRC = pathlib.Path(__file__).resolve().parent
 GAMES = ROOT / 'src' / 'games'
-INDEX = ROOT / 'index.html'
+INDEX = ROOT / 'play' / 'index.html'
 
 JS_ORDER = ['shell.js', 'cell.js', 'ripple.js', 'pup.js', 'drift.js',
             'moon.js', 'strata.js', 'pangaea.js', 'weather.js',

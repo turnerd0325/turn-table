@@ -122,7 +122,7 @@ class Harness:
         handler = functools.partial(_Quiet, directory=str(ROOT))
         self.httpd = http.server.ThreadingHTTPServer(('127.0.0.1', 0), handler)
         threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
-        self.base = f'http://127.0.0.1:{self.httpd.server_address[1]}/'
+        self.base = f'http://127.0.0.1:{self.httpd.server_address[1]}/play/'
         self.pw = sync_playwright().start()
         self.browser = self.pw.chromium.launch(headless=self.headless, args=['--disable-gpu-sandbox'])
         return self
