@@ -17924,9 +17924,9 @@ const TEST_GAMES={
   sep:{n:3,unit:'mixtures',what:'Plan how to separate 3 mixtures. One try each.',how:['Look at the mixture.','Pick the machines in order, then press **Save answer**.']},
   diner:{n:3,unit:'orders',what:'Count the atoms in 3 orders. No timer. One try each.',how:['Read the order and the ingredients.','Answer each question, then press **Save answer**.']}
 };
-/* Games whose test items are not built yet: they stay out of the mode picker and the dashboard until
-   their TEST_ITEMS entry exists. Session B removes evidence, sep and diner from this list. */
-const TST_LATER=new Set(['evidence','sep','diner']);
+/* Games whose test items are not built yet stay out of the mode picker and the dashboard until
+   their TEST_ITEMS entry exists. All 6 star games are built now (Session B added evidence, sep, diner). */
+const TST_LATER=new Set([]);
 const tstHas=g=>!!TEST_GAMES[g]&&!TST_LATER.has(g);
 NG_ORDER.forEach(k=>{TEST_GAMES[k]={n:NG_TEST_LV.length,unit:'levels',what:`Play ${NG_TEST_LV.length} levels, one from each pack. One try each.`,how:NGS[k].how};});
 const tstName=g=>NGS[g]?NGS[g].name:((SW_GAMES.find(x=>x[0]===g)||[g,g])[1]);
@@ -18108,7 +18108,7 @@ function tstCsv(C){
   const a=h('a',{href:URL.createObjectURL(new Blob([out.join('\n')],{type:'text/csv'})),download:`${C.name} pre-post tests.csv`});document.body.append(a);a.click();a.remove();
 }
 
-/* ===================== STAR-GAME TESTS (Blackout!, Laser Maze, Coaster Architect; more in Session B) =====================
+/* ===================== STAR-GAME TESTS (Blackout!, Laser Maze, Coaster Architect, Evidence Lab, Separation Station, Atom Diner) =====================
    One shared screen (#s-gtest). Each game gives 3 fixed items, one per pack. An item is a still picture
    (nothing runs, so nothing gives the answer away) plus one-try questions:
      {title, text, svg:()=>svg string, alt, qs:[{id, q, opts:[[value,label],...], ans}]}
@@ -18131,7 +18131,7 @@ function gtRender(){
   $('gtKind').textContent=TST&&TST.kind==='post'?'Post-Test':'Pre-Test';$('gtGame').textContent=tstName(GT.g);
   $('gtNum').textContent=GT.k+1;$('gtOf').textContent=n;
   $('gtTitle').textContent=it.title;$('gtText').replaceChildren(...ngRich(it.text));
-  const sv=svgEl(it.svg());sv.classList.add('gtsvg');sv.setAttribute('role','img');sv.setAttribute('aria-label',it.alt||it.title);
+  const sv=svgEl(it.svg(GT.pick));sv.classList.add('gtsvg');sv.setAttribute('role','img');sv.setAttribute('aria-label',it.alt||it.title);
   sv.querySelectorAll('[data-gq]').forEach(e=>{const q=it.qs.find(x=>x.id===e.dataset.gq);if(!q)return;const v=GT.pick[q.id];
     e.setAttribute('data-pick',v==null?'':v);const lab=e.querySelector('.gtlab');if(lab)lab.textContent=v==null?'?':(q.opts.find(o=>o[0]===v)||['',''])[1];
     e.addEventListener('click',()=>gtCycle(q.id));});
@@ -18145,7 +18145,9 @@ function gtRender(){
 function gtSave(){
   if(!GT)return;const it=GT.items[GT.k];if(!it.qs.every(q=>GT.pick[q.id]!=null))return;
   const a={};let ok=0;it.qs.forEach(q=>{a[q.id]=GT.pick[q.id];if(GT.pick[q.id]===q.ans)ok++;});
-  GT.res.push({i:GT.k+1,s:Math.round(ok/it.qs.length*1000)/1000,a});GT.pick={};tstSaved();
+  /* an item may score itself (e.g. Separation Station: any working machine order is right) */
+  const sc=it.score?Math.max(0,Math.min(1,it.score(a))):ok/it.qs.length;
+  GT.res.push({i:GT.k+1,s:Math.round(sc*1000)/1000,a});GT.pick={};tstSaved();
   if(GT.k+1<GT.items.length){GT.k++;gtRender();window.scrollTo(0,0);return;}
   const r=GT.res,n=GT.items.length;GT=null;tstFinish(r.reduce((s,x)=>s+x.s,0)/n*100,{items:r});
 }
@@ -18283,6 +18285,160 @@ TEST_ITEMS.coaster=()=>{
      svg:()=>caTestSvg([{L:L3,Hs:H3}]),
      qs:[{id:'loop',q:'Will the cart make it all the way around the loop?',opts:[['yes','Yes'],['no','No']],ans:ok3?'yes':'no'},
          {id:'why',q:'Why?',opts:[['need','A loop needs a start at least 2.5 × the radius (7.5 m) so the cart still has speed at the top'],['top','The start is as tall as the loop top, so that is exactly enough'],['heavy','A heavy cart always makes the loop']],ans:'need'}]}];
+};
+
+/* ---------- shared drawing bits for the Session B tests ---------- */
+const gtEsc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const gtTxt=(x,y,t,o)=>{o=o||{};return `<text x="${x}" y="${y}" text-anchor="${o.a||'start'}" font-size="${o.s||15}" font-weight="${o.w||700}" fill="${o.c||'#22304f'}" font-family="system-ui">${gtEsc(t)}</text>`;};
+const gtIcon=(n,x,y,sz)=>ART.cic(n).replace('<svg ',`<svg x="${x}" y="${y}" width="${sz}" height="${sz}" `);
+
+/* ---------- Evidence Lab (MS-PS1-2, PS1-7): results already written down, no testing ---------- */
+function evTestPage(sample,rows,cands,cols){
+  /* rows: [[label, result]]; cands/cols: the field guide (substances x tests) */
+  const W=900,gx=330,nw=118,cw=(W-gx-20-nw)/cols.length,H=Math.max(110+rows.length*44,96+cands.length*46)+20;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" rx="16" fill="#2b3550"/>`+
+   `<rect x="16" y="16" width="296" height="${H-32}" rx="10" fill="#fffaf0" stroke="#d9cfb5" stroke-width="2"/>`;
+  for(let y=82;y<H-24;y+=44)s+=`<line x1="28" x2="300" y1="${y+8}" y2="${y+8}" stroke="#bcd3f0" stroke-width="1.5"/>`;
+  s+=`<line x1="58" x2="58" y1="16" y2="${H-16}" stroke="#f2a7a7" stroke-width="2"/>`+gtTxt(70,46,'Lab notebook',{s:18,w:900})+gtTxt(70,68,sample,{s:13,c:'#6b7894'});
+  rows.forEach(([k,v],i)=>{s+=gtTxt(70,108+i*44,k+':',{s:14,c:'#5b6b8c'})+gtTxt(70,126+i*44,v,{s:16,w:900,c:'#1b2a4a'});});
+  s+=`<rect x="${gx}" y="16" width="${W-gx-16}" height="${H-32}" rx="10" fill="#f4f7fd" stroke="#c7d2e8" stroke-width="2"/>`+
+   `<rect x="${gx+(W-gx-16)/2-40}" y="8" width="80" height="18" rx="6" fill="#8a96b3"/>`+gtTxt(gx+16,50,'Field guide',{s:18,w:900});
+  const wrap=v=>{if(v.length<=11)return [v];const w=v.split(' ');let a=w[0],i=1;while(i<w.length-1&&(a+' '+w[i]).length<=11)a+=' '+w[i++];return [a.replace(/,$/,''),w.slice(i).join(' ')];};
+  cols.forEach((t,j)=>{s+=gtTxt(gx+nw+cw*j+cw/2,80,EV_SHORT[t],{s:13,w:800,a:'middle',c:'#5b6b8c'});});
+  cands.forEach((c,i)=>{const y=96+i*46;s+=`<rect x="${gx+10}" y="${y}" width="${W-gx-36}" height="40" rx="8" fill="${i%2?'#fff':'#eaf0fb'}"/>`+gtTxt(gx+20,y+25,EV_SUBS[c].n,{s:15,w:900});
+    cols.forEach((t,j)=>{const ln=wrap(EV_SUBS[c][t]);ln.forEach((l,k)=>{s+=gtTxt(gx+nw+cw*j+cw/2,y+(ln.length>1?18+k*15:25),l,{s:12.5,w:700,a:'middle'});});});});
+  return s+'</svg>';
+}
+function evTestStickers(sc,tests){
+  const S=EV_SC[sc],W=900,H=250;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" rx="16" fill="#2b3550"/>`+
+   gtTxt(24,42,'Evidence board: '+S.n,{s:19,w:900,c:'#fff'})+gtTxt(24,66,S.story,{s:14,c:'#cdd6ec'});
+  const cw=(W-48-(tests.length-1)*12)/tests.length;
+  tests.forEach((t,i)=>{const k=evSticker(sc,t),x=24+i*(cw+12),y=90,col=k.k==='weak'?['#fff3c4','#b98a00']:k.k==='none'?['#e9edf6','#6b7894']:['#ffe1cc','#c2541a'];
+    const words=S[t][1].split(' '),lines=[''];words.forEach(w=>{if((lines[lines.length-1]+' '+w).trim().length>15)lines.push(w);else lines[lines.length-1]=(lines[lines.length-1]+' '+w).trim();});
+    const tt=EV_RT[t].n.length>14?EV_RT[t].n.replace(/ (\S+)$/,'\n$1').split('\n'):[EV_RT[t].n];
+    s+=`<g transform="rotate(${i%2?2:-2} ${x+cw/2} ${y+70})"><rect x="${x}" y="${y}" width="${cw}" height="140" rx="14" fill="${col[0]}" stroke="${col[1]}" stroke-width="3"/>`+
+      gtTxt(x+cw/2,y+26,k.lab,{s:12.5,w:900,a:'middle',c:col[1]})+tt.map((l,j)=>gtTxt(x+cw/2,y+52+j*18,l,{s:15,w:900,a:'middle'})).join('')+
+      lines.map((l,j)=>gtTxt(x+cw/2,y+(tt.length>1?100:88)+j*19,l,{s:14,w:700,a:'middle',c:'#33415f'})).join('')+'</g>';});
+  return s+'</svg>';
+}
+TEST_ITEMS.evidence=()=>{
+  /* answer = the one candidate that matches every shown result (checked with the game's own evSubsOK) */
+  const solve=(cands,tests,secret)=>{const m=cands.filter(c=>tests.every(t=>EV_SUBS[c][t]===EV_SUBS[secret][t]));if(m.length!==1||!evSubsOK(cands,tests,secret))console.warn('Evidence test: case not unique',secret);return m[0];};
+  /* 1. Powder case (pack 1, Flour Power): iodine says "starch", heat tells the two starches apart */
+  const C1=['flour','cornstarch','soda'],T1=['water','iodine','heat'],A1=solve(C1,T1,'flour');
+  /* 2. Metal case (pack 2, Fool's Gold): density and magnet; the seller says it is gold */
+  const C2=['gold','brass','pyrite','leadbar'],T2=['magnet','density'],A2=solve(C2,T2,'pyrite'),d2=parseFloat(EV_SUBS[A2].density);
+  /* 3. Reaction or not (pack 3, Cold Case): only weak clues, no strong sign of new stuff */
+  const R3=['gas','solid','smell','color','temp'],A3=evProof('dye',R3,R3);
+  return [
+    {title:'Name the powder',text:'A white powder lost its label. The tests are already done. Use the **field guide** to name it.',alt:'A lab notebook with three test results next to a field guide of three powders',
+     svg:()=>evTestPage('Mystery powder',T1.map(t=>[EV_TOOL[t][1],EV_SUBS[A1][t]]),C1,['look','water','vinegar','iodine','heat']),
+     qs:[{id:'name',q:'Which substance is the mystery powder?',opts:C1.map(c=>[c,EV_SUBS[c].n]),ans:A1}]},
+    {title:'Is it really gold?',text:'A seller says this shiny yellow nugget is **real gold**. Here are the test results.',alt:'A lab notebook with a magnet result and a density result next to a field guide of four yellow metals',
+     svg:()=>evTestPage('Shiny yellow nugget',[['Hold a magnet close',EV_SUBS[A2].magnet],['Density check',`${Math.round(d2*10)} g ÷ 10 mL = ${EV_SUBS[A2].density}`]],C2,['look','magnet','conduct','density']),
+     qs:[{id:'name',q:'What is the nugget really made of?',opts:C2.map(c=>[c,EV_SUBS[c].n]),ans:A2}]},
+    {title:'Reaction or not?',text:'Here is every evidence sticker for this event. Decide what kind of change it was.',alt:'Five evidence stickers for food coloring dropped into water',
+     svg:()=>evTestStickers('dye',R3),
+     qs:[{id:'stamp',q:'Stamp it:',opts:[['chem','Chemical reaction (new stuff formed)'],['phys','Physical change (same stuff)']],ans:A3}]}];
+};
+
+/* ---------- Separation Station (MS-PS1-8): plan the belt, nothing runs ---------- */
+function sepTestSvg(L,n,tools,pick){
+  const W=900,H=330,mix=L.mix;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gtsepBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26324f"/><stop offset="1" stop-color="#1a2338"/></linearGradient></defs><rect width="${W}" height="${H}" rx="16" fill="url(#gtsepBg)"/>`;
+  /* the hopper with the mixture */
+  s+=`<path d="M24 34h220l-30 120h-160z" fill="#3a4766" stroke="#6f7fa6" stroke-width="3" stroke-linejoin="round"/>`+gtTxt(134,26,'The mixture',{s:14,w:900,a:'middle',c:'#cfd8ee'});
+  const per=mix.length>3?2:mix.length,rows=Math.ceil(mix.length/per),isz=rows>1?34:44;
+  mix.forEach((k,i)=>{const row=Math.floor(i/per),inRow=Math.min(per,mix.length-row*per),cx=134+((i%per)-(inRow-1)/2)*84,cy=rows>1?52+row*52:62;
+    s+=gtIcon(SB[k].ic,cx-isz/2,cy,isz)+gtTxt(cx,cy+isz+12,cap1(SB[k].n.replace(' pieces','').replace('Cooking ','')),{s:12,w:800,a:'middle',c:'#fff'});});
+  const gl=L.goal.map(k=>SB[k].n.replace(' pieces','').replace('Cooking ','').toLowerCase());
+  s+=gtTxt(134,182,'Get back pure:',{s:13,w:800,a:'middle',c:'#9fb0d6'})+gtTxt(134,202,gl.slice(0,2).join(', ')+(gl.length>2?',':''),{s:13.5,w:900,a:'middle',c:'#ffd76a'})+
+    (gl.length>2?gtTxt(134,220,gl.slice(2).join(', '),{s:13.5,w:900,a:'middle',c:'#ffd76a'}):'');
+  /* the belt with empty numbered slots (a picked machine shows in its slot) */
+  const x0=276,bw=W-x0-24,sw=Math.min(150,(bw-(n-1)*14)/n);
+  s+=`<rect x="${x0-14}" y="168" width="${bw+28}" height="22" rx="11" fill="#55617f"/>`;
+  for(let i=0;i<n;i++){const x=x0+i*(sw+14),m=pick&&pick['s'+(i+1)];
+    s+=`<rect x="${x}" y="64" width="${sw}" height="100" rx="12" fill="${m?'#e9f0ff':'rgba(255,255,255,.06)'}" stroke="${m?'#6aa7ff':'#9aa6c6'}" stroke-width="2.5" ${m?'':'stroke-dasharray="7 6"'}/>`+
+      gtTxt(x+sw/2,56,'Step '+(i+1),{s:13,w:900,a:'middle',c:'#cfd8ee'})+
+      (m?gtIcon(MACH[m].ic,x+sw/2-24,76,48)+gtTxt(x+sw/2,150,MACH[m].n,{s:12.5,w:900,a:'middle'}):gtTxt(x+sw/2,124,'?',{s:34,w:900,a:'middle',c:'#9aa6c6'}));
+    if(i<n-1)s+=`<path d="M${x+sw+3} 114l8 0" stroke="#9aa6c6" stroke-width="3"/>`;}
+  /* the machines you may use (names only) */
+  s+=gtTxt(24,246,'Machines you can use:',{s:13,w:800,c:'#9fb0d6'});
+  tools.forEach((m,i)=>{const x=24+i*(W-48)/tools.length;s+=gtIcon(MACH[m].ic,x,258,40)+gtTxt(x+46,284,MACH[m].n,{s:13,w:800,c:'#fff'});});
+  return s+'</svg>';
+}
+function sepTestItem(lvName,n,title,text){
+  const L=SEP_LEVELS.find(x=>x.name===lvName),tools=sepTools(L),ok=[];
+  /* every belt of exactly n machines that works (the game's own sepRun decides) */
+  for(let c=0;c<Math.pow(tools.length,n);c++){const b=[];let x=c;for(let j=0;j<n;j++){b.push(tools[x%tools.length]);x=Math.floor(x/tools.length);}if(sepRun(L,b).ok)ok.push(b);}
+  if(!ok.length)console.warn('Separation test: no answer',lvName);
+  const belt=a=>Array.from({length:n},(_,i)=>a['s'+(i+1)]);
+  return {title,text,alt:`A mixture of ${L.mix.map(k=>SB[k].n.toLowerCase()).join(', ')} and an empty factory belt with ${n} step${n>1?'s':''}`,
+    svg:p=>sepTestSvg(L,n,tools,p),
+    qs:Array.from({length:n},(_,i)=>({id:'s'+(i+1),q:n>1?`**Step ${i+1}**`:'Which machine?',opts:tools.map(m=>[m,MACH[m].n]),ans:ok[0]?ok[0][i]:null})),
+    /* full credit for any working order; otherwise the fraction of steps that match the closest working order */
+    score:a=>{const b=belt(a);if(sepRun(L,b).ok)return 1;return ok.reduce((best,o)=>Math.max(best,o.filter((m,i)=>m===b[i]).length/n),0);},
+    sols:ok};
+}
+TEST_ITEMS.sep=()=>[
+  sepTestItem('Junkyard Cleanup',1,'One machine','Pick the **one machine** that gets back both substances, pure.'),
+  sepTestItem('Muddy Sea',2,'Two steps','Pick **2 machines** in order. Step 1 runs first.'),
+  sepTestItem('Pool Party Cleanup',3,'Harder mix','Pick **3 machines** in order. Step 1 runs first.')];
+
+/* ---------- Atom Diner (MS-PS1-5): untimed orders, count the atoms ---------- */
+function dnTestSvg(R,P,hideP){
+  /* the shelf shows sealed ingredient jars (formulas only, not smashed), so the student counts from the formula */
+  const W=900,H=250;
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gtdnBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe6c7"/><stop offset="1" stop-color="#f6c992"/></linearGradient>`+
+   `<linearGradient id="gtdnJar" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9f4ff"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#d7e8fa"/></linearGradient></defs><rect width="${W}" height="${H}" rx="16" fill="url(#gtdnBg)"/>`;
+  s+=`<rect x="16" y="16" width="560" height="${H-32}" rx="12" fill="#fff8ee" stroke="#d9a86a" stroke-width="2"/>`+gtTxt(32,44,'Ingredients on the shelf',{s:17,w:900});
+  const jars=[];R.forEach(([n,f])=>{for(let i=0;i<n;i++)jars.push(f);});
+  const jw=Math.min(84,(528-(jars.length-1)*8)/jars.length),x0=296-(jars.length*jw+(jars.length-1)*8)/2;
+  s+=`<rect x="28" y="182" width="536" height="12" rx="4" fill="#b9814a"/>`;
+  jars.forEach((f,i)=>{const x=x0+i*(jw+8),lab=fmtFormula(parseF(f));
+    s+=`<rect x="${x+jw*.18}" y="64" width="${jw*.64}" height="14" rx="4" fill="#c46a3a"/><rect x="${x}" y="76" width="${jw}" height="106" rx="14" fill="url(#gtdnJar)" stroke="#8fb0d6" stroke-width="2"/>`+
+      `<rect x="${x+5}" y="108" width="${jw-10}" height="40" rx="8" fill="#fff" stroke="#e2487a" stroke-width="2"/>`+gtTxt(x+jw/2,135,lab,{s:lab.length>4?15:19,w:900,a:'middle',c:'#1b2a4a'});});
+  const groups=R.map(([n,f])=>`${n} × ${fmtFormula(parseF(f))}`).join('   +   ');
+  s+=gtTxt(296,222,groups,{s:16,w:900,a:'middle',c:'#5b4630'});
+  /* order ticket */
+  s+=`<g transform="rotate(1.5 740 125)"><rect x="604" y="22" width="276" height="${H-44}" rx="6" fill="#fff" stroke="#c9ced8" stroke-width="2"/><rect x="604" y="22" width="276" height="34" rx="6" fill="#e2487a"/>`+gtTxt(742,45,'ORDER TICKET',{s:15,w:900,a:'middle',c:'#fff'});
+  P.forEach(([n,f],i)=>{s+=gtTxt(626,96+i*44,(hideP?'? × ':n+' × ')+fmtFormula(parseF(f)),{s:24,w:900,c:'#1b2a4a'});});
+  s+=gtTxt(626,H-36,hideP?'You work out how many.':'Make exactly this.',{s:13,w:700,c:'#6b7894'})+'</g>';
+  return s+'</svg>';
+}
+TEST_ITEMS.diner=()=>{
+  /* counts and leftovers come from the game's own atom counting (cntList, parseF) */
+  const left=(R,P)=>{const a=cntList(R),b=cntList(P),o={};Object.keys(a).forEach(k=>{const d=a[k]-(b[k]||0);if(d>0)o[k]=d;});return o;};
+  const leftKey=o=>Object.keys(o).length?Object.keys(o).map(k=>k+o[k]).join(''):'none';
+  const NAME={H:'hydrogen',O:'oxygen',C:'carbon',N:'nitrogen'};
+  const leftOpts=(ans,alts)=>{const lab=k=>k==='none'?'None. Every atom is used':k.replace(/([A-Z][a-z]?)(\d+)/g,(m,e,n)=>`${n} ${NAME[e]} atom${n>1?'s':''}`);
+    return [...new Set([ans,...alts])].slice(0,4).sort().map(k=>[k,lab(k)]);};
+  const num=(ans,alts)=>[...new Set([ans,...alts])].filter(v=>v>0).slice(0,4).sort((a,b)=>a-b).map(v=>[String(v),String(v)]);
+  const cnt=(R,e)=>cntList(R)[e]||0;
+  const dish=n=>DISHES.find(d=>d.dish===n);
+  /* 1. Breakfast Shift: Rocket Fuel Combo, exact ingredients */
+  const d1=dish('Rocket Fuel Combo'),R1=d1.R,P1=d1.P,L1=leftKey(left(R1,P1));
+  /* 2. Lunch Rush: Gas Stove Special, but the shelf has 3 O₂ instead of 2 */
+  const d2=dish('Gas Stove Special'),R2=[[1,'CH4'],[3,'O2']],P2=d2.P,L2=leftKey(left(R2,P2));
+  /* 3. Dinner Madness: Backyard Grill Plate, amounts hidden on the ticket */
+  const d3=dish('Backyard Grill Plate'),R3=d3.R,P3=d3.P,L3=leftKey(left(R3,P3)),n3=f=>(P3.find(x=>x[1]===f)||[0])[0];
+  return [
+    {title:'Breakfast order',text:'Smash the ingredients into atoms, then make the order. Count carefully.',alt:'Ingredients: 2 H2 and 1 O2. The ticket asks for 2 H2O.',
+     svg:()=>dnTestSvg(R1,P1),
+     qs:[{id:'H',q:'How many **hydrogen (H)** atoms are in the ingredients?',opts:num(cnt(R1,'H'),[2,6,8]),ans:String(cnt(R1,'H'))},
+         {id:'O',q:'How many **oxygen (O)** atoms are in the ingredients?',opts:num(cnt(R1,'O'),[1,3,4]),ans:String(cnt(R1,'O'))},
+         {id:'left',q:'After you make the order, which atoms are **left over**?',opts:leftOpts(L1,['H2','O1','O2']),ans:L1}]},
+    {title:'Lunch order',text:'Here is what is on the shelf and what the customer ordered.',alt:'Ingredients: 1 CH4 and 3 O2. The ticket asks for 1 CO2 and 2 H2O.',
+     svg:()=>dnTestSvg(R2,P2),
+     qs:[{id:'H',q:'How many **hydrogen (H)** atoms are in the ingredients?',opts:num(cnt(R2,'H'),[2,6,8]),ans:String(cnt(R2,'H'))},
+         {id:'O',q:'How many **oxygen (O)** atoms are in the ingredients?',opts:num(cnt(R2,'O'),[3,4,8]),ans:String(cnt(R2,'O'))},
+         {id:'left',q:'After you make the order, which atoms are **left over**?',opts:leftOpts(L2,['none','H2','C1']),ans:L2}]},
+    {title:'Dinner order',text:'The ticket does not say how many. Use **every atom** on the shelf, with none left over.',alt:'Ingredients: 1 C3H8 and 5 O2. The ticket asks for some CO2 and some H2O.',
+     svg:()=>dnTestSvg(R3,P3,true),
+     qs:[{id:'O',q:'How many **oxygen (O)** atoms are in the ingredients?',opts:num(cnt(R3,'O'),[5,8,12]),ans:String(cnt(R3,'O'))},
+         {id:'CO2',q:'How many **CO₂** can you make?',opts:num(n3('CO2'),[1,4,5]),ans:String(n3('CO2'))},
+         {id:'H2O',q:'How many **H₂O** can you make?',opts:num(n3('H2O'),[2,3,8]),ans:String(n3('H2O'))}]}];
 };
 /*NGJS>>*/
 /* ---- hydrate static art placeholders ---- */

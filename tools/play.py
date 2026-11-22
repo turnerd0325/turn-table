@@ -69,7 +69,7 @@ SETUP = {
 for _k in NG_KEYS:
     SETUP[_k] = f"ngSetup('{_k}')"
 
-TESTABLE = {'speed', 'trivia', 'lab', 'atom', 'balance', 'blackout', 'laser', 'coaster', *NG_KEYS}
+TESTABLE = {'speed', 'trivia', 'lab', 'atom', 'balance', 'blackout', 'laser', 'coaster', 'evidence', 'sep', 'diner', *NG_KEYS}
 
 VIEWPORTS = {'1366': (1366, 768), '390': (390, 844)}
 
