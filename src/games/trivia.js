@@ -32,11 +32,29 @@ function trQuestion(){
 function renderHints(animate){
   $('trHints').replaceChildren(...T.hints.map((txt,i)=>{
     const open=i<T.shown||T.done;
-    return h('li',{class:'hint '+(open?'shown':'locked'),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
+    return h('li',{class:'hint h'+(i+1)+' '+(open?'shown':'locked')+(open&&!T.done&&i===T.shown-1?' fresh':''),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
       h('b',null,`Hint ${i+1} · ${HINT_LABELS[i]}`),open?txt:[I('lock'),' Locked']);
   }));
   $('trWorth').textContent=T.done?0:5-T.shown;
   $('trHintBtn').disabled=T.done||T.shown>=4;
+  trCardFill(animate);
+}
+/* mystery card: fields fill in as the hints that give them away are revealed */
+function trCardFill(animate){
+  const e=T.target,k=T.shown,tile=$('trTile'),pips=$('trPips').children;
+  const set=(id,on,txt)=>{const f=$(id),b=f.lastChild,was=f.classList.contains('on');f.classList.toggle('on',on);b.textContent=on?txt:'?';
+    if(on&&!was&&animate&&!Art.reduced())Art.pop(f);};
+  const all=T.done;
+  set('trfP',all||k>=3,e.period);set('trfG',all||k>=4,e.group);set('trfN',all||k>=4,e.n);set('trfS',all||k>=4,e.sym);
+  for(let i=0;i<4;i++)pips[i].className=(!all&&i<5-k)?'on':'';
+  if(!T.done){tile.className='trtile mys';tile.replaceChildren(h('span',{class:'trq'},'?'));tile.style.removeProperty('--wob');}
+}
+/* solved reveal: the ? flips over into the real element tile */
+function trSolved(ok){
+  const e=T.target,tile=$('trTile');
+  tile.className='trtile rev cat-'+e.cat+(ok?' win':' miss');
+  tile.replaceChildren(h('i',{class:'trn'},e.n),h('b',{class:'trs'},e.sym),h('span',{class:'trnm'},e.name),h('span',{class:'trm'},e.mass.toFixed(e.mass<10?3:2)));
+  if(ok&&!Art.reduced())setTimeout(()=>{if(tile.isConnected)Art.burstAt(tile,{n:T.shown<=2?30:18,colors:['#ffd23f','#ff7a59','#4fc3f7','#a5e86b','#c792ea']});},380);
 }
 function trReveal(){if(T.done||T.shown>=4)return;T.shown++;renderHints(true);}
 $('trHintBtn').onclick=trReveal;
@@ -72,7 +90,7 @@ function trFinishQ(ok){
   T.results.push({e,pts,hints:T.shown,ok});bdTriviaQ(e.sym,ok,T.shown);
   if(!ok)bumpMissed(e.sym);
   trCells[e.n].classList.remove('out');trCells[e.n].classList.add('hit');
-  $('trScore').textContent=T.score;renderHints(false);
+  $('trScore').textContent=T.score;renderHints(false);trSolved(ok);
   const m=$('trMsg');m.className='msg '+(ok?'good':'bad');
   m.textContent=ok?`Yes! It's ${e.name} (${e.sym}). +${pts} point${pts===1?'':'s'}!`:`The answer was ${e.name} (${e.sym}). Study its spot on the table!`;
   if(ok){const k=T.shown,P=[null,['bulb','Genius! +4','great'],['star','Awesome! +3','great'],['check','Nice! +2','good'],['check','Phew! +1','good']][k];

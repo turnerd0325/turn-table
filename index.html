@@ -121,6 +121,66 @@ h1{margin:0 0 6px;font-size:30px} h2{margin:0 0 8px;font-size:22px} h3{margin:0 
 .hint.locked{background:#f2f5fb;color:#9aa8c0;font-style:italic}
 .hint.shown{background:#eaf1ff;border-color:#b9cfff;animation:pop .3s}
 .hint b{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--accent)}
+/*<<GC:trivia*/
+/* Element Trivia: mystery card, hint reveal, solved flip */
+#s-trivia .trcard{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;padding:10px;margin:0 0 8px;border-radius:16px;color:#fff;
+  background:radial-gradient(120% 140% at 15% 0%,#33457a 0%,#17213f 62%,#0f1730 100%);box-shadow:0 6px 16px rgba(20,33,61,.28),inset 0 1px 0 rgba(255,255,255,.14)}
+#s-trivia .trtile{position:relative;width:76px;height:76px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1;color:#14213d;
+  box-shadow:0 4px 0 rgba(0,0,0,.28),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile.mys{background:linear-gradient(160deg,#4a5d99,#26335f);color:#cfdcff;border:2px dashed rgba(255,255,255,.38);animation:trfloat 3.2s ease-in-out infinite}
+#s-trivia .trq{font-size:46px;text-shadow:0 0 14px rgba(140,180,255,.9)}
+#s-trivia .trtile.rev{border:3px solid #fff;animation:trflip .7s cubic-bezier(.2,.9,.25,1.15) both}
+#s-trivia .trtile.rev.win{box-shadow:0 0 0 4px rgba(255,210,63,.85),0 0 28px 6px rgba(255,210,63,.65),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile.rev.miss{box-shadow:0 0 0 4px rgba(255,107,107,.8),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile .trn{position:absolute;top:5px;left:7px;font-size:12px;font-style:normal;opacity:.75}
+#s-trivia .trtile .trs{font-size:38px;margin-top:2px}
+#s-trivia .trtile .trnm{font-size:11.5px;margin-top:3px;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#s-trivia .trtile .trm{position:absolute;bottom:3px;font-size:9px;opacity:.65;font-weight:700}
+#s-trivia .trtile.cat-alkali{background:#f29a92}#s-trivia .trtile.cat-alkaline{background:#f4bd85}
+#s-trivia .trtile.cat-transition{background:#f1dc8f}#s-trivia .trtile.cat-post{background:#b9d995}
+#s-trivia .trtile.cat-metalloid{background:#87cfb9}#s-trivia .trtile.cat-nonmetal{background:#96c5ea}
+#s-trivia .trtile.cat-halogen{background:#b7a8ec}#s-trivia .trtile.cat-noble{background:#e6a3d2}
+#s-trivia .trtile.cat-lanthanide{background:#f3c3cf}#s-trivia .trtile.cat-actinide{background:#d6c3a4}
+#s-trivia .trmeta{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#s-trivia .trf{background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.25);border-radius:9px;padding:4px 8px;display:flex;flex-direction:column;gap:1px;transition:background .25s,border-color .25s}
+#s-trivia .trf small{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;opacity:.7;font-weight:700}
+#s-trivia .trf b{font-size:17px;color:#9fb4e6}
+#s-trivia .trf.on{background:rgba(255,210,63,.18);border:1px solid rgba(255,210,63,.7)}
+#s-trivia .trf.on b{color:#ffe27a}
+#s-trivia .side h2{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:20px}
+#s-trivia .trpips{display:flex;gap:5px;align-items:center;margin-left:auto}
+#s-trivia .trpips::before{content:"Worth";font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted,#6b7a99);margin-right:4px;font-weight:700}
+#s-trivia .trpips i{width:15px;height:15px;border-radius:50%;background:#e3e9f5;border:2px solid #c9d3e8;transition:all .3s}
+#s-trivia .trpips i.on{background:radial-gradient(circle at 35% 30%,#fff3b0,#ffc83d 55%,#e09a10);border-color:#fff3b0;box-shadow:0 0 10px rgba(255,210,63,.8)}
+#s-trivia .hint{padding:6px 10px;font-size:14px;line-height:1.3;position:relative;transition:background .3s,border-color .3s,box-shadow .3s}
+#s-trivia .hint.shown{animation:none}
+#s-trivia .hint.fresh{animation:trhint .5s cubic-bezier(.2,.9,.3,1.2) both;border-color:#5b8def;box-shadow:0 0 0 3px rgba(91,141,239,.22),0 4px 10px rgba(91,141,239,.2)}
+#s-trivia .hint.h4.shown{background:linear-gradient(90deg,#fff3d1,#ffe7a8);border-color:#f2b94b}
+#s-trivia .hint.h4.shown b{color:#b46a00}
+#s-trivia .hint.locked{background:repeating-linear-gradient(135deg,#f2f5fb 0 8px,#eaeff8 8px 16px)}
+#s-trivia #trTable .el.hit{animation:trpulse 1s ease-in-out 3}
+@keyframes trfloat{50%{transform:translateY(-3px)}}
+@keyframes trflip{0%{transform:perspective(400px) rotateY(90deg) scale(.7)}60%{transform:perspective(400px) rotateY(-12deg) scale(1.08)}100%{transform:perspective(400px) rotateY(0) scale(1)}}
+@keyframes trhint{0%{transform:translateX(-14px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+@keyframes trpulse{50%{transform:scale(1.35);box-shadow:0 0 0 8px rgba(255,210,63,.55)}}
+@media (prefers-reduced-motion:reduce){#s-trivia .trtile,#s-trivia .hint.fresh,#s-trivia #trTable .el.hit{animation:none!important}}
+@media (max-width:900px){#s-trivia .trcard{grid-template-columns:70px 1fr}#s-trivia .trtile{width:70px;height:70px}#s-trivia .trtile .trs{font-size:30px}#s-trivia .trq{font-size:38px}}
+/* fit one screen at 1366x768 */
+#s-trivia .side{padding:12px 14px}
+#s-trivia .side h2{font-size:19px;margin:0 0 6px}
+#s-trivia .side>p.sub{display:none}
+#s-trivia .hints{margin-bottom:6px;gap:5px}
+#s-trivia .hint{padding:5px 9px;font-size:13.5px;line-height:1.25}
+#s-trivia .hint b{font-size:11px;margin-bottom:1px}
+#s-trivia .trf{padding:3px 8px}
+#s-trivia .trf b{font-size:16px;line-height:1.1}
+#s-trivia .guessrow{margin:6px 0 4px}
+#s-trivia #trHintBtn,#s-trivia #trNext{margin-top:4px;padding-top:9px;padding-bottom:9px}
+#s-trivia #trMsg{min-height:20px}
+#s-trivia .side h2{white-space:nowrap}
+#s-trivia .trtile .trm{display:none}
+#s-trivia .trtile .trnm{margin-top:2px}
+/*GC:trivia>>*/
 .guessrow{display:flex;gap:6px;margin:8px 0}
 .side .btn{width:100%;margin-top:6px}
 .guessrow .btn{width:auto;margin:0}
@@ -273,6 +333,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .m6{background:linear-gradient(135deg,#e5484d,#ff8a8a)} .m7{background:linear-gradient(135deg,#0b7a9e,#3bb7d9)} .m8{background:linear-gradient(135deg,#d6336c,#ff7aa2)}
 .sync{font-size:12px;padding:3px 9px;border-radius:999px;font-weight:700;background:rgba(255,255,255,.14)}
 .sync.ok{background:rgba(63,209,160,.25);color:#c6f5e2} .sync.bad{background:rgba(214,69,69,.35);color:#ffd9d9} .sync.wait{background:rgba(245,183,0,.3);color:#ffeaa8}
+@media (max-width:560px){header{padding:8px 10px;gap:8px}.brand{font-size:18px}#userChip{gap:5px;min-width:0}#userChip .btn{padding:4px 9px;font-size:13px}#userChip .who{max-width:88px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sync span{display:none}.sync{padding:4px 7px}}
 .stylechips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 2px}
 .stylechip{font:inherit;font-weight:700;border:2px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;cursor:pointer}
 .stylechip:hover{border-color:var(--accent)} .stylechip.on{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -438,7 +499,7 @@ footer a{color:var(--muted);cursor:pointer;text-decoration:underline}
 .bcfs{font-size:22px;font-weight:900;letter-spacing:.5px;text-align:center;color:#14193a}
 .bcbig{color:#2f6bff;margin-right:2px}
 .bcstage{position:relative;border-radius:16px;overflow:hidden;background:#0b1130;box-shadow:0 8px 22px rgba(8,16,44,.28);height:calc(100vh - 420px);min-height:230px}
-#s-balance.testing .bcstage{height:calc(100vh - 330px)}
+#s-balance.testing .bcstage{height:calc(100vh - 364px)}
 .bcstage svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
 .bclbl{fill:#9fb4ff;font:900 14px system-ui,sans-serif;letter-spacing:.12em}
 .bcmass{fill:#cfdaff;font:800 14px system-ui,sans-serif;letter-spacing:.06em}
@@ -732,6 +793,29 @@ h2 .ico,h1 .ico{color:var(--accent);margin-right:4px}
 .lzlegend .lgg{background:rgba(143,208,255,.45);border:1.5px solid #8fd0ff}
 .lzlegend .lgb{background:#07080c;border:1.5px solid #59627f}
 @media (prefers-reduced-motion:reduce){.lzflow line,.lzpulse{animation:none}}
+/*<<GC:laser*/
+/* Laser Maze polish: breathing beam, flares, crystal rays, lab sign */
+.lzbreathe{animation:lzbr 2.2s ease-in-out infinite}
+@keyframes lzbr{50%{opacity:.62}}
+.lzflare{animation:lzfl 1.1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes lzfl{50%{opacity:.3;transform:scale(1.25)}}
+.lzrays{animation:lzspin 7s linear infinite}
+@keyframes lzspin{to{transform:rotate(360deg)}}
+.lzsign{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 8px;padding:6px 10px;border-radius:12px;font-weight:800;letter-spacing:1.5px;font-size:15px;
+  background:linear-gradient(180deg,#232b45,#161c32);border:2px solid #3a4468;color:#56608a;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);transition:all .35s}
+.lzsign .lzst{font-size:11px;letter-spacing:1px;padding:2px 7px;border-radius:99px;background:#2b3354;color:#6c78a3}
+.lzsign .lzbulbs{display:flex;gap:4px}
+.lzsign .lzbulbs i{width:7px;height:7px;border-radius:50%;background:#3a4468}
+.lzsign.on{color:#7bffd9;border-color:#37e0c1;background:linear-gradient(180deg,#143a3d,#0f2a33);text-shadow:0 0 8px #37e0c1,0 0 18px rgba(55,224,193,.7);
+  box-shadow:0 0 0 2px rgba(55,224,193,.25),0 0 22px rgba(55,224,193,.55),inset 0 0 16px rgba(55,224,193,.18);animation:lzflick .7s steps(1,end) 1}
+.lzsign.on .lzst{background:#37e0c1;color:#06353a;text-shadow:none}
+.lzsign.on .lzbulbs i{background:#ffe27a;box-shadow:0 0 8px #ffd23f;animation:lzchase 1s ease-in-out infinite}
+.lzsign.on .lzbulbs i:nth-child(2){animation-delay:.12s}.lzsign.on .lzbulbs i:nth-child(3){animation-delay:.24s}.lzsign.on .lzbulbs i:nth-child(4){animation-delay:.36s}.lzsign.on .lzbulbs i:nth-child(5){animation-delay:.48s}
+@keyframes lzchase{50%{opacity:.35}}
+@keyframes lzflick{0%{opacity:.2}12%{opacity:1}20%{opacity:.3}32%{opacity:1}46%{opacity:.5}60%{opacity:1}100%{opacity:1}}
+#s-laser .omain:has(~ .oside .lzsign.on) #lzBoard{box-shadow:0 0 0 3px rgba(55,224,193,.6),0 10px 36px rgba(55,224,193,.35)}
+@media (prefers-reduced-motion:reduce){.lzbreathe,.lzflare,.lzrays,.lzsign.on,.lzsign.on .lzbulbs i{animation:none!important}}
+/*GC:laser>>*/
 #boBoard{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;border-radius:16px;box-shadow:0 10px 30px rgba(10,16,40,.35);display:block}
 .boflow{animation:bof 1s linear infinite} .boflow.rev{animation-direction:reverse}
 @keyframes bof{to{stroke-dashoffset:-18}}
@@ -747,6 +831,30 @@ ul.tests li.ok{background:#e9f9ef;border-color:#8fd5ae;color:#116b3a} ul.tests l
 ul.tests li.bad{background:#fff0f0;border-color:#f0a3a3;color:#8a1f1f} ul.tests li.bad .tk{color:#d33}
 ul.tests li.run{border-color:var(--accent);background:#eaf1ff}
 @media (prefers-reduced-motion:reduce){.boflow{animation:none}}
+/*<<GC:blackout*/
+/* Blackout! polish: city skyline, glowing current, breathing lamps */
+.bocity{margin:8px auto 0;max-width:640px}
+#boCity{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 6px 18px rgba(10,16,40,.3)}
+#boCity .bd{fill:#18213f;stroke:#2b3760;stroke-width:1}
+#boCity .w{fill:#242e50;transition:fill .3s ease,filter .3s ease}
+#boCity .glow{opacity:0;transition:opacity .5s}
+#boCity .bodist.half .w.a{fill:#ffd76a}
+#boCity .bodist.half .glow{opacity:.35}
+#boCity .bodist.on .w{fill:#fff0b3;filter:drop-shadow(0 0 2px #ffd76a);transition-delay:calc(var(--d)*.32s + var(--o)*.05s)}
+#boCity .bodist.on .bd{stroke:#ffd76a;transition:stroke .4s calc(var(--d)*.32s)}
+#boCity .bodist.on .glow{opacity:.9;transition-delay:calc(var(--d)*.32s)}
+#boCity.won .bodist.on .glow{animation:bocg 2.4s ease-in-out infinite}
+.boglow{opacity:.3;animation:bogl 1.2s ease-in-out infinite}
+.bobreathe{animation:bobr 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bocg{50%{opacity:.6}}
+@keyframes bogl{50%{opacity:.14}}
+@keyframes bobr{50%{transform:scale(1.07)}}
+#s-blackout:has(#boCity.won) #boBoard{box-shadow:0 0 0 3px rgba(255,215,106,.55),0 10px 36px rgba(255,190,70,.35)}
+#s-blackout:has(#boCity.won) .boflow{animation-duration:.45s!important}
+@media (prefers-reduced-motion:reduce){.boglow,.bobreathe,#boCity.won .bodist.on .glow{animation:none!important}#boCity .w,#boCity .glow{transition:none!important}}
+#s-blackout .omain,#s-blackout .lzwrap,.bocity{min-width:0;max-width:100%}
+#boBoard{max-width:100%}
+/*GC:blackout>>*/
 /*<<GC:evidence*/
 /* ===== Evidence Lab: lab bench detective (source: src/games/evidence.css) ===== */
 .evtop{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -958,6 +1066,11 @@ body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidde
 .oside{gap:5px} .ogrid{gap:10px}
 .onescr .coach{margin:3px 0;padding:4px 10px;font-size:14px} .onescr .cacl{margin:0 0 4px;padding:4px 12px}
 .onescr{padding:8px 12px}
+main:has(#s-sep:not([hidden])){padding-bottom:4px}#s-sep:has(.tool:nth-child(7)) .endbin{min-height:40px}#s-sep:has(.tool:nth-child(7)) .hud{margin-bottom:6px}#s-sep .factory-wrap{padding:2px 0}
+#s-sep .toolbox:has(.tool:nth-child(5)) .tool{padding:3px 8px;gap:6px}#s-sep .toolbox:has(.tool:nth-child(5)) .tool small{font-size:11.5px;line-height:1.12}#s-sep .toolbox:has(.tool:nth-child(5)) .tool b{font-size:15px}#s-sep .toolbox:has(.tool:nth-child(5)){gap:6px}#s-sep:has(.tool:nth-child(5)) .kh{margin:3px 0 2px}#s-sep:has(.tool:nth-child(5)) .coach{margin:2px 0}#s-sep:has(.tool:nth-child(5)) .clue{margin-bottom:3px;padding:4px 12px}#s-sep:has(.tool:nth-child(5)) .spgoal{margin:2px 0}
+#s-sep .toolbox .tool{padding:5px 10px;gap:8px}#s-sep .toolbox .tool small{font-size:12px;line-height:1.2}#s-sep .endbin{min-height:54px}#s-sep .factory{margin-top:2px}#s-sep .spgoal{gap:6px}#s-sep .spgoal .tag{padding:2px 10px}
+#s-sep .card{padding:10px 16px}#s-sep .clue{padding:6px 12px;margin:0 0 6px}#s-sep .clue b{font-size:20px!important}#s-sep .coach{margin:4px 0;padding:5px 10px;font-size:14.5px}#s-sep .spgoal{margin:4px 0}#s-sep .kh{margin:6px 0 4px}#s-sep #sxMsg{min-height:0}
+#s-balance.testing .bccard{padding-top:8px;padding-bottom:8px}#s-balance.testing .bccard .coach{margin:3px 0;padding:4px 10px}
 .cagoals li{padding:3px 8px!important} .oside ul.tests li{padding:3px 8px}
 .oside .carow .btn,.oside .btn{padding-top:6px;padding-bottom:6px}
 body:has(#s-laser:not([hidden]),#s-blackout:not([hidden]),#s-evidence:not([hidden]),#s-coaster:not([hidden])) .hud{margin-bottom:6px}
@@ -2105,6 +2218,7 @@ body.ingame .ngsvg.scsvg,.ngsvg.scsvg{display:block;width:100%;height:auto;max-h
 /* Field Golf */
 .fgslot{cursor:pointer}.fgslot.fixed{cursor:not-allowed}.fgslot:focus-visible{outline:none}.fgslot:focus-visible circle,.fgslot:focus-visible rect{stroke:#ffb703;stroke-width:4}
 .fgkey{font-size:12.5px;font-weight:700;color:#33405c}
+.fgflag{animation:fgwave 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:left center}@keyframes fgwave{50%{transform:skewY(7deg) scaleX(.9)}}@media (prefers-reduced-motion:reduce){.fgflag{animation:none}}
 .fglist{display:grid;gap:3px;font-size:14px}
 .fgtog{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;cursor:pointer}
 /* Wave Tuner */
@@ -2475,9 +2589,18 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
   <div class="play has-side">
     <div id="trTable"></div>
     <aside class="side">
-      <h2><i data-ic="question"></i>Mystery Element</h2>
+      <h2><i data-ic="question"></i>Mystery Element<span class="trpips" id="trPips" aria-hidden="true"><i></i><i></i><i></i><i></i></span></h2>
+      <div class="trcard" id="trCard" aria-live="polite">
+        <div class="trtile mys" id="trTile"><span class="trq">?</span></div>
+        <div class="trmeta">
+          <div class="trf" id="trfN"><small>Atomic #</small><b>?</b></div>
+          <div class="trf" id="trfS"><small>Symbol</small><b>?</b></div>
+          <div class="trf" id="trfP"><small>Period</small><b>?</b></div>
+          <div class="trf" id="trfG"><small>Group</small><b>?</b></div>
+        </div>
+        </div>
       <ol class="hints" id="trHints"></ol>
-      <div class="guessrow"><input type="text" id="trGuess" placeholder="Type a name or symbol" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
+      <div class="guessrow"><input type="text" id="trGuess" placeholder="Name, symbol, or click" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
       <p class="sub" style="margin:2px 0 0;font-size:13px">…or click the element on the table!</p>
       <button class="btn ghost" id="trHintBtn">Reveal next hint (−1 pt)</button>
       <div class="msg" id="trMsg"></div>
@@ -2754,6 +2877,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
       <div class="omain"><div class="lzwrap"><svg id="lzBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The laser maze"></svg></div></div>
       <div class="oside">
         <div class="infobox" id="lzIntro" hidden></div>
+        <div class="lzsign off" id="lzSign" role="status"><span class="lzbulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><b>LASER LAB</b><span class="lzst" id="lzSignSt">OFFLINE</span><span class="lzbulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
         <div class="spgoal" id="lzGoal"></div>
         <div class="osl"><span class="stepchip">1</span>Pieces <small>drag into the maze, or click a piece then a square</small></div>
         <div class="toolbox" id="lzTools"></div>
@@ -2798,6 +2922,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
     <div class="ogrid">
       <div class="omain">
         <div class="lzwrap"><svg id="boBoard" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The circuit board"></svg></div>
+        <div class="bocity"><svg id="boCity" viewBox="0 0 640 84" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The city skyline. Each district lights up when its lamp is on."></svg></div>
         <div class="lamps" id="boLamps"></div>
       </div>
       <div class="oside">
@@ -4949,7 +5074,7 @@ function setSyncBadge(){
   if(syncState==='offline'){t='Offline – saved on this device';cls='bad';ic='cloudoff';}
   else if(syncState==='authfail'){t='Log in again to save';cls='bad';ic='warning';}
   else if(waiting){t='Saving…';cls='wait';ic='clock';}
-  b.innerHTML=ART.ico(ic)+'<span>'+t+'</span>';b.className='sync '+cls;
+  b.innerHTML=ART.ico(ic)+'<span>'+t+'</span>';b.className='sync '+cls;b.title=t;b.setAttribute('aria-label',t);
 }
 let flushing=false;
 async function flushQueue(){
@@ -5375,11 +5500,29 @@ function trQuestion(){
 function renderHints(animate){
   $('trHints').replaceChildren(...T.hints.map((txt,i)=>{
     const open=i<T.shown||T.done;
-    return h('li',{class:'hint '+(open?'shown':'locked'),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
+    return h('li',{class:'hint h'+(i+1)+' '+(open?'shown':'locked')+(open&&!T.done&&i===T.shown-1?' fresh':''),style:animate&&i===T.shown-1&&!T.done?'':'animation:none'},
       h('b',null,`Hint ${i+1} · ${HINT_LABELS[i]}`),open?txt:[I('lock'),' Locked']);
   }));
   $('trWorth').textContent=T.done?0:5-T.shown;
   $('trHintBtn').disabled=T.done||T.shown>=4;
+  trCardFill(animate);
+}
+/* mystery card: fields fill in as the hints that give them away are revealed */
+function trCardFill(animate){
+  const e=T.target,k=T.shown,tile=$('trTile'),pips=$('trPips').children;
+  const set=(id,on,txt)=>{const f=$(id),b=f.lastChild,was=f.classList.contains('on');f.classList.toggle('on',on);b.textContent=on?txt:'?';
+    if(on&&!was&&animate&&!Art.reduced())Art.pop(f);};
+  const all=T.done;
+  set('trfP',all||k>=3,e.period);set('trfG',all||k>=4,e.group);set('trfN',all||k>=4,e.n);set('trfS',all||k>=4,e.sym);
+  for(let i=0;i<4;i++)pips[i].className=(!all&&i<5-k)?'on':'';
+  if(!T.done){tile.className='trtile mys';tile.replaceChildren(h('span',{class:'trq'},'?'));tile.style.removeProperty('--wob');}
+}
+/* solved reveal: the ? flips over into the real element tile */
+function trSolved(ok){
+  const e=T.target,tile=$('trTile');
+  tile.className='trtile rev cat-'+e.cat+(ok?' win':' miss');
+  tile.replaceChildren(h('i',{class:'trn'},e.n),h('b',{class:'trs'},e.sym),h('span',{class:'trnm'},e.name),h('span',{class:'trm'},e.mass.toFixed(e.mass<10?3:2)));
+  if(ok&&!Art.reduced())setTimeout(()=>{if(tile.isConnected)Art.burstAt(tile,{n:T.shown<=2?30:18,colors:['#ffd23f','#ff7a59','#4fc3f7','#a5e86b','#c792ea']});},380);
 }
 function trReveal(){if(T.done||T.shown>=4)return;T.shown++;renderHints(true);}
 $('trHintBtn').onclick=trReveal;
@@ -5415,7 +5558,7 @@ function trFinishQ(ok){
   T.results.push({e,pts,hints:T.shown,ok});bdTriviaQ(e.sym,ok,T.shown);
   if(!ok)bumpMissed(e.sym);
   trCells[e.n].classList.remove('out');trCells[e.n].classList.add('hit');
-  $('trScore').textContent=T.score;renderHints(false);
+  $('trScore').textContent=T.score;renderHints(false);trSolved(ok);
   const m=$('trMsg');m.className='msg '+(ok?'good':'bad');
   m.textContent=ok?`Yes! It's ${e.name} (${e.sym}). +${pts} point${pts===1?'':'s'}!`:`The answer was ${e.name} (${e.sym}). Study its spot on the table!`;
   if(ok){const k=T.shown,P=[null,['bulb','Genius! +4','great'],['star','Awesome! +3','great'],['check','Nice! +2','good'],['check','Phew! +1','good']][k];
@@ -7699,14 +7842,17 @@ function lzSvg(){
     else if(c==='t'||c==='u')s+=lzPiece('T',c==='t'?'/':'\\',cx,cy,'fixed');}
   /* beams */
   const seg=(k)=>tr.segs.map(q=>`<line x1="${q[0]*S+S/2}" y1="${q[1]*S+S/2}" x2="${q[2]*S+S/2}" y2="${q[3]*S+S/2}" ${k(q[4])}/>`).join('');
-  s+=`<g filter="url(#lzBlur)">${seg(i=>`stroke="#ff2e63" stroke-width="16" stroke-linecap="round" opacity="${.35+.45*i}"`)}</g>`+
+  s+=`<g class="lzbreathe" filter="url(#lzBlur)">${seg(i=>`stroke="#ff2e63" stroke-width="16" stroke-linecap="round" opacity="${.35+.45*i}"`)}</g>`+
      `<g>${seg(i=>`stroke="#ff5d7d" stroke-width="7" stroke-linecap="round" opacity="${.6+.4*i}"`)}${seg(i=>`stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity="${.7+.3*i}"`)}</g>`+
      `<g class="lzflow">${seg(i=>`stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="3 22" opacity="${.5+.4*i}"`)}</g>`;
+  /* flares where the beam bends or ends */
+  {const seen={};let fl='';tr.segs.forEach(q=>{[[q[2],q[3]]].forEach(([x,y])=>{const k=x+','+y;if(seen[k])return;seen[k]=1;const cx=x*S+S/2,cy=y*S+S/2;
+    fl+=`<circle cx="${cx}" cy="${cy}" r="15" fill="#ff8aa3" opacity=".55" class="lzflare"/><circle cx="${cx}" cy="${cy}" r="6" fill="#fff" opacity=".95"/>`;});});s+=`<g filter="url(#lzBlur)">${fl}</g>`;}
   /* laser, targets, alarms */
   const ls=L.laser,lcx=ls.x*S+S/2,lcy=ls.y*S+S/2,ang=Math.atan2(ls.dy,ls.dx)*180/Math.PI;
-  s+=`<g transform="rotate(${ang} ${lcx} ${lcy})"><rect x="${lcx-26}" y="${lcy-19}" width="48" height="38" rx="9" fill="#2c3550" stroke="#5a6794" stroke-width="2"/><rect x="${lcx+8}" y="${lcy-10}" width="22" height="20" rx="5" fill="#1a2036" stroke="#5a6794" stroke-width="2"/><circle cx="${lcx+31}" cy="${lcy}" r="7" fill="#ff5d7d"/><circle cx="${lcx+31}" cy="${lcy}" r="3" fill="#fff"/><circle cx="${lcx-12}" cy="${lcy}" r="5" fill="#37e0c1"/></g>`;
+  s+=`<g transform="rotate(${ang} ${lcx} ${lcy})"><rect x="${lcx-26}" y="${lcy-19}" width="48" height="38" rx="9" fill="#2c3550" stroke="#5a6794" stroke-width="2"/><rect x="${lcx+8}" y="${lcy-10}" width="22" height="20" rx="5" fill="#1a2036" stroke="#5a6794" stroke-width="2"/><circle cx="${lcx+31}" cy="${lcy}" r="15" fill="#ff5d7d" opacity=".45" class="lzflare"/><circle cx="${lcx+31}" cy="${lcy}" r="7" fill="#ff5d7d"/><circle cx="${lcx+31}" cy="${lcy}" r="3" fill="#fff"/><circle cx="${lcx-12}" cy="${lcy}" r="5" fill="#37e0c1"/></g>`;
   L.targets.forEach(t=>{const cx=t.x*S+S/2,cy=t.y*S+S/2,on=tr.lit[lzKey(t.x,t.y)];
-    s+=on?`<circle cx="${cx}" cy="${cy}" r="34" fill="url(#lzGlow)" class="lzpulse"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="url(#lzGem)" stroke="#fff3b8" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".35"/>`
+    s+=on?`<circle cx="${cx}" cy="${cy}" r="34" fill="url(#lzGlow)" class="lzpulse"/><g class="lzrays" style="transform-origin:${cx}px ${cy}px"><path d="M${cx} ${cy-38}L${cx+4} ${cy-6}L${cx+38} ${cy}L${cx+4} ${cy+6}L${cx} ${cy+38}L${cx-4} ${cy+6}L${cx-38} ${cy}L${cx-4} ${cy-6}Z" fill="#fff3b8" opacity=".55"/></g><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="url(#lzGem)" stroke="#fff3b8" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".35"/>`
     :`<polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="#4a587a" stroke="#8b9abf" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".12"/>`;});
   L.alarms.forEach(a=>{const cx=a.x*S+S/2,cy=a.y*S+S/2,on=tr.hit[lzKey(a.x,a.y)];
     s+=(on?`<circle cx="${cx}" cy="${cy}" r="36" fill="url(#lzRed)" class="lzpulse fast"/>`:'')+`<rect x="${cx-19}" y="${cy+8}" width="38" height="11" rx="4" fill="#3a4263"/><path d="M${cx-17} ${cy+9}a17 17 0 0 1 34 0z" fill="${on?'#ff2d4d':'#7a2638'}" stroke="${on?'#ffd0d8':'#a74a5d'}" stroke-width="2"/><rect x="${cx-4}" y="${cy-9}" width="8" height="12" rx="3" fill="#fff" opacity="${on?.9:.3}"/>`;});
@@ -7736,8 +7882,15 @@ function lzRender(){
     return b;}),
     h('button',{class:'tool'+(LZ.tool==='X'?' on':''),title:'Remove tool: click a piece to take it back.',onclick:()=>{LZ.tool=LZ.tool==='X'?null:'X';lzRender();}},
       h('span',{class:'ti'},svgEl(lzIcon('X',30))),h('span',null,h('b',null,'Remove'),h('small',null,'Click a piece to take it back'))));
+  const prevLit=LZ.litSet||{};
   lzSvg();lzCoach();lzHintUI();
   const tr=LZ.tr;
+  /* crystals that just lit up burst */
+  {const r=$('lzBoard').getBoundingClientRect();LZ.litSet={};
+   L.targets.forEach(t=>{const k=lzKey(t.x,t.y);if(!tr.lit[k])return;LZ.litSet[k]=1;
+     if(!prevLit[k]&&r.width&&!Art.reduced())Art.burst(r.left+(t.x+.5)/L.W*r.width,r.top+(t.y+.5)/L.H*r.height,{n:16,colors:['#fff3b8','#ffd23f','#ff8aa3','#ffffff']});});}
+  {const on=tr.ok&&lzUsed()>0,sg=$('lzSign');if(sg){const was=sg.classList.contains('on');sg.classList.toggle('on',on);sg.classList.toggle('off',!on);
+    $('lzSignSt').textContent=on?'ONLINE':'OFFLINE';if(on&&!was&&!Art.reduced())Art.pop(sg);}}
   if(tr.ok&&lzUsed()>0){if(!LZ.solved){LZ.solved=true;lzWin();}}
   else if(LZ.solved){LZ.solved=false;$('lzResult').hidden=true;}
 }
@@ -7979,26 +8132,49 @@ function renderBlackoutSetup(){renderLevelPicker($('boLevels'),$('boTotal'),'bla
 function boStart(i){
   const L=BO_LEVELS[i];BO={i,parts:{},tool:null,hint:0,results:null,view:null,swn:0,solved:false,testing:false};
   Object.keys(L.fixed).forEach(k=>{BO.parts[k]=Object.assign({fixed:true,open:false},L.fixed[k]);});
-  show('s-blackout');$('boMsg').textContent='';$('boResult').hidden=true;boRender();
+  show('s-blackout');$('boMsg').textContent='';$('boResult').hidden=true;boCityBuild();boRender();
 }
 function boLiveParts(){return BO.parts;}
 function boSim(){const L=boCur(),v=BO.view;return boSolve(L,BO.parts,{useState:!v,burn:v?v.burn:[],open:v?v.open:[]});}
 function boSay(t,kind){const c=$('boCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+/* city skyline: one district per lamp; windows light up as that lamp glows, and all districts light in turn at the win */
+function boCityBuild(){
+  const L=boCur(),ids=Object.keys(L.names||{}).length?Object.keys(L.names):[...Object.values(L.fixed||{}),...Object.values(L.sol.parts)].filter(p=>p.t==='L').map(p=>p.id),n=Math.max(1,ids.length),W=640,dw=W/n;
+  let s=`<defs><linearGradient id="boSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1226"/><stop offset="1" stop-color="#1b2748"/></linearGradient><radialGradient id="boDG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".8"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient></defs><rect width="${W}" height="84" rx="12" fill="url(#boSky)"/>`;
+  for(let i=0;i<22;i++)s+=`<circle cx="${(i*97+13)%W}" cy="${(i*31+7)%34+4}" r="${i%3?.9:1.4}" fill="#fff" opacity="${.25+(i%4)*.12}"/>`;
+  ids.forEach((id,i)=>{const x0=i*dw,nb=dw>200?5:4,bw=(dw-16)/nb;
+    s+=`<g class="bodist" data-id="${id}" style="--d:${i}"><ellipse class="glow" cx="${x0+dw/2}" cy="58" rx="${dw*.46}" ry="34" fill="url(#boDG)"/>`;
+    for(let j=0;j<nb;j++){const bh=24+((i*37+j*53)%30),bx=x0+8+j*bw,by=70-bh,bwd=bw-3;
+      s+=`<rect class="bd" x="${bx}" y="${by}" width="${bwd}" height="${bh}" rx="2"/>`;
+      const cols=Math.max(1,Math.floor((bwd-5)/7)),rows=Math.max(1,Math.floor((bh-6)/9));
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const wx=bx+4+c*((bwd-8)/Math.max(1,cols)+.2),k=(r*5+c*3+j+i)%5;
+        s+=`<rect class="w${k%2?' a':''}" style="--o:${k}" x="${wx.toFixed(1)}" y="${by+5+r*9}" width="3.6" height="4.6" rx=".8"/>`;}}
+    s+=`<text x="${x0+dw/2}" y="81" text-anchor="middle" font-size="8.5" font-weight="800" fill="#8d97b5" font-family="system-ui">${(L.names[id]||id).toUpperCase()}</text></g>`;});
+  s+=`<rect y="70" width="${W}" height="3" fill="#33406a"/><text id="boCityTxt" x="12" y="14" font-size="10.5" font-weight="800" fill="#8d97b5" letter-spacing="1" font-family="system-ui">CITY POWER: OFF</text>`;
+  $('boCity').innerHTML=s;
+}
+function boCityUpdate(){
+  const sv=$('boCity');if(!sv||!BO||!BO.sim)return;const won=!!BO.solved;let lit=0,tot=0;
+  sv.classList.toggle('won',won);sv.parentNode.style.maxWidth=$('boBoard').style.maxWidth;
+  sv.querySelectorAll('.bodist').forEach(g=>{const l=BO.sim.lamps[g.dataset.id],on=l&&l.level>0;tot++;if(on)lit++;g.classList.toggle('on',won);g.classList.toggle('half',!won&&!!on);});
+  const t=$('boCityTxt');if(t){t.textContent=won?'CITY RELIT':lit?`CITY POWER: ${lit} OF ${tot} DISTRICTS`:'CITY POWER: OFF';t.setAttribute('fill',won?'#ffd76a':lit?'#c9b36a':'#8d97b5');}
+}
 function boPartG(k,p,sim,view){
   const e=boEnds(k),a=e[0],b=e[1],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,ang=k[0]==='h'?0:90,I=sim.cur[k]||0,flow=Math.abs(I)>0.04;
   const wst=`stroke="#7a4616" stroke-width="10" stroke-linecap="round"`,wst2=`stroke="${flow?'#ffc56b':'#e59b52'}" stroke-width="5.5" stroke-linecap="round"`;
   const cls=p.fixed?'bofix':'bopl';
+  const gl=flow?`<line class="boglow" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#ffb347" stroke-width="20" stroke-linecap="round"/>`:'';
   if(p.t==='w'){
-    let s=`<g class="${cls}"><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst}/><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst2}/>`;
+    let s=gl+`<g class="${cls}"><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst}/><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst2}/>`;
     if(flow)s+=`<line class="boflow${I<0?' rev':''}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 17" style="animation-duration:${Math.max(.35,Math.min(1.6,1.4/Math.abs(I)))}s"/>`;
     return s+'</g>';}
-  let g=`<g class="${cls}" transform="translate(${mx} ${my}) rotate(${ang})"><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst}/><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst2}/>`;
+  let g=(p.t!=='B'?gl:'')+`<g class="${cls}" transform="translate(${mx} ${my}) rotate(${ang})"><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst}/><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst2}/>`;
   let extra='';
   if(p.t==='L'){
     const L0=sim.lamps[p.id],lv=L0?L0.level:0,burnt=view&&view.burn&&view.burn.indexOf(p.id)>=0,r=L0?Math.min(1,L0.ratio/2.2):0;
     if(burnt){g+=`<circle r="25" fill="#2a2f45" stroke="#5a6285" stroke-width="3"/><path d="M-10 8l5-12 5 10 5-12 5 12" stroke="#7a7f99" stroke-width="2" fill="none"/><path d="M-14 -14l28 28M14 -14l-28 28" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round"/>`;}
     else{
-      if(lv>0)extra=`<circle cx="${mx}" cy="${my}" r="${34+r*46}" fill="url(#boGlow)" opacity="${.35+.65*Math.min(1,r*1.6)}"/>`;
+      if(lv>0)extra=`<circle cx="${mx}" cy="${my}" r="${34+r*46}" fill="url(#boGlow)" class="bobreathe" opacity="${.35+.65*Math.min(1,r*1.6)}"/>`;
       g+=`<circle r="25" fill="${lv?(lv>=3?'#fff6cf':'#ffe9a3'):'#3a4263'}" fill-opacity="${lv?.55+Math.min(.45,r):0.9}" stroke="${lv?'#ffd76a':'#6b7595'}" stroke-width="3"/><path d="M-11 9l5-13 5 11 5-13 5 13" stroke="${lv?'#ff8a1e':'#7f89aa'}" stroke-width="${lv?3:2.4}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;}
   }else if(p.t==='S'){
     const op=(!view&&p.open)||(view&&(view.open==='*'||(Array.isArray(view.open)&&view.open.indexOf(p.id)>=0)));
@@ -8060,7 +8236,7 @@ function boRender(){
   const S=BO.sim;
   $('boLamps').replaceChildren(...Object.keys(BO.parts).filter(k=>BO.parts[k].t==='L').map(k=>{const id=BO.parts[k].id,lv=S.lamps[id]?S.lamps[id].level:0,burnt=BO.view&&BO.view.burn&&BO.view.burn.indexOf(id)>=0;
     return h('span',{class:'lampchip'+(lv?' on':'')+(burnt?' burnt':'')},svgEl(boIcon('L',20)),` ${d.names[id]||id}: `,h('b',null,burnt?'burned out':BO_STATE[lv]));}));
-  boTestsUI();boCoach();boHintUI();
+  boTestsUI();boCoach();boHintUI();boCityUpdate();
   $('boTest').disabled=BO.testing;$('boTest').classList.toggle('pulse',!BO.testing&&!BO.results&&boPlacedCount()>0);
 }
 function boCoach(){
@@ -8097,7 +8273,7 @@ async function boRunTests(){
 }
 function boWin(){
   const d=boCur(),n=boPlacedCount(),par=Object.keys(d.sol.parts).length,stars=n<=par?3:n<=par+2?2:1;
-  BO.solved=true;
+  BO.solved=true;boCityUpdate();
   if(!(BO.rec>=stars)){BO.rec=stars;recordStars('blackout',BO.i+1,stars,{parts:n,par});}
   fx.pop({icon:'bolt',text:stars===3?'City relit!':'Lights on!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
   levelResult($('boResult'),{stars,next:BO.i+1<BO_N,
@@ -16549,14 +16725,34 @@ const FG_LEVELS=[
 const FG_PACKS={0:'Pack 1: Push and pull',3:'Pack 2: Distance and size',6:'Pack 3: Fields and magnets'};
 const FG_DIR=[['up','Bends up ↑'],['straight','Goes straight →'],['down','Bends down ↓']];
 function fgBoard(G){
-  const L=G.L,S=G.st,set=S.set.map(fgQ);let t=`<rect width="${FG_W}" height="${FG_H}" fill="#0f5132"/><rect x="0" y="0" width="${FG_W}" height="8" fill="#3a2a1a"/><rect x="0" y="${FG_H-8}" width="${FG_W}" height="8" fill="#3a2a1a"/>`;
+  const L=G.L,S=G.st,set=S.set.map(fgQ);let t=`<defs><linearGradient id="fgTurf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17703f"/><stop offset=".5" stop-color="#11593a"/><stop offset="1" stop-color="#0d4a30"/></linearGradient>`+
+    `<pattern id="fgBlade" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M1.5 8l.8-3.4M5.6 7l.8-3M7.6 3.2l.6-2.2" stroke="#2f9a5d" stroke-width="1" stroke-linecap="round" opacity=".45"/></pattern>`+
+    `<radialGradient id="fgHr"><stop offset="0" stop-color="#ff5a4d" stop-opacity=".55"/><stop offset="1" stop-color="#ff5a4d" stop-opacity="0"/></radialGradient>`+
+    `<radialGradient id="fgHb"><stop offset="0" stop-color="#4f86ff" stop-opacity=".55"/><stop offset="1" stop-color="#4f86ff" stop-opacity="0"/></radialGradient>`+
+    `<radialGradient id="fgBall" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#e9edf5"/><stop offset="1" stop-color="#b7c0d1"/></radialGradient>`+
+    `<radialGradient id="fgSteel" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#c3cad5"/><stop offset="1" stop-color="#7d8798"/></radialGradient>`+
+    `<radialGradient id="fgHalo"><stop offset="0" stop-color="#ffe27a" stop-opacity=".8"/><stop offset="1" stop-color="#ffe27a" stop-opacity="0"/></radialGradient>`+
+    `<linearGradient id="fgWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3f26"/><stop offset="1" stop-color="#3a2a1a"/></linearGradient>`+
+    `<linearGradient id="fgShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>`+
+    `<rect width="${FG_W}" height="${FG_H}" fill="url(#fgTurf)"/>`+
+    Array.from({length:Math.ceil(FG_W/52)},(_,i)=>i%2?`<rect x="${i*52}" y="0" width="52" height="${FG_H}" fill="#fff" opacity=".045"/>`:'').join('')+
+    `<rect width="${FG_W}" height="${FG_H}" fill="url(#fgBlade)"/>`+
+    `<rect x="0" y="0" width="${FG_W}" height="8" fill="url(#fgWood)"/><rect x="0" y="${FG_H-8}" width="${FG_W}" height="8" fill="url(#fgWood)"/><rect x="0" y="8" width="${FG_W}" height="16" fill="url(#fgShade)"/>`+
+    `<rect x="${FG_X0-18}" y="${FG_Y0-16}" width="44" height="32" rx="8" fill="#1f8a52" opacity=".85" stroke="#7fd6a6" stroke-width="1.5" stroke-opacity=".6"/><text x="${FG_X0+4}" y="${FG_Y0+30}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#bff0d4" opacity=".8" letter-spacing="1">TEE</text>`;
   if(S.field){const src=L.slots.map((s,i)=>({x:s[1],y:s[2],q:s[4]!=null?s[4]:set[i]})).filter(s=>s.q);
     for(let gx=40;gx<FG_W;gx+=40)for(let gy=30;gy<FG_H;gy+=36){let fx=0,fy=0;src.forEach(s=>{const dx=gx-s.x,dy=gy-s.y,r=Math.max(16,Math.hypot(dx,dy)),q=L.steel?-Math.abs(s.q):s.q;fx+=q*dx/r**3;fy+=q*dy/r**3;});
       const m=Math.hypot(fx,fy);if(m<1e-6)continue;const ux=fx/m,uy=fy/m,len=Math.min(14,4+Math.log10(m*1e5+1)*3);
       t+=`<path d="M${gx-ux*len/2} ${gy-uy*len/2}L${gx+ux*len/2} ${gy+uy*len/2}" stroke="#bff0d4" stroke-width="1.6" opacity=".55" marker-end="url(#fga)"/>`;}}
-  t+=`<rect x="${FG_X1}" y="${L.hole-20}" width="20" height="40" fill="#0a2a1a"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="14" fill="#06150d"/><path d="M${FG_X1+6} ${L.hole-14}v-26" stroke="#fff" stroke-width="2"/><path d="M${FG_X1+6} ${L.hole-40}l16 6-16 6z" fill="#e2483f"/>`;
+  t+=`<ellipse cx="${FG_X1+4}" cy="${L.hole+2}" rx="40" ry="38" fill="#1f8a52" opacity=".55"/><ellipse cx="${FG_X1+7}" cy="${L.hole+4}" rx="17" ry="14" fill="#000" opacity=".35"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="15.5" fill="#e8f5ec" opacity=".85"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="13.5" fill="#06150d"/><path d="M${FG_X1-4} ${L.hole-4}a12 12 0 0 1 20 0" stroke="#000" stroke-opacity=".5" stroke-width="3" fill="none"/>`+
+    `<path d="M${FG_X1+6} ${L.hole}V${L.hole-Math.max(24,Math.min(46,L.hole-16))}" stroke="#f4f1e8" stroke-width="2.6" stroke-linecap="round"/><path class="fgflag" d="M${FG_X1+7} ${L.hole-Math.max(24,Math.min(46,L.hole-16))}q9 -3 18 1t-18 9z" fill="#e2483f" stroke="#a82a22" stroke-width="1"/>`;
+  L.slots.forEach((sl,i)=>{const v=sl[4]!=null?sl[4]:S.set[i];if(!v)return;const q=fgQ(v),R=Math.abs(q)>1?104:76,pos=v==='N'||(typeof v==='number'&&v>0);
+    t+=`<circle cx="${sl[1]}" cy="${sl[2]}" r="${R}" fill="url(#${pos?'fgHr':'fgHb'})"/><circle cx="${sl[1]}" cy="${sl[2]}" r="${R*.5}" fill="none" stroke="${pos?'#ff9a90':'#9db9ff'}" stroke-width="1.2" stroke-dasharray="3 5" opacity=".5"/><circle cx="${sl[1]}" cy="${sl[2]}" r="${R*.8}" fill="none" stroke="${pos?'#ff9a90':'#9db9ff'}" stroke-width="1" stroke-dasharray="2 7" opacity=".3"/>`;});
   t+=`<path d="M${FG_X0} ${FG_Y0}H${FG_X1}" stroke="#fff" stroke-dasharray="3 8" opacity=".3"/>`;
-  if(S.path)t+=`<polyline points="${S.path.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#ffd34d" stroke-width="3" stroke-linecap="round" opacity=".9"/>`;
+  if(S.path&&S.path.length>1){const P=S.path,pl=a=>a.map(p=>p.join(',')).join(' ');
+    t+=`<polyline points="${pl(P)}" fill="none" stroke="#ffe27a" stroke-width="2.2" stroke-dasharray="1 7" stroke-linecap="round" opacity=".6"/>`;
+    const tail=P.slice(-40),q=Math.ceil(tail.length/4);
+    for(let j=0;j<4;j++){const seg=tail.slice(Math.max(0,j*q-1),(j+1)*q);if(seg.length<2)continue;
+      t+=`<polyline points="${pl(seg)}" fill="none" stroke="#fff4b8" stroke-width="${4+j*3.2}" stroke-linecap="round" stroke-linejoin="round" opacity="${.12+j*.14}"/>`;}}
   L.slots.forEach((s,i)=>{const v=s[4]!=null?s[4]:S.set[i],fixed=s[4]!=null,big=Math.abs(fgQ(v)||0)>1;
     t+=`<g class="fgslot${fixed?' fixed':''}" data-i="${i}" role="button" tabindex="${fixed?-1:0}" aria-label="Spot ${s[0]}: ${fgName(v)}">`;
     if(!v)t+=`<circle cx="${s[1]}" cy="${s[2]}" r="20" fill="none" stroke="#bff0d4" stroke-width="2.5" stroke-dasharray="5 5"/><text x="${s[1]}" y="${s[2]+5}" text-anchor="middle" font-size="13" font-weight="800" fill="#bff0d4">tap</text>`;
@@ -16564,7 +16760,7 @@ function fgBoard(G){
     else{const pos=v>0;t+=`<circle cx="${s[1]}" cy="${s[2]}" r="${big?22:17}" fill="${pos?'#e2483f':'#2f6bff'}" stroke="#fff" stroke-width="${fixed?4:2}" ${fixed?'stroke-dasharray="4 3"':''}/><text x="${s[1]}" y="${s[2]+7}" text-anchor="middle" font-size="${big?24:20}" font-weight="900" fill="#fff">${pos?'+':'−'}</text>`;}
     t+='</g>';});
   const bx=S.ball?S.ball[0]:FG_X0,by=S.ball?S.ball[1]:FG_Y0;
-  t+=`<circle cx="${bx}" cy="${by}" r="10" fill="${L.steel?'#c3cad5':'#fff'}" stroke="#333" stroke-width="1.5"/>`+(L.steel?'':`<text x="${bx}" y="${by+5}" text-anchor="middle" font-size="13" font-weight="900" fill="#e2483f">+</text>`);
+  t+=(S.running?`<circle cx="${bx}" cy="${by}" r="26" fill="url(#fgHalo)"/>`:'')+`<ellipse cx="${bx+3}" cy="${by+9}" rx="9" ry="3.6" fill="#000" opacity=".35"/><circle cx="${bx}" cy="${by}" r="10" fill="url(#${L.steel?'fgSteel':'fgBall'})" stroke="#2a3140" stroke-width="1.4"/>`+(L.steel?'':`<text x="${bx}" y="${by+5}" text-anchor="middle" font-size="13" font-weight="900" fill="#e2483f">+</text>`)+`<circle cx="${bx-3.5}" cy="${by-4}" r="2.2" fill="#fff" opacity=".85"/>`;
   if(S.boom)t+=`<text x="${bx}" y="${by-14}" text-anchor="middle" font-size="22">💥</text>`;
   return ngSvg(FG_W,FG_H,`<defs><marker id="fga" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5 0 10z" fill="#bff0d4"/></marker></defs>`+t,'ngsvg fgsvg','The field golf course');
 }

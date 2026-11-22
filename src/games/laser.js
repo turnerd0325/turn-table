@@ -185,14 +185,17 @@ function lzSvg(){
     else if(c==='t'||c==='u')s+=lzPiece('T',c==='t'?'/':'\\',cx,cy,'fixed');}
   /* beams */
   const seg=(k)=>tr.segs.map(q=>`<line x1="${q[0]*S+S/2}" y1="${q[1]*S+S/2}" x2="${q[2]*S+S/2}" y2="${q[3]*S+S/2}" ${k(q[4])}/>`).join('');
-  s+=`<g filter="url(#lzBlur)">${seg(i=>`stroke="#ff2e63" stroke-width="16" stroke-linecap="round" opacity="${.35+.45*i}"`)}</g>`+
+  s+=`<g class="lzbreathe" filter="url(#lzBlur)">${seg(i=>`stroke="#ff2e63" stroke-width="16" stroke-linecap="round" opacity="${.35+.45*i}"`)}</g>`+
      `<g>${seg(i=>`stroke="#ff5d7d" stroke-width="7" stroke-linecap="round" opacity="${.6+.4*i}"`)}${seg(i=>`stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity="${.7+.3*i}"`)}</g>`+
      `<g class="lzflow">${seg(i=>`stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="3 22" opacity="${.5+.4*i}"`)}</g>`;
+  /* flares where the beam bends or ends */
+  {const seen={};let fl='';tr.segs.forEach(q=>{[[q[2],q[3]]].forEach(([x,y])=>{const k=x+','+y;if(seen[k])return;seen[k]=1;const cx=x*S+S/2,cy=y*S+S/2;
+    fl+=`<circle cx="${cx}" cy="${cy}" r="15" fill="#ff8aa3" opacity=".55" class="lzflare"/><circle cx="${cx}" cy="${cy}" r="6" fill="#fff" opacity=".95"/>`;});});s+=`<g filter="url(#lzBlur)">${fl}</g>`;}
   /* laser, targets, alarms */
   const ls=L.laser,lcx=ls.x*S+S/2,lcy=ls.y*S+S/2,ang=Math.atan2(ls.dy,ls.dx)*180/Math.PI;
-  s+=`<g transform="rotate(${ang} ${lcx} ${lcy})"><rect x="${lcx-26}" y="${lcy-19}" width="48" height="38" rx="9" fill="#2c3550" stroke="#5a6794" stroke-width="2"/><rect x="${lcx+8}" y="${lcy-10}" width="22" height="20" rx="5" fill="#1a2036" stroke="#5a6794" stroke-width="2"/><circle cx="${lcx+31}" cy="${lcy}" r="7" fill="#ff5d7d"/><circle cx="${lcx+31}" cy="${lcy}" r="3" fill="#fff"/><circle cx="${lcx-12}" cy="${lcy}" r="5" fill="#37e0c1"/></g>`;
+  s+=`<g transform="rotate(${ang} ${lcx} ${lcy})"><rect x="${lcx-26}" y="${lcy-19}" width="48" height="38" rx="9" fill="#2c3550" stroke="#5a6794" stroke-width="2"/><rect x="${lcx+8}" y="${lcy-10}" width="22" height="20" rx="5" fill="#1a2036" stroke="#5a6794" stroke-width="2"/><circle cx="${lcx+31}" cy="${lcy}" r="15" fill="#ff5d7d" opacity=".45" class="lzflare"/><circle cx="${lcx+31}" cy="${lcy}" r="7" fill="#ff5d7d"/><circle cx="${lcx+31}" cy="${lcy}" r="3" fill="#fff"/><circle cx="${lcx-12}" cy="${lcy}" r="5" fill="#37e0c1"/></g>`;
   L.targets.forEach(t=>{const cx=t.x*S+S/2,cy=t.y*S+S/2,on=tr.lit[lzKey(t.x,t.y)];
-    s+=on?`<circle cx="${cx}" cy="${cy}" r="34" fill="url(#lzGlow)" class="lzpulse"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="url(#lzGem)" stroke="#fff3b8" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".35"/>`
+    s+=on?`<circle cx="${cx}" cy="${cy}" r="34" fill="url(#lzGlow)" class="lzpulse"/><g class="lzrays" style="transform-origin:${cx}px ${cy}px"><path d="M${cx} ${cy-38}L${cx+4} ${cy-6}L${cx+38} ${cy}L${cx+4} ${cy+6}L${cx} ${cy+38}L${cx-4} ${cy+6}L${cx-38} ${cy}L${cx-4} ${cy-6}Z" fill="#fff3b8" opacity=".55"/></g><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="url(#lzGem)" stroke="#fff3b8" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".35"/>`
     :`<polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy+24} ${cx-18},${cy}" fill="#4a587a" stroke="#8b9abf" stroke-width="2.4"/><polygon points="${cx},${cy-24} ${cx+18},${cy} ${cx},${cy-3} ${cx-18},${cy}" fill="#fff" opacity=".12"/>`;});
   L.alarms.forEach(a=>{const cx=a.x*S+S/2,cy=a.y*S+S/2,on=tr.hit[lzKey(a.x,a.y)];
     s+=(on?`<circle cx="${cx}" cy="${cy}" r="36" fill="url(#lzRed)" class="lzpulse fast"/>`:'')+`<rect x="${cx-19}" y="${cy+8}" width="38" height="11" rx="4" fill="#3a4263"/><path d="M${cx-17} ${cy+9}a17 17 0 0 1 34 0z" fill="${on?'#ff2d4d':'#7a2638'}" stroke="${on?'#ffd0d8':'#a74a5d'}" stroke-width="2"/><rect x="${cx-4}" y="${cy-9}" width="8" height="12" rx="3" fill="#fff" opacity="${on?.9:.3}"/>`;});
@@ -222,8 +225,15 @@ function lzRender(){
     return b;}),
     h('button',{class:'tool'+(LZ.tool==='X'?' on':''),title:'Remove tool: click a piece to take it back.',onclick:()=>{LZ.tool=LZ.tool==='X'?null:'X';lzRender();}},
       h('span',{class:'ti'},svgEl(lzIcon('X',30))),h('span',null,h('b',null,'Remove'),h('small',null,'Click a piece to take it back'))));
+  const prevLit=LZ.litSet||{};
   lzSvg();lzCoach();lzHintUI();
   const tr=LZ.tr;
+  /* crystals that just lit up burst */
+  {const r=$('lzBoard').getBoundingClientRect();LZ.litSet={};
+   L.targets.forEach(t=>{const k=lzKey(t.x,t.y);if(!tr.lit[k])return;LZ.litSet[k]=1;
+     if(!prevLit[k]&&r.width&&!Art.reduced())Art.burst(r.left+(t.x+.5)/L.W*r.width,r.top+(t.y+.5)/L.H*r.height,{n:16,colors:['#fff3b8','#ffd23f','#ff8aa3','#ffffff']});});}
+  {const on=tr.ok&&lzUsed()>0,sg=$('lzSign');if(sg){const was=sg.classList.contains('on');sg.classList.toggle('on',on);sg.classList.toggle('off',!on);
+    $('lzSignSt').textContent=on?'ONLINE':'OFFLINE';if(on&&!was&&!Art.reduced())Art.pop(sg);}}
   if(tr.ok&&lzUsed()>0){if(!LZ.solved){LZ.solved=true;lzWin();}}
   else if(LZ.solved){LZ.solved=false;$('lzResult').hidden=true;}
 }

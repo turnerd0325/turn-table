@@ -485,6 +485,7 @@ body.ingame .ngsvg.scsvg,.ngsvg.scsvg{display:block;width:100%;height:auto;max-h
 /* Field Golf */
 .fgslot{cursor:pointer}.fgslot.fixed{cursor:not-allowed}.fgslot:focus-visible{outline:none}.fgslot:focus-visible circle,.fgslot:focus-visible rect{stroke:#ffb703;stroke-width:4}
 .fgkey{font-size:12.5px;font-weight:700;color:#33405c}
+.fgflag{animation:fgwave 1.3s ease-in-out infinite;transform-box:fill-box;transform-origin:left center}@keyframes fgwave{50%{transform:skewY(7deg) scaleX(.9)}}@media (prefers-reduced-motion:reduce){.fgflag{animation:none}}
 .fglist{display:grid;gap:3px;font-size:14px}
 .fgtog{display:flex;align-items:center;gap:6px;font-weight:700;font-size:13.5px;cursor:pointer}
 /* Wave Tuner */

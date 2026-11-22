@@ -1,0 +1,58 @@
+/* Element Trivia: mystery card, hint reveal, solved flip */
+#s-trivia .trcard{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:center;padding:10px;margin:0 0 8px;border-radius:16px;color:#fff;
+  background:radial-gradient(120% 140% at 15% 0%,#33457a 0%,#17213f 62%,#0f1730 100%);box-shadow:0 6px 16px rgba(20,33,61,.28),inset 0 1px 0 rgba(255,255,255,.14)}
+#s-trivia .trtile{position:relative;width:76px;height:76px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1;color:#14213d;
+  box-shadow:0 4px 0 rgba(0,0,0,.28),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile.mys{background:linear-gradient(160deg,#4a5d99,#26335f);color:#cfdcff;border:2px dashed rgba(255,255,255,.38);animation:trfloat 3.2s ease-in-out infinite}
+#s-trivia .trq{font-size:46px;text-shadow:0 0 14px rgba(140,180,255,.9)}
+#s-trivia .trtile.rev{border:3px solid #fff;animation:trflip .7s cubic-bezier(.2,.9,.25,1.15) both}
+#s-trivia .trtile.rev.win{box-shadow:0 0 0 4px rgba(255,210,63,.85),0 0 28px 6px rgba(255,210,63,.65),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile.rev.miss{box-shadow:0 0 0 4px rgba(255,107,107,.8),0 8px 18px rgba(0,0,0,.35)}
+#s-trivia .trtile .trn{position:absolute;top:5px;left:7px;font-size:12px;font-style:normal;opacity:.75}
+#s-trivia .trtile .trs{font-size:38px;margin-top:2px}
+#s-trivia .trtile .trnm{font-size:11.5px;margin-top:3px;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#s-trivia .trtile .trm{position:absolute;bottom:3px;font-size:9px;opacity:.65;font-weight:700}
+#s-trivia .trtile.cat-alkali{background:#f29a92}#s-trivia .trtile.cat-alkaline{background:#f4bd85}
+#s-trivia .trtile.cat-transition{background:#f1dc8f}#s-trivia .trtile.cat-post{background:#b9d995}
+#s-trivia .trtile.cat-metalloid{background:#87cfb9}#s-trivia .trtile.cat-nonmetal{background:#96c5ea}
+#s-trivia .trtile.cat-halogen{background:#b7a8ec}#s-trivia .trtile.cat-noble{background:#e6a3d2}
+#s-trivia .trtile.cat-lanthanide{background:#f3c3cf}#s-trivia .trtile.cat-actinide{background:#d6c3a4}
+#s-trivia .trmeta{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#s-trivia .trf{background:rgba(255,255,255,.08);border:1px dashed rgba(255,255,255,.25);border-radius:9px;padding:4px 8px;display:flex;flex-direction:column;gap:1px;transition:background .25s,border-color .25s}
+#s-trivia .trf small{font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;opacity:.7;font-weight:700}
+#s-trivia .trf b{font-size:17px;color:#9fb4e6}
+#s-trivia .trf.on{background:rgba(255,210,63,.18);border:1px solid rgba(255,210,63,.7)}
+#s-trivia .trf.on b{color:#ffe27a}
+#s-trivia .side h2{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:20px}
+#s-trivia .trpips{display:flex;gap:5px;align-items:center;margin-left:auto}
+#s-trivia .trpips::before{content:"Worth";font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted,#6b7a99);margin-right:4px;font-weight:700}
+#s-trivia .trpips i{width:15px;height:15px;border-radius:50%;background:#e3e9f5;border:2px solid #c9d3e8;transition:all .3s}
+#s-trivia .trpips i.on{background:radial-gradient(circle at 35% 30%,#fff3b0,#ffc83d 55%,#e09a10);border-color:#fff3b0;box-shadow:0 0 10px rgba(255,210,63,.8)}
+#s-trivia .hint{padding:6px 10px;font-size:14px;line-height:1.3;position:relative;transition:background .3s,border-color .3s,box-shadow .3s}
+#s-trivia .hint.shown{animation:none}
+#s-trivia .hint.fresh{animation:trhint .5s cubic-bezier(.2,.9,.3,1.2) both;border-color:#5b8def;box-shadow:0 0 0 3px rgba(91,141,239,.22),0 4px 10px rgba(91,141,239,.2)}
+#s-trivia .hint.h4.shown{background:linear-gradient(90deg,#fff3d1,#ffe7a8);border-color:#f2b94b}
+#s-trivia .hint.h4.shown b{color:#b46a00}
+#s-trivia .hint.locked{background:repeating-linear-gradient(135deg,#f2f5fb 0 8px,#eaeff8 8px 16px)}
+#s-trivia #trTable .el.hit{animation:trpulse 1s ease-in-out 3}
+@keyframes trfloat{50%{transform:translateY(-3px)}}
+@keyframes trflip{0%{transform:perspective(400px) rotateY(90deg) scale(.7)}60%{transform:perspective(400px) rotateY(-12deg) scale(1.08)}100%{transform:perspective(400px) rotateY(0) scale(1)}}
+@keyframes trhint{0%{transform:translateX(-14px) scale(.96);opacity:0}100%{transform:none;opacity:1}}
+@keyframes trpulse{50%{transform:scale(1.35);box-shadow:0 0 0 8px rgba(255,210,63,.55)}}
+@media (prefers-reduced-motion:reduce){#s-trivia .trtile,#s-trivia .hint.fresh,#s-trivia #trTable .el.hit{animation:none!important}}
+@media (max-width:900px){#s-trivia .trcard{grid-template-columns:70px 1fr}#s-trivia .trtile{width:70px;height:70px}#s-trivia .trtile .trs{font-size:30px}#s-trivia .trq{font-size:38px}}
+/* fit one screen at 1366x768 */
+#s-trivia .side{padding:12px 14px}
+#s-trivia .side h2{font-size:19px;margin:0 0 6px}
+#s-trivia .side>p.sub{display:none}
+#s-trivia .hints{margin-bottom:6px;gap:5px}
+#s-trivia .hint{padding:5px 9px;font-size:13.5px;line-height:1.25}
+#s-trivia .hint b{font-size:11px;margin-bottom:1px}
+#s-trivia .trf{padding:3px 8px}
+#s-trivia .trf b{font-size:16px;line-height:1.1}
+#s-trivia .guessrow{margin:6px 0 4px}
+#s-trivia #trHintBtn,#s-trivia #trNext{margin-top:4px;padding-top:9px;padding-bottom:9px}
+#s-trivia #trMsg{min-height:20px}
+#s-trivia .side h2{white-space:nowrap}
+#s-trivia .trtile .trm{display:none}
+#s-trivia .trtile .trnm{margin-top:2px}

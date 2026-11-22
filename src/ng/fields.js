@@ -54,14 +54,34 @@ const FG_LEVELS=[
 const FG_PACKS={0:'Pack 1: Push and pull',3:'Pack 2: Distance and size',6:'Pack 3: Fields and magnets'};
 const FG_DIR=[['up','Bends up ↑'],['straight','Goes straight →'],['down','Bends down ↓']];
 function fgBoard(G){
-  const L=G.L,S=G.st,set=S.set.map(fgQ);let t=`<rect width="${FG_W}" height="${FG_H}" fill="#0f5132"/><rect x="0" y="0" width="${FG_W}" height="8" fill="#3a2a1a"/><rect x="0" y="${FG_H-8}" width="${FG_W}" height="8" fill="#3a2a1a"/>`;
+  const L=G.L,S=G.st,set=S.set.map(fgQ);let t=`<defs><linearGradient id="fgTurf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17703f"/><stop offset=".5" stop-color="#11593a"/><stop offset="1" stop-color="#0d4a30"/></linearGradient>`+
+    `<pattern id="fgBlade" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M1.5 8l.8-3.4M5.6 7l.8-3M7.6 3.2l.6-2.2" stroke="#2f9a5d" stroke-width="1" stroke-linecap="round" opacity=".45"/></pattern>`+
+    `<radialGradient id="fgHr"><stop offset="0" stop-color="#ff5a4d" stop-opacity=".55"/><stop offset="1" stop-color="#ff5a4d" stop-opacity="0"/></radialGradient>`+
+    `<radialGradient id="fgHb"><stop offset="0" stop-color="#4f86ff" stop-opacity=".55"/><stop offset="1" stop-color="#4f86ff" stop-opacity="0"/></radialGradient>`+
+    `<radialGradient id="fgBall" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#e9edf5"/><stop offset="1" stop-color="#b7c0d1"/></radialGradient>`+
+    `<radialGradient id="fgSteel" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".5" stop-color="#c3cad5"/><stop offset="1" stop-color="#7d8798"/></radialGradient>`+
+    `<radialGradient id="fgHalo"><stop offset="0" stop-color="#ffe27a" stop-opacity=".8"/><stop offset="1" stop-color="#ffe27a" stop-opacity="0"/></radialGradient>`+
+    `<linearGradient id="fgWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5a3f26"/><stop offset="1" stop-color="#3a2a1a"/></linearGradient>`+
+    `<linearGradient id="fgShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000" stop-opacity=".35"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient></defs>`+
+    `<rect width="${FG_W}" height="${FG_H}" fill="url(#fgTurf)"/>`+
+    Array.from({length:Math.ceil(FG_W/52)},(_,i)=>i%2?`<rect x="${i*52}" y="0" width="52" height="${FG_H}" fill="#fff" opacity=".045"/>`:'').join('')+
+    `<rect width="${FG_W}" height="${FG_H}" fill="url(#fgBlade)"/>`+
+    `<rect x="0" y="0" width="${FG_W}" height="8" fill="url(#fgWood)"/><rect x="0" y="${FG_H-8}" width="${FG_W}" height="8" fill="url(#fgWood)"/><rect x="0" y="8" width="${FG_W}" height="16" fill="url(#fgShade)"/>`+
+    `<rect x="${FG_X0-18}" y="${FG_Y0-16}" width="44" height="32" rx="8" fill="#1f8a52" opacity=".85" stroke="#7fd6a6" stroke-width="1.5" stroke-opacity=".6"/><text x="${FG_X0+4}" y="${FG_Y0+30}" text-anchor="middle" font-size="9.5" font-weight="800" fill="#bff0d4" opacity=".8" letter-spacing="1">TEE</text>`;
   if(S.field){const src=L.slots.map((s,i)=>({x:s[1],y:s[2],q:s[4]!=null?s[4]:set[i]})).filter(s=>s.q);
     for(let gx=40;gx<FG_W;gx+=40)for(let gy=30;gy<FG_H;gy+=36){let fx=0,fy=0;src.forEach(s=>{const dx=gx-s.x,dy=gy-s.y,r=Math.max(16,Math.hypot(dx,dy)),q=L.steel?-Math.abs(s.q):s.q;fx+=q*dx/r**3;fy+=q*dy/r**3;});
       const m=Math.hypot(fx,fy);if(m<1e-6)continue;const ux=fx/m,uy=fy/m,len=Math.min(14,4+Math.log10(m*1e5+1)*3);
       t+=`<path d="M${gx-ux*len/2} ${gy-uy*len/2}L${gx+ux*len/2} ${gy+uy*len/2}" stroke="#bff0d4" stroke-width="1.6" opacity=".55" marker-end="url(#fga)"/>`;}}
-  t+=`<rect x="${FG_X1}" y="${L.hole-20}" width="20" height="40" fill="#0a2a1a"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="14" fill="#06150d"/><path d="M${FG_X1+6} ${L.hole-14}v-26" stroke="#fff" stroke-width="2"/><path d="M${FG_X1+6} ${L.hole-40}l16 6-16 6z" fill="#e2483f"/>`;
+  t+=`<ellipse cx="${FG_X1+4}" cy="${L.hole+2}" rx="40" ry="38" fill="#1f8a52" opacity=".55"/><ellipse cx="${FG_X1+7}" cy="${L.hole+4}" rx="17" ry="14" fill="#000" opacity=".35"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="15.5" fill="#e8f5ec" opacity=".85"/><circle cx="${FG_X1+6}" cy="${L.hole}" r="13.5" fill="#06150d"/><path d="M${FG_X1-4} ${L.hole-4}a12 12 0 0 1 20 0" stroke="#000" stroke-opacity=".5" stroke-width="3" fill="none"/>`+
+    `<path d="M${FG_X1+6} ${L.hole}V${L.hole-Math.max(24,Math.min(46,L.hole-16))}" stroke="#f4f1e8" stroke-width="2.6" stroke-linecap="round"/><path class="fgflag" d="M${FG_X1+7} ${L.hole-Math.max(24,Math.min(46,L.hole-16))}q9 -3 18 1t-18 9z" fill="#e2483f" stroke="#a82a22" stroke-width="1"/>`;
+  L.slots.forEach((sl,i)=>{const v=sl[4]!=null?sl[4]:S.set[i];if(!v)return;const q=fgQ(v),R=Math.abs(q)>1?104:76,pos=v==='N'||(typeof v==='number'&&v>0);
+    t+=`<circle cx="${sl[1]}" cy="${sl[2]}" r="${R}" fill="url(#${pos?'fgHr':'fgHb'})"/><circle cx="${sl[1]}" cy="${sl[2]}" r="${R*.5}" fill="none" stroke="${pos?'#ff9a90':'#9db9ff'}" stroke-width="1.2" stroke-dasharray="3 5" opacity=".5"/><circle cx="${sl[1]}" cy="${sl[2]}" r="${R*.8}" fill="none" stroke="${pos?'#ff9a90':'#9db9ff'}" stroke-width="1" stroke-dasharray="2 7" opacity=".3"/>`;});
   t+=`<path d="M${FG_X0} ${FG_Y0}H${FG_X1}" stroke="#fff" stroke-dasharray="3 8" opacity=".3"/>`;
-  if(S.path)t+=`<polyline points="${S.path.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#ffd34d" stroke-width="3" stroke-linecap="round" opacity=".9"/>`;
+  if(S.path&&S.path.length>1){const P=S.path,pl=a=>a.map(p=>p.join(',')).join(' ');
+    t+=`<polyline points="${pl(P)}" fill="none" stroke="#ffe27a" stroke-width="2.2" stroke-dasharray="1 7" stroke-linecap="round" opacity=".6"/>`;
+    const tail=P.slice(-40),q=Math.ceil(tail.length/4);
+    for(let j=0;j<4;j++){const seg=tail.slice(Math.max(0,j*q-1),(j+1)*q);if(seg.length<2)continue;
+      t+=`<polyline points="${pl(seg)}" fill="none" stroke="#fff4b8" stroke-width="${4+j*3.2}" stroke-linecap="round" stroke-linejoin="round" opacity="${.12+j*.14}"/>`;}}
   L.slots.forEach((s,i)=>{const v=s[4]!=null?s[4]:S.set[i],fixed=s[4]!=null,big=Math.abs(fgQ(v)||0)>1;
     t+=`<g class="fgslot${fixed?' fixed':''}" data-i="${i}" role="button" tabindex="${fixed?-1:0}" aria-label="Spot ${s[0]}: ${fgName(v)}">`;
     if(!v)t+=`<circle cx="${s[1]}" cy="${s[2]}" r="20" fill="none" stroke="#bff0d4" stroke-width="2.5" stroke-dasharray="5 5"/><text x="${s[1]}" y="${s[2]+5}" text-anchor="middle" font-size="13" font-weight="800" fill="#bff0d4">tap</text>`;
@@ -69,7 +89,7 @@ function fgBoard(G){
     else{const pos=v>0;t+=`<circle cx="${s[1]}" cy="${s[2]}" r="${big?22:17}" fill="${pos?'#e2483f':'#2f6bff'}" stroke="#fff" stroke-width="${fixed?4:2}" ${fixed?'stroke-dasharray="4 3"':''}/><text x="${s[1]}" y="${s[2]+7}" text-anchor="middle" font-size="${big?24:20}" font-weight="900" fill="#fff">${pos?'+':'−'}</text>`;}
     t+='</g>';});
   const bx=S.ball?S.ball[0]:FG_X0,by=S.ball?S.ball[1]:FG_Y0;
-  t+=`<circle cx="${bx}" cy="${by}" r="10" fill="${L.steel?'#c3cad5':'#fff'}" stroke="#333" stroke-width="1.5"/>`+(L.steel?'':`<text x="${bx}" y="${by+5}" text-anchor="middle" font-size="13" font-weight="900" fill="#e2483f">+</text>`);
+  t+=(S.running?`<circle cx="${bx}" cy="${by}" r="26" fill="url(#fgHalo)"/>`:'')+`<ellipse cx="${bx+3}" cy="${by+9}" rx="9" ry="3.6" fill="#000" opacity=".35"/><circle cx="${bx}" cy="${by}" r="10" fill="url(#${L.steel?'fgSteel':'fgBall'})" stroke="#2a3140" stroke-width="1.4"/>`+(L.steel?'':`<text x="${bx}" y="${by+5}" text-anchor="middle" font-size="13" font-weight="900" fill="#e2483f">+</text>`)+`<circle cx="${bx-3.5}" cy="${by-4}" r="2.2" fill="#fff" opacity=".85"/>`;
   if(S.boom)t+=`<text x="${bx}" y="${by-14}" text-anchor="middle" font-size="22">💥</text>`;
   return ngSvg(FG_W,FG_H,`<defs><marker id="fga" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5 0 10z" fill="#bff0d4"/></marker></defs>`+t,'ngsvg fgsvg','The field golf course');
 }

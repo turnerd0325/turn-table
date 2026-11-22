@@ -176,26 +176,49 @@ function renderBlackoutSetup(){renderLevelPicker($('boLevels'),$('boTotal'),'bla
 function boStart(i){
   const L=BO_LEVELS[i];BO={i,parts:{},tool:null,hint:0,results:null,view:null,swn:0,solved:false,testing:false};
   Object.keys(L.fixed).forEach(k=>{BO.parts[k]=Object.assign({fixed:true,open:false},L.fixed[k]);});
-  show('s-blackout');$('boMsg').textContent='';$('boResult').hidden=true;boRender();
+  show('s-blackout');$('boMsg').textContent='';$('boResult').hidden=true;boCityBuild();boRender();
 }
 function boLiveParts(){return BO.parts;}
 function boSim(){const L=boCur(),v=BO.view;return boSolve(L,BO.parts,{useState:!v,burn:v?v.burn:[],open:v?v.open:[]});}
 function boSay(t,kind){const c=$('boCoach');c.className='coach'+(kind?' '+kind:'');c.replaceChildren(h('span',{class:'ci'},I('bulb')),t);}
+/* city skyline: one district per lamp; windows light up as that lamp glows, and all districts light in turn at the win */
+function boCityBuild(){
+  const L=boCur(),ids=Object.keys(L.names||{}).length?Object.keys(L.names):[...Object.values(L.fixed||{}),...Object.values(L.sol.parts)].filter(p=>p.t==='L').map(p=>p.id),n=Math.max(1,ids.length),W=640,dw=W/n;
+  let s=`<defs><linearGradient id="boSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1226"/><stop offset="1" stop-color="#1b2748"/></linearGradient><radialGradient id="boDG"><stop offset="0" stop-color="#ffd76a" stop-opacity=".8"/><stop offset="1" stop-color="#ffd76a" stop-opacity="0"/></radialGradient></defs><rect width="${W}" height="84" rx="12" fill="url(#boSky)"/>`;
+  for(let i=0;i<22;i++)s+=`<circle cx="${(i*97+13)%W}" cy="${(i*31+7)%34+4}" r="${i%3?.9:1.4}" fill="#fff" opacity="${.25+(i%4)*.12}"/>`;
+  ids.forEach((id,i)=>{const x0=i*dw,nb=dw>200?5:4,bw=(dw-16)/nb;
+    s+=`<g class="bodist" data-id="${id}" style="--d:${i}"><ellipse class="glow" cx="${x0+dw/2}" cy="58" rx="${dw*.46}" ry="34" fill="url(#boDG)"/>`;
+    for(let j=0;j<nb;j++){const bh=24+((i*37+j*53)%30),bx=x0+8+j*bw,by=70-bh,bwd=bw-3;
+      s+=`<rect class="bd" x="${bx}" y="${by}" width="${bwd}" height="${bh}" rx="2"/>`;
+      const cols=Math.max(1,Math.floor((bwd-5)/7)),rows=Math.max(1,Math.floor((bh-6)/9));
+      for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){const wx=bx+4+c*((bwd-8)/Math.max(1,cols)+.2),k=(r*5+c*3+j+i)%5;
+        s+=`<rect class="w${k%2?' a':''}" style="--o:${k}" x="${wx.toFixed(1)}" y="${by+5+r*9}" width="3.6" height="4.6" rx=".8"/>`;}}
+    s+=`<text x="${x0+dw/2}" y="81" text-anchor="middle" font-size="8.5" font-weight="800" fill="#8d97b5" font-family="system-ui">${(L.names[id]||id).toUpperCase()}</text></g>`;});
+  s+=`<rect y="70" width="${W}" height="3" fill="#33406a"/><text id="boCityTxt" x="12" y="14" font-size="10.5" font-weight="800" fill="#8d97b5" letter-spacing="1" font-family="system-ui">CITY POWER: OFF</text>`;
+  $('boCity').innerHTML=s;
+}
+function boCityUpdate(){
+  const sv=$('boCity');if(!sv||!BO||!BO.sim)return;const won=!!BO.solved;let lit=0,tot=0;
+  sv.classList.toggle('won',won);sv.parentNode.style.maxWidth=$('boBoard').style.maxWidth;
+  sv.querySelectorAll('.bodist').forEach(g=>{const l=BO.sim.lamps[g.dataset.id],on=l&&l.level>0;tot++;if(on)lit++;g.classList.toggle('on',won);g.classList.toggle('half',!won&&!!on);});
+  const t=$('boCityTxt');if(t){t.textContent=won?'CITY RELIT':lit?`CITY POWER: ${lit} OF ${tot} DISTRICTS`:'CITY POWER: OFF';t.setAttribute('fill',won?'#ffd76a':lit?'#c9b36a':'#8d97b5');}
+}
 function boPartG(k,p,sim,view){
   const e=boEnds(k),a=e[0],b=e[1],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2,ang=k[0]==='h'?0:90,I=sim.cur[k]||0,flow=Math.abs(I)>0.04;
   const wst=`stroke="#7a4616" stroke-width="10" stroke-linecap="round"`,wst2=`stroke="${flow?'#ffc56b':'#e59b52'}" stroke-width="5.5" stroke-linecap="round"`;
   const cls=p.fixed?'bofix':'bopl';
+  const gl=flow?`<line class="boglow" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#ffb347" stroke-width="20" stroke-linecap="round"/>`:'';
   if(p.t==='w'){
-    let s=`<g class="${cls}"><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst}/><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst2}/>`;
+    let s=gl+`<g class="${cls}"><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst}/><line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${wst2}/>`;
     if(flow)s+=`<line class="boflow${I<0?' rev':''}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 17" style="animation-duration:${Math.max(.35,Math.min(1.6,1.4/Math.abs(I)))}s"/>`;
     return s+'</g>';}
-  let g=`<g class="${cls}" transform="translate(${mx} ${my}) rotate(${ang})"><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst}/><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst2}/>`;
+  let g=(p.t!=='B'?gl:'')+`<g class="${cls}" transform="translate(${mx} ${my}) rotate(${ang})"><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst}/><line x1="-${BOS/2}" y1="0" x2="${BOS/2}" y2="0" ${wst2}/>`;
   let extra='';
   if(p.t==='L'){
     const L0=sim.lamps[p.id],lv=L0?L0.level:0,burnt=view&&view.burn&&view.burn.indexOf(p.id)>=0,r=L0?Math.min(1,L0.ratio/2.2):0;
     if(burnt){g+=`<circle r="25" fill="#2a2f45" stroke="#5a6285" stroke-width="3"/><path d="M-10 8l5-12 5 10 5-12 5 12" stroke="#7a7f99" stroke-width="2" fill="none"/><path d="M-14 -14l28 28M14 -14l-28 28" stroke="#ff6b6b" stroke-width="3" stroke-linecap="round"/>`;}
     else{
-      if(lv>0)extra=`<circle cx="${mx}" cy="${my}" r="${34+r*46}" fill="url(#boGlow)" opacity="${.35+.65*Math.min(1,r*1.6)}"/>`;
+      if(lv>0)extra=`<circle cx="${mx}" cy="${my}" r="${34+r*46}" fill="url(#boGlow)" class="bobreathe" opacity="${.35+.65*Math.min(1,r*1.6)}"/>`;
       g+=`<circle r="25" fill="${lv?(lv>=3?'#fff6cf':'#ffe9a3'):'#3a4263'}" fill-opacity="${lv?.55+Math.min(.45,r):0.9}" stroke="${lv?'#ffd76a':'#6b7595'}" stroke-width="3"/><path d="M-11 9l5-13 5 11 5-13 5 13" stroke="${lv?'#ff8a1e':'#7f89aa'}" stroke-width="${lv?3:2.4}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;}
   }else if(p.t==='S'){
     const op=(!view&&p.open)||(view&&(view.open==='*'||(Array.isArray(view.open)&&view.open.indexOf(p.id)>=0)));
@@ -257,7 +280,7 @@ function boRender(){
   const S=BO.sim;
   $('boLamps').replaceChildren(...Object.keys(BO.parts).filter(k=>BO.parts[k].t==='L').map(k=>{const id=BO.parts[k].id,lv=S.lamps[id]?S.lamps[id].level:0,burnt=BO.view&&BO.view.burn&&BO.view.burn.indexOf(id)>=0;
     return h('span',{class:'lampchip'+(lv?' on':'')+(burnt?' burnt':'')},svgEl(boIcon('L',20)),` ${d.names[id]||id}: `,h('b',null,burnt?'burned out':BO_STATE[lv]));}));
-  boTestsUI();boCoach();boHintUI();
+  boTestsUI();boCoach();boHintUI();boCityUpdate();
   $('boTest').disabled=BO.testing;$('boTest').classList.toggle('pulse',!BO.testing&&!BO.results&&boPlacedCount()>0);
 }
 function boCoach(){
@@ -294,7 +317,7 @@ async function boRunTests(){
 }
 function boWin(){
   const d=boCur(),n=boPlacedCount(),par=Object.keys(d.sol.parts).length,stars=n<=par?3:n<=par+2?2:1;
-  BO.solved=true;
+  BO.solved=true;boCityUpdate();
   if(!(BO.rec>=stars)){BO.rec=stars;recordStars('blackout',BO.i+1,stars,{parts:n,par});}
   fx.pop({icon:'bolt',text:stars===3?'City relit!':'Lights on!',kind:'great',size:'big'});fx.confetti(stars===3?90:50);
   levelResult($('boResult'),{stars,next:BO.i+1<BO_N,

@@ -18,7 +18,7 @@
 .bcfs{font-size:22px;font-weight:900;letter-spacing:.5px;text-align:center;color:#14193a}
 .bcbig{color:#2f6bff;margin-right:2px}
 .bcstage{position:relative;border-radius:16px;overflow:hidden;background:#0b1130;box-shadow:0 8px 22px rgba(8,16,44,.28);height:calc(100vh - 420px);min-height:230px}
-#s-balance.testing .bcstage{height:calc(100vh - 330px)}
+#s-balance.testing .bcstage{height:calc(100vh - 364px)}
 .bcstage svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
 .bclbl{fill:#9fb4ff;font:900 14px system-ui,sans-serif;letter-spacing:.12em}
 .bcmass{fill:#cfdaff;font:800 14px system-ui,sans-serif;letter-spacing:.06em}

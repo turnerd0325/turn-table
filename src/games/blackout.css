@@ -1,0 +1,22 @@
+/* Blackout! polish: city skyline, glowing current, breathing lamps */
+.bocity{margin:8px auto 0;max-width:640px}
+#boCity{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 6px 18px rgba(10,16,40,.3)}
+#boCity .bd{fill:#18213f;stroke:#2b3760;stroke-width:1}
+#boCity .w{fill:#242e50;transition:fill .3s ease,filter .3s ease}
+#boCity .glow{opacity:0;transition:opacity .5s}
+#boCity .bodist.half .w.a{fill:#ffd76a}
+#boCity .bodist.half .glow{opacity:.35}
+#boCity .bodist.on .w{fill:#fff0b3;filter:drop-shadow(0 0 2px #ffd76a);transition-delay:calc(var(--d)*.32s + var(--o)*.05s)}
+#boCity .bodist.on .bd{stroke:#ffd76a;transition:stroke .4s calc(var(--d)*.32s)}
+#boCity .bodist.on .glow{opacity:.9;transition-delay:calc(var(--d)*.32s)}
+#boCity.won .bodist.on .glow{animation:bocg 2.4s ease-in-out infinite}
+.boglow{opacity:.3;animation:bogl 1.2s ease-in-out infinite}
+.bobreathe{animation:bobr 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes bocg{50%{opacity:.6}}
+@keyframes bogl{50%{opacity:.14}}
+@keyframes bobr{50%{transform:scale(1.07)}}
+#s-blackout:has(#boCity.won) #boBoard{box-shadow:0 0 0 3px rgba(255,215,106,.55),0 10px 36px rgba(255,190,70,.35)}
+#s-blackout:has(#boCity.won) .boflow{animation-duration:.45s!important}
+@media (prefers-reduced-motion:reduce){.boglow,.bobreathe,#boCity.won .bodist.on .glow{animation:none!important}#boCity .w,#boCity .glow{transition:none!important}}
+#s-blackout .omain,#s-blackout .lzwrap,.bocity{min-width:0;max-width:100%}
+#boBoard{max-width:100%}

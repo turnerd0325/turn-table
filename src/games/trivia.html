@@ -10,9 +10,18 @@
   <div class="play has-side">
     <div id="trTable"></div>
     <aside class="side">
-      <h2><i data-ic="question"></i>Mystery Element</h2>
+      <h2><i data-ic="question"></i>Mystery Element<span class="trpips" id="trPips" aria-hidden="true"><i></i><i></i><i></i><i></i></span></h2>
+      <div class="trcard" id="trCard" aria-live="polite">
+        <div class="trtile mys" id="trTile"><span class="trq">?</span></div>
+        <div class="trmeta">
+          <div class="trf" id="trfN"><small>Atomic #</small><b>?</b></div>
+          <div class="trf" id="trfS"><small>Symbol</small><b>?</b></div>
+          <div class="trf" id="trfP"><small>Period</small><b>?</b></div>
+          <div class="trf" id="trfG"><small>Group</small><b>?</b></div>
+        </div>
+        </div>
       <ol class="hints" id="trHints"></ol>
-      <div class="guessrow"><input type="text" id="trGuess" placeholder="Type a name or symbol" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
+      <div class="guessrow"><input type="text" id="trGuess" placeholder="Name, symbol, or click" autocomplete="off" spellcheck="false"><button class="btn" id="trGo">Guess</button></div>
       <p class="sub" style="margin:2px 0 0;font-size:13px">…or click the element on the table!</p>
       <button class="btn ghost" id="trHintBtn">Reveal next hint (−1 pt)</button>
       <div class="msg" id="trMsg"></div>
