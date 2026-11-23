@@ -68,37 +68,46 @@ function ptBuild(P,meta){
   const fill=k=>{ptCur=k;const m=meta[k],S=subj(k),lk=gameLocked(k),n=list.indexOf(k)+1,art=h('div',{class:'pvart'});art.innerHTML=ART.thumb(k);
     const go=lk?h('button',{class:'btn pvplay lockd',type:'button',onclick:e=>ptLockPop(k,e.currentTarget)},I('lock'),'Locked for now'):h('button',{class:'btn pvplay',type:'button',onclick:()=>ttGate(k,m.fn)},'Play ',m.title);
     ngRC(prev,h('div',{class:'pvin',style:`--c1:${S.c1};--c2:${S.c2}`},art,h('div',{class:'pvtxt'},
-      h('div',{class:'pvhead'},h('span',{class:'pvnum'},n),h('span',{class:'pvsym'},PT_SYM[k]),h('span',{class:'pvsub'},S.name)),
-      h('b',{class:'pvname'},m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null,typeof HS_STD!=='undefined'&&HS_STD[k]?stdTag(HS_STD[k],'hs','Also matches high school NGSS '+HS_STD[k]+'.'):null),
-      h('p',null,m.desc),m.best&&!lk?h('div',{class:'best'},m.best):null,go)));};
+      h('div',{class:'pvhead'},h('span',{class:'pvnum'},n),h('span',{class:'pvsym'},PT_SYM[k])),
+      h('b',{class:'pvname'},m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null),
+      h('p',null,m.desc),go)));};
   const tile=(k,i)=>{const m=meta[k],S=subj(k),lk=gameLocked(k),[r,c]=ptPos(i);
     const b=h('button',{type:'button',class:`ptile s-${S.id}`+(lk?' locked':''),style:`grid-row:${r};grid-column:${c};--c1:${S.c1};--c2:${S.c2}`,'data-k':k,'data-n':i+1,
       'aria-label':`Game ${i+1}: ${m.title}. ${S.name}.${lk?' Locked for now.':''} ${m.desc}`,
       onclick:()=>{fill(k);lk?ptLockPop(k,b):ttGate(k,m.fn);},onmouseenter:()=>fill(k),onfocus:()=>fill(k)},
       h('span',{class:'ptn'},i+1),lk?h('span',{class:'ptl'},I('lock')):null,h('span',{class:'pts'},PT_SYM[k]),h('span',{class:'ptt'},m.title));
     return b;};
-  const util=(cls,pos,title,sub,fn)=>h('button',{type:'button',class:'ptutil '+cls,style:`grid-row:5;grid-column:${pos}`,onclick:fn},h('b',null,title),h('span',null,sub));
+  const util=(cls,pos,title,sub,fn)=>h('button',{type:'button',class:'ptutil '+cls,style:`grid-row:5;grid-column:${pos}`,onclick:fn},h('b',null,title),sub?h('span',null,sub):null);
   const grid=h('div',{class:'ptgrid',role:'group','aria-label':'All games, laid out like the periodic table'},
     ...list.map(tile),prev,
-    util('u-join','1/7','Join a Class Game','Got a 4-number code from your teacher?',openLiveJoin),
-    util('u-prof','13/16','My Profile','Badges and best scores',()=>{renderStats();show('s-stats');}),
-    util('u-fb','16/19','Feedback','Send an idea to your teacher',()=>{renderFeedback();show('s-feedback');}));
+    util('u-join','1/7','Join a Class Game','Have a 4-number code?',openLiveJoin),
+    util('u-prof','13/16','My Profile',null,()=>{renderStats();show('s-stats');}),
+    util('u-fb','16/19','Feedback',null,()=>{renderFeedback();show('s-feedback');}));
   if(ptFocus)grid.dataset.focus=ptFocus;
   fill(ptCur);
   const chips=SUBJECTS.slice().sort((a,b)=>list.indexOf(SUBJ_GAMES[a.id][0])-list.indexOf(SUBJ_GAMES[b.id][0])).map(s=>{const ks=SUBJ_GAMES[s.id],open=ks.filter(k=>!gameLocked(k)).length;
     return h('button',{type:'button',class:'ptchip',style:`--c1:${s.c1};--c2:${s.c2}`,'aria-pressed':ptFocus===s.id?'true':'false','data-s':s.id,
-      title:'Click to light up only the '+s.name+' games. Click again to show them all.',
+      title:`${s.name}: ${ks.length} games, ${open} open. Click to light up only these games; click again to show all.`,
       onclick:e=>{ptFocus=ptFocus===s.id?null:s.id;if(ptFocus)grid.dataset.focus=ptFocus;else delete grid.dataset.focus;
         e.currentTarget.parentNode.querySelectorAll('.ptchip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===ptFocus?'true':'false'));}},
-      h('i',{class:'chsw'},s.sym),h('span',{class:'cn'},h('b',null,s.name),h('small',null,`${ks.length} games · ${open} open`)));});
+      h('i',{class:'chsw'},s.sym),h('b',{class:'cn'},s.name));});
+  let tipsOpen=false;try{tipsOpen=localStorage.getItem('tt_key_open')==='1';}catch(e){}
+  const short=(ic,txt)=>h('span',{class:'kshort'},ic,txt);
   const how=(ic,kids)=>h('div',{class:'kitem'},ic,h('span',null,...kids));
+  const tips=h('div',{class:'ptkey-how',id:'ptTips'},
+    how(h('span',{class:'kic'},'\u261D'),[h('b',null,'Read about a game:'),' hover over a tile, or press Tab, and its card shows in the middle.']),
+    how(h('span',{class:'kic keys'},'\u2190\u2192'),[h('b',null,'Keyboard:'),' arrow keys move around, ',h('b',null,'type a number'),' to jump to that game, Enter plays.']),
+    how(h('span',{class:'kic'},'Ch'),[h('b',null,'Colors:'),' tap a subject above to light up just those games. Tap again to show all.']));
+  tips.hidden=!tipsOpen;
+  const more=h('button',{type:'button',class:'ptkey-more','aria-expanded':tipsOpen?'true':'false','aria-controls':'ptTips',
+    onclick:()=>{tips.hidden=!tips.hidden;more.setAttribute('aria-expanded',tips.hidden?'false':'true');try{localStorage.setItem('tt_key_open',tips.hidden?'0':'1');}catch(e){}}},'More tips',h('i',{class:'chev'},'\u25BE'));
   const key=h('section',{class:'ptkey','aria-label':'Key: how to use the table'},
-    h('div',{class:'ptkey-row'},h('b',{class:'ptkey-t'},'KEY'),h('div',{class:'ptkey-sub'},h('b',null,'Color = subject.'),' Tap a color to light up just that subject.'),h('div',{class:'ptchips'},...chips)),
-    h('div',{class:'ptkey-how'},
-      how(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,'Ab')),[h('b',null,'Number in the corner'),' = the game’s number, like an atomic number. The letters are its short symbol.']),
-      how(h('span',{class:'kic'},'☝'),[h('b',null,'Click a tile to play it.'),' Hover over a tile, or press Tab, to read about it in the middle.']),
-      how(h('span',{class:'kic keys'},'←→'),[h('b',null,'Keyboard:'),' arrow keys move around, ',h('b',null,'type a number'),' to jump to that game, Enter plays.']),
-      how(h('span',{class:'kic'},I('lock')),[h('b',null,'Padlock'),' = not open yet. Ask your teacher.'])));
+    h('div',{class:'ptkey-row'},h('b',{class:'ptkey-t'},'KEY'),
+      short(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,'Ab')),'Game number'),
+      short(h('span',{class:'kic'},'\u261D'),'Click to play'),
+      short(h('span',{class:'kic'},I('lock')),'Locked'),
+      h('div',{class:'ptchips'},...chips),more),
+    tips);
   return {key,grid};
 }
 /* type a number to jump to that game; arrow keys move between tiles */
@@ -168,21 +177,22 @@ renderMenu=function(){
   const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
   const note=h('div',{class:'stdnote'},'Each tag is the NGSS standard the game is built on. NYSSLS marks one of New York\u2019s added standards. A dashed tag means the game helps you get ready for that standard.');
   const ngssbar=h('div',{class:'ngssbar'},h('span',{class:'ngssbadge'},'NGSS-ALIGNED'),h('span',null,'Every game is built around a middle school NGSS standard. The tag on each card shows which one.'));
-  const viewTog=()=>h('div',{class:'viewtog'},h('span',{class:'vtl'},'Show the games as:'),
+  const viewTog=()=>h('div',{class:'viewtog'+(TV?' tv':'')},TV?h('span',{class:'vtgreet'},`Hi, ${P.name}! Pick a game`):null,h('span',{class:'vtl'},TV?'Show as:':'Show the games as:'),
     h('div',{class:'vtseg',role:'group','aria-label':'How to show the games'},
       h('button',{type:'button',class:'vtb','aria-pressed':TV?'true':'false',onclick:()=>{if(!TV)setView('table');}},I('ptable'),'Periodic table'),
-      h('button',{type:'button',class:'vtb','aria-pressed':TV?'false':'true',onclick:()=>{if(TV||S)setView('subjects');}},I('rows'),'4 subjects')),
-    h('span',{class:'vth'},'Same games, two ways to find them.'));
+      h('button',{type:'button',class:'vtb','aria-pressed':TV?'false':'true',onclick:()=>{if(TV||S)setView('subjects');}},I('rows'),'4 subjects')));
   const teach=()=>{const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
     return [h('div',{class:'secthead teach'},I('cap'),'For teachers'),
       h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
         teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
         h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. Sign in with your teacher account to run it. ',h('a',{class:'tlink',role:'button',tabindex:'0',onclick:openDash,onkeydown:e=>{if(e.key==='Enter')openDash();}},'Teacher dashboard'))))];};
+  const teachBar=()=>h('div',{class:'teachbar'},h('span',{class:'tbl'},I('cap'),'For teachers'),h('span',{class:'tbt'},'Run a live quiz or game board for the whole class.'),
+    h('button',{class:'btn sm',type:'button',onclick:cgEnter},'Class Games'),h('button',{class:'btn sm ghost',type:'button',onclick:openDash},'Teacher dashboard'));
   if(TV){
     metaOnly=true;ptList().forEach(k=>{if(cards[k])cards[k]();});metaOnly=false;
     const af=document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.k;
     const pt=ptBuild(P,meta);
-    ngRC($('menuGrid'),...preview,viewTog(),pt.key,pt.grid,ngssbar,...teach(),note,...owner);
+    ngRC($('menuGrid'),...preview,viewTog(),pt.key,pt.grid,ngssbar,teachBar(),...owner);
     if(af){const t=pt.grid.querySelector('[data-k="'+af+'"]');if(t)t.focus({preventScroll:true});}
     return;
   }
