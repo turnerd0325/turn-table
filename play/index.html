@@ -2496,6 +2496,101 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 @media (max-width:900px){[data-g=frozen] .ngrid{grid-template-columns:1fr}.kfwrap{width:100%}}
 @media (max-width:420px){.kftiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .art-still .kfsvg .kfempty,.art-still .kfsvg .kfpm.unset,.art-still .kfsvg .kfray,.art-still .kfsvg .kfsteam path,.art-still .kfpredl.need{animation:none}
+
+/* ===== PERIODIC-TABLE MENU (primary view) + view toggle ===== */
+.viewtog{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;background:#fff;border:3px solid #f4b13a;border-radius:16px;padding:4px 10px;box-shadow:0 6px 18px rgba(244,177,58,.28)}
+.viewtog .vtl{font-weight:900;font-size:17px;color:var(--navy)}
+.viewtog .vth{font-weight:600;font-size:14px;color:var(--muted);margin-left:auto}
+.vtseg{display:inline-flex;gap:4px;background:#e6ebf7;border-radius:14px;padding:4px}
+.vtb{display:inline-flex;align-items:center;gap:9px;border:0;font:inherit;font-weight:900;font-size:17px;min-height:40px;padding:0 18px;border-radius:11px;background:transparent;color:var(--navy);cursor:pointer;transition:background .12s,color .12s}
+.vtb .ico{width:22px;height:22px;stroke-width:2.1}
+.vtb:hover{background:#fff}
+.vtb[aria-pressed="true"]{background:var(--navy);color:#fff;box-shadow:0 3px 0 #f4b13a;cursor:default}
+.vtb:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
+
+.ptkey{grid-column:1/-1;background:#fff;border:3px solid var(--navy);border-radius:16px;padding:6px 12px;display:flex;flex-direction:column;gap:5px}
+.ptkey-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.ptkey-t{background:var(--navy);color:#fff;font-weight:900;letter-spacing:2.5px;padding:5px 12px;border-radius:10px;font-size:15px}
+.ptkey-sub{font-size:14.5px;color:var(--ink)}
+.ptchips{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
+.ptchip{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--c1);background:#fff;border-radius:12px;padding:2px 12px 2px 3px;font:inherit;cursor:pointer;text-align:left;transition:background .12s,transform .1s}
+.ptchip:hover{transform:translateY(-1px);background:#f4f7ff}
+.ptchip .chsw{font-style:normal;display:flex;align-items:center;justify-content:center;width:34px;height:32px;border-radius:9px;color:#fff;font-weight:900;font-size:16px;background:linear-gradient(160deg,var(--c2) -20%,var(--c1) 60%)}
+.ptchip .cn{display:flex;flex-direction:column;line-height:1.15}
+.ptchip .cn b{font-size:14.5px;color:var(--navy)}.ptchip .cn small{font-size:12px;font-weight:700;color:var(--muted)}
+.ptchip[aria-pressed="true"]{background:var(--c1);box-shadow:0 0 0 3px #f4b13a}
+.ptchip[aria-pressed="true"] .cn b,.ptchip[aria-pressed="true"] .cn small{color:#fff}
+.ptchip[aria-pressed="true"] .chsw{background:#fff;color:var(--c1)}
+.ptchip:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
+.ptkey-how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 16px;padding-top:5px;border-top:2px dashed #dbe2f2}
+.kitem{display:flex;align-items:center;gap:9px;font-size:13px;line-height:1.25;color:var(--ink)}
+.kitem b{color:var(--navy)}
+.kmini{flex:0 0 auto;position:relative;width:38px;height:42px;border-radius:8px;background:linear-gradient(160deg,#a77bff -20%,#6a3fd6 60%);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 rgba(0,0,0,.18)}
+.kmini i{position:absolute;top:3px;left:5px;font-style:normal;font-weight:800;font-size:11px}
+.kmini b{font-size:20px;font-weight:900;color:#fff;margin-top:6px}
+.kic{flex:0 0 auto;width:38px;height:42px;border-radius:8px;background:#fff4d6;color:#7a5200;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;border:2px solid #f4b13a}
+.kic.keys{font-size:17px;letter-spacing:-1px}
+.kic .ico{width:22px;height:22px}
+
+.ptgrid{grid-column:1/-1;display:grid;grid-template-columns:repeat(18,minmax(0,1fr));grid-template-rows:auto auto auto 8px auto;gap:4px;margin-top:2px}
+.ptile{position:relative;justify-self:stretch;align-self:start;width:100%;aspect-ratio:1/1.1;border:0;font:inherit;color:#fff;cursor:pointer;border-radius:9px;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  background:linear-gradient(160deg,var(--c2) -20%,var(--c1) 60%);box-shadow:0 2px 0 rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.28);text-shadow:0 1px 1px rgba(0,0,0,.4);transition:transform .1s,opacity .15s,filter .15s}
+.ptile:hover,.ptile:focus-visible{transform:scale(1.16);z-index:3;box-shadow:0 8px 18px rgba(16,21,54,.35),inset 0 0 0 2px rgba(255,255,255,.7)}
+.ptile:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
+.ptn{position:absolute;top:3px;left:5px;font-weight:800;font-size:clamp(9px,.82vw,12.5px);line-height:1}
+.pts{font-weight:900;font-size:clamp(17px,2.3vw,33px);line-height:1;letter-spacing:-.5px;margin-top:7px}
+.ptt{font-weight:700;font-size:clamp(7.5px,.74vw,11px);line-height:1.1;text-align:center;padding:0 3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:100%}
+.ptl{position:absolute;top:2px;right:3px;width:13px;height:13px;display:flex}.ptl .ico{width:13px;height:13px;stroke-width:2.4}
+.ptile.locked{filter:grayscale(.75) brightness(.92);cursor:not-allowed}
+.ptile.locked:hover{transform:none;box-shadow:0 2px 0 rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.28)}
+.ptgrid[data-focus] .ptile{opacity:.2}
+.ptgrid[data-focus="life"] .ptile.s-life,.ptgrid[data-focus="phys"] .ptile.s-phys,.ptgrid[data-focus="chem"] .ptile.s-chem,.ptgrid[data-focus="earth"] .ptile.s-earth{opacity:1}
+
+.ptprev{grid-area:1/3/4/13;position:relative;min-height:0;border-radius:16px;background:#fff;border:2px solid #dbe2f2;box-shadow:0 6px 18px rgba(16,21,54,.08)}
+.pvin{position:absolute;inset:0;display:flex;align-items:center;gap:16px;padding:10px 16px 10px 14px;border-radius:14px;overflow:hidden;border-top:6px solid var(--c1)}
+.pvart{flex:0 0 38%;max-width:330px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;line-height:0;box-shadow:0 0 0 3px var(--c1)}
+.pvart svg{display:block;width:100%;height:100%}
+.pvtxt{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.pvhead{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13px}
+.pvnum{background:var(--c1);color:#fff;border-radius:7px;padding:1px 8px;font-size:14px}
+.pvsym{font-size:22px;font-weight:900;color:var(--c1);line-height:1}
+.pvsub{color:var(--muted);text-transform:uppercase;letter-spacing:.8px;font-size:12px}
+.pvname{font-size:clamp(17px,1.75vw,24px);letter-spacing:-.2px;color:var(--navy);line-height:1.15}
+.pvname .stdchip{font-size:11px;padding:1px 8px;margin-left:7px;position:relative;top:-2px}
+.pvtxt p{margin:0;font-size:clamp(12px,1.02vw,14.5px);line-height:1.35;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pvtxt .best{margin-top:0;align-self:flex-start;font-weight:700;font-size:13px;background:#fff4d6;color:#7a5200;padding:3px 11px;border-radius:999px}
+.pvplay{align-self:flex-start;margin-top:2px;padding:8px 18px;font-size:15px}
+.pvplay.lockd{background:#e9edf6;color:#55617d;box-shadow:none;cursor:not-allowed;display:inline-flex;align-items:center;gap:7px}.pvplay.lockd .ico{width:16px;height:16px}
+
+.ptutil{align-self:stretch;border:2px solid var(--navy);background:#fff;color:var(--navy);border-radius:12px;font:inherit;text-align:left;padding:8px 14px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;gap:1px;transition:transform .1s,background .12s}
+.ptutil b{font-size:clamp(13px,1.2vw,17px)}.ptutil span{font-size:clamp(11px,.95vw,13px);font-weight:600;color:var(--muted)}
+.ptutil:hover{background:#f4f7ff;transform:translateY(-2px)}
+.ptutil.u-join{border-color:#f4b13a;background:#fff9e8}
+.ptutil:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
+.ptbuf{display:none;position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:60;background:var(--navy);color:#fff;font-weight:900;font-size:22px;padding:10px 22px;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.35);border:3px solid #f4b13a}
+
+@media (max-width:1099px){
+  .pvart{display:none}.ptkey-how{grid-template-columns:repeat(2,minmax(0,1fr))}.viewtog .vth{display:none}
+  .pvin{padding:8px 12px}.pvtxt p{-webkit-line-clamp:2}
+}
+@media (max-width:759px){
+  .ptgrid{grid-template-columns:repeat(auto-fill,minmax(84px,1fr));grid-template-rows:none;gap:6px}
+  .ptgrid>*{grid-row:auto!important;grid-column:auto!important}
+  .ptprev{display:none}
+  .ptutil{grid-column:1/-1!important}
+  .ptile{aspect-ratio:1/1.08}.pts{font-size:28px}.ptt{font-size:11px}.ptn{font-size:12px}
+  .ptkey-how{grid-template-columns:1fr}.ptkey-how .kitem:nth-child(2),.ptkey-how .kitem:nth-child(3){display:none}
+  .ptchips{margin-left:0;display:grid;grid-template-columns:1fr 1fr;width:100%}.ptchip .cn small{display:none}
+  .vtb{padding:0 12px;font-size:15px}
+}
+@media (prefers-reduced-motion:reduce){.ptile,.ptchip,.ptutil,.vtb{transition:none}.ptile:hover,.ptile:focus-visible{transform:none}}
+
+/* table view: slimmer heading, badge strip moves under the table so the whole table fits on one screen */
+#s-menu.ptview:not([hidden]){display:flex;flex-direction:column}
+#s-menu.ptview #menuHello{order:1;font-size:clamp(20px,2vw,26px);margin:0 0 6px}
+#s-menu.ptview #menuSub{display:none}
+#s-menu.ptview #menuGrid{order:2;margin-top:0;gap:10px}
+#s-menu.ptview #bdStrip{order:3;margin:12px 0 0}
 /*NGCSS>>*/
 .td-use{font-size:13px;color:#5b6b8c;margin-top:4px}
 .pg-card{max-width:1100px;margin:0 auto}
@@ -17833,15 +17928,104 @@ $('brand').onclick=()=>{setSubj(null);me?goMenu():show('s-login');};
 $('btnLogout').addEventListener('click',()=>setSubj(null));
 function subjStats(P,s){const ks=SUBJ_GAMES[s],open=ks.filter(k=>!gameLocked(k)).length;let st=0,mx=0;
   ks.forEach(k=>{const n=k==='sep'?SEP_LEVELS.length:NEWGK[k]?NEWGK[k].n:0;if(n){st+=gameStars(P,k,n);mx+=n*3;}});return {open,n:ks.length,st,mx};}
+/* ---- periodic-table menu (the primary view) ----
+   Every game is a tile on a table shaped like the real one: 1 tile + 1 tile on top, then 2 + 6 across
+   (twice), with the extra games in a detached bottom row like the lanthanides. Colors are subjects.
+   The number in each corner is the game's number (like an atomic number); a key above the table
+   explains it. Games get their number from PT_ORDER; a new game that is not listed there is added
+   at the end automatically (its tile lands in PT_POS, or in row 6 once the table is full). */
+let menuView='table';try{menuView=localStorage.getItem('tt_menu_view')==='subjects'?'subjects':'table';}catch(e){}
+function setView(v){menuView=v;setSubj(null);try{localStorage.setItem('tt_menu_view',v);}catch(e){}renderMenu();window.scrollTo(0,0);}
+Object.assign(ART.P,{
+  ptable:'<rect x="3" y="3" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="3" width="4.5" height="4.5" rx="1"/><rect x="3" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="16" width="4.5" height="4.5" rx="1"/><rect x="3" y="16" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="16" width="4.5" height="4.5" rx="1"/>',
+  rows:'<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/>'
+});
+const PT_SYM={speed:'Sf',trivia:'Et',explore:'Ex',lab:'Cl',atom:'Ab',balance:'Bi',diner:'Ad',sep:'Ss',evidence:'Ev',
+  laser:'Lm',blackout:'Bo',coaster:'Ca',courier:'Sc',frozen:'Kf',fields:'Fg',waves:'Wt',
+  cell:'Cs',ripple:'Rp',pup:'Pp',drift:'Id',moon:'Mw',strata:'Dt',pangaea:'Pr',weather:'Wd'};
+const PT_ORDER=['speed','trivia','explore','lab','atom','balance','diner','sep','evidence',
+  'laser','blackout','coaster','courier','frozen','fields','waves','cell','ripple','pup','drift','moon','strata','pangaea','weather'];
+const PT_POS=(()=>{const a=[[1,1],[1,18]];[2,3].forEach(r=>{a.push([r,1],[r,2]);for(let c=13;c<=18;c++)a.push([r,c]);});for(let c=7;c<=12;c++)a.push([5,c]);return a;})();
+const ptPos=i=>PT_POS[i]||[6,7+(i-PT_POS.length)];
+const ptList=()=>{const all=Object.values(SUBJ_GAMES).flat();return [...PT_ORDER.filter(k=>all.includes(k)),...all.filter(k=>!PT_ORDER.includes(k))];};
+let ptCur=null,ptFocus=null;
+function ptLockPop(k,el){const r=el.getBoundingClientRect(),cx=Math.min(Math.max(r.left+r.width/2,190),innerWidth-190);   /* keep the pop-up on screen for tiles at the edges */
+  fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[k]&&!classOff().includes(k)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:{getBoundingClientRect:()=>({left:cx-1,width:2,top:r.top})}});}
+function ptBuild(P,meta){
+  const list=ptList(),subj=k=>SUBJECTS.find(s=>s.id===SUBJ_OF[k]);
+  if(!ptCur||!list.includes(ptCur))ptCur=list.find(k=>!gameLocked(k))||list[0];
+  const prev=h('div',{class:'ptprev','aria-live':'polite'});
+  const fill=k=>{ptCur=k;const m=meta[k],S=subj(k),lk=gameLocked(k),n=list.indexOf(k)+1,art=h('div',{class:'pvart'});art.innerHTML=ART.thumb(k);
+    const go=lk?h('button',{class:'btn pvplay lockd',type:'button',onclick:e=>ptLockPop(k,e.currentTarget)},I('lock'),'Locked for now'):h('button',{class:'btn pvplay',type:'button',onclick:()=>ttGate(k,m.fn)},'Play ',m.title);
+    ngRC(prev,h('div',{class:'pvin',style:`--c1:${S.c1};--c2:${S.c2}`},art,h('div',{class:'pvtxt'},
+      h('div',{class:'pvhead'},h('span',{class:'pvnum'},n),h('span',{class:'pvsym'},PT_SYM[k]),h('span',{class:'pvsub'},S.name)),
+      h('b',{class:'pvname'},m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null,typeof HS_STD!=='undefined'&&HS_STD[k]?stdTag(HS_STD[k],'hs','Also matches high school NGSS '+HS_STD[k]+'.'):null),
+      h('p',null,m.desc),m.best&&!lk?h('div',{class:'best'},m.best):null,go)));};
+  const tile=(k,i)=>{const m=meta[k],S=subj(k),lk=gameLocked(k),[r,c]=ptPos(i);
+    const b=h('button',{type:'button',class:`ptile s-${S.id}`+(lk?' locked':''),style:`grid-row:${r};grid-column:${c};--c1:${S.c1};--c2:${S.c2}`,'data-k':k,'data-n':i+1,
+      'aria-label':`Game ${i+1}: ${m.title}. ${S.name}.${lk?' Locked for now.':''} ${m.desc}`,
+      onclick:()=>{fill(k);lk?ptLockPop(k,b):ttGate(k,m.fn);},onmouseenter:()=>fill(k),onfocus:()=>fill(k)},
+      h('span',{class:'ptn'},i+1),lk?h('span',{class:'ptl'},I('lock')):null,h('span',{class:'pts'},PT_SYM[k]),h('span',{class:'ptt'},m.title));
+    return b;};
+  const util=(cls,pos,title,sub,fn)=>h('button',{type:'button',class:'ptutil '+cls,style:`grid-row:5;grid-column:${pos}`,onclick:fn},h('b',null,title),h('span',null,sub));
+  const grid=h('div',{class:'ptgrid',role:'group','aria-label':'All games, laid out like the periodic table'},
+    ...list.map(tile),prev,
+    util('u-join','1/7','Join a Class Game','Got a 4-number code from your teacher?',openLiveJoin),
+    util('u-prof','13/16','My Profile','Badges and best scores',()=>{renderStats();show('s-stats');}),
+    util('u-fb','16/19','Feedback','Send an idea to your teacher',()=>{renderFeedback();show('s-feedback');}));
+  if(ptFocus)grid.dataset.focus=ptFocus;
+  fill(ptCur);
+  const chips=SUBJECTS.slice().sort((a,b)=>list.indexOf(SUBJ_GAMES[a.id][0])-list.indexOf(SUBJ_GAMES[b.id][0])).map(s=>{const ks=SUBJ_GAMES[s.id],open=ks.filter(k=>!gameLocked(k)).length;
+    return h('button',{type:'button',class:'ptchip',style:`--c1:${s.c1};--c2:${s.c2}`,'aria-pressed':ptFocus===s.id?'true':'false','data-s':s.id,
+      title:'Click to light up only the '+s.name+' games. Click again to show them all.',
+      onclick:e=>{ptFocus=ptFocus===s.id?null:s.id;if(ptFocus)grid.dataset.focus=ptFocus;else delete grid.dataset.focus;
+        e.currentTarget.parentNode.querySelectorAll('.ptchip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===ptFocus?'true':'false'));}},
+      h('i',{class:'chsw'},s.sym),h('span',{class:'cn'},h('b',null,s.name),h('small',null,`${ks.length} games · ${open} open`)));});
+  const how=(ic,kids)=>h('div',{class:'kitem'},ic,h('span',null,...kids));
+  const key=h('section',{class:'ptkey','aria-label':'Key: how to use the table'},
+    h('div',{class:'ptkey-row'},h('b',{class:'ptkey-t'},'KEY'),h('div',{class:'ptkey-sub'},h('b',null,'Color = subject.'),' Tap a color to light up just that subject.'),h('div',{class:'ptchips'},...chips)),
+    h('div',{class:'ptkey-how'},
+      how(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,'Ab')),[h('b',null,'Number in the corner'),' = the game’s number, like an atomic number. The letters are its short symbol.']),
+      how(h('span',{class:'kic'},'☝'),[h('b',null,'Click a tile to play it.'),' Hover over a tile, or press Tab, to read about it in the middle.']),
+      how(h('span',{class:'kic keys'},'←→'),[h('b',null,'Keyboard:'),' arrow keys move around, ',h('b',null,'type a number'),' to jump to that game, Enter plays.']),
+      how(h('span',{class:'kic'},I('lock')),[h('b',null,'Padlock'),' = not open yet. Ask your teacher.'])));
+  return {key,grid};
+}
+/* type a number to jump to that game; arrow keys move between tiles */
+(function(){let buf='',tm=0,pill=null;
+  const active=()=>{const m=$('s-menu');return m&&!m.hidden&&menuView==='table'&&!menuSubj&&document.querySelector('#menuGrid .ptgrid');};
+  const say=t=>{if(!pill){pill=h('div',{class:'ptbuf','aria-hidden':'true'});document.body.append(pill);}pill.textContent=t;pill.style.display=t?'block':'none';};
+  const jump=n=>{const t=document.querySelector(`#menuGrid .ptile[data-n="${n}"]`);if(t){t.focus();}};
+  const move=(dx,dy)=>{const tiles=[...document.querySelectorAll('#menuGrid .ptile,#menuGrid .ptutil')],cur=document.activeElement&&tiles.includes(document.activeElement)?document.activeElement:null;
+    if(!cur){const t=tiles[0];if(t)t.focus();return;}
+    const a=cur.getBoundingClientRect(),ax=a.left+a.width/2,ay=a.top+a.height/2;
+    const pick=strict=>{let best=null,bd=1e9;
+      tiles.forEach(t=>{if(t===cur)return;const r=t.getBoundingClientRect(),x=r.left+r.width/2-ax,y=r.top+r.height/2-ay,pri=dx?x*dx:y*dy,sec=dx?Math.abs(y):Math.abs(x);
+        if(pri<=(dx?a.width:a.height)*.3)return;                       /* must be in the direction asked */
+        if(strict&&sec>(dx?a.height:a.width)*.6)return;                /* first try: stay in the same row / column */
+        const d=pri+sec*2.2;if(d<bd){bd=d;best=t;}});return best;};
+    const best=pick(true)||pick(false);
+    if(best)best.focus();};
+  document.addEventListener('keydown',e=>{if(!active()||e.ctrlKey||e.metaKey||e.altKey)return;const t=e.target;
+    if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable))return;
+    if(/^[0-9]$/.test(e.key)){clearTimeout(tm);buf+=e.key;let n=+buf;
+      if(n>ptList().length){buf=e.key;n=+buf;}
+      say('Go to game: '+buf);const fin=()=>{if(n>=1)jump(n);buf='';say('');};
+      if(n*10>ptList().length)fin();else tm=setTimeout(fin,800);e.preventDefault();return;}
+    const D={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]}[e.key];
+    if(D){move(D[0],D[1]);e.preventDefault();}});})();
 renderMenu=function(){
   try{$('btnLogout').textContent=isPreview()?'Exit preview':'Log out';}catch(e){}
   const P=prof(),S=menuSubj&&SUBJECTS.find(s=>s.id===menuSubj);
-  $('menuHello').textContent=S?`${S.name}`:`Hi, ${P.name}! Pick a subject`;
-  $('menuSub').textContent=S?S.desc+' Pick a game!':(P.cinfo&&P.cinfo.name?`${P.cinfo.teacher}'s class: ${P.cinfo.name}. Pick a subject, then a game.`:'Pick a subject, then a game. Show what you know!');
+  const TV=!S&&menuView==='table';
+  $('s-menu').classList.toggle('ptview',TV);
+  $('menuHello').textContent=S?`${S.name}`:`Hi, ${P.name}! Pick a ${TV?'game':'subject'}`;
+  $('menuSub').textContent=S?S.desc+' Pick a game!':TV?(P.cinfo&&P.cinfo.name?`${P.cinfo.teacher}'s class: ${P.cinfo.name}. Every game is on the table. Pick one!`:'Every game is on the table. Pick one and show what you know!'):(P.cinfo&&P.cinfo.name?`${P.cinfo.teacher}'s class: ${P.cinfo.name}. Pick a subject, then a game.`:'Pick a subject, then a game. Show what you know!');
   try{bdStrip();bdCheck();}catch(e){}
   $('bdStrip').hidden=!!S;
   const sb=Object.values(P.speed).map(r=>r.best).filter(x=>x!=null),ab=Object.values(P.atom).map(r=>r.best).filter(x=>x>0);
-  const mc=(cls,ic,title,desc,best,fn)=>{const art=h('div',{class:'art'});art.innerHTML=ART.thumb(ic);
+  const meta={};let metaOnly=false;
+  const mc=(cls,ic,title,desc,best,fn)=>{meta[ic]={title,desc,best,fn};if(metaOnly)return null;const art=h('div',{class:'art'});art.innerHTML=ART.thumb(ic);
     const locked=gameLocked(ic),sd=SHORT_DESC[ic]||desc;
     const tip=h('div',{class:'tip'});
     if(locked){tip.append(h('div',{class:'lk'},I('lock'),'Locked for now'));}
@@ -17874,9 +18058,27 @@ renderMenu=function(){
   const owner=!isPreview()&&isOwner()&&classOff().length?[h('div',{class:'ownernote'},'Owner view: all games are open for you. Your class currently has '+classOff().length+' game'+(classOff().length===1?'':'s')+' switched off.')]:[];
   const note=h('div',{class:'stdnote'},'Each tag is the NGSS standard the game is built on. NYSSLS marks one of New York\u2019s added standards. A dashed tag means the game helps you get ready for that standard.');
   const ngssbar=h('div',{class:'ngssbar'},h('span',{class:'ngssbadge'},'NGSS-ALIGNED'),h('span',null,'Every game is built around a middle school NGSS standard. The tag on each card shows which one.'));
+  const viewTog=()=>h('div',{class:'viewtog'},h('span',{class:'vtl'},'Show the games as:'),
+    h('div',{class:'vtseg',role:'group','aria-label':'How to show the games'},
+      h('button',{type:'button',class:'vtb','aria-pressed':TV?'true':'false',onclick:()=>{if(!TV)setView('table');}},I('ptable'),'Periodic table'),
+      h('button',{type:'button',class:'vtb','aria-pressed':TV?'false':'true',onclick:()=>{if(TV||S)setView('subjects');}},I('rows'),'4 subjects')),
+    h('span',{class:'vth'},'Same games, two ways to find them.'));
+  const teach=()=>{const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
+    return [h('div',{class:'secthead teach'},I('cap'),'For teachers'),
+      h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
+        teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
+        h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. Sign in with your teacher account to run it. ',h('a',{class:'tlink',role:'button',tabindex:'0',onclick:openDash,onkeydown:e=>{if(e.key==='Enter')openDash();}},'Teacher dashboard'))))];};
+  if(TV){
+    metaOnly=true;ptList().forEach(k=>{if(cards[k])cards[k]();});metaOnly=false;
+    const af=document.activeElement&&document.activeElement.dataset&&document.activeElement.dataset.k;
+    const pt=ptBuild(P,meta);
+    ngRC($('menuGrid'),...preview,viewTog(),pt.key,pt.grid,ngssbar,...teach(),note,...owner);
+    if(af){const t=pt.grid.querySelector('[data-k="'+af+'"]');if(t)t.focus({preventScroll:true});}
+    return;
+  }
   if(S){
     const st=subjStats(P,S.id);
-    ngRC($('menuGrid'),...preview,
+    ngRC($('menuGrid'),...preview,viewTog(),
       h('div',{class:'subjbar',style:`--c1:${S.c1};--c2:${S.c2}`},ngBtn('← All subjects',()=>{setSubj(null);renderMenu();window.scrollTo(0,0);},'ghost sm'),
         h('span',{class:'subjsym'},S.sym),h('div',null,h('b',null,S.name),h('small',null,`${st.n} games${st.mx?` · ${st.st}/${st.mx} ★`:''}`))),
       ngssbar,join(),...SUBJ_GAMES[S.id].map(k=>cards[k]()),
@@ -17884,17 +18086,13 @@ renderMenu=function(){
       note,...owner);
     return;
   }
-  const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
   const tiles=SUBJECTS.map(s=>{const st=subjStats(P,s.id);
     return h('button',{type:'button',class:'subjtile',style:`--c1:${s.c1};--c2:${s.c2}`,'aria-label':`${s.name}: ${st.n} games. ${s.desc}`,onclick:()=>{setSubj(s.id);renderMenu();window.scrollTo(0,0);}},
       h('span',{class:'stnum'},s.num),h('span',{class:'stsym'},s.sym),h('span',{class:'stname'},s.name),
       h('span',{class:'stdesc'},s.desc),h('span',{class:'stmeta'},`${st.open} of ${st.n} games open`+(st.mx?` · ${st.st} ★`:'')),
       h('span',{class:'stthumbs'},...SUBJ_GAMES[s.id].slice(0,4).map(k=>{const a=h('i');a.innerHTML=ART.thumb(k);return a;})));});
-  ngRC($('menuGrid'),...preview,
-    h('div',{class:'secthead teach'},I('cap'),'For teachers'),
-    h('div',{class:'teachrow'},tcard,h('div',{class:'teachside'},
-      teacherSay(['This platform is used to study for science, not to just play around!'],{small:true}),
-      h('div',{class:'teachnote'},h('b',null,'Teacher-led games. '),'Put your screen on the projector, start a game, and your students join on their Chromebooks with a 4-number code. Sign in with your teacher account to run it. ',h('a',{class:'tlink',role:'button',tabindex:'0',onclick:openDash,onkeydown:e=>{if(e.key==='Enter')openDash();}},'Teacher dashboard')))),
+  ngRC($('menuGrid'),...preview,viewTog(),
+    ...teach(),
     h('div',{class:'secthead stud'},'For students'),
     h('div',{class:'subjgrid'},...tiles),
     join(),...tail,note,...owner);
