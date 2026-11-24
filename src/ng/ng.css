@@ -761,17 +761,6 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .ptkey{grid-column:1/-1;background:#fff;border:3px solid var(--navy);border-radius:16px;padding:6px 12px;display:flex;flex-direction:column;gap:5px}
 .ptkey-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
 .ptkey-t{background:var(--navy);color:#fff;font-weight:900;letter-spacing:2.5px;padding:5px 12px;border-radius:10px;font-size:15px}
-.ptkey-sub{font-size:14.5px;color:var(--ink)}
-.ptchips{display:flex;flex-wrap:wrap;gap:8px;margin-left:auto}
-.ptchip{display:inline-flex;align-items:center;gap:8px;border:2px solid var(--c1);background:#fff;border-radius:12px;padding:2px 12px 2px 3px;font:inherit;cursor:pointer;text-align:left;transition:background .12s,transform .1s}
-.ptchip:hover{transform:translateY(-1px);background:#f4f7ff}
-.ptchip .chsw{font-style:normal;display:flex;align-items:center;justify-content:center;width:34px;height:32px;border-radius:9px;color:#fff;font-weight:900;font-size:16px;background:linear-gradient(160deg,var(--c2) -20%,var(--c1) 60%)}
-.ptchip .cn{display:flex;flex-direction:column;line-height:1.15}
-.ptchip .cn b{font-size:14.5px;color:var(--navy)}.ptchip .cn small{font-size:12px;font-weight:700;color:var(--muted)}
-.ptchip[aria-pressed="true"]{background:var(--c1);box-shadow:0 0 0 3px #f4b13a}
-.ptchip[aria-pressed="true"] .cn b,.ptchip[aria-pressed="true"] .cn small{color:#fff}
-.ptchip[aria-pressed="true"] .chsw{background:#fff;color:var(--c1)}
-.ptchip:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
 .ptkey-how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 16px;padding-top:5px;border-top:2px dashed #dbe2f2}
 .kitem{display:flex;align-items:center;gap:9px;font-size:13px;line-height:1.25;color:var(--ink)}
 .kitem b{color:var(--navy)}
@@ -793,8 +782,6 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .ptl{position:absolute;top:2px;right:3px;width:13px;height:13px;display:flex}.ptl .ico{width:13px;height:13px;stroke-width:2.4}
 .ptile.locked{filter:grayscale(.75) brightness(.92);cursor:not-allowed}
 .ptile.locked:hover{transform:none;box-shadow:0 2px 0 rgba(0,0,0,.2),inset 0 0 0 1px rgba(255,255,255,.28)}
-.ptgrid[data-focus] .ptile{opacity:.2}
-.ptgrid[data-focus="life"] .ptile.s-life,.ptgrid[data-focus="phys"] .ptile.s-phys,.ptgrid[data-focus="chem"] .ptile.s-chem,.ptgrid[data-focus="earth"] .ptile.s-earth{opacity:1}
 
 .ptprev{grid-area:1/3/4/13;position:relative;min-height:0;border-radius:16px;background:#fff;border:2px solid #dbe2f2;box-shadow:0 6px 18px rgba(16,21,54,.08)}
 .pvin{position:absolute;inset:0;display:flex;align-items:center;gap:16px;padding:10px 16px 10px 14px;border-radius:14px;overflow:hidden;border-top:6px solid var(--c1)}
@@ -830,10 +817,9 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
   .ptutil{grid-column:1/-1!important}
   .ptile{aspect-ratio:1/1.08}.pts{font-size:28px}.ptt{font-size:11px}.ptn{font-size:12px}
   .ptkey-how{grid-template-columns:1fr}.ptkey-how .kitem:nth-child(2),.ptkey-how .kitem:nth-child(3){display:none}
-  .ptchips{margin-left:0;display:grid;grid-template-columns:1fr 1fr;width:100%}.ptchip .cn small{display:none}
   .vtb{padding:0 12px;font-size:15px}
 }
-@media (prefers-reduced-motion:reduce){.ptile,.ptchip,.ptutil,.vtb{transition:none}.ptile:hover,.ptile:focus-visible{transform:none}}
+@media (prefers-reduced-motion:reduce){.ptile,.ptutil,.vtb{transition:none}.ptile:hover,.ptile:focus-visible{transform:none}}
 
 /* table view: slimmer heading, badge strip moves under the table so the whole table fits on one screen */
 #s-menu.ptview:not([hidden]){display:flex;flex-direction:column}
@@ -853,9 +839,6 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .ptkey-row .kmini,.ptkey-row .kic{width:30px;height:34px}
 .ptkey-row .kmini b{font-size:15px;margin-top:5px}.ptkey-row .kmini i{font-size:9px;top:2px;left:4px}
 .ptkey-row .kic{font-size:18px;border-width:2px}.ptkey-row .kic .ico{width:17px;height:17px}
-.ptchip{padding:2px 12px 2px 3px}.ptchip .cn{font-size:14px;color:var(--navy)}
-.ptchip[aria-pressed="true"] .cn{color:#fff}
-.ptchips{gap:6px}
 .ptkey-more{display:inline-flex;align-items:center;gap:5px;border:2px solid var(--navy);background:#fff;color:var(--navy);font:inherit;font-weight:800;font-size:13px;border-radius:999px;padding:5px 12px;cursor:pointer}
 .ptkey-more:hover{background:#f4f7ff}.ptkey-more:focus-visible{outline:3px solid #f4b13a;outline-offset:2px}
 .ptkey-more .chev{font-style:normal;transition:transform .15s}.ptkey-more[aria-expanded="true"] .chev{transform:rotate(180deg)}
@@ -866,5 +849,40 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .teachbar .tbl{display:inline-flex;align-items:center;gap:8px;font-weight:900;color:var(--navy);font-size:16px}
 .teachbar .tbl .ico{width:22px;height:22px;color:#f4b13a}
 .teachbar .tbt{color:var(--muted);font-size:14px;font-weight:600;margin-right:auto}
-@media (max-width:1099px){.ptkey-how{grid-template-columns:1fr}.ptkey-row{justify-content:flex-start}.ptchips{margin-left:0}}
-@media (max-width:759px){.kshort:nth-of-type(n+3){display:none}.ptchip .cn{font-size:13px}.teachbar .tbt{display:none}}
+@media (max-width:1099px){.ptkey-how{grid-template-columns:1fr}.ptkey-row{justify-content:flex-start}}
+@media (max-width:759px){.kshort:nth-of-type(n+3){display:none}.teachbar .tbt{display:none}}
+
+/* ---- subject blocks (Nov 24): four vertical chunks side by side instead of a periodic-table silhouette ---- */
+.ptgrid{grid-template-columns:repeat(3,minmax(0,1fr)) 14px repeat(3,minmax(0,1fr)) 14px repeat(2,minmax(0,1fr)) 14px repeat(2,minmax(0,1fr)) 14px repeat(3,minmax(0,1fr));
+  grid-template-rows:none;grid-auto-rows:auto;gap:6px;margin-top:0;align-items:start}
+.ptlab{display:flex;align-items:center;gap:8px;min-width:0;padding:4px 10px 4px 5px;border-radius:12px;color:#fff;background:linear-gradient(160deg,var(--c2) -30%,var(--c1) 65%);box-shadow:0 3px 0 rgba(0,0,0,.18);text-shadow:0 1px 1px rgba(0,0,0,.35)}
+.ptlab i{flex:0 0 auto;font-style:normal;font-weight:900;font-size:16px;width:32px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.95);color:var(--c1);text-shadow:none}
+.ptlab span{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.ptlab b{font-size:clamp(13px,1.15vw,16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptlab small{font-size:12px;font-weight:700;opacity:.92}
+.ptile{aspect-ratio:auto;height:clamp(66px,6.3vw,88px);align-self:start}
+.pts{font-size:clamp(20px,2.1vw,30px);margin-top:6px}
+.ptt{font-size:clamp(9px,.78vw,11.5px)}
+.ptn{font-size:clamp(10px,.8vw,12.5px)}
+.ptprev{align-self:stretch}
+.pvin{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;padding:8px 12px 10px}
+.pvart{flex:0 0 auto;max-width:none;width:100%;aspect-ratio:2/1}
+.pvtxt{flex:1 1 auto;gap:3px}
+.pvtxt p{-webkit-line-clamp:3}
+.pvplay{margin-top:auto;align-self:stretch;text-align:center;justify-content:center}
+.ptutil{align-self:stretch;min-width:0;padding:6px 10px;text-align:center;align-items:center}
+.ptutil b{font-size:clamp(12px,1.05vw,15px)}
+.ptutil.u-join{align-items:flex-start;text-align:left}
+.ptkey-how{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1099px){
+  .ptgrid{gap:5px}.pvart{display:none}.ptkey-how{grid-template-columns:1fr}
+  .pvin{padding:8px 10px}.pvname{font-size:16px}.ptutil b{font-size:12px}.ptutil span{display:none}
+}
+@media (max-width:759px){
+  .ptgrid{grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px}
+  .ptgrid>*{grid-row:auto!important;grid-column:auto!important}
+  .ptlab{grid-column:1/-1!important;margin-top:8px}.ptlab:first-child{margin-top:0}
+  .ptile{height:84px}.pts{font-size:26px}.ptt{font-size:11px}.ptn{font-size:12px}
+  .ptprev{display:none}.ptutil{grid-column:1/-1!important;text-align:left;align-items:flex-start}.ptutil span{display:block}
+}
+@media (max-width:1099px){.ptlab{gap:5px;padding-right:6px}.ptlab i{width:26px;font-size:14px}.ptlab b{font-size:12.5px}}

@@ -38,12 +38,13 @@ $('brand').onclick=()=>{setSubj(null);me?goMenu():show('s-login');};
 $('btnLogout').addEventListener('click',()=>setSubj(null));
 function subjStats(P,s){const ks=SUBJ_GAMES[s],open=ks.filter(k=>!gameLocked(k)).length;let st=0,mx=0;
   ks.forEach(k=>{const n=k==='sep'?SEP_LEVELS.length:NEWGK[k]?NEWGK[k].n:0;if(n){st+=gameStars(P,k,n);mx+=n*3;}});return {open,n:ks.length,st,mx};}
-/* ---- periodic-table menu (the primary view) ----
-   Every game is a tile on a table shaped like the real one: 1 tile + 1 tile on top, then 2 + 6 across
-   (twice), with the extra games in a detached bottom row like the lanthanides. Colors are subjects.
-   The number in each corner is the game's number (like an atomic number); a key above the table
-   explains it. Games get their number from PT_ORDER; a new game that is not listed there is added
-   at the end automatically (its tile lands in PT_POS, or in row 6 once the table is full). */
+/* ---- "All games" menu (the primary view) ----
+   Four vertical blocks side by side, one per subject (PT_CHUNKS: subject, columns wide, start column),
+   each with a colored label on top and its games packed underneath. Join / Profile / Feedback sit in the
+   spare cells under the two short blocks and the preview card fills the right side.
+   Each tile has a game number in the corner (like an atomic number) and a two-letter symbol (PT_SYM).
+   Numbers follow PT_ORDER. A new game is added to its subject in SUBJ_GAMES and gets a PT_SYM entry; it
+   joins the end of its subject's block (and the number list) automatically. */
 let menuView='table';try{menuView=localStorage.getItem('tt_menu_view')==='subjects'?'subjects':'table';}catch(e){}
 function setView(v){menuView=v;setSubj(null);try{localStorage.setItem('tt_menu_view',v);}catch(e){}renderMenu();window.scrollTo(0,0);}
 Object.assign(ART.P,{
@@ -55,10 +56,11 @@ const PT_SYM={speed:'Sf',trivia:'Et',explore:'Ex',lab:'Cl',atom:'Ab',balance:'Bi
   cell:'Cs',ripple:'Rp',pup:'Pp',drift:'Id',moon:'Mw',strata:'Dt',pangaea:'Pr',weather:'Wd'};
 const PT_ORDER=['speed','trivia','explore','lab','atom','balance','diner','sep','evidence',
   'laser','blackout','coaster','courier','frozen','fields','waves','cell','ripple','pup','drift','moon','strata','pangaea','weather'];
-const PT_POS=(()=>{const a=[[1,1],[1,18]];[2,3].forEach(r=>{a.push([r,1],[r,2]);for(let c=13;c<=18;c++)a.push([r,c]);});for(let c=7;c<=12;c++)a.push([5,c]);return a;})();
-const ptPos=i=>PT_POS[i]||[6,7+(i-PT_POS.length)];
+/* four vertical subject chunks side by side: [subject, columns wide, start column] */
+const PT_CHUNKS=[['chem',3,1],['phys',3,5],['life',2,9],['earth',2,12]];
+const PT_PREV_COL='15/18';
 const ptList=()=>{const all=Object.values(SUBJ_GAMES).flat();return [...PT_ORDER.filter(k=>all.includes(k)),...all.filter(k=>!PT_ORDER.includes(k))];};
-let ptCur=null,ptFocus=null;
+let ptCur=null;
 function ptLockPop(k,el){const r=el.getBoundingClientRect(),cx=Math.min(Math.max(r.left+r.width/2,190),innerWidth-190);   /* keep the pop-up on screen for tiles at the edges */
   fx.pop({icon:'lock',text:freeMode()&&!FREE_GAMES[k]&&!classOff().includes(k)?'Full version only. Ask your teacher about Turn-Table!':'Locked for now. Ask your teacher!',kind:'try',at:{getBoundingClientRect:()=>({left:cx-1,width:2,top:r.top})}});}
 function ptBuild(P,meta){
@@ -71,42 +73,44 @@ function ptBuild(P,meta){
       h('div',{class:'pvhead'},h('span',{class:'pvnum'},n),h('span',{class:'pvsym'},PT_SYM[k])),
       h('b',{class:'pvname'},m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null),
       h('p',null,m.desc),go)));};
-  const tile=(k,i)=>{const m=meta[k],S=subj(k),lk=gameLocked(k),[r,c]=ptPos(i);
+  const tile=(k,i,r,c)=>{const m=meta[k],S=subj(k),lk=gameLocked(k);
     const b=h('button',{type:'button',class:`ptile s-${S.id}`+(lk?' locked':''),style:`grid-row:${r};grid-column:${c};--c1:${S.c1};--c2:${S.c2}`,'data-k':k,'data-n':i+1,
       'aria-label':`Game ${i+1}: ${m.title}. ${S.name}.${lk?' Locked for now.':''} ${m.desc}`,
       onclick:()=>{fill(k);lk?ptLockPop(k,b):ttGate(k,m.fn);},onmouseenter:()=>fill(k),onfocus:()=>fill(k)},
       h('span',{class:'ptn'},i+1),lk?h('span',{class:'ptl'},I('lock')):null,h('span',{class:'pts'},PT_SYM[k]),h('span',{class:'ptt'},m.title));
     return b;};
-  const util=(cls,pos,title,sub,fn)=>h('button',{type:'button',class:'ptutil '+cls,style:`grid-row:5;grid-column:${pos}`,onclick:fn},h('b',null,title),sub?h('span',null,sub):null);
-  const grid=h('div',{class:'ptgrid',role:'group','aria-label':'All games, laid out like the periodic table'},
-    ...list.map(tile),prev,
-    util('u-join','1/7','Join a Class Game','Have a 4-number code?',openLiveJoin),
-    util('u-prof','13/16','My Profile',null,()=>{renderStats();show('s-stats');}),
-    util('u-fb','16/19','Feedback',null,()=>{renderFeedback();show('s-feedback');}));
-  if(ptFocus)grid.dataset.focus=ptFocus;
+  /* each subject gets its own labeled block; games fill it left-to-right, top-to-bottom */
+  const order=[...PT_CHUNKS.map(x=>x[0]),...SUBJECTS.map(s=>s.id).filter(id=>!PT_CHUNKS.some(x=>x[0]===id))];
+  const chunkOf=id=>PT_CHUNKS.find(x=>x[0]===id)||[id,2,1];
+  const cells=[],rowsOf={};
+  order.forEach(id=>{const ks=list.filter(k=>SUBJ_OF[k]===id);if(!ks.length)return;const S=SUBJECTS.find(s=>s.id===id),[,w,c0]=chunkOf(id),open=ks.filter(k=>!gameLocked(k)).length;
+    rowsOf[id]=Math.ceil(ks.length/w);
+    cells.push(h('div',{class:'ptlab s-'+id,style:`grid-row:1;grid-column:${c0}/${c0+w};--c1:${S.c1};--c2:${S.c2}`},h('i',null,S.sym),h('span',null,h('b',null,S.name),h('small',null,ks.length+' games'))));
+    ks.forEach((k,j)=>cells.push(tile(k,list.indexOf(k),2+Math.floor(j/w),c0+j%w)));});
+  const gap=Math.max(rowsOf.life||0,rowsOf.earth||0)+2,lastRow=Math.max(gap,...Object.values(rowsOf).map(n=>n+1))+0;
+  prev.style.gridArea=`1/15/${lastRow+1}/18`;
+  const util=(cls,pos,title,sub,fn)=>h('button',{type:'button',class:'ptutil '+cls,style:`grid-row:${gap};grid-column:${pos}`,onclick:fn},h('b',null,title),sub?h('span',null,sub):null);
+  const grid=h('div',{class:'ptgrid',role:'group','aria-label':'All games, grouped by subject'},
+    ...cells,prev,
+    util('u-join','9/12','Join a Class Game','Have a code?',openLiveJoin),
+    util('u-prof','12/13','My Profile',null,()=>{renderStats();show('s-stats');}),
+    util('u-fb','13/14','Feedback',null,()=>{renderFeedback();show('s-feedback');}));
   fill(ptCur);
-  const chips=SUBJECTS.slice().sort((a,b)=>list.indexOf(SUBJ_GAMES[a.id][0])-list.indexOf(SUBJ_GAMES[b.id][0])).map(s=>{const ks=SUBJ_GAMES[s.id],open=ks.filter(k=>!gameLocked(k)).length;
-    return h('button',{type:'button',class:'ptchip',style:`--c1:${s.c1};--c2:${s.c2}`,'aria-pressed':ptFocus===s.id?'true':'false','data-s':s.id,
-      title:`${s.name}: ${ks.length} games, ${open} open. Click to light up only these games; click again to show all.`,
-      onclick:e=>{ptFocus=ptFocus===s.id?null:s.id;if(ptFocus)grid.dataset.focus=ptFocus;else delete grid.dataset.focus;
-        e.currentTarget.parentNode.querySelectorAll('.ptchip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.s===ptFocus?'true':'false'));}},
-      h('i',{class:'chsw'},s.sym),h('b',{class:'cn'},s.name));});
   let tipsOpen=false;try{tipsOpen=localStorage.getItem('tt_key_open')==='1';}catch(e){}
   const short=(ic,txt)=>h('span',{class:'kshort'},ic,txt);
   const how=(ic,kids)=>h('div',{class:'kitem'},ic,h('span',null,...kids));
   const tips=h('div',{class:'ptkey-how',id:'ptTips'},
-    how(h('span',{class:'kic'},'\u261D'),[h('b',null,'Read about a game:'),' hover over a tile, or press Tab, and its card shows in the middle.']),
-    how(h('span',{class:'kic keys'},'\u2190\u2192'),[h('b',null,'Keyboard:'),' arrow keys move around, ',h('b',null,'type a number'),' to jump to that game, Enter plays.']),
-    how(h('span',{class:'kic'},'Ch'),[h('b',null,'Colors:'),' tap a subject above to light up just those games. Tap again to show all.']));
+    how(h('span',{class:'kic'},'\u261D'),[h('b',null,'Read about a game:'),' hover over a tile, or press Tab, and its card shows on the right.']),
+    how(h('span',{class:'kic keys'},'\u2190\u2192'),[h('b',null,'Keyboard:'),' arrow keys move around, ',h('b',null,'type a number'),' to jump to that game, Enter plays.']));
   tips.hidden=!tipsOpen;
   const more=h('button',{type:'button',class:'ptkey-more','aria-expanded':tipsOpen?'true':'false','aria-controls':'ptTips',
     onclick:()=>{tips.hidden=!tips.hidden;more.setAttribute('aria-expanded',tips.hidden?'false':'true');try{localStorage.setItem('tt_key_open',tips.hidden?'0':'1');}catch(e){}}},'More tips',h('i',{class:'chev'},'\u25BE'));
-  const key=h('section',{class:'ptkey','aria-label':'Key: how to use the table'},
+  const key=h('section',{class:'ptkey','aria-label':'Key: how to use the menu'},
     h('div',{class:'ptkey-row'},h('b',{class:'ptkey-t'},'KEY'),
       short(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,'Ab')),'Game number'),
       short(h('span',{class:'kic'},'\u261D'),'Click to play'),
       short(h('span',{class:'kic'},I('lock')),'Locked'),
-      h('div',{class:'ptchips'},...chips),more),
+      more),
     tips);
   return {key,grid};
 }
@@ -179,7 +183,7 @@ renderMenu=function(){
   const ngssbar=h('div',{class:'ngssbar'},h('span',{class:'ngssbadge'},'NGSS-ALIGNED'),h('span',null,'Every game is built around a middle school NGSS standard. The tag on each card shows which one.'));
   const viewTog=()=>h('div',{class:'viewtog'+(TV?' tv':'')},TV?h('span',{class:'vtgreet'},`Hi, ${P.name}! Pick a game`):null,h('span',{class:'vtl'},TV?'Show as:':'Show the games as:'),
     h('div',{class:'vtseg',role:'group','aria-label':'How to show the games'},
-      h('button',{type:'button',class:'vtb','aria-pressed':TV?'true':'false',onclick:()=>{if(!TV)setView('table');}},I('ptable'),'Periodic table'),
+      h('button',{type:'button',class:'vtb','aria-pressed':TV?'true':'false',onclick:()=>{if(!TV)setView('table');}},I('ptable'),'All games'),
       h('button',{type:'button',class:'vtb','aria-pressed':TV?'false':'true',onclick:()=>{if(TV||S)setView('subjects');}},I('rows'),'4 subjects')));
   const teach=()=>{const tcard=mc('m16','cgames','Class Games','Run a live quiz or a game-show-style board for the whole class from your projector.','Live Quiz · Quiz Board Maker',cgEnter);tcard.classList.add('teachcard');
     return [h('div',{class:'secthead teach'},I('cap'),'For teachers'),
