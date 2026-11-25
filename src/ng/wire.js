@@ -42,7 +42,7 @@ function subjStats(P,s){const ks=SUBJ_GAMES[s],open=ks.filter(k=>!gameLocked(k))
    Four vertical blocks side by side, one per subject (PT_CHUNKS: subject, columns wide, start column),
    each with a colored label on top and its games packed underneath. Join / Profile / Feedback sit in the
    spare cells under the two short blocks and the preview card fills the right side.
-   Each tile has a game number in the corner (like an atomic number) and a two-letter symbol (PT_SYM).
+   Each tile has a game number in the corner (like an atomic number) and an icon (PT_ICON).
    Numbers follow PT_ORDER. A new game is added to its subject in SUBJ_GAMES and gets a PT_SYM entry; it
    joins the end of its subject's block (and the number list) automatically. */
 let menuView='table';try{menuView=localStorage.getItem('tt_menu_view')==='subjects'?'subjects':'table';}catch(e){}
@@ -51,9 +51,9 @@ Object.assign(ART.P,{
   ptable:'<rect x="3" y="3" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="3" width="4.5" height="4.5" rx="1"/><rect x="3" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="9.5" width="4.5" height="4.5" rx="1"/><rect x="9" y="16" width="4.5" height="4.5" rx="1"/><rect x="3" y="16" width="4.5" height="4.5" rx="1"/><rect x="16.5" y="16" width="4.5" height="4.5" rx="1"/>',
   rows:'<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1.3"/><circle cx="4.5" cy="12" r="1.3"/><circle cx="4.5" cy="18" r="1.3"/>'
 });
-const PT_SYM={speed:'Sf',trivia:'Et',explore:'Ex',lab:'Cl',atom:'Ab',balance:'Bi',diner:'Ad',sep:'Ss',evidence:'Ev',
-  laser:'Lm',blackout:'Bo',coaster:'Ca',courier:'Sc',frozen:'Kf',fields:'Fg',waves:'Wt',
-  cell:'Cs',ripple:'Rp',pup:'Pp',drift:'Id',moon:'Mw',strata:'Dt',pangaea:'Pr',weather:'Wd'};
+const PT_ICON={speed:'clock',trivia:'question',explore:'ptable',lab:'flask',atom:'atom',balance:'scale',diner:'plate',sep:'funnel',evidence:'lens',
+  laser:'laser',blackout:'bolt',coaster:'coaster',courier:'rocket',frozen:'snow',fields:'magnet',waves:'wave',
+  cell:'cell',ripple:'web',pup:'paw',drift:'beetle',moon:'moon',strata:'layers',pangaea:'globe',weather:'rain'};
 const PT_ORDER=['speed','trivia','explore','lab','atom','balance','diner','sep','evidence',
   'laser','blackout','coaster','courier','frozen','fields','waves','cell','ripple','pup','drift','moon','strata','pangaea','weather'];
 /* four vertical subject chunks side by side: [subject, columns wide, start column] */
@@ -70,14 +70,13 @@ function ptBuild(P,meta){
   const fill=k=>{ptCur=k;const m=meta[k],S=subj(k),lk=gameLocked(k),n=list.indexOf(k)+1,art=h('div',{class:'pvart'});art.innerHTML=ART.thumb(k);
     const go=lk?h('button',{class:'btn pvplay lockd',type:'button',onclick:e=>ptLockPop(k,e.currentTarget)},I('lock'),'Locked for now'):h('button',{class:'btn pvplay',type:'button',onclick:()=>ttGate(k,m.fn)},'Play ',m.title);
     ngRC(prev,h('div',{class:'pvin',style:`--c1:${S.c1};--c2:${S.c2}`},art,h('div',{class:'pvtxt'},
-      h('div',{class:'pvhead'},h('span',{class:'pvnum'},n),h('span',{class:'pvsym'},PT_SYM[k])),
-      h('b',{class:'pvname'},m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null),
+      h('b',{class:'pvname'},h('span',{class:'pvnum'},n),m.title,STD[k]?stdTag(STD[k][0],STD[k][1]?'sup':'',STD[k][1]?'Helps students get ready for '+stdOrg(STD[k][0])+' '+STD[k][0]+'.':null):null),
       h('p',null,m.desc),go)));};
   const tile=(k,i,r,c)=>{const m=meta[k],S=subj(k),lk=gameLocked(k);
     const b=h('button',{type:'button',class:`ptile s-${S.id}`+(lk?' locked':''),style:`grid-row:${r};grid-column:${c};--c1:${S.c1};--c2:${S.c2}`,'data-k':k,'data-n':i+1,
       'aria-label':`Game ${i+1}: ${m.title}. ${S.name}.${lk?' Locked for now.':''} ${m.desc}`,
       onclick:()=>{fill(k);lk?ptLockPop(k,b):ttGate(k,m.fn);},onmouseenter:()=>fill(k),onfocus:()=>fill(k)},
-      h('span',{class:'ptn'},i+1),lk?h('span',{class:'ptl'},I('lock')):null,h('span',{class:'pts'},PT_SYM[k]),h('span',{class:'ptt'},m.title));
+      h('span',{class:'ptn'},i+1),lk?h('span',{class:'ptl'},I('lock')):null,h('span',{class:'pts'},I(PT_ICON[k]||'play')),h('span',{class:'ptt'},m.title));
     return b;};
   /* each subject gets its own labeled block; games fill it left-to-right, top-to-bottom */
   const order=[...PT_CHUNKS.map(x=>x[0]),...SUBJECTS.map(s=>s.id).filter(id=>!PT_CHUNKS.some(x=>x[0]===id))];
@@ -107,7 +106,7 @@ function ptBuild(P,meta){
     onclick:()=>{tips.hidden=!tips.hidden;more.setAttribute('aria-expanded',tips.hidden?'false':'true');try{localStorage.setItem('tt_key_open',tips.hidden?'0':'1');}catch(e){}}},'More tips',h('i',{class:'chev'},'\u25BE'));
   const key=h('section',{class:'ptkey','aria-label':'Key: how to use the menu'},
     h('div',{class:'ptkey-row'},h('b',{class:'ptkey-t'},'KEY'),
-      short(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,'Ab')),'Game number'),
+      short(h('span',{class:'kmini'},h('i',null,'5'),h('b',null,I('atom'))),'Game number'),
       short(h('span',{class:'kic'},'\u261D'),'Click to play'),
       short(h('span',{class:'kic'},I('lock')),'Locked'),
       more),
