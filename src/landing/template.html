@@ -4,9 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script>
-/* Students and teachers who already use Turn-Table (saved sign-in, a class link, an email-confirm or checkout return) go straight to the app at /play/. */
+/* Students and teachers who already use Turn-Table (saved sign-in, a class link, an email-confirm or checkout return) go straight to the app at /play/.
+   Ad and social tags (utm_*, fbclid, ttclid, gclid...) are saved as the visitor's source and do NOT count as a reason to leave this page. */
 (function(){try{var l=location,s=l.search,h=l.hash,ls=window.localStorage,p=ls.getItem('pte_profiles_v1'),t=ls.getItem('tt_ta');
-if(s||h||(p&&p!=='{}')||t){l.replace('/play/'+s+h);}}catch(e){}})();
+var q=new URLSearchParams(s),m={},any=0,rest=0;
+q.forEach(function(v,k){if(/^utm_/.test(k)||/^(fbclid|ttclid|gclid|igshid|msclkid|mc_eid|mc_cid)$/.test(k)){m[k]=v.slice(0,120);any=1;}else rest=1;});
+if(any){m.at=new Date().toISOString().slice(0,10);var j=JSON.stringify(m);if(!ls.getItem('tt_src_first'))ls.setItem('tt_src_first',j);ls.setItem('tt_src_last',j);}
+if(rest||h||(p&&p!=='{}')||t){l.replace('/play/'+s+h);}}catch(e){}})();
 </script>
 <title>Turn-Table™ | Standards-Aligned Middle School Science Games</title>
 <meta name="description" content="Turn-Table is middle school science practice where the science is the game. Students find elements, build atoms, run separation machines and build cells, and Pre-Test and Post-Test show what stuck.">

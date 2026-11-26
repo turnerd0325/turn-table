@@ -18751,8 +18751,8 @@ document.querySelectorAll('i[data-logo]').forEach(x=>{x.outerHTML=ART.logo(+x.da
 if(!storageOK)$('warn').hidden=false;
 if(me)goMenu();else{renderLogin();show('s-login');}
 /* links from the landing page: ?teacher (sign in) and ?teacher=new (create account) */
+ttSrcCapture(); /* save the visitor's source (utm/fbclid) whatever screen they land on */
 (()=>{const sp=new URLSearchParams(location.search),tq=sp.get('teacher');if(tq===null)return;
-  ttSrcCapture();
   const pl=sp.get('plan'),bi=sp.get('billing');
   if(pl||bi){try{sessionStorage.setItem('tt_copref',JSON.stringify({plan:pl==='bundle'?'bundle':'turntable',billing:bi==='monthly'?'monthly':'annual'}));}catch(e){}}
   if(sp.get('checkout')==='done')TA.coDone=true;
