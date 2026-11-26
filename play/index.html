@@ -2689,6 +2689,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .td-nocharge::before{content:"✓";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#1f9d55;color:#fff;font-size:12px}
 .td-up s{color:#8a94a8;margin-right:2px}.td-save{color:#14794a}
 .td-gatebtns{display:flex;flex-direction:column;align-items:center;gap:10px}
+.td-skip{background:none;border:0;padding:6px 8px;color:#2153d6;font:inherit;font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.td-skip:hover{color:#163c9e}.td-skip:disabled{opacity:.5;cursor:default}
 .pg-privrow{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between}
 .pg-hide{font-size:13px;font-weight:700;display:flex;gap:7px;align-items:center;cursor:pointer;margin-top:6px}
 .pg-hide input{width:17px;height:17px;accent-color:var(--blue,#2f6bff)}
@@ -5182,7 +5183,7 @@ async function openDash(){
   if(!(await ensureTeacher('dash')))return;
   await taRefresh();
   const T=TA.me&&TA.me.teacher,backFromCheckout=TA.coDone;
-  if(T&&T.needs_card&&TA.toCard&&!TA.coDone){TA.toCard=false;renderDash();showT('s-tdash');return goCheckout();}
+  if(T&&T.needs_card&&TA.toCard&&!TA.coDone)TA.toCard=false; /* new teachers land on the card page, which also offers Skip for now */
   if(T&&T.needs_card&&TA.coDone){TA.coDone=false;TA.coWait=true;renderDash();showT('s-tdash');
     for(let i=0;i<20&&TA.me&&TA.me.teacher.needs_card;i++){await new Promise(r=>setTimeout(r,2000));await taRefresh();}
     TA.coWait=false;}
@@ -5209,15 +5210,19 @@ async function goCheckout(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStor
   const q=new URLSearchParams({t:r.token,plan:o.plan||pref.plan||'turntable',billing:o.billing||pref.billing||'annual',trial:o.trial===0?'0':'1'});
   ttTeacherPx('InitiateCheckout',tpxPlan(o));await tpxFlush();
   location.href=TT_CHECKOUT_URL+'?'+q.toString();}
+async function skipCard(btn){btn.disabled=true;
+  const r=await tcall('tt_t_skip_card');if(!r){btn.disabled=false;return;}
+  TA.me=r;ttTeacherPx('SkipCard',{content_name:'Turn-Table free day'},true);renderDash();showT('s-tdash');}
 function renderCardGate(T){
   const body=$('tdBody');
   if(TA.coWait)return body.replaceChildren(h('div',{class:'card td-gate'},h('h2',null,'Setting up your free trial…'),h('p',{class:'sub'},'This takes a few seconds after checkout. The page will open by itself.')));
   body.replaceChildren(h('div',{class:'card td-gate'},
-    h('h2',null,`One more step, ${T.name}`),
+    h('h2',null,T.card_skipped?`Your free day is over, ${T.name}`:`One more step, ${T.name}`),
     h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
     h('p',{class:'td-nocharge'},'No charge until the end of the trial period.'),
     h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year (regular price $49, so you save $13 every year), locked in for as long as you stay."),
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
+      T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Skip for now: try it free for 1 day, no card'),
       h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
     h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™. Signed in as '+(T.email||'')+'.')));
 }
@@ -5237,6 +5242,7 @@ function renderDash(){
       h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now')):
 T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
+    TT_CHECKOUT_LIVE&&T.card_skipped&&T.plan==='trial'?h('div',{class:'td-up'},h('div',null,h('b',null,'Free day pass. '),h('span',null,'Add a card any time to get your full 7-day free trial. No charge until it ends.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout();}},'Add my card'))):
     TT_CHECKOUT_LIVE&&T.plan==='trial'&&T.role!=='founder'?h('div',{class:'td-up'},h('div',null,h('b',null,'Founding price: $36 a year '),h('s',null,'$49'),h('b',{class:'td-save'},' You save $13 every year.'),h('span',null,' Locked in for as long as you stay, for the first 100 teachers. Turn-Table unlocks as soon as you check out.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now'),h('a',{class:'td-month',href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0,billing:'monthly'});}},'or pay monthly, $7 a month'))):null,
     h('div',{class:'td-try'},h('div',null,h('b',null,'Try every game yourself'),h('span',null,'Play any game as a student would, including Review, Pre-Test and Post-Test. Nothing you do there is saved to a class.')),act([I('play'),' Play the games'],teacherPlay,'good big')),
     h('h3',{class:'td-sec',style:'margin-top:4px'},'Your classes'),
