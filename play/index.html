@@ -5237,7 +5237,7 @@ function renderCardGate(T){
     h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
     h('p',{class:'td-nocharge'},'No charge until the end of the trial period.'),
     h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year (regular price $49, so you save $13 every year), locked in for as long as you stay."),
-    Date.now()<TT_PROMO_ENDS?h('p',{class:'td-promo'},h('b',null,'Have a promo code? '),'You can type it in on the next page. Look for "Add promotion code" under the price.'):null,
+    Date.now()<TT_PROMO_ENDS?h('p',{class:'td-promo'},h('b',null,'Have a promo code? '),'You can type it in on the next page. Tap "Add code" under the price.'):null,
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
       T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Skip for now: try it free for 1 day, no card'),
       h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
