@@ -2686,6 +2686,8 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .td-gate h2{margin:0 0 10px}.td-gate .lead{font-size:19px;font-weight:700;margin:0 0 8px}
 .td-gate .sub{margin:0 auto 18px;max-width:46ch}.td-gate .small{font-size:12.5px;margin:18px auto 0}
 .td-nocharge{display:inline-flex;align-items:center;gap:8px;margin:2px auto 12px;padding:7px 14px;border-radius:999px;background:#e7f6ee;color:#14794a;font-weight:800;font-size:15px}
+.td-promo{margin:4px auto 10px;padding:10px 14px;border:2px dashed #f2b705;border-radius:12px;background:#fff8e1;color:#5c4400;font-size:15px;max-width:520px}
+.td-email{margin:12px 0 4px;font-size:14px;color:#475569}.td-email b{color:#0f172a}.td-email a{margin-left:6px;font-weight:700}
 .td-nocharge::before{content:"✓";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#1f9d55;color:#fff;font-size:12px}
 .td-up s{color:#8a94a8;margin-right:2px}.td-save{color:#14794a}
 .td-gatebtns{display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -5050,7 +5052,19 @@ function tpxPlan(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStorage.getIt
   const plan=(o.plan||pref.plan)==='bundle'?'bundle':'turntable',billing=(o.billing||pref.billing)==='monthly'?'monthly':'annual',v=TT_PRICE[plan][billing];
   return {content_name:plan==='bundle'?'Hook + Check Bundle':'Turn-Table',content_category:billing,currency:'USD',value:v,predicted_ltv:billing==='monthly'?v*12:v};}
 const curClass=()=>{const K=(TA.me&&TA.me.classes)||[];return K.find(c=>c.id===TA.cls)||K.find(c=>!c.archived)||K[0]||null;};
-let taMode='in',taBusy=false;
+let taMode='in',taBusy=false,taWarned='';
+/* Catch common email typos at sign-up (no confirmation email anymore, so a typo means a lost teacher). */
+function taEmailFix(email){
+  const at=email.lastIndexOf('@');if(at<1)return null;
+  const user=email.slice(0,at);let dom=email.slice(at+1);
+  const M={'gmial.com':'gmail.com','gmai.com':'gmail.com','gamil.com':'gmail.com','gmal.com':'gmail.com','gnail.com':'gmail.com','gmail.co':'gmail.com','gmail.cm':'gmail.com','gmaill.com':'gmail.com',
+    'yaho.com':'yahoo.com','yahooo.com':'yahoo.com','yahoo.co':'yahoo.com','hotmial.com':'hotmail.com','hotmai.com':'hotmail.com','hotmail.co':'hotmail.com',
+    'outlok.com':'outlook.com','outloo.com':'outlook.com','outlook.co':'outlook.com','iclod.com':'icloud.com','icloud.co':'icloud.com','aol.co':'aol.com'};
+  let d=M[dom]||dom;
+  d=d.replace(/\.(con|cmo|ocm|vom|xom|comm)$/,'.com').replace(/\.(ogr|orgg|rog)$/,'.org').replace(/\.(nte|nett)$/,'.net').replace(/\.(eud|edd)$/,'.edu')
+     .replace(/traditonal/,'traditional').replace(/shcool/,'school').replace(/scool/,'school');
+  return d!==dom?user+'@'+d:null;
+}
 function taMsg(t,good){$('taMsg').textContent=t;$('taMsg').className='msg '+(good?'good':'bad');}
 function setTaMode(m){
   taMode=m;$('taModeIn').classList.toggle('on',m==='in');$('taModeUp').classList.toggle('on',m==='up');
@@ -5072,6 +5086,8 @@ async function taSubmit(){
     if(name.length<2)return taMsg('Type your name, like Mr. Turner.');
     if(pw.length<8)return taMsg('Use a password with at least 8 characters.');
     if(!$('taAgree').checked)return taMsg('Please tick the box to confirm.');
+    const fix=taEmailFix(email);
+    if(fix&&taWarned!==email){taWarned=email;$('taEmail').value=fix;return taMsg(`Did you mean ${fix}? We fixed it for you. Tap Create my teacher account again. (If ${email} was right, change it back.)`);}
   }else if(!pw)return taMsg('Type your password.');
   taBusy=true;$('taGo').disabled=true;taMsg('Working…',true);
   try{
@@ -5221,10 +5237,22 @@ function renderCardGate(T){
     h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
     h('p',{class:'td-nocharge'},'No charge until the end of the trial period.'),
     h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year (regular price $49, so you save $13 every year), locked in for as long as you stay."),
+    Date.now()<TT_PROMO_ENDS?h('p',{class:'td-promo'},h('b',null,'Have a promo code? '),'You can type it in on the next page. Look for "Add promotion code" under the price.'):null,
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
       T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Skip for now: try it free for 1 day, no card'),
       h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
-    h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™. Signed in as '+(T.email||'')+'.')));
+    h('p',{class:'td-email'},'Your account email: ',h('b',null,T.email||''),' ',T.card_skipped?null:h('a',{href:'#',onclick:e=>{e.preventDefault();taStartOver(T);}},'Typo? Start over')),
+    h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™.')));
+}
+const TT_PROMO_ENDS=Date.parse('2026-11-30T23:59:00Z');
+/* Wrong email at sign-up: sign out and reopen Create account with name and school filled in. */
+async function taStartOver(T){
+  const nm=T.name||'',sc=T.school||'';
+  await taLogout();
+  $('taForm').hidden=false;$('taCheck').hidden=true;setTaMode('up');
+  $('taName').value=nm;$('taSchool').value=sc;$('taEmail').value='';$('taPass').value='';
+  taMsg('Type the right email and a password to make your account again.',true);
+  showT('s-tauth');setTimeout(()=>{try{$('taEmail').focus();}catch(e){}},50);
 }
 function renderDash(){
   const M=TA.me;if(!M)return;const T=M.teacher,K=M.classes,C=curClass();if(C)TA.cls=C.id;
