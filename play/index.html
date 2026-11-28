@@ -5224,7 +5224,7 @@ async function openDash(){
   if(T&&T.needs_card&&TA.coDone){TA.coDone=false;TA.coWait=true;renderDash();showT('s-tdash');
     for(let i=0;i<20&&TA.me&&TA.me.teacher.needs_card;i++){await new Promise(r=>setTimeout(r,2000));await taRefresh();}
     TA.coWait=false;}
-  if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();let eid='';try{eid=localStorage.getItem('tt_eid')||'';}catch(e){}ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:0,predicted_ltv:pp.predicted_ltv},true,eid);}
+  if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();let eid='';try{eid=localStorage.getItem('tt_eid')||'';}catch(e){}ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:pp.value,predicted_ltv:pp.predicted_ltv},true,eid);}
   renderDash();showT('s-tdash');
   if(TA.goBilling&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){TA.goBilling=false;openBilling();}
 }
