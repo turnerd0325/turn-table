@@ -3543,7 +3543,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
   <div class="card">
     <h2><i data-ic="key"></i>Founder panel</h2>
     <p class="sub">Every teacher account on Turn-Table<sup class="tm">™</sup>. Only you can see this page.</p>
-    <div class="tbar"><button class="btn sm" id="tfoRefresh" type="button">↻ Refresh</button><button class="btn sm ghost" id="tfoBack" type="button">← Dashboard</button></div>
+    <div class="tbar"><button class="btn sm" id="tfoRefresh" type="button">↻ Refresh</button><button class="btn sm ghost" id="tfoBack" type="button">← Dashboard</button><a class="btn sm ghost" id="tfoInbox" href="https://app.thesciencehooklab.com/admin/inbox" target="_blank" rel="noopener">✉ Inbox</a></div>
     <div class="tscroll"><table class="dt" id="tfoTable"></table></div>
   </div>
 </section>
@@ -5267,7 +5267,7 @@ function renderDash(){
       h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt),
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
-      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,act('Sign out',taLogout))),
+      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,T.role==='founder'?act('Inbox',()=>window.open('https://app.thesciencehooklab.com/admin/inbox','_blank','noopener')):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now')):
 T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
     TT_CHECKOUT_LIVE&&T.card_skipped&&T.plan==='trial'?h('div',{class:'td-up'},h('div',null,h('b',null,'Free day pass. '),h('span',null,'Add a card any time to get your full 7-day free trial. No charge until it ends.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout();}},'Add my card'))):
