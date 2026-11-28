@@ -65,14 +65,17 @@
 
   /* name: a Meta standard event (PageView, ViewContent, Lead, ...) or a custom name.
      params: small plain values only. Never pass student info. */
-  function track(name, params) {
+  /* eventID (optional): the same ID the server sends to Meta's Conversions API, so Meta counts
+     the browser and server copies of one event once. */
+  function track(name, params, eventID) {
     try {
       if (!load()) return false;
       params = params || {};
+      var opt = eventID ? { eventID: String(eventID) } : undefined;
       if (META_PIXEL_ID) {
         if (name === 'PageView') window.fbq('track', 'PageView');
-        else if (TT_STD[name]) window.fbq('track', name, params);
-        else window.fbq('trackCustom', name, params);
+        else if (TT_STD[name]) window.fbq('track', name, params, opt);
+        else window.fbq('trackCustom', name, params, opt);
       }
       if (TIKTOK_PIXEL_ID && window.ttq) {
         if (name === 'PageView') window.ttq.page();

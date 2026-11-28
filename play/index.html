@@ -5031,12 +5031,12 @@ const showT=id=>{show(id);$('userChip').hidden=true;tpxScreen(id);};
    load it or contact Facebook/TikTok. Never send student names, nicknames or scores in an event. */
 const TPX_SCREENS=new Set(['s-tauth','s-trecover','s-tdash','s-teacher','s-progress','s-thist','s-tfb','s-cg']);
 const tpxDone={};let tpxQ=null;
-function ttTeacherPx(ev,params,once){
+function ttTeacherPx(ev,params,once,eid){
   try{
     if(me&&profiles[me]&&!profiles[me].preview)return;               /* a student is signed in on this device */
     if(TA.me&&TA.me.teacher&&TA.me.teacher.role==='founder')return;  /* keep the founder's own visits out of the ad data */
     if(once){if(tpxDone[ev])return;tpxDone[ev]=1;}
-    const go=()=>{if(window.ttPixel)window.ttPixel.track(ev,params||{});};
+    const go=()=>{if(window.ttPixel)window.ttPixel.track(ev,params||{},eid);};
     if(window.ttPixel)return go();
     if(!tpxQ){tpxQ=[];const s=document.createElement('script');s.src='/tt-pixel.js';s.async=true;
       s.onload=()=>{const q=tpxQ||[];tpxQ=[];q.forEach(f=>f());};document.head.append(s);}
@@ -5221,7 +5221,7 @@ async function openDash(){
   if(T&&T.needs_card&&TA.coDone){TA.coDone=false;TA.coWait=true;renderDash();showT('s-tdash');
     for(let i=0;i<20&&TA.me&&TA.me.teacher.needs_card;i++){await new Promise(r=>setTimeout(r,2000));await taRefresh();}
     TA.coWait=false;}
-  if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:0,predicted_ltv:pp.predicted_ltv},true);}
+  if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();let eid='';try{eid=localStorage.getItem('tt_eid')||'';}catch(e){}ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:0,predicted_ltv:pp.predicted_ltv},true,eid);}
   renderDash();showT('s-tdash');
   if(TA.goBilling&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){TA.goBilling=false;openBilling();}
 }
@@ -5243,6 +5243,12 @@ const TT_CHECKOUT_URL=(()=>{const live='https://app.thesciencehooklab.com/tt-che
 async function goCheckout(o){o=o||{};let pref={};try{pref=JSON.parse(sessionStorage.getItem('tt_copref')||'{}')||{};}catch(e){}
   const r=await tcall('tt_t_checkout_token');if(!r||!r.token)return;
   const q=new URLSearchParams({t:r.token,plan:o.plan||pref.plan||'turntable',billing:o.billing||pref.billing||'annual',trial:o.trial===0?'0':'1'});
+  /* One ID shared by the browser StartTrial (back from checkout) and the server copy the Stripe webhook
+     sends to Meta, so Meta counts the trial once. Plus Meta's own browser cookies so the server copy
+     can be matched to the ad click. Teacher pages only. */
+  try{const eid='tts_'+Date.now().toString(36)+Math.random().toString(36).slice(2,10);localStorage.setItem('tt_eid',eid);q.set('eid',eid);
+    const ck=n=>{const m=document.cookie.match(new RegExp('(?:^|; )'+n+'=([^;]*)'));return m?decodeURIComponent(m[1]):'';};
+    const fbp=ck('_fbp'),fbc=ck('_fbc');if(fbp)q.set('fbp',fbp);if(fbc)q.set('fbc',fbc);}catch(e){}
   ttTeacherPx('InitiateCheckout',tpxPlan(o));await tpxFlush();
   location.href=TT_CHECKOUT_URL+'?'+q.toString();}
 async function skipCard(btn){btn.disabled=true;
