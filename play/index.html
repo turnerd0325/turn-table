@@ -5267,7 +5267,7 @@ function renderCardGate(T){
       step('Today','Full access to every game, Class Games and Pre/Post-Tests. $0.','now'),
       step(fmt(remind),"I email you a reminder before you're charged."),
       step(fmt(end),`Trial ends. ${price}${priceNote} starts, unless you cancel.`)),
-    h('p',{class:'td-cancel'},h('b',null,'Cancel in one click '),`from your dashboard (Manage billing) any time before ${fmt(end)}, and you pay nothing.`),
+    h('p',{class:'td-cancel'},h('b',null,'Cancel in seconds, online. '),`Tap Manage billing on your dashboard any time before ${fmt(end)} and you pay nothing. No phone call, no email needed.`),
     promo?h('p',{class:'td-promo'},h('b',null,'Black Friday: '),'use code ',h('b',{class:'td-pcode'},'THANKDEAL25'),' for 25% off your first year (ends Mon 6:59 pm ET). Tap "Add code" under the price on the next page.'):null,
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Start my free trial: $0 today'),
       h('p',{class:'td-secure'},'Secure checkout by Stripe. I never see your card number.'),
