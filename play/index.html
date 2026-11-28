@@ -2714,6 +2714,7 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
   <div id="userChip" hidden>
     <span class="who" id="userName"></span>
     <span class="sync ok" id="syncBadge"></span>
+    <button class="btn sm ghost" id="btnInbox" hidden type="button">✉ Inbox</button>
     <button class="btn sm ghost" id="btnHome">Menu</button>
     <button class="btn sm ghost" id="btnLogout">Log out</button>
   </div>
@@ -5429,6 +5430,7 @@ function show(id){
   document.body.classList.toggle('ingame',PLAY_SCREENS.has(id));
   try{if(id!=='s-jpg')jgStop();if(id!=='s-livet'&&id!=='s-jpg')lgSnd.musicStop();}catch(e){}
   $('userChip').hidden=!me; if(me)$('userName').replaceChildren(I('user'),prof().name);
+  try{$('btnInbox').hidden=!(TA.me&&TA.me.teacher&&TA.me.teacher.role==='founder');}catch(e){}
   window.scrollTo(0,0);
 }
 function goMenu(){renderMenu();show('s-menu');refreshClassInfo();}
@@ -5447,6 +5449,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b
 $('brand').onclick=()=>{me?goMenu():show('s-login');};
 $('btnHome').onclick=goMenu;
 $('btnLogout').onclick=()=>{const pv=isPreview();me=null;try{sessionStorage.removeItem('pte_me');}catch(e){}if(pv&&TA.s){openDash();return;}renderLogin();show('s-login');};
+$('btnInbox').onclick=()=>{try{window.open('https://app.thesciencehooklab.com/admin/inbox','_blank','noopener');}catch(e){location.href='https://app.thesciencehooklab.com/admin/inbox';}};
 
 function modal({title,text,input,ok='OK',cancel=true}){
   return new Promise(res=>{
