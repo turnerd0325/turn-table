@@ -5043,7 +5043,11 @@ const tpxFlush=()=>new Promise(r=>setTimeout(r,window.ttPixel&&window.ttPixel.en
 function ttSrcCapture(){
   try{const sp=new URLSearchParams(location.search),s={};let any=false;
     ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid','ttclid'].forEach(k=>{const v=sp.get(k);if(v){s[k]=v.slice(0,120);any=true;}});
-    if(!any)return;s.at=new Date().toISOString().slice(0,10);
+    /* outside referrer, and Facebook/Instagram's in-app browser (it often drops the referrer and tags) */
+    const ref=document.referrer&&document.referrer.indexOf(location.origin)!==0?document.referrer.slice(0,200):'';
+    const ua=navigator.userAgent||'',app=/Instagram/.test(ua)?'instagram':(/FBAN|FBAV|FB_IAB|FBIOS/.test(ua)?'facebook':'');
+    if(!any&&!ref&&!app){if(!localStorage.getItem('tt_src_first'))localStorage.setItem('tt_src_first',JSON.stringify({direct:1,page:'/play/',at:new Date().toISOString().slice(0,10)}));return;}
+    if(ref)s.referrer=ref;if(app)s.app=app;s.page='/play/';s.at=new Date().toISOString().slice(0,10);
     if(!localStorage.getItem('tt_src_first'))localStorage.setItem('tt_src_first',JSON.stringify(s));
     localStorage.setItem('tt_src_last',JSON.stringify(s));}catch(e){}
 }
@@ -5093,7 +5097,7 @@ async function taSubmit(){
   taBusy=true;$('taGo').disabled=true;taMsg('Working…',true);
   try{
     if(taMode==='up'){
-      const r=await authCall('/signup',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email,password:pw,data:{name,school,src:ttSrc()}}});
+      const r=await authCall('/signup',{query:'redirect_to='+encodeURIComponent(taRedirect()),body:{email,password:pw,data:{name,school,src:ttSrc(),pick:(()=>{try{return JSON.parse(sessionStorage.getItem('tt_copref')||'null');}catch(e){return null;}})()}}});
       if(!r.ok){
         const c=r.j.error_code||r.j.code||'';
         return taMsg(c==='weak_password'?'That password is too easy to guess. Try a longer one with letters and numbers.':(c==='over_email_send_rate_limit'||r.status===429)?'Too many emails were sent just now. Wait a few minutes and try again.':c==='user_already_exists'?'That email already has an account. Tap Sign in.':'Could not create the account. Check the email and try again.');

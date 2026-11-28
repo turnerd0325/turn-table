@@ -91,8 +91,17 @@
       var sp = new URLSearchParams(location.search), s = {}, any = false;
       KEYS.forEach(function (k) { var v = sp.get(k); if (v) { s[k] = v.slice(0, 120); any = true; } });
       var ref = document.referrer && document.referrer.indexOf(location.origin) !== 0 ? document.referrer.slice(0, 200) : '';
-      if (!any && !ref) return;
+      /* Facebook and Instagram open links in their own in-app browser, which often drops the
+         referrer and sometimes the tags. Its name in the user agent still shows where they came from. */
+      var ua = navigator.userAgent || '', app = /Instagram/.test(ua) ? 'instagram' : (/FBAN|FBAV|FB_IAB|FBIOS/.test(ua) ? 'facebook' : '');
+      if (!any && !ref && !app) {
+        /* nothing to go on: still note the first visit, so "no source" means direct, not missing */
+        if (!localStorage.getItem('tt_src_first')) localStorage.setItem('tt_src_first', JSON.stringify({ direct: 1, page: location.pathname.slice(0, 60), at: new Date().toISOString().slice(0, 10) }));
+        return;
+      }
       if (ref) s.referrer = ref;
+      if (app) s.app = app;
+      s.page = location.pathname.slice(0, 60);
       s.at = new Date().toISOString().slice(0, 10);
       if (!localStorage.getItem('tt_src_first')) localStorage.setItem('tt_src_first', JSON.stringify(s));
       localStorage.setItem('tt_src_last', JSON.stringify(s));
