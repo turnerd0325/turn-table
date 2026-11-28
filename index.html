@@ -470,6 +470,45 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
   .cmp .r{grid-template-columns:110px 1fr 44px}
   .plan{padding:28px}
 }
+
+/* ---------- standards tabs ---------- */
+.ngss-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.ngss-tabs button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid rgba(12,22,48,.15);background:#fff;color:var(--ink);font:700 15px/1 var(--body);cursor:pointer}
+.ngss-tabs button i{width:10px;height:10px;border-radius:3px}
+.ngss-tabs button small{font-weight:600;color:var(--muted)}
+.ngss-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ngss-tabs button[aria-selected="true"] small{color:#cfd8ee}
+.ngss-panel ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.ngss-panel li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;background:#fff;border:1px solid rgba(12,22,48,.08);border-radius:12px;padding:8px 12px;font-size:14.5px;line-height:1.35}
+.ngss-panel li .ntx small{display:block;margin-top:2px;font-size:12.5px;color:var(--muted)}
+.ngss-panel .nchip{white-space:nowrap}
+.ngss-more{display:none;margin:10px 0 0;background:none;border:0;color:#2153d6;font:700 15px var(--body);text-decoration:underline;cursor:pointer;min-height:44px}
+.ngss-box .ngss-foot{font-size:13px;margin-top:12px}
+html.js .ngss-panel[hidden]{display:none}
+html:not(.js) .ngss-panel[hidden]{display:block;margin-top:14px}
+html:not(.js) .ngss-tabs{display:none}
+@media (max-width:760px){
+  .ngss-panel ul{grid-template-columns:1fr}
+  html.js .ngss-panel.long:not(.all) li:nth-child(n+6){display:none}
+  .ngss-tabs{flex-wrap:nowrap;gap:6px}
+  .ngss-tabs button{padding:0 11px;font-size:14px;gap:6px;flex:1 1 auto;justify-content:center;white-space:nowrap}
+  .ngss-panel li{grid-template-columns:1fr;gap:4px;padding:8px 12px}
+  .ngss-panel .nchip{justify-self:start;font-size:11.5px;padding:2px 8px}
+  #ngss .sec-head .lede{font-size:16px}
+  html.js .ngss-panel.long:not(.all) .ngss-more{display:inline-block}
+}
+/* ---------- trial CTAs ---------- */
+.jump{display:none!important}
+.trialbar{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--night);box-shadow:0 -10px 30px -10px rgba(7,19,48,.55);padding:10px 16px calc(10px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .25s ease}
+.trialbar.on{transform:none}
+.trialbar .in{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:18px}
+.trialbar span{color:#cfd8ee;font-size:15px;font-weight:600}
+.trialbar .btn{min-height:50px;padding:0 28px;font-size:17px;box-shadow:0 0 0 4px rgba(255,200,87,.25)}
+body{padding-bottom:84px}
+@media (max-width:560px){.trialbar span{display:none}.trialbar .btn{width:100%;justify-content:center}}
+.midcta{background:radial-gradient(700px 300px at 50% 130%,rgba(255,200,87,.28),transparent 60%),var(--night);text-align:center;padding:56px 0}
+.midcta h2{color:#fff;margin:0 auto;font-size:clamp(28px,3.6vw,44px);max-width:22ch}
+.midcta p{color:#b3c0de;margin:12px auto 24px;font-size:18px;max-width:48ch}
 </style>
 </head>
 <body>
@@ -579,6 +618,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
     <p class="games-note">Plus two whole-class games for the projector. <a href="#class" style="color:#fff;font-weight:700">See the class games ↓</a></p>
   </div>
 </section>
+<section class="midcta"><div class="wrap"><h2>Ready to play these with your class?</h2><p>7 days free. Every game, Pre-Test and Post-Test unlocks today. Cancel anytime.</p><a class="btn sun" href="/play/?teacher=new">Start my trial now</a></div></section>
+
 
 <section class="pad mist" id="ngss">
   <div class="wrap">
@@ -586,43 +627,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
       <div><p class="ngss-badge"><b>NGSS</b>aligned, game by game</p><h2>Every game is built on an NGSS standard.</h2></div>
       <p class="lede">We start each game from a middle school NGSS performance expectation, then design the game so students can only win by doing what it asks. 24 games cover 29 middle school standards, and every Pre-Test checks the standard its game is built on.</p>
     </div>
-    <div class="ngss-grid">
-      <div class="ngss-col"><h3><i style="background:var(--phys)"></i>Physical Science <small>15 standards</small></h3><ul>
-        <li><span class="nchip"><b>NGSS</b> MS-PS1-1</span><span class="ntx">Model atoms and molecules: what matter is made of<small><b>Atom Builder</b>, <b>Compound Lab</b>, Speed Find <em>(supports)</em>, Element Trivia <em>(supports)</em>, Explore the Table <em>(supports)</em></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS1-2</span><span class="ntx">Use properties to tell whether a chemical reaction happened<small><b>Evidence Lab</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS1-5</span><span class="ntx">Atoms are never lost or made in a chemical reaction<small><b>Balance It</b>, <b>Atom Diner</b></small></span></li>
-        <li><span class="nchip ny"><b>NYSSLS</b> MS-PS1-7</span><span class="ntx">Density is a property that identifies a substance<small><b>Evidence Lab</b></small></span></li>
-        <li><span class="nchip ny"><b>NYSSLS</b> MS-PS1-8</span><span class="ntx">Mixtures can be separated by the properties of each part<small><b>Separation Station</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS2-2</span><span class="ntx">An object’s motion depends on the forces on it and its mass<small><b>Space Courier</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS2-3</span><span class="ntx">What makes electric and magnetic forces stronger or weaker<small><b>Field Golf</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS2-5</span><span class="ntx">Fields push and pull on objects that are not touching<small><b>Field Golf</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS3-1</span><span class="ntx">Kinetic energy depends on mass and speed<small><b>Coaster Architect</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS3-2</span><span class="ntx">Height changes the energy an object stores<small><b>Coaster Architect</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS3-3</span><span class="ntx">Design a device that slows down heat transfer<small><b>Keep It Frozen</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS3-4</span><span class="ntx">Mass and material change how much heat it takes to warm up<small><b>Keep It Frozen</b></small></span></li>
-        <li><span class="nchip ny"><b>NYSSLS</b> MS-PS3-6</span><span class="ntx">Energy moves through electric circuits<small><b>Blackout!</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS4-1</span><span class="ntx">A wave’s amplitude sets how much energy it carries<small><b>Wave Tuner</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-PS4-2</span><span class="ntx">Light is reflected, absorbed or passed through by materials<small><b>Laser Maze</b></small></span></li>
-      </ul></div>
-      <div class="ngss-col"><h3><i style="background:var(--life)"></i>Life Science <small>9 standards</small></h3><ul>
-        <li><span class="nchip"><b>NGSS</b> MS-LS1-1</span><span class="ntx">Living things are made of cells<small><b>Cell Shop</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS1-2</span><span class="ntx">The parts of a cell work together as a system<small><b>Cell Shop</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS2-2</span><span class="ntx">Organisms interact in patterns across ecosystems<small><b>Ripple</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS2-3</span><span class="ntx">Matter and energy move through an ecosystem<small><b>Ripple</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS2-4</span><span class="ntx">A change to an ecosystem changes its populations<small><b>Ripple</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS3-2</span><span class="ntx">Sexual and asexual reproduction and genetic variation<small><b>Pup Predictor</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS4-1</span><span class="ntx">Fossils show patterns in the history of life<small><b>Deep Time</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS4-4</span><span class="ntx">Traits that help survival get passed on: natural selection<small><b>Island Drift</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-LS4-6</span><span class="ntx">Populations change over many generations<small><b>Island Drift</b></small></span></li>
-      </ul>
-      <h3><i style="background:var(--earth)"></i>Earth and Space Science <small>5 standards</small></h3><ul>
-        <li><span class="nchip"><b>NGSS</b> MS-ESS1-1</span><span class="ntx">The Earth, Sun and Moon model: phases, eclipses and seasons<small><b>Moonwatch</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-ESS1-4</span><span class="ntx">Rock layers tell Earth’s 4.6-billion-year history<small><b>Deep Time</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-ESS2-3</span><span class="ntx">Fossils, rocks and coastlines show that plates move<small><b>Pangaea Rebuild</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-ESS2-5</span><span class="ntx">Air masses meeting change the weather<small><b>Weather Desk</b></small></span></li>
-        <li><span class="nchip"><b>NGSS</b> MS-ESS2-6</span><span class="ntx">Uneven heating and Earth’s spin drive weather patterns<small><b>Weather Desk</b></small></span></li>
-      </ul>
-      <p class="ngss-foot"><b>NYSSLS</b> is New York’s version of NGSS. It uses the same codes and adds three middle school standards (MS-PS1-7, MS-PS1-8 and MS-PS3-6), so New York teachers are covered too. The chemistry games also line up with high school NGSS HS-PS1-1, HS-PS1-2 and HS-PS1-7. <em>Supports</em> means the game builds the skills students need for that standard.</p></div>
+    <div class="ngss-box"><div class="ngss-tabs" role="tablist" aria-label="Science type"><button type="button" role="tab" id="ngt-phys" aria-controls="ngp-phys" aria-selected="true"><i style="background:var(--phys)"></i>Physical <small>15</small></button><button type="button" role="tab" id="ngt-life" aria-controls="ngp-life" aria-selected="false" tabindex="-1"><i style="background:var(--life)"></i>Life <small>9</small></button><button type="button" role="tab" id="ngt-earth" aria-controls="ngp-earth" aria-selected="false" tabindex="-1"><i style="background:var(--earth)"></i>Earth <small>5</small></button></div><div class="ngss-panel long" role="tabpanel" id="ngp-phys" aria-labelledby="ngt-phys"><ul><li><span class="nchip"><b>NGSS</b> MS-PS1-1</span><span class="ntx">Model atoms and molecules: what matter is made of<small><b>Atom Builder</b>, <b>Compound Lab</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS1-2</span><span class="ntx">Use properties to tell whether a chemical reaction happened<small><b>Evidence Lab</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS1-5</span><span class="ntx">Atoms are never lost or made in a chemical reaction<small><b>Balance It</b>, <b>Atom Diner</b></small></span></li><li><span class="nchip ny"><b>NYSSLS</b> MS-PS1-7</span><span class="ntx">Density is a property that identifies a substance<small><b>Evidence Lab</b></small></span></li><li><span class="nchip ny"><b>NYSSLS</b> MS-PS1-8</span><span class="ntx">Mixtures can be separated by the properties of each part<small><b>Separation Station</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS2-2</span><span class="ntx">An object’s motion depends on the forces on it and its mass<small><b>Space Courier</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS2-3</span><span class="ntx">What makes electric and magnetic forces stronger or weaker<small><b>Field Golf</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS2-5</span><span class="ntx">Fields push and pull on objects that are not touching<small><b>Field Golf</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS3-1</span><span class="ntx">Kinetic energy depends on mass and speed<small><b>Coaster Architect</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS3-2</span><span class="ntx">Height changes the energy an object stores<small><b>Coaster Architect</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS3-3</span><span class="ntx">Design a device that slows down heat transfer<small><b>Keep It Frozen</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS3-4</span><span class="ntx">Mass and material change how much heat it takes to warm up<small><b>Keep It Frozen</b></small></span></li><li><span class="nchip ny"><b>NYSSLS</b> MS-PS3-6</span><span class="ntx">Energy moves through electric circuits<small><b>Blackout!</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS4-1</span><span class="ntx">A wave’s amplitude sets how much energy it carries<small><b>Wave Tuner</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-PS4-2</span><span class="ntx">Light is reflected, absorbed or passed through by materials<small><b>Laser Maze</b></small></span></li></ul><button type="button" class="ngss-more">Show all 15</button></div><div class="ngss-panel long" role="tabpanel" id="ngp-life" aria-labelledby="ngt-life" hidden><ul><li><span class="nchip"><b>NGSS</b> MS-LS1-1</span><span class="ntx">Living things are made of cells<small><b>Cell Shop</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS1-2</span><span class="ntx">The parts of a cell work together as a system<small><b>Cell Shop</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS2-2</span><span class="ntx">Organisms interact in patterns across ecosystems<small><b>Ripple</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS2-3</span><span class="ntx">Matter and energy move through an ecosystem<small><b>Ripple</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS2-4</span><span class="ntx">A change to an ecosystem changes its populations<small><b>Ripple</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS3-2</span><span class="ntx">Sexual and asexual reproduction and genetic variation<small><b>Pup Predictor</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS4-1</span><span class="ntx">Fossils show patterns in the history of life<small><b>Deep Time</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS4-4</span><span class="ntx">Traits that help survival get passed on: natural selection<small><b>Island Drift</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-LS4-6</span><span class="ntx">Populations change over many generations<small><b>Island Drift</b></small></span></li></ul><button type="button" class="ngss-more">Show all 9</button></div><div class="ngss-panel" role="tabpanel" id="ngp-earth" aria-labelledby="ngt-earth" hidden><ul><li><span class="nchip"><b>NGSS</b> MS-ESS1-1</span><span class="ntx">The Earth, Sun and Moon model: phases, eclipses and seasons<small><b>Moonwatch</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-ESS1-4</span><span class="ntx">Rock layers tell Earth’s 4.6-billion-year history<small><b>Deep Time</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-ESS2-3</span><span class="ntx">Fossils, rocks and coastlines show that plates move<small><b>Pangaea Rebuild</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-ESS2-5</span><span class="ntx">Air masses meeting change the weather<small><b>Weather Desk</b></small></span></li><li><span class="nchip"><b>NGSS</b> MS-ESS2-6</span><span class="ntx">Uneven heating and Earth’s spin drive weather patterns<small><b>Weather Desk</b></small></span></li></ul></div><p class="ngss-foot"><b>NYSSLS</b> is New York’s version of NGSS. It uses the same codes and adds three middle school standards (MS-PS1-7, MS-PS1-8 and MS-PS3-6), so New York teachers are covered too. The chemistry games also line up with high school NGSS HS-PS1-1, HS-PS1-2 and HS-PS1-7.</p>
     </div>
   </div>
 </section>
@@ -743,6 +748,8 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
     </div>
   </div>
 </section>
+<section class="midcta"><div class="wrap"><h2>See your students' growth in the first week.</h2><p>Run a Pre-Test this week and watch the growth report fill in. 7 days free, cancel anytime.</p><a class="btn sun" href="/play/?teacher=new">Start my trial now</a></div></section>
+
 
 
 <section class="pad">
@@ -833,6 +840,7 @@ h2{background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 60%,#2b3f86 100%);
 </main>
 <a class="jump" id="jump" href="#games" aria-label="See all 24 games"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="2" width="7.5" height="7.5" rx="2" fill="#ffc857" stroke="#ffc857"/><rect x="12.5" y="2" width="7.5" height="7.5" rx="2"/><rect x="2" y="12.5" width="7.5" height="7.5" rx="2"/><rect x="12.5" y="12.5" width="7.5" height="7.5" rx="2"/></svg>See all 24 games</a>
 
+<div class="trialbar" id="trialbar"><div class="in"><span>7 days free. Cancel anytime.</span><a class="btn sun" href="/play/?teacher=new">Start my trial now</a></div></div>
 <footer>
   <div class="wrap">
     <span>Turn-Table™ is part of The Science Hook Lab.</span>
@@ -944,6 +952,16 @@ const SUBJ={life:['Life Science','#3fc07c'],phys:['Physics','#4f95ff'],chem:['Ch
       const hs=document.querySelector('.hero');hs.style.setProperty('--py',(y*.25).toFixed(1)+'px');}
     ticking=false;}
   addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(upd);}},{passive:true});addEventListener('resize',upd);upd();
+})();
+</script>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.ngss-tabs [role=tab]'));
+  function pick(t,focus){tabs.forEach(function(b){var on=b===t;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;document.getElementById(b.getAttribute('aria-controls')).hidden=!on});if(focus)t.focus()}
+  tabs.forEach(function(b,i){b.addEventListener('click',function(){pick(b)});b.addEventListener('keydown',function(e){var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){e.preventDefault();pick(tabs[(i+d+tabs.length)%tabs.length],true)}})});
+  [].forEach.call(document.querySelectorAll('.ngss-more'),function(m){m.addEventListener('click',function(){m.parentNode.classList.add('all')})});
+  var bar=document.getElementById('trialbar'),heroBtn=document.querySelector('.hero .btn.sun');
+  if(bar&&heroBtn&&'IntersectionObserver' in window){new IntersectionObserver(function(es){bar.classList.toggle('on',!es[0].isIntersecting)}).observe(heroBtn)}else if(bar){bar.classList.add('on')}
 })();
 </script>
 </body>
