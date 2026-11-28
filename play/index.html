@@ -5266,7 +5266,7 @@ function renderCardGate(T){
   const product=bundle?'Turn-Table™ + The Science Hook Lab':'Turn-Table™';
   const price=monthly?`$${pp.value} a month`:`$${pp.value} a year`;
   const priceNote=!bundle&&!monthly?' (founding price, regular $49)':'';
-  const promo=Date.now()<TT_PROMO_ENDS&&!monthly;
+  const promo=monthly?null:ttPromoNow();
   const step=(when,what,cls)=>h('li',{class:cls||''},h('b',null,when),h('span',null,what));
   body.replaceChildren(h('div',{class:'card td-gate'},
     h('h2',null,T.card_skipped?`Your free day is over, ${T.name}`:`One more step, ${T.name}`),
@@ -5277,7 +5277,7 @@ function renderCardGate(T){
       step(fmt(remind),"I email you a reminder before you're charged."),
       step(fmt(end),`Trial ends. ${price}${priceNote} starts, unless you cancel.`)),
     h('p',{class:'td-cancel'},h('b',null,'Cancel in seconds, online. '),`Tap Manage billing on your dashboard any time before ${fmt(end)} and you pay nothing. No phone call, no email needed.`),
-    promo?h('p',{class:'td-promo'},h('b',null,'Black Friday: '),'use code ',h('b',{class:'td-pcode'},'THANKDEAL25'),' for 25% off your first year (ends Mon 6:59 pm ET). Tap "Add code" under the price on the next page.'):null,
+    promo?h('p',{class:'td-promo'},h('b',null,promo.label+': '),'use code ',h('b',{class:'td-pcode'},promo.code),` for ${promo.pct}% off your first year (${promo.ends}). Tap "Add code" under the price on the next page.`):null,
     h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Start my free trial: $0 today'),
       h('p',{class:'td-secure'},'Secure checkout by Stripe. I never see your card number.'),
       T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Not ready? Try it free for 1 day, no card')),
@@ -5291,7 +5291,11 @@ function renderCardGate(T){
 /* Stripe billing portal on the Science Hook Lab (manage card, cancel). */
 async function openBilling(){const r=await tcall('tt_t_checkout_token');if(!r||!r.token)return;
   location.href=TT_CHECKOUT_URL.replace(/\/tt-checkout$/,'/tt-billing')+'?t='+encodeURIComponent(r.token);}
-const TT_PROMO_ENDS=Date.parse('2026-11-30T23:59:00Z');
+/* Card-page promo, by time. Black Friday code until Sun Nov 29 7 pm ET, then Cyber Monday until Tue Dec 1 10 am ET (Stripe expiry matches). */
+const TT_PROMOS=[
+  {code:'THANKDEAL25',pct:25,label:'Black Friday',ends:'ends Mon 6:59 pm ET',from:0,until:Date.parse('2026-11-30T00:00:00Z')},
+  {code:'CYBER30',pct:30,label:'Cyber Monday',ends:'ends Tue 10 am ET',from:Date.parse('2026-11-30T00:00:00Z'),until:Date.parse('2026-12-01T15:00:00Z')}];
+function ttPromoNow(t){t=t||Date.now();return TT_PROMOS.find(p=>t>=p.from&&t<p.until)||null;}
 /* Wrong email at sign-up: sign out and reopen Create account with name and school filled in. */
 async function taStartOver(T){
   const nm=T.name||'',sc=T.school||'';
