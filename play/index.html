@@ -2691,6 +2691,19 @@ body.ingame .ngsvg.kfsvg,.ngsvg.kfsvg{display:block;width:100%;height:auto;max-h
 .td-nocharge::before{content:"✓";display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#1f9d55;color:#fff;font-size:12px}
 .td-up s{color:#8a94a8;margin-right:2px}.td-save{color:#14794a}
 .td-gatebtns{display:flex;flex-direction:column;align-items:center;gap:10px}
+.td-gate{max-width:640px}
+.td-steps{list-style:none;margin:6px 0 12px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:left}
+.td-steps li{background:#f5f7fb;border:1.5px solid #e2e8f0;border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.35;color:#334155}
+.td-steps li b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:.4px;color:#0f172a;margin-bottom:3px}
+.td-steps li.now{background:#e7f6ee;border-color:#bfe6cf}.td-steps li.now b{color:#14794a}
+.td-cancel{margin:0 auto 12px;font-size:15px;color:#334155;max-width:52ch}
+.td-pcode{font-family:ui-monospace,Menlo,Consolas,monospace;background:#fff;padding:1px 6px;border-radius:6px;border:1px solid #f2b705}
+.td-secure{margin:-2px 0 2px;font-size:13px;color:#64748b}.td-secure::before{content:"🔒 "}
+.td-trust{display:flex;gap:14px;align-items:flex-start;text-align:left;margin:16px 0 4px;padding:14px;border-top:1.5px solid #e2e8f0}
+.td-trust img{width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none}
+.td-trust p{margin:0 0 6px;font-size:14px;line-height:1.45;color:#334155}.td-trust p:last-child{margin:0}
+.td-trust a{font-weight:700}
+@media (max-width:560px){.td-gate{padding:26px 16px}.td-steps{grid-template-columns:1fr;gap:8px}.td-steps li{display:flex;gap:10px;align-items:baseline}.td-steps li b{min-width:92px;margin:0}}
 .td-skip{background:none;border:0;padding:6px 8px;color:#2153d6;font:inherit;font-weight:700;font-size:15px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.td-skip:hover{color:#163c9e}.td-skip:disabled{opacity:.5;cursor:default}
 .pg-privrow{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;justify-content:space-between}
 .pg-hide{font-size:13px;font-weight:700;display:flex;gap:7px;align-items:center;cursor:pointer;margin-top:6px}
@@ -5210,6 +5223,7 @@ async function openDash(){
     TA.coWait=false;}
   if(backFromCheckout&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){const pp=tpxPlan();ttTeacherPx('StartTrial',{content_name:pp.content_name,content_category:pp.content_category,currency:'USD',value:0,predicted_ltv:pp.predicted_ltv},true);}
   renderDash();showT('s-tdash');
+  if(TA.goBilling&&TA.me&&TA.me.teacher&&!TA.me.teacher.needs_card){TA.goBilling=false;openBilling();}
 }
 function needWrite(){
   if(TA.me&&TA.me.teacher.expired){modal({title:'Your free trial has ended',text:'You can still look at your classes and scores. To start class games or make new classes, contact Turn-Table™ to keep going.',cancel:false});return false;}
@@ -5237,18 +5251,37 @@ async function skipCard(btn){btn.disabled=true;
 function renderCardGate(T){
   const body=$('tdBody');
   if(TA.coWait)return body.replaceChildren(h('div',{class:'card td-gate'},h('h2',null,'Setting up your free trial…'),h('p',{class:'sub'},'This takes a few seconds after checkout. The page will open by itself.')));
+  const pp=tpxPlan(),bundle=pp.content_name!=='Turn-Table',monthly=pp.content_category==='monthly';
+  const fmt=d=>d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  const end=new Date(Date.now()+7*864e5),remind=new Date(end.getTime()-3*864e5);
+  const product=bundle?'Turn-Table™ + The Science Hook Lab':'Turn-Table™';
+  const price=monthly?`$${pp.value} a month`:`$${pp.value} a year`;
+  const priceNote=!bundle&&!monthly?' (founding price, regular $49)':'';
+  const promo=Date.now()<TT_PROMO_ENDS&&!monthly;
+  const step=(when,what,cls)=>h('li',{class:cls||''},h('b',null,when),h('span',null,what));
   body.replaceChildren(h('div',{class:'card td-gate'},
     h('h2',null,T.card_skipped?`Your free day is over, ${T.name}`:`One more step, ${T.name}`),
-    h('p',{class:'lead'},'Add a card to start your 7-day free trial of Turn-Table™.'),
-    h('p',{class:'td-nocharge'},'No charge until the end of the trial period.'),
-    h('p',{class:'sub'},"Cancel anytime before then. You'll get the founding price of $36 a year (regular price $49, so you save $13 every year), locked in for as long as you stay."),
-    Date.now()<TT_PROMO_ENDS?h('p',{class:'td-promo'},h('b',null,'Have a promo code? '),'You can type it in on the next page. Tap "Add code" under the price.'):null,
-    h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Add my card and start the trial'),
-      T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Skip for now: try it free for 1 day, no card'),
-      h('button',{class:'btn ghost sm',type:'button',onclick:taLogout},'Sign out')),
-    h('p',{class:'td-email'},'Your account email: ',h('b',null,T.email||''),' ',T.card_skipped?null:h('a',{href:'#',onclick:e=>{e.preventDefault();taStartOver(T);}},'Typo? Start over')),
-    h('p',{class:'sub small'},'Checkout is handled by Stripe on the Science Hook Lab, the company behind Turn-Table™.')));
+    h('p',{class:'lead'},`Start your 7-day free trial of ${product}`),
+    h('p',{class:'td-nocharge'},'$0 today. Nothing is charged for 7 days.'),
+    h('ol',{class:'td-steps'},
+      step('Today','Full access to every game, Class Games and Pre/Post-Tests. $0.','now'),
+      step(fmt(remind),"I email you a reminder before you're charged."),
+      step(fmt(end),`Trial ends. ${price}${priceNote} starts, unless you cancel.`)),
+    h('p',{class:'td-cancel'},h('b',null,'Cancel in one click '),`from your dashboard (Manage billing) any time before ${fmt(end)}, and you pay nothing.`),
+    promo?h('p',{class:'td-promo'},h('b',null,'Black Friday: '),'use code ',h('b',{class:'td-pcode'},'THANKDEAL25'),' for 25% off your first year (ends Mon 6:59 pm ET). Tap "Add code" under the price on the next page.'):null,
+    h('div',{class:'td-gatebtns'},h('button',{class:'btn good big',type:'button',onclick:()=>goCheckout()},'Start my free trial: $0 today'),
+      h('p',{class:'td-secure'},'Secure checkout by Stripe. I never see your card number.'),
+      T.card_skipped?null:h('button',{class:'td-skip',type:'button',onclick:e=>skipCard(e.currentTarget)},'Not ready? Try it free for 1 day, no card')),
+    h('div',{class:'td-trust'},
+      h('img',{src:'/welcome/img/dennis.webp',alt:'Dennis Turner',width:56,height:56,loading:'lazy'}),
+      h('div',null,
+        h('p',null,h('b',null,'Made by Dennis Turner, '),'a 7th grade science teacher in New York. Questions? ',h('a',{href:'mailto:dennisturner@thesciencehooklab.com'},'Email me'),'.'),
+        h('p',null,'Students join with a class code and a made-up nickname: no student emails or real names, and no ads or tracking on student screens. ',h('a',{href:'/privacy/#laws',target:'_blank',rel:'noopener'},'Privacy, FERPA and COPPA')))),
+    h('p',{class:'td-email'},'Your account email: ',h('b',null,T.email||''),' ',T.card_skipped?null:h('a',{href:'#',onclick:e=>{e.preventDefault();taStartOver(T);}},'Typo? Start over'),' · ',h('a',{href:'#',onclick:e=>{e.preventDefault();taLogout();}},'Sign out'))));
 }
+/* Stripe billing portal on the Science Hook Lab (manage card, cancel). */
+async function openBilling(){const r=await tcall('tt_t_checkout_token');if(!r||!r.token)return;
+  location.href=TT_CHECKOUT_URL.replace(/\/tt-checkout$/,'/tt-billing')+'?t='+encodeURIComponent(r.token);}
 const TT_PROMO_ENDS=Date.parse('2026-11-30T23:59:00Z');
 /* Wrong email at sign-up: sign out and reopen Create account with name and school filled in. */
 async function taStartOver(T){
@@ -5272,7 +5305,7 @@ function renderDash(){
       h('div',null,h('h2',{style:'margin:0'},I('cap'),`Hi, ${T.name}!`),h('div',{class:'td-plan'+(T.expired?' bad':'')},planTxt),
         T.limits&&!T.limits.unlimited?h('div',{class:'td-use'+(T.limits.students>=T.limits.max_students*.9||T.limits.classes>=T.limits.max_classes?' near':'')},
           `Classes ${T.limits.classes} of ${T.limits.max_classes} · Students ${T.limits.students} of ${T.limits.max_students}`):null),
-      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role==='founder'?act('Founder panel',openFounder):null,T.role==='founder'?act('Inbox',()=>window.open('https://app.thesciencehooklab.com/admin/inbox','_blank','noopener')):null,act('Sign out',taLogout))),
+      h('div',{class:'tbar'},act([I('play'),' Play the games'],teacherPlay,'good'),act([I('chart'),' Progress & data'],()=>openProgress(),'good'),act('Class Games',()=>{if(needWrite()){renderCG();showT('s-cg');}},'good'),act('Roster & scores',openRoster),act('Student feedback',openTeacherFeedback),T.role!=='founder'&&!T.needs_card&&(T.plan==='paid'||(T.plan==='trial'&&!T.card_skipped))?act('Manage billing',openBilling):null,T.role==='founder'?act('Founder panel',openFounder):null,T.role==='founder'?act('Inbox',()=>window.open('https://app.thesciencehooklab.com/admin/inbox','_blank','noopener')):null,act('Sign out',taLogout))),
     T.expired&&T.free_lock?h('div',{class:'td-banner'},h('b',null,'Your free trial has ended. '),'Your students can still play the free version: Speed Find, Cell Shop and Moonwatch (first levels, 3 plays a day). Everything else, Pre-Test and Post-Test, and Class Games come with a membership. ',h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade now')):
 T.expired?h('div',{class:'td-banner'},'Your free trial has ended. You can still look at your classes and scores, but you cannot start class games or make new classes. ',TT_CHECKOUT_LIVE?h('a',{href:'#',onclick:e=>{e.preventDefault();goCheckout({trial:0});}},'Upgrade to keep going'):'Contact Turn-Table™ to keep going','.'):
     TT_CHECKOUT_LIVE&&T.card_skipped&&T.plan==='trial'?h('div',{class:'td-up'},h('div',null,h('b',null,'Free day pass. '),h('span',null,'Add a card any time to get your full 7-day free trial. No charge until it ends.')),h('div',{class:'td-upact'},h('a',{class:'btn sm good',href:'#',onclick:e=>{e.preventDefault();goCheckout();}},'Add my card'))):
@@ -18790,7 +18823,7 @@ ttSrcCapture(); /* save the visitor's source (utm/fbclid) whatever screen they l
 (()=>{const sp=new URLSearchParams(location.search),tq=sp.get('teacher');if(tq===null)return;
   const pl=sp.get('plan'),bi=sp.get('billing');
   if(pl||bi){try{sessionStorage.setItem('tt_copref',JSON.stringify({plan:pl==='bundle'?'bundle':'turntable',billing:bi==='monthly'?'monthly':'annual'}));}catch(e){}}
-  if(sp.get('checkout')==='done')TA.coDone=true;
+  if(sp.get('checkout')==='done')TA.coDone=true;if(sp.get('billing')==='1')TA.goBilling=true;
   try{history.replaceState(null,'',location.pathname);}catch(e){}
   if(TA.s)ensureTeacher('dash').then(ok=>{if(ok)openDash();});else{openTAuth();if(tq==='new')setTaMode('up');}})();
 taHash();window.addEventListener('hashchange',taHash);
